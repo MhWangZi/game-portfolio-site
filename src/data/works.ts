@@ -135,6 +135,10 @@ export const works: WorkItem[] = [
       version: 'v2.3 / 网页游戏与可导入剧本包',
       size: '约 175 KB',
     },
+    links: [
+      { label: '早期原型与网页文字冒险 Word 文档', url: './downloads/prototype-and-web-adventure.docx' },
+      { label: '系统玩法设计与可玩原型 Word 文档', url: './downloads/playable-prototype-portfolio.docx' },
+    ],
   },
   {
     id: 'godot-prototype-suite',
@@ -171,6 +175,10 @@ export const works: WorkItem[] = [
         src: './media/portfolio/godot-prototype-suite.webp',
         caption: '早期 Godot 原型模块截图，包含场景、角色与交互实现记录。',
       },
+    ],
+    links: [
+      { label: '早期原型与网页文字冒险 Word 文档', url: './downloads/prototype-and-web-adventure.docx' },
+      { label: '系统玩法设计与可玩原型 Word 文档', url: './downloads/playable-prototype-portfolio.docx' },
     ],
   },
   {
@@ -209,6 +217,11 @@ export const works: WorkItem[] = [
         caption: '烽火地带货币与资源流转拆解图。',
       },
     ],
+    download: {
+      url: './downloads/delta-economy-breakdown.docx',
+      version: 'Word 文档 / 经济系统拆解',
+      size: '约 414 KB',
+    },
   },
   {
     id: 'wuthering-values',
@@ -246,6 +259,11 @@ export const works: WorkItem[] = [
         caption: '鸣潮属性与成长曲线拆解表格。',
       },
     ],
+    download: {
+      url: './downloads/wuthering-values-breakdown.docx',
+      version: 'Word 文档 / 数值体系拆解',
+      size: '约 559 KB',
+    },
   },
   {
     id: 'equipment-analysis',
@@ -283,6 +301,11 @@ export const works: WorkItem[] = [
         caption: '三款长线养成游戏装备系统对比表。',
       },
     ],
+    download: {
+      url: './downloads/equipment-analysis-report.docx',
+      version: 'Word 文档 / 装备系统竞品分析',
+      size: '约 676 KB',
+    },
   },
   {
     id: 'action-combat',
@@ -320,6 +343,11 @@ export const works: WorkItem[] = [
         caption: '黑神话与只狼战斗系统差异拆解表。',
       },
     ],
+    download: {
+      url: './downloads/action-combat-comparison.docx',
+      version: 'Word 文档 / 动作战斗系统对比',
+      size: '约 0.99 MiB',
+    },
   },
   {
     id: 'roguelite-systems',
@@ -357,6 +385,11 @@ export const works: WorkItem[] = [
         caption: 'Hades 与 Dead Cells 双循环、随机性和元进度对比表。',
       },
     ],
+    download: {
+      url: './downloads/roguelite-systems-breakdown.docx',
+      version: 'Word 文档 / Roguelite 系统对比',
+      size: '约 660 KB',
+    },
   },
 ]
 

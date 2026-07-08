@@ -113,6 +113,7 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
 
   const activeCase = archiveCases[activeIndex]
   const activeWork = workMap.get(activeCase.id)
+  const activeIsPrototype = activeWork?.kind === 'Playable Prototype'
   const previousCase = archiveCases[wrapIndex(activeIndex - 1)]
   const nextCase = archiveCases[wrapIndex(activeIndex + 1)]
   const progress = ((activeIndex + 1) / archiveCases.length) * 100
@@ -285,7 +286,7 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
             {activeWork?.download ? (
               <a className="secondary-action archive-download-button" href={activeWork.download.url} download>
                 <Download size={16} />
-                构建包
+                {activeIsPrototype ? '构建包' : 'Word 文档'}
               </a>
             ) : (
               <span className="archive-file-note">

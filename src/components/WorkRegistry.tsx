@@ -81,6 +81,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
           const kind = getWorkKind(work)
           const archiveCode = getArchiveCode(kind, originalIndex)
           const isPrototype = kind === 'Playable Prototype'
+          const downloadLabel = isPrototype ? '可试玩' : '可下载文档'
           return (
             <button
               className={[
@@ -103,7 +104,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
                 {work.download ? (
                   <span className="card-download">
                     <Download size={13} />
-                    可试玩
+                    {downloadLabel}
                   </span>
                 ) : (
                   <span className="card-download ghost">

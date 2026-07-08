@@ -52,7 +52,14 @@ export function WorkDetail({ work }: WorkDetailProps) {
   const reducedMotion = usePrefersReducedMotion()
   const mainMedia = work.media[0]
   const mechanicCards = work.id === 'parry-arena' ? parryMechanics : []
+  const isPrototype = work.kind === 'Playable Prototype'
   const evidenceMode = work.kind === 'Playable Prototype' ? 'PLAYABLE VALIDATION' : 'SYSTEM ANALYSIS'
+  const downloadTitle = isPrototype ? 'Windows 试玩包 / 项目文件包' : 'Word 拆解文档 / 分析报告'
+  const downloadFallback = isPrototype
+    ? '当前提供截图、视频或拆解图；构建包后续补充。'
+    : '当前提供截图或拆解图；完整 Word 文档后续补充。'
+  const downloadReadout = isPrototype ? '可下载构建包' : '可下载 Word 文档'
+  const downloadButtonLabel = isPrototype ? '下载文件' : '下载文档'
 
   useLayoutEffect(() => {
     if (reducedMotion || !detailRef.current) return
@@ -121,7 +128,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
         <div className="detail-terminal-card">
           <div className="terminal-topline">
             <span>{evidenceMode}</span>
-            <strong>{work.download ? 'BUILD ONLINE' : 'REPORT INDEXED'}</strong>
+            <strong>{work.download ? (isPrototype ? 'BUILD ONLINE' : 'DOCX READY') : 'REPORT INDEXED'}</strong>
           </div>
           <div className="terminal-focus">
             <span>FOCUS</span>
@@ -137,7 +144,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
           <div className="terminal-readout">
             <span>证据入口</span>
             <span>{work.media[0]?.type === 'video' ? '演示视频' : '截图 / 表格'}</span>
-            <span>{work.download ? '可下载构建包' : '拆解档案'}</span>
+            <span>{work.download ? downloadReadout : '拆解档案'}</span>
           </div>
         </div>
       </div>
@@ -207,13 +214,13 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
         <div className={work.download ? 'download-box available' : 'download-box'}>
           <div>
-            {work.download ? <PackageCheck size={20} /> : <FileText size={20} />}
+            {work.download && isPrototype ? <PackageCheck size={20} /> : <FileText size={20} />}
             <div>
-              <strong>{work.download ? 'Windows 试玩包 / 项目文件包' : '暂未公开下载包'}</strong>
+              <strong>{work.download ? downloadTitle : '暂未公开下载包'}</strong>
               <span>
                 {work.download
                   ? `${work.download.version} / ${work.download.size ?? '文件大小待补充'}`
-                  : '当前提供截图、视频或拆解图；构建包后续补充。'}
+                  : downloadFallback}
               </span>
               {work.download?.sha256 ? <code>SHA-256 {formatSha(work.download.sha256)}</code> : null}
             </div>
@@ -221,7 +228,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
           {work.download ? (
             <a href={work.download.url} download>
               <FileDown size={16} />
-              下载文件
+              {downloadButtonLabel}
             </a>
           ) : null}
         </div>
