@@ -1986,3 +1986,324 @@ main > section {
     animation: none !important;
   }
 }
+
+/* Personal homepage pass: softer title, journal modules, and balanced contact ending. */
+.personal-hero {
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: clamp(28px, 5vw, 62px);
+}
+
+.hero-kicker {
+  color: var(--accent);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  font-weight: 780;
+  letter-spacing: 0.05em;
+}
+
+.personal-hero h1 {
+  max-width: 780px;
+  font-size: clamp(3rem, 6.1vw, 5.55rem);
+  line-height: 1.08;
+  font-weight: 790;
+}
+
+.personal-hero .hero-subtitle {
+  max-width: 760px;
+  font-size: clamp(1.25rem, 2.05vw, 1.95rem);
+  line-height: 1.45;
+  font-weight: 650;
+}
+
+.personal-hero .hero-summary {
+  max-width: 720px;
+}
+
+.personal-poster-nav {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  max-width: 940px;
+}
+
+.personal-poster-nav a {
+  min-height: 96px;
+}
+
+.personal-poster-nav strong {
+  margin: 10px 0 6px;
+  font-size: clamp(1rem, 1.62vw, 1.38rem);
+}
+
+.personal-section {
+  position: relative;
+  min-height: auto;
+  padding: 96px 0 0;
+}
+
+.about-grid,
+.notes-grid,
+.process-line {
+  display: grid;
+  gap: 14px;
+}
+
+.about-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.about-card,
+.note-card,
+.process-step {
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.022)),
+    rgba(14, 18, 28, 0.68);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.about-card {
+  min-height: 190px;
+}
+
+.about-card svg,
+.process-step span,
+.note-card span {
+  color: var(--accent);
+}
+
+.about-card h3,
+.note-card h3,
+.process-step h3 {
+  margin: 14px 0 10px;
+  font-size: 1.08rem;
+}
+
+.about-card p,
+.note-card p,
+.process-step p {
+  color: var(--muted);
+  line-height: 1.68;
+}
+
+.notes-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.note-card {
+  min-height: 260px;
+}
+
+.note-card span,
+.process-step span {
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.note-card h3 {
+  font-size: clamp(1.18rem, 1.8vw, 1.48rem);
+  line-height: 1.25;
+}
+
+.process-line {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.process-step {
+  min-height: 220px;
+}
+
+.process-step::after,
+.note-card::after,
+.about-card::after {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  color: transparent;
+  content: "";
+  width: 42px;
+  height: 42px;
+  border-right: 1px solid rgba(242, 184, 96, 0.24);
+  border-bottom: 1px solid rgba(242, 184, 96, 0.24);
+}
+
+.learning-card {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  padding: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(242, 184, 96, 0.2);
+  border-radius: 6px;
+}
+
+.learning-card svg {
+  color: var(--accent);
+}
+
+.learning-card strong,
+.learning-card span {
+  display: block;
+}
+
+.learning-card strong {
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.card-learning {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.card-learning svg {
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.interest-section {
+  padding-top: 88px;
+}
+
+.interest-section .section-heading h2,
+.notes-section .section-heading h2,
+.process-section .section-heading h2,
+.about-section .section-heading h2 {
+  font-size: clamp(2rem, 3.6vw, 3.65rem);
+}
+
+.site-footer {
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
+  gap: clamp(28px, 6vw, 84px);
+  align-items: center;
+  min-height: 72svh;
+  padding: 96px 0 58px;
+}
+
+.footer-copy h2 {
+  margin: 10px 0 16px;
+  font-size: clamp(2.7rem, 6vw, 5.8rem);
+  line-height: 1.02;
+}
+
+.footer-copy p:not(.eyebrow) {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.28vw, 1.16rem);
+  line-height: 1.85;
+}
+
+.contact-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.contact-card-grid a {
+  position: relative;
+  display: grid;
+  min-height: 142px;
+  align-content: space-between;
+  gap: 8px;
+  padding: 16px;
+  color: var(--muted);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.022)),
+    rgba(14, 18, 28, 0.72);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.contact-card-grid a:hover {
+  color: var(--text);
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  background:
+    linear-gradient(145deg, rgba(242, 184, 96, 0.1), rgba(255, 255, 255, 0.025)),
+    rgba(14, 18, 28, 0.86);
+}
+
+.contact-card-grid svg {
+  color: var(--accent);
+}
+
+.contact-card-grid span {
+  font-size: 0.86rem;
+}
+
+.contact-card-grid strong {
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.footer-actions {
+  display: none;
+}
+
+@media (max-width: 1120px) {
+  .personal-hero,
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .personal-poster-nav,
+  .about-grid,
+  .process-line {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .personal-section {
+    padding-top: 72px;
+  }
+
+  .personal-hero h1 {
+    font-size: clamp(2.55rem, 11.6vw, 3.65rem);
+    line-height: 1.12;
+  }
+
+  .personal-hero .hero-subtitle {
+    font-size: clamp(1.08rem, 5vw, 1.38rem);
+  }
+
+  .personal-poster-nav,
+  .about-grid,
+  .process-line,
+  .contact-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personal-poster-nav a {
+    min-height: 80px;
+  }
+
+  .site-footer {
+    min-height: auto;
+    padding-top: 82px;
+  }
+
+  .contact-card-grid a {
+    min-height: 112px;
+  }
+}

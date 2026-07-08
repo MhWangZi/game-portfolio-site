@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
+import { AboutSection } from './components/AboutSection'
 import { AbilityMatrix } from './components/AbilityMatrix'
 import { BootOverlay } from './components/BootOverlay'
 import { FeaturedProject } from './components/FeaturedProject'
 import { Hero } from './components/Hero'
+import { NotesSection } from './components/NotesSection'
 import { PortfolioScene } from './components/PortfolioScene'
+import { ProcessSection } from './components/ProcessSection'
 import { SiteFooter } from './components/SiteFooter'
 import { WorkDetail } from './components/WorkDetail'
 import { WorkRegistry } from './components/WorkRegistry'
@@ -61,13 +64,13 @@ function App() {
         <header className="topbar">
           <a className="brand-mark" href="#top" aria-label="回到首页">
             <span>YYQ</span>
-            <strong>Game Design Archive</strong>
+            <strong>Game Design Notes</strong>
           </a>
           <nav aria-label="Primary navigation">
-            <a href="#featured">重点原型</a>
-            <a href="#works">作品档案</a>
-            <a href="#abilities">能力证据</a>
-            <a href="#work-detail">下载包</a>
+            <a href="#about">关于</a>
+            <a href="#projects">项目</a>
+            <a href="#notes">笔记</a>
+            <a href="#process">方法</a>
             <a href="#contact">联系</a>
           </nav>
         </header>
@@ -77,11 +80,14 @@ function App() {
             workCount={works.length}
             downloadableCount={downloadableCount}
             featuredWork={featuredWork}
-            onPrimaryAction={() => document.getElementById('works')?.scrollIntoView()}
+            onPrimaryAction={() => document.getElementById('projects')?.scrollIntoView()}
           />
+          <AboutSection />
           <FeaturedProject work={featuredWork} onSelect={selectWork} />
           <WorkRegistry works={works} selectedId={selectedId} onSelect={selectWork} />
           <WorkDetail work={selectedWork} />
+          <NotesSection />
+          <ProcessSection />
           <AbilityMatrix />
         </main>
 

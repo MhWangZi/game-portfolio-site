@@ -9,39 +9,40 @@ type HeroProps = {
 }
 
 const posterLinks = [
-  { index: '01', label: 'PLAYABLE', caption: '可玩原型', href: '#works' },
-  { index: '02', label: 'SYSTEM', caption: '系统拆解', href: '#works' },
-  { index: '03', label: 'EVIDENCE', caption: '能力证据', href: '#abilities' },
-  { index: '04', label: 'BUILDS', caption: '下载包', href: '#work-detail' },
+  { index: '01', label: 'ABOUT', caption: '关于我', href: '#about' },
+  { index: '02', label: 'PROJECTS', caption: '近期项目', href: '#projects' },
+  { index: '03', label: 'NOTES', caption: '设计笔记', href: '#notes' },
+  { index: '04', label: 'PROCESS', caption: '设计方法', href: '#process' },
+  { index: '05', label: 'CONTACT', caption: '保持联系', href: '#contact' },
 ]
 
 export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryAction }: HeroProps) {
   const heroDownload = featuredWork.download?.url ?? './downloads/static-signal-web-package.zip'
 
   return (
-    <section className="hero-section module-screen" id="top">
+    <section className="hero-section module-screen personal-hero" id="top">
       <div className="hero-copy" data-hero-block>
-        <p className="eyebrow">BOOT_SEQUENCE / GAME_DESIGN_ARCHIVE</p>
-        <h1>杨毓琦｜游戏策划实习作品集</h1>
-        <p className="hero-subtitle">把玩法规则拆成可验证原型，把系统分析整理成清晰判断。</p>
+        <p className="hero-kicker">YANG YUQI / GAME DESIGNER</p>
+        <h1>游戏设计与原型记录</h1>
+        <p className="hero-subtitle">关于规则、系统与玩家体验的个人笔记</p>
         <p className="hero-summary">
-          这里集中展示我能落地的可玩原型、能复查的系统拆解、竞品分析和长期玩家经验。重点不是堆截图，
-          而是让招聘方快速看到：我做了什么，为什么这样做，证据在哪里。
+          我关注玩法规则、系统结构与玩家行为，也会把自己的设计想法做成可运行的小原型。
+          这里记录近期项目、拆解观察和一些还在迭代中的设计想法。
         </p>
 
         <div className="signal-marquee" aria-hidden="true">
           <div>
-            <span>PLAYABLE BUILD</span>
+            <span>PLAYABLE PROTOTYPE</span>
+            <span>DESIGN NOTES</span>
             <span>SYSTEM LOOP</span>
-            <span>DESIGN EVIDENCE</span>
-            <span>WINDOWS PACKAGE</span>
-            <span>GAME DESIGN ARCHIVE</span>
-            <span>PLAYABLE BUILD</span>
-            <span>SYSTEM LOOP</span>
+            <span>PLAYER BEHAVIOR</span>
+            <span>GAME DESIGN LOG</span>
+            <span>PLAYABLE PROTOTYPE</span>
+            <span>DESIGN NOTES</span>
           </div>
         </div>
 
-        <div className="poster-nav" aria-label="Archive quick navigation">
+        <div className="poster-nav personal-poster-nav" aria-label="Personal site quick navigation">
           {posterLinks.map((item) => (
             <a href={item.href} key={item.label}>
               <span>{item.index}</span>
@@ -54,11 +55,11 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
         <div className="hero-actions">
           <button className="primary-action" type="button" onClick={onPrimaryAction}>
             <Play size={18} />
-            查看作品档案
+            看近期项目
           </button>
           <a className="secondary-action strong" href={heroDownload} download>
             <Download size={18} />
-            下载代表原型
+            下载可玩原型
           </a>
           <a
             className="secondary-action"
@@ -67,54 +68,40 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             rel="noreferrer"
           >
             <Code size={18} />
-            GitHub 仓库
+            GitHub
           </a>
-        </div>
-
-        <div className="boot-lines" aria-label="Archive boot status">
-          <span>[01] 可运行原型已索引</span>
-          <span>[02] 系统拆解报告已归档</span>
-          <span>[03] 下载与外部证据入口在线</span>
         </div>
       </div>
 
-      <aside className="hero-console" aria-label="Portfolio status">
+      <aside className="hero-console" aria-label="Personal site status">
         <div className="console-card hero-panel">
           <div className="console-title">
             <TerminalSquare size={18} />
-            <span>STATUS PANEL</span>
+            <span>NOW / DOING</span>
           </div>
           <div className="panel-row">
-            <span>作品数量</span>
+            <span>记录方向</span>
+            <strong>游戏设计 / 原型 / 拆解</strong>
+          </div>
+          <div className="panel-row">
+            <span>近期项目</span>
             <strong>{workCount}</strong>
           </div>
           <div className="panel-row">
-            <span>求职方向</span>
-            <strong>游戏策划实习</strong>
-          </div>
-          <div className="panel-row">
-            <span>核心能力</span>
-            <strong>原型验证 / 系统拆解</strong>
-          </div>
-          <div className="panel-row">
-            <span>代表原型</span>
-            <strong>{featuredWork.title}</strong>
-          </div>
-          <div className="panel-row">
-            <span>展示技术</span>
-            <strong>React / Three.js / GSAP</strong>
-          </div>
-          <div className="panel-row">
-            <span>可下载项目</span>
+            <span>可下载原型</span>
             <strong>{downloadableCount}</strong>
           </div>
+          <div className="panel-row">
+            <span>最近在看</span>
+            <strong>战斗节奏 / 经济循环 / 叙事规则</strong>
+          </div>
           <div className="hero-panel-links">
-            <a href="#abilities">
-              能力矩阵
+            <a href="#notes">
+              设计笔记
               <ArrowDown size={14} />
             </a>
             <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
-              仓库记录
+              GitHub
               <ExternalLink size={14} />
             </a>
           </div>
@@ -122,7 +109,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
 
         <div className="console-card hero-feature-mini">
           <div className="console-card-top">
-            <p className="eyebrow">FILE_01 / FEATURED BUILD</p>
+            <p className="eyebrow">RECENT PROTOTYPE</p>
             <span className="status-chip">
               <i />
               {featuredWork.kind}
@@ -140,7 +127,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             </span>
             <span>
               <Download size={14} />
-              {featuredWork.download ? 'Windows Build' : 'Evidence Only'}
+              {featuredWork.download ? '可下载' : '观察记录'}
             </span>
           </div>
         </div>

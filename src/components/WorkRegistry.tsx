@@ -1,6 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ArrowRight, Download, FileText, Filter, PackageCheck } from 'lucide-react'
+import { ArrowRight, Download, FileText, Filter, NotebookPen } from 'lucide-react'
 import type { WorkItem, WorkKind } from '../types'
 import { allSkillTags } from '../data/works'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -19,6 +19,14 @@ function getArchiveCode(kind: WorkKind, index: number) {
   return `${kind === 'Playable Prototype' ? 'P' : 'S'}-${String(index + 1).padStart(2, '0')}`
 }
 
+function getLearningLine(work: WorkItem) {
+  if (work.id === 'parry-arena') return '我在这里练习把防守行为做成主要进攻来源，并控制弹反的收益边界。'
+  if (work.id === 'anchored-gaze') return '我想看“攻击改变空间结构”能不能带来追击、控场和逃脱之间的取舍。'
+  if (work.id === 'static-signal') return '我在尝试让文字冒险不只靠阅读推进，而是有风险、行动点和分支压力。'
+  if (work.kind === 'Playable Prototype') return '这个项目主要用于验证一个小循环是否能跑起来，以及哪些规则值得继续做。'
+  return '这是一篇系统观察，我把玩家路径、资源循环和设计取舍整理成可以复查的结构。'
+}
+
 export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps) {
   const [filter, setFilter] = useState('全部')
   const gridRef = useRef<HTMLDivElement | null>(null)
@@ -28,8 +36,6 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
     () => (filter === '全部' ? works : works.filter((work) => work.skills.includes(filter))),
     [filter, works],
   )
-  const prototypeCount = useMemo(() => works.filter((work) => getWorkKind(work) === 'Playable Prototype').length, [works])
-  const analysisCount = works.length - prototypeCount
 
   useLayoutEffect(() => {
     if (reducedMotion || !gridRef.current) return
@@ -42,28 +48,14 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
   }, [filter, reducedMotion])
 
   return (
-    <section className="section-shell" id="works">
+    <section className="section-shell projects-section" id="projects">
       <div className="section-heading registry-heading">
-        <p className="eyebrow">PROJECT FILES / INDEX</p>
-        <h2>作品档案库</h2>
+        <p className="eyebrow">PROJECTS / RECENT WORK</p>
+        <h2>近期项目</h2>
         <p>
-          可玩原型看构建包、核心循环和操作验证；系统分析看拆解维度、判断依据和可迁移结论。
-          所有作品都按同一套档案格式归档。
+          有些是能下载试玩的小原型，有些是系统拆解和竞品观察。它们共同记录我如何把一个问题拆成规则、
+          循环、玩家选择和下一步改动。
         </p>
-        <div className="registry-stats" aria-label="Work category counts">
-          <span>
-            <strong>{prototypeCount}</strong>
-            Playable Prototype
-          </span>
-          <span>
-            <strong>{analysisCount}</strong>
-            System Analysis
-          </span>
-          <span>
-            <strong>{works.filter((work) => work.download).length}</strong>
-            Build Package
-          </span>
-        </div>
       </div>
 
       <div className="filter-row" aria-label="Work filters">
@@ -106,17 +98,17 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
                 <img src={work.media[0]?.src} alt="" aria-hidden="true" />
                 <span className="card-badge">
                   <i />
-                  {kind}
+                  {isPrototype ? 'Prototype' : 'Note'}
                 </span>
                 {work.download ? (
                   <span className="card-download">
                     <Download size={13} />
-                    可下载
+                    可试玩
                   </span>
                 ) : (
                   <span className="card-download ghost">
                     <FileText size={13} />
-                    设计证据
+                    观察
                   </span>
                 )}
               </span>
@@ -127,9 +119,9 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
               <strong>{work.title}</strong>
               <span className="card-role">{work.role}</span>
               <span className="card-summary">{work.oneLine ?? work.summary}</span>
-              <span className="card-proof-line">
-                <PackageCheck size={14} />
-                {work.proof?.[0]?.value ?? work.period ?? '作品证据已归档'}
+              <span className="card-learning">
+                <NotebookPen size={14} />
+                {getLearningLine(work)}
               </span>
               <span className="tag-row">
                 {work.skills.slice(0, 4).map((skill) => (
@@ -137,7 +129,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
                 ))}
               </span>
               <span className="card-cta">
-                打开档案
+                查看记录
                 <ArrowRight size={15} />
               </span>
             </button>

@@ -25,7 +25,7 @@ async function canvasSignature(page: Page) {
 test('desktop scene is visible and reacts to pointer movement', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Desktop scene assertion only runs in the desktop project.')
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: '杨毓琦｜游戏策划实习作品集' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '游戏设计与原型记录' })).toBeVisible()
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-scene-mode', 'full')
   await page.waitForTimeout(350)

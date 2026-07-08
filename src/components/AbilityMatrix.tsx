@@ -3,13 +3,13 @@ import { abilityGroups } from '../data/works'
 
 export function AbilityMatrix() {
   return (
-    <section className="section-shell" id="abilities">
+    <section className="section-shell interest-section" id="interests">
       <div className="section-heading compact">
-        <p className="eyebrow">CAPABILITY CHIPS / EVIDENCE MAP</p>
-        <h2>能力证据矩阵</h2>
+        <p className="eyebrow">INTERESTS / SYSTEMS I WATCH</p>
+        <h2>我喜欢研究的系统</h2>
         <p>
-          能力不单独写成标签，而是挂到具体作品、下载包和拆解图上。每张卡都回答一个问题：
-          这项能力在什么项目里被证明过？
+          这些不是简历式能力标签，而是我反复会回到的几个问题：玩家为什么继续玩、资源为什么流动、
+          战斗为什么有节奏、一个规则如何变成可玩的体验。
         </p>
       </div>
 
@@ -29,7 +29,7 @@ export function AbilityMatrix() {
             </div>
             {group.evidence?.length ? (
               <div className="evidence-list">
-                <strong>作品证据</strong>
+                <strong>相关记录</strong>
                 {group.evidence.map((item) => (
                   <span key={item}>
                     <BadgeCheck size={14} />

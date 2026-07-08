@@ -1,35 +1,59 @@
 import { Code, ExternalLink, Mail, MapPin, Video } from 'lucide-react'
 
+const contactItems = [
+  {
+    icon: Mail,
+    label: '邮箱',
+    value: '3159591298@qq.com',
+    href: 'mailto:3159591298@qq.com',
+    external: false,
+  },
+  {
+    icon: Code,
+    label: 'GitHub',
+    value: '项目与网页源码',
+    href: 'https://github.com/MhWangZi/game-portfolio-site',
+    external: true,
+  },
+  {
+    icon: Video,
+    label: '演示视频',
+    value: '查看原型演示',
+    href: 'https://www.bilibili.com/video/BV1maTC6REzh/',
+    external: true,
+  },
+  {
+    icon: MapPin,
+    label: '回到顶部',
+    value: '重新浏览',
+    href: '#top',
+    external: false,
+  },
+]
+
 export function SiteFooter() {
   return (
     <footer className="site-footer" id="contact">
-      <div>
-        <p className="eyebrow">CONTACT / GAME DESIGN INTERNSHIP</p>
-        <h2>杨毓琦｜游戏策划实习</h2>
+      <div className="footer-copy">
+        <p className="eyebrow">CONTACT / SAY HELLO</p>
+        <h2>保持联系</h2>
         <p>
-          可提供可玩原型、系统拆解报告、竞品分析和下载包。适合快速查看我的玩法验证能力、
-          系统分析能力，以及把设计想法做成可运行版本的执行记录。
+          如果你想聊游戏设计、原型制作、像素风项目或实习机会，可以通过下面的方式找到我。
+          我也会继续把新的原型、拆解和设计笔记放到这里。
         </p>
       </div>
-      <div className="footer-actions">
-        <a href="mailto:3159591298@qq.com">
-          <Mail size={16} />
-          3159591298@qq.com
-        </a>
-        <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
-          <Code size={16} />
-          GitHub
-          <ExternalLink size={13} />
-        </a>
-        <a href="https://www.bilibili.com/video/BV1maTC6REzh/" target="_blank" rel="noreferrer">
-          <Video size={16} />
-          演示视频
-          <ExternalLink size={13} />
-        </a>
-        <a href="#top">
-          <MapPin size={16} />
-          回到顶部
-        </a>
+      <div className="contact-card-grid" aria-label="Contact links">
+        {contactItems.map((item) => {
+          const Icon = item.icon
+          return (
+            <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined} key={item.label}>
+              <Icon size={18} />
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+              {item.external ? <ExternalLink size={13} /> : null}
+            </a>
+          )
+        })}
       </div>
     </footer>
   )

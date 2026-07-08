@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
-const bootLines = ['MOUNT ARCHIVE', 'INDEX BUILDS', 'SYNC DESIGN EVIDENCE', 'READY']
+const bootLines = ['OPEN NOTES', 'LOAD PROTOTYPES', 'MAP SYSTEM LOOPS', 'READY']
 
 export function BootOverlay() {
   const reducedMotion = usePrefersReducedMotion()
@@ -30,7 +30,7 @@ export function BootOverlay() {
           <i />
           <i />
         </div>
-        <div className="boot-title">装载游戏设计档案</div>
+        <div className="boot-title">打开游戏设计笔记</div>
         <div className="boot-progress">
           <span />
         </div>
