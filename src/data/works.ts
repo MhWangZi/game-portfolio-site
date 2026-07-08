@@ -35,8 +35,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/anchored-gaze.webp',
-        caption: '核心锚点机制与特殊锚效果说明，来自项目作品集文档。',
+        src: './media/portfolio/anchored-gaze-gameplay.png',
+        caption: '万众瞩目实机画面：视线压力、锚点收集与敌群追击的空间关系。',
       },
     ],
     download: {
@@ -83,8 +83,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/parry-arena.webp',
-        caption: '弹反竞技场的波次、商店、Boss 与资源取舍设计说明。',
+        src: './media/portfolio/parry-arena-gameplay.png',
+        caption: '弹反竞技场实机画面：波次战斗、敌人站位、体力与资源栏同时构成压力。',
       },
     ],
     download: {
@@ -126,8 +126,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/static-signal.webp',
-        caption: '静默信号网页原型与剧本编辑器模块截图。',
+        src: './media/portfolio/static-signal-interface.png',
+        caption: '静默信号网页界面：身份差异文本、属性分布与规则怪谈调查入口。',
       },
     ],
     download: {

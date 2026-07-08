@@ -38,7 +38,7 @@ export function useArchiveAnimations() {
 
       gsap.utils.toArray<HTMLElement>('.featured-section, .section-shell, .personal-section, .work-detail').forEach((section) => {
         const revealItems = section.querySelectorAll(
-          '.section-heading, .featured-card, .filter-row, .work-card, .detail-showcase, .detail-copy, .ability-card, .about-card, .note-card, .process-step, .contact-card-grid a',
+          '.section-heading, .featured-card, .archive-carousel-shell, .filter-row, .work-card, .detail-showcase, .detail-copy, .ability-card, .about-card, .note-card, .process-step, .contact-card-grid a',
         )
         gsap.fromTo(
           revealItems,
