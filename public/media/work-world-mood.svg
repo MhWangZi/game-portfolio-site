@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="World mood study placeholder">
+  <rect width="1280" height="800" fill="#070806"/>
+  <path d="M0 610C180 470 292 524 442 438c164-94 252-278 440-214 136 46 194 170 398 86v490H0z" fill="#10180e"/>
+  <path d="M0 660c222-82 342-76 510-34 154 38 272-70 442-42 128 20 208 72 328 24v192H0z" fill="#142112"/>
+  <g fill="none" stroke="#d7ff45" stroke-width="3" opacity=".82">
+    <path d="M162 482l78-152 82 152z"/>
+    <path d="M790 318l102-186 108 186z"/>
+    <path d="M612 552c22-122 74-190 154-204"/>
+  </g>
+  <circle cx="1010" cy="162" r="64" fill="#7fdbe7" opacity=".16"/>
+  <text x="72" y="116" fill="#e8efe0" font-family="Microsoft YaHei, Segoe UI, sans-serif" font-size="46" font-weight="700">世界观与美术调性练习</text>
+  <text x="72" y="170" fill="#9aa394" font-family="Microsoft YaHei, Segoe UI, sans-serif" font-size="25">替换为 moodboard / 场景图 / 设计文档截图</text>
+</svg>

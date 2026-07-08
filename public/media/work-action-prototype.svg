@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="Action level prototype placeholder">
+  <rect width="1280" height="800" fill="#0b0f09"/>
+  <path d="M0 640h1280v160H0z" fill="#11180f"/>
+  <path d="M80 600h280l60-86h220l54 86h506" fill="none" stroke="#d7ff45" stroke-width="5"/>
+  <g fill="#7fdbe7" opacity=".86">
+    <rect x="232" y="505" width="42" height="42"/>
+    <rect x="824" y="460" width="74" height="74"/>
+    <rect x="970" y="532" width="32" height="32"/>
+  </g>
+  <g fill="none" stroke="#e8efe0" stroke-width="2" opacity=".32">
+    <path d="M126 180h360v210H126z"/>
+    <path d="M542 126h230v142H542z"/>
+    <path d="M822 188h330v214H822z"/>
+  </g>
+  <text x="72" y="110" fill="#e8efe0" font-family="Microsoft YaHei, Segoe UI, sans-serif" font-size="46" font-weight="700">动作关卡原型</text>
+  <text x="72" y="164" fill="#9aa394" font-family="Microsoft YaHei, Segoe UI, sans-serif" font-size="25">替换为真实截图 / 演示视频</text>
+</svg>
