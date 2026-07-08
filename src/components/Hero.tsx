@@ -9,19 +9,19 @@ export function Hero({ workCount, onPrimaryAction }: HeroProps) {
   return (
     <section className="hero-section" id="top">
       <div className="hero-copy">
-        <p className="eyebrow">Game portfolio / playable evidence</p>
-        <h1>把游戏作品、策划能力和可下载试玩包放在一个可公开访问的网站里。</h1>
+        <p className="eyebrow">Yang Yuqi / Game system design portfolio</p>
+        <h1>杨毓琦｜游戏策划实习作品集</h1>
         <p className="hero-summary">
-          面向招聘与实习场景：作品不是简单堆图，而是把职责、设计判断、系统拆解、交互演示和 Windows 试玩包放在同一条浏览路径中。
+          面向游戏策划实习投递：这里集中展示可玩原型、系统拆解、竞品分析和长期玩家经验。重点不是堆截图，而是让招聘方快速看到我如何把玩法规则拆成可验证原型，并把复杂系统拆成清晰的设计判断。
         </p>
         <div className="hero-actions">
           <button className="primary-action" type="button" onClick={onPrimaryAction}>
             <Play size={18} />
-            查看全部作品
+            查看作品墙
           </button>
-          <a className="secondary-action" href="./downloads/windows-demo-placeholder.zip" download>
+          <a className="secondary-action" href="./downloads/static-signal-web-package.zip" download>
             <Download size={18} />
-            Windows 试玩包模板
+            下载静默信号网页包
           </a>
         </div>
       </div>
@@ -32,24 +32,28 @@ export function Hero({ workCount, onPrimaryAction }: HeroProps) {
           <strong>{workCount}</strong>
         </div>
         <div className="panel-row">
-          <span>试玩方式</span>
-          <strong>视频 + EXE 下载</strong>
+          <span>求职方向</span>
+          <strong>游戏策划实习</strong>
         </div>
         <div className="panel-row">
-          <span>网页试玩</span>
-          <strong>Web 导出后接入</strong>
+          <span>核心能力</span>
+          <strong>系统拆解 / 原型验证</strong>
         </div>
         <div className="panel-row">
-          <span>展示层</span>
-          <strong>Three.js / GSAP</strong>
+          <span>代表原型</span>
+          <strong>Anchored Gaze</strong>
+        </div>
+        <div className="panel-row">
+          <span>展示技术</span>
+          <strong>React / Three.js / GSAP</strong>
         </div>
         <div className="hero-panel-links">
           <a href="#abilities">
             能力矩阵
             <ArrowDown size={14} />
           </a>
-          <a href="https://github.com/" target="_blank" rel="noreferrer">
-            替换 GitHub
+          <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
+            GitHub 仓库
             <ExternalLink size={14} />
           </a>
         </div>

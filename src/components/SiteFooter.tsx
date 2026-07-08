@@ -5,12 +5,12 @@ export function SiteFooter() {
     <footer className="site-footer" id="contact">
       <div>
         <p className="eyebrow">Contact</p>
-        <h2>把这里替换为你的姓名、邮箱和投递链接。</h2>
+        <h2>杨毓琦｜游戏策划实习</h2>
       </div>
       <div className="footer-actions">
-        <a href="mailto:replace-with-your-email@example.com">
+        <a href="mailto:3159591298@qq.com">
           <Mail size={16} />
-          邮箱
+          3159591298@qq.com
         </a>
         <a href="#top">
           <MapPin size={16} />

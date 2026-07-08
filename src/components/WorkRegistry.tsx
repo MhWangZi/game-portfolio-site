@@ -36,7 +36,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
       <div className="section-heading">
         <p className="eyebrow">Registry</p>
         <h2>全部作品</h2>
-        <p>参考案例库结构：先用卡片扫描，再进入单个作品的职责、证据和下载区。</p>
+        <p>按“可玩原型”和“系统分析”组织内容：先扫卡片，再进入单个作品的职责、证据、下载和外部链接。</p>
       </div>
 
       <div className="filter-row" aria-label="Work filters">

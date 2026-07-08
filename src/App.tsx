@@ -44,7 +44,7 @@ function App() {
       <div className="content-layer">
         <header className="topbar">
           <a href="#top" aria-label="Go to top">
-            Game Portfolio
+            杨毓琦 Portfolio
           </a>
           <nav aria-label="Primary navigation">
             <a href="#works">作品</a>

@@ -25,7 +25,7 @@ async function canvasSignature(page: Page) {
 test('desktop scene is visible and reacts to pointer movement', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Desktop scene assertion only runs in the desktop project.')
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /把游戏作品/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '杨毓琦｜游戏策划实习作品集' })).toBeVisible()
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-scene-mode', 'full')
   await page.waitForTimeout(350)
@@ -44,18 +44,15 @@ test('mobile layout does not overflow and uses compact scene mode', async ({ pag
   await expect(canvas).toHaveAttribute('data-scene-mode', 'compact')
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(1)
-  await expect(page.getByRole('button', { name: /动作关卡原型/ })).toBeVisible()
+  await expect(page.getByRole('button', { name: /万众瞩目/ })).toBeVisible()
 })
 
 test('reduced motion keeps content readable', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced motion assertion only runs in the reduced-motion project.')
   await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/#systems-design-prototype')
+  await page.goto('/#static-signal')
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-motion', 'reduced')
-  await expect(page.getByRole('heading', { name: '系统设计原型' })).toBeVisible()
-  await expect(page.getByRole('link', { name: /下载 EXE zip/ }).first()).toHaveAttribute(
-    'href',
-    /windows-demo-placeholder\.zip/,
-  )
+  await expect(page.getByRole('heading', { name: 'STATIC SIGNAL 静默信号' })).toBeVisible()
+  await expect(page.getByRole('link', { name: /下载文件/ }).first()).toHaveAttribute('href', /static-signal-web-package\.zip/)
 })

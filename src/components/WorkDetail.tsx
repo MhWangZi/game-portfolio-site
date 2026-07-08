@@ -28,9 +28,9 @@ export function WorkDetail({ work }: WorkDetailProps) {
         {mainMedia?.type === 'video' ? (
           <video src={mainMedia.src} poster={mainMedia.poster} controls />
         ) : (
-          <img src={mainMedia?.src ?? './media/work-action-prototype.svg'} alt={`${work.title} preview`} />
+          <img src={mainMedia?.src ?? './media/portfolio/anchored-gaze.webp'} alt={`${work.title} preview`} />
         )}
-        <p>{mainMedia?.caption ?? '替换为真实截图、录屏或 Web 试玩入口。'}</p>
+        <p>{mainMedia?.caption ?? '作品截图、录屏或网页试玩入口待补充。'}</p>
       </div>
 
       <div className="detail-copy" id={work.id} data-detail-animate>
@@ -79,10 +79,10 @@ export function WorkDetail({ work }: WorkDetailProps) {
           <div>
             <FileText size={18} />
             <div>
-              <strong>Windows 试玩包</strong>
+              <strong>下载 / 试玩文件</strong>
               <span>
                 {work.download
-                  ? `${work.download.version} / ${work.download.size ?? 'size after upload'}`
+                  ? `${work.download.version} / ${work.download.size ?? '待补充大小'}`
                   : '该作品暂未提供下载包'}
               </span>
             </div>
@@ -90,7 +90,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
           {work.download ? (
             <a href={work.download.url} download>
               <Download size={16} />
-              下载 EXE zip
+              下载文件
             </a>
           ) : null}
         </div>
@@ -98,7 +98,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
         {work.links?.length ? (
           <div className="link-row">
             {work.links.map((link) => (
-              <a href={link.url} key={link.label}>
+              <a href={link.url} key={link.label} target="_blank" rel="noreferrer">
                 {link.label}
                 <ExternalLink size={14} />
               </a>
