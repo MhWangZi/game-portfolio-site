@@ -52,18 +52,19 @@ export function WorkDetail({ work }: WorkDetailProps) {
   const reducedMotion = usePrefersReducedMotion()
   const mainMedia = work.media[0]
   const mechanicCards = work.id === 'parry-arena' ? parryMechanics : []
+  const evidenceMode = work.kind === 'Playable Prototype' ? 'PLAYABLE VALIDATION' : 'SYSTEM ANALYSIS'
 
   useLayoutEffect(() => {
     if (reducedMotion || !detailRef.current) return
     gsap.fromTo(
       detailRef.current.querySelectorAll('[data-detail-animate]'),
-      { autoAlpha: 0, y: 18 },
-      { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.055, ease: 'power2.out' },
+      { autoAlpha: 0, y: 22, scale: 0.985 },
+      { autoAlpha: 1, y: 0, scale: 1, duration: 0.48, stagger: 0.06, ease: 'power3.out' },
     )
   }, [reducedMotion, work.id])
 
   return (
-    <section className="work-detail" id="work-detail" ref={detailRef}>
+    <section className="work-detail module-screen" id="work-detail" ref={detailRef}>
       <div className="detail-showcase" data-detail-animate>
         <div className="detail-media">
           {mainMedia?.type === 'video' ? (
@@ -116,6 +117,29 @@ export function WorkDetail({ work }: WorkDetailProps) {
             ))}
           </div>
         ) : null}
+
+        <div className="detail-terminal-card">
+          <div className="terminal-topline">
+            <span>{evidenceMode}</span>
+            <strong>{work.download ? 'BUILD ONLINE' : 'REPORT INDEXED'}</strong>
+          </div>
+          <div className="terminal-focus">
+            <span>FOCUS</span>
+            <strong>{work.oneLine ?? work.summary}</strong>
+          </div>
+          <div className="terminal-bars" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className="terminal-readout">
+            <span>证据入口</span>
+            <span>{work.media[0]?.type === 'video' ? '演示视频' : '截图 / 表格'}</span>
+            <span>{work.download ? '可下载构建包' : '拆解档案'}</span>
+          </div>
+        </div>
       </div>
 
       <div className="detail-copy" id={work.id} data-detail-animate>

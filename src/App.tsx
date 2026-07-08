@@ -8,8 +8,11 @@ import { SiteFooter } from './components/SiteFooter'
 import { WorkDetail } from './components/WorkDetail'
 import { WorkRegistry } from './components/WorkRegistry'
 import { works } from './data/works'
+import { useArchiveAnimations } from './hooks/useArchiveAnimations'
 
 function App() {
+  useArchiveAnimations()
+
   const firstWorkId = works[0]?.id ?? ''
   const [selectedId, setSelectedId] = useState(() => {
     const hash = window.location.hash.replace('#', '')

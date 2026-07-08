@@ -1099,6 +1099,7 @@ code {
   display: grid;
   gap: 18px;
   padding: 18px;
+  scroll-margin-top: 132px;
 }
 
 .detail-title-block {
@@ -1476,5 +1477,512 @@ code {
 
   .boot-overlay {
     display: none;
+  }
+}
+
+/* Interaction pass: stronger module rhythm, boot scene, and detail-fill fixes. */
+main > section {
+  scroll-margin-top: 88px;
+}
+
+.module-screen,
+.featured-section,
+.section-shell {
+  min-height: calc(100svh - 22px);
+}
+
+.featured-section,
+.section-shell {
+  display: grid;
+  align-content: center;
+}
+
+.ambient-image {
+  animation: ambient-drift 18s ease-in-out infinite alternate;
+}
+
+.app-shell::after {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(242, 184, 96, 0.05), transparent);
+  opacity: 0.32;
+  transform: translateX(-120%);
+  animation: scan-sweep 8.5s ease-in-out infinite;
+}
+
+.boot-overlay {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(242, 184, 96, 0.18), transparent 26%),
+    linear-gradient(135deg, rgba(242, 184, 96, 0.08), transparent 32%),
+    rgba(6, 7, 10, 0.98);
+  animation: boot-overlay-exit 1850ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.boot-shutter {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  background: #050609;
+  border-right: 1px solid rgba(242, 184, 96, 0.22);
+  animation: boot-shutter-left 1850ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.boot-shutter-right {
+  right: 0;
+  left: auto;
+  border-right: 0;
+  border-left: 1px solid rgba(242, 184, 96, 0.22);
+  animation-name: boot-shutter-right;
+}
+
+.boot-core {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: min(460px, 100%);
+  justify-items: center;
+  gap: 18px;
+  color: var(--text);
+  transform: translateY(8px);
+  animation: boot-core-exit 1850ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.boot-cube {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  transform: rotate(12deg);
+  animation: boot-cube-spin 980ms ease-in-out infinite alternate;
+}
+
+.boot-cube::before,
+.boot-cube::after,
+.boot-cube i {
+  position: absolute;
+  inset: 10px;
+  content: "";
+  border: 2px solid rgba(242, 184, 96, 0.88);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 34px rgba(242, 184, 96, 0.18);
+}
+
+.boot-cube::after {
+  inset: 0;
+  border-color: rgba(255, 255, 255, 0.62);
+  transform: translate(10px, -10px);
+}
+
+.boot-cube i:nth-child(1) {
+  inset: 18px;
+  border-color: rgba(242, 184, 96, 0.34);
+  transform: rotate(45deg);
+}
+
+.boot-cube i:nth-child(2),
+.boot-cube i:nth-child(3) {
+  display: none;
+}
+
+.boot-title {
+  margin: 0;
+  color: var(--accent);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: clamp(1rem, 3vw, 1.32rem);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.boot-progress {
+  width: min(310px, 72vw);
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.boot-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent), #ffe0aa);
+  transform-origin: left center;
+  animation: boot-progress 1420ms ease forwards;
+}
+
+.boot-log {
+  width: min(340px, 80vw);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(242, 184, 96, 0.18);
+  border-radius: 6px;
+}
+
+.signal-marquee {
+  width: min(900px, 100%);
+  overflow: hidden;
+  border-block: 1px solid rgba(242, 184, 96, 0.2);
+  color: rgba(242, 184, 96, 0.78);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.76rem;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.signal-marquee div {
+  display: flex;
+  width: max-content;
+  gap: 26px;
+  padding: 9px 0;
+  animation: marquee-slide 15s linear infinite;
+}
+
+.signal-marquee span::before {
+  content: "[";
+}
+
+.signal-marquee span::after {
+  content: "]";
+}
+
+.poster-nav a::before,
+.work-card::before,
+.ability-card::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(110deg, transparent 0%, rgba(242, 184, 96, 0.13) 42%, transparent 58%);
+  opacity: 0;
+  transform: translateX(-75%);
+  transition:
+    opacity 180ms ease,
+    transform 520ms ease;
+}
+
+.poster-nav a:hover::before,
+.work-card:hover::before,
+.ability-card:hover::before {
+  opacity: 1;
+  transform: translateX(75%);
+}
+
+.work-card {
+  transform-origin: 50% 70%;
+}
+
+.work-card:hover,
+.work-card.active {
+  transform: translateY(-6px) scale(1.01);
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-heading::after {
+  display: block;
+  width: min(320px, 55vw);
+  height: 1px;
+  margin-top: 4px;
+  content: "";
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.featured-card,
+.work-card,
+.detail-copy,
+.detail-media,
+.detail-flow,
+.download-box,
+.mechanic-rule-grid article,
+.proof-grid > div,
+.ability-card {
+  position: relative;
+}
+
+.work-detail {
+  align-items: stretch;
+  min-height: calc(100svh - 16px);
+  padding: 112px 0 34px;
+  scroll-margin-top: 118px;
+}
+
+.detail-showcase {
+  align-self: stretch;
+  grid-template-rows: auto auto auto auto minmax(190px, 1fr);
+}
+
+.detail-media img,
+.detail-media video {
+  height: clamp(280px, 31vw, 410px);
+}
+
+.detail-terminal-card {
+  position: relative;
+  display: grid;
+  align-content: space-between;
+  gap: 18px;
+  min-height: 210px;
+  padding: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 84% 24%, rgba(242, 184, 96, 0.14), transparent 26%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+    var(--panel);
+  border: 1px solid rgba(242, 184, 96, 0.24);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.detail-terminal-card::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(rgba(242, 184, 96, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 184, 96, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.72), transparent);
+}
+
+.detail-terminal-card::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 38%;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(0deg, rgba(242, 184, 96, 0.08), transparent);
+  animation: terminal-pulse 2.2s ease-in-out infinite alternate;
+}
+
+.terminal-topline,
+.terminal-focus,
+.terminal-bars,
+.terminal-readout {
+  position: relative;
+  z-index: 1;
+}
+
+.terminal-topline,
+.terminal-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+  color: var(--faint);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+.terminal-topline strong {
+  color: var(--accent);
+}
+
+.terminal-focus {
+  display: grid;
+  gap: 8px;
+}
+
+.terminal-focus span {
+  color: var(--faint);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.75rem;
+}
+
+.terminal-focus strong {
+  max-width: 720px;
+  color: var(--text);
+  font-size: clamp(1.05rem, 2vw, 1.38rem);
+  line-height: 1.45;
+}
+
+.terminal-bars {
+  display: grid;
+  grid-template-columns: 1fr 0.68fr 0.42fr 0.82fr 0.28fr;
+  gap: 8px;
+}
+
+.terminal-bars i {
+  height: 7px;
+  background: rgba(242, 184, 96, 0.2);
+  border-radius: 999px;
+  transform-origin: left center;
+  animation: terminal-bars 1.8s ease-in-out infinite alternate;
+}
+
+.terminal-bars i:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.terminal-bars i:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.terminal-bars i:nth-child(4) {
+  animation-delay: 360ms;
+}
+
+.terminal-bars i:nth-child(5) {
+  animation-delay: 480ms;
+}
+
+.topbar,
+.console-card,
+.featured-card,
+.work-card,
+.detail-copy,
+.detail-terminal-card,
+.ability-card {
+  will-change: transform, opacity;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-1.4%, 1.2%, 0) scale(1.035);
+  }
+}
+
+@keyframes scan-sweep {
+  0%,
+  52% {
+    transform: translateX(-120%);
+  }
+  72%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes boot-overlay-exit {
+  0%,
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-shutter-left {
+  0%,
+  58% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-110%);
+  }
+}
+
+@keyframes boot-shutter-right {
+  0%,
+  58% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+@keyframes boot-core-exit {
+  0%,
+  70% {
+    opacity: 1;
+    transform: translateY(8px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.94);
+  }
+}
+
+@keyframes boot-cube-spin {
+  from {
+    transform: rotate(-8deg) scale(0.96);
+  }
+  to {
+    transform: rotate(18deg) scale(1.08);
+  }
+}
+
+@keyframes boot-progress {
+  from {
+    transform: scaleX(0.06);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes marquee-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-45%);
+  }
+}
+
+@keyframes terminal-pulse {
+  from {
+    opacity: 0.26;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 0.65;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminal-bars {
+  from {
+    transform: scaleX(0.35);
+    opacity: 0.45;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1120px) {
+  .module-screen,
+  .featured-section,
+  .section-shell {
+    min-height: auto;
+  }
+
+  .detail-showcase {
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .signal-marquee {
+    width: 100%;
+  }
+
+  .work-detail {
+    padding-top: 64px;
+  }
+
+  .detail-terminal-card {
+    min-height: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-image,
+  .app-shell::after,
+  .signal-marquee div,
+  .terminal-bars i,
+  .detail-terminal-card::after {
+    animation: none !important;
   }
 }

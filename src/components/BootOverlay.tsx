@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
-const bootLines = ['MOUNT ARCHIVE', 'INDEX BUILDS', 'LOAD SYSTEM FILES', 'READY']
+const bootLines = ['MOUNT ARCHIVE', 'INDEX BUILDS', 'SYNC DESIGN EVIDENCE', 'READY']
 
 export function BootOverlay() {
   const reducedMotion = usePrefersReducedMotion()
@@ -14,7 +14,7 @@ export function BootOverlay() {
       return
     }
 
-    const timer = window.setTimeout(() => setVisible(false), 1150)
+    const timer = window.setTimeout(() => setVisible(false), 1850)
     return () => window.clearTimeout(timer)
   }, [reducedMotion])
 
@@ -22,12 +22,18 @@ export function BootOverlay() {
 
   return (
     <div className="boot-overlay" aria-hidden="true">
-      <div className="boot-panel">
-        <div className="boot-panel-top">
-          <span>YYQ_ARCHIVE</span>
-          <span>v1.0</span>
+      <div className="boot-shutter boot-shutter-left" />
+      <div className="boot-shutter boot-shutter-right" />
+      <div className="boot-core">
+        <div className="boot-cube">
+          <i />
+          <i />
+          <i />
         </div>
-        <div className="boot-title">Interactive Game Design Archive</div>
+        <div className="boot-title">装载游戏设计档案</div>
+        <div className="boot-progress">
+          <span />
+        </div>
         <div className="boot-log">
           {bootLines.map((line, index) => (
             <span key={line} style={{ '--boot-index': index } as CSSProperties}>

@@ -19,7 +19,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
   const heroDownload = featuredWork.download?.url ?? './downloads/static-signal-web-package.zip'
 
   return (
-    <section className="hero-section" id="top">
+    <section className="hero-section module-screen" id="top">
       <div className="hero-copy" data-hero-block>
         <p className="eyebrow">BOOT_SEQUENCE / GAME_DESIGN_ARCHIVE</p>
         <h1>杨毓琦｜游戏策划实习作品集</h1>
@@ -28,6 +28,18 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
           这里集中展示我能落地的可玩原型、能复查的系统拆解、竞品分析和长期玩家经验。重点不是堆截图，
           而是让招聘方快速看到：我做了什么，为什么这样做，证据在哪里。
         </p>
+
+        <div className="signal-marquee" aria-hidden="true">
+          <div>
+            <span>PLAYABLE BUILD</span>
+            <span>SYSTEM LOOP</span>
+            <span>DESIGN EVIDENCE</span>
+            <span>WINDOWS PACKAGE</span>
+            <span>GAME DESIGN ARCHIVE</span>
+            <span>PLAYABLE BUILD</span>
+            <span>SYSTEM LOOP</span>
+          </div>
+        </div>
 
         <div className="poster-nav" aria-label="Archive quick navigation">
           {posterLinks.map((item) => (
