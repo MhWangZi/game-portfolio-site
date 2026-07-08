@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AbilityMatrix } from './components/AbilityMatrix'
+import { FeaturedProject } from './components/FeaturedProject'
 import { Hero } from './components/Hero'
 import { PortfolioScene } from './components/PortfolioScene'
 import { SiteFooter } from './components/SiteFooter'
@@ -17,6 +18,11 @@ function App() {
     () => works.find((work) => work.id === selectedId) ?? works[0],
     [selectedId],
   )
+  const featuredWork = useMemo(
+    () => works.find((work) => work.featured) ?? works.find((work) => work.id === 'parry-arena') ?? works[0],
+    [],
+  )
+  const downloadableCount = useMemo(() => works.filter((work) => work.download).length, [])
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -47,14 +53,22 @@ function App() {
             杨毓琦 Portfolio
           </a>
           <nav aria-label="Primary navigation">
+            <a href="#featured">重点</a>
             <a href="#works">作品</a>
             <a href="#abilities">能力</a>
+            <a href="#work-detail">下载</a>
             <a href="#contact">联系</a>
           </nav>
         </header>
 
         <main>
-          <Hero workCount={works.length} onPrimaryAction={() => document.getElementById('works')?.scrollIntoView()} />
+          <Hero
+            workCount={works.length}
+            downloadableCount={downloadableCount}
+            featuredWork={featuredWork}
+            onPrimaryAction={() => document.getElementById('works')?.scrollIntoView()}
+          />
+          <FeaturedProject work={featuredWork} onSelect={selectWork} />
           <WorkRegistry works={works} selectedId={selectedId} onSelect={selectWork} />
           <WorkDetail work={selectedWork} />
           <AbilityMatrix />

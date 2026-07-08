@@ -1,6 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ArrowRight, Filter } from 'lucide-react'
+import { ArrowRight, Download, Filter, FileText } from 'lucide-react'
 import type { WorkItem } from '../types'
 import { allSkillTags } from '../data/works'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -11,11 +11,15 @@ type WorkRegistryProps = {
   onSelect: (id: string) => void
 }
 
+function getWorkKind(work: WorkItem) {
+  return work.kind ?? (work.skills.includes('可玩原型') ? 'Playable Prototype' : 'System Analysis')
+}
+
 export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps) {
   const [filter, setFilter] = useState('全部')
   const gridRef = useRef<HTMLDivElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
-  const filters = useMemo(() => ['全部', ...allSkillTags.slice(0, 8)], [])
+  const filters = useMemo(() => ['全部', ...allSkillTags], [])
   const visibleWorks = useMemo(
     () => (filter === '全部' ? works : works.filter((work) => work.skills.includes(filter))),
     [filter, works],
@@ -27,16 +31,16 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
     gsap.fromTo(
       cards,
       { autoAlpha: 0, y: 18 },
-      { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.05, ease: 'power2.out' },
+      { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.045, ease: 'power2.out' },
     )
   }, [filter, reducedMotion])
 
   return (
     <section className="section-shell" id="works">
       <div className="section-heading">
-        <p className="eyebrow">Registry</p>
-        <h2>全部作品</h2>
-        <p>按“可玩原型”和“系统分析”组织内容：先扫卡片，再进入单个作品的职责、证据、下载和外部链接。</p>
+        <p className="eyebrow">Works Registry</p>
+        <h2>全部作品档案</h2>
+        <p>可玩原型和系统分析分开识别；每张卡片都回答“项目是什么、我负责什么、能看到什么证据”。</p>
       </div>
 
       <div className="filter-row" aria-label="Work filters">
@@ -57,30 +61,54 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
       </div>
 
       <div className="work-grid" ref={gridRef}>
-        {visibleWorks.map((work, index) => (
-          <button
-            className={work.id === selectedId ? 'work-card active' : 'work-card'}
-            id={`card-${work.id}`}
-            key={work.id}
-            type="button"
-            onClick={() => onSelect(work.id)}
-          >
-            <span className="card-index">{String(index + 1).padStart(2, '0')}</span>
-            <span className="card-engine">{work.engine ?? 'Game project'}</span>
-            <strong>{work.title}</strong>
-            <span className="card-role">{work.role}</span>
-            <span className="card-summary">{work.summary}</span>
-            <span className="tag-row">
-              {work.skills.slice(0, 4).map((skill) => (
-                <span key={skill}>{skill}</span>
-              ))}
-            </span>
-            <span className="card-cta">
-              查看详情
-              <ArrowRight size={15} />
-            </span>
-          </button>
-        ))}
+        {visibleWorks.map((work, index) => {
+          const kind = getWorkKind(work)
+          const isPrototype = kind === 'Playable Prototype'
+          return (
+            <button
+              className={[
+                'work-card',
+                isPrototype ? 'prototype-card' : 'analysis-card',
+                work.id === selectedId ? 'active' : '',
+              ].join(' ')}
+              id={`card-${work.id}`}
+              key={work.id}
+              type="button"
+              onClick={() => onSelect(work.id)}
+            >
+              <span className="card-media">
+                <img src={work.media[0]?.src} alt="" aria-hidden="true" />
+                <span className="card-badge">{kind}</span>
+                {work.download ? (
+                  <span className="card-download">
+                    <Download size={13} />
+                    可下载
+                  </span>
+                ) : null}
+              </span>
+              <span className="card-topline">
+                <span className="card-index">{String(index + 1).padStart(2, '0')}</span>
+                <span className="card-engine">{work.engine ?? 'Game project'}</span>
+              </span>
+              <strong>{work.title}</strong>
+              <span className="card-role">{work.role}</span>
+              <span className="card-summary">{work.oneLine ?? work.summary}</span>
+              <span className="card-meta-line">
+                <FileText size={13} />
+                {work.period ?? '时间待补充'}
+              </span>
+              <span className="tag-row">
+                {work.skills.slice(0, 4).map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </span>
+              <span className="card-cta">
+                查看详情
+                <ArrowRight size={15} />
+              </span>
+            </button>
+          )
+        })}
       </div>
     </section>
   )
