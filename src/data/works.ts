@@ -1,4 +1,4 @@
-import type { AbilityGroup, WorkItem } from '../types'
+﻿import type { AbilityGroup, WorkItem } from '../types'
 
 const releaseBase = 'https://github.com/MhWangZi/game-portfolio-site/releases/download/portfolio-game-builds-v1'
 
@@ -22,14 +22,14 @@ export const works: WorkItem[] = [
     visualTheme: 'voxel',
     proof: [
       { label: '项目类型', value: '2D 俯视角 / 收集逃脱' },
-      { label: '可见证据', value: 'Windows Build + 演示视频' },
+      { label: '档案文件', value: 'Windows Build + 演示视频' },
       { label: '团队环境', value: '3 人 / 48h GameJam' },
     ],
     designHighlights: [
       { title: '核心循环', body: '追击压力、投锚控场、关键锚收集和倒计时逃脱构成完整短局目标。' },
       { title: '玩家决策', body: '玩家需要判断什么时候开路、什么时候保命、什么时候冒险推进收集进度。' },
       { title: '机制取舍', body: '攻击不直接删除敌人，而是把敌人转化为临时障碍，强化空间规划。' },
-      { title: '可验证结果', body: '完成可运行 Windows 版本、教学关卡、音效和演示视频，可直接验证玩法。' },
+      { title: '落地状态', body: '完成可运行 Windows 版本、教学关卡、音效和演示视频，可直接验证玩法。' },
     ],
     flow: ['追击压力', '投掷锚', '石化敌人', '收集关键锚', '倒计时逃脱'],
     media: [
@@ -70,14 +70,14 @@ export const works: WorkItem[] = [
     featured: true,
     proof: [
       { label: '项目类型', value: '2D 像素风 / 弹反生存动作' },
-      { label: '可见证据', value: 'Windows Build / 五波流程' },
+      { label: '档案文件', value: 'Windows Build / 五波流程' },
       { label: '核心验证', value: '格挡、弹反、闪避分工' },
     ],
     designHighlights: [
       { title: '核心循环', body: '波次战斗后进入宝箱与商店，玩家把即时操作收益转化为成长选择。' },
       { title: '玩家决策', body: '普通格挡更稳但消耗体力，完美弹反收益高但窗口严格，闪避用于处理冲撞和危险站位。' },
       { title: '机制取舍', body: '强化弹反爽感，但通过体力、冷却和 Boss 行为避免弹反成为万能解法。' },
-      { title: '可验证结果', body: '实现普通格挡、完美弹反、弹幕反射、波次递进、Boss 阶段和战术补给。' },
+      { title: '落地状态', body: '实现普通格挡、完美弹反、弹幕反射、波次递进、Boss 阶段和战术补给。' },
     ],
     flow: ['波次战斗', '宝箱结算', '波间商店', '道具成长', 'Boss 挑战'],
     media: [
@@ -113,14 +113,14 @@ export const works: WorkItem[] = [
     visualTheme: 'ui-panels',
     proof: [
       { label: '项目类型', value: '网页文字冒险 / TRPG' },
-      { label: '可见证据', value: 'HTML 包 + 可导入 JSON 剧本' },
+      { label: '档案文件', value: 'HTML 包 + 可导入 JSON 剧本' },
       { label: '核心验证', value: '剧本编辑器与本地存档' },
     ],
     designHighlights: [
       { title: '核心循环', body: '探索场景、消耗行动点、收集线索、触发风险并进入分支结局。' },
       { title: '玩家决策', body: '玩家要在情报收益、风险增长、身份能力和不可返回地点之间取舍。' },
       { title: '机制取舍', body: '用 JSON 剧本和编辑器把内容生产从代码中拆开，降低扩展成本。' },
-      { title: '可验证结果', body: '提供可下载网页包、默认副本、自定义剧本导入和编辑器测试流程。' },
+      { title: '落地状态', body: '提供可下载网页包、默认副本、自定义剧本导入和编辑器测试流程。' },
     ],
     flow: ['选择身份', '调查节点', '2D6 判定', '线索记录', '多结局'],
     media: [
@@ -155,14 +155,14 @@ export const works: WorkItem[] = [
     visualTheme: 'terrain',
     proof: [
       { label: '项目类型', value: 'Godot 模块实验' },
-      { label: '可见证据', value: '场景截图 / 模块说明' },
+      { label: '档案文件', value: '场景截图 / 模块说明' },
       { label: '核心验证', value: 'JSON 驱动内容生成' },
     ],
     designHighlights: [
       { title: '核心循环', body: '用小型玩法模块验证移动、战斗、场景和 UI 反馈的基本闭环。' },
       { title: '玩家决策', body: '横版射击强调走位与射击节奏，卡牌模块强调出牌顺序和防御结算。' },
       { title: '机制取舍', body: '优先把场景物件、卡牌和敌人抽到 JSON，减少具体对象耦合。' },
-      { title: '可验证结果', body: '完成可运行模块、截图证据和可复用配置结构。' },
+      { title: '落地状态', body: '完成可运行模块、截图证据和可复用配置结构。' },
     ],
     flow: ['移动验证', '场景生成', '碰撞反馈', '卡牌结算', 'UI 刷新'],
     media: [
@@ -192,14 +192,14 @@ export const works: WorkItem[] = [
     visualTheme: 'particles',
     proof: [
       { label: '分析对象', value: 'PvPvE 搜打撤经济' },
-      { label: '可见证据', value: '货币流转图 / 回收方案' },
+      { label: '档案文件', value: '货币流转图 / 回收方案' },
       { label: '核心问题', value: '长期不删档通胀' },
     ],
     designHighlights: [
       { title: '核心循环', body: '入局成本、局内风险、成功撤离、交易变现和局外投入形成闭环。' },
       { title: '玩家决策', body: '玩家在装备成本、地图风险、撤离收益和仓储压力之间权衡。' },
       { title: '机制取舍', body: '稳定低风险收益保护新手，高风险高收益路线提供追求，但需要回收机制控通胀。' },
-      { title: '可验证结果', body: '产出来源、消耗点和官方回收项均拆成可复查的系统节点。' },
+      { title: '落地状态', body: '产出来源、消耗点和官方回收项均拆成可复查的系统节点。' },
     ],
     flow: ['入局成本', '局内搜刮', '成功撤离', '交易流通', '系统回收'],
     media: [
@@ -229,14 +229,14 @@ export const works: WorkItem[] = [
     visualTheme: 'ui-panels',
     proof: [
       { label: '分析对象', value: '鸣潮 ARPG 数值体系' },
-      { label: '可见证据', value: '属性表 / 成长曲线' },
+      { label: '档案文件', value: '属性表 / 成长曲线' },
       { label: '核心问题', value: '复杂乘区与通胀风险' },
     ],
     designHighlights: [
       { title: '核心循环', body: '角色、武器、声骸和共鸣链共同构成多来源成长。' },
       { title: '玩家决策', body: '玩家围绕乘区收益、角色定位和资源投入优先级做养成判断。' },
       { title: '机制取舍', body: '多乘区能拆分收益，但版本扩张会增加理解成本和旧角色淘汰风险。' },
-      { title: '可验证结果', body: '用表格和曲线把属性关系、成长跳点和风险点结构化呈现。' },
+      { title: '落地状态', body: '用表格和曲线把属性关系、成长跳点和风险点结构化呈现。' },
     ],
     flow: ['属性分层', '乘区拆解', '成长采样', '曲线判断', '风险总结'],
     media: [
@@ -266,14 +266,14 @@ export const works: WorkItem[] = [
     visualTheme: 'artifact',
     proof: [
       { label: '分析对象', value: '声骸 / 圣遗物 / 遗器' },
-      { label: '可见证据', value: '15 张对比表' },
+      { label: '档案文件', value: '15 张对比表' },
       { label: '核心问题', value: '随机负担与构筑空间' },
     ],
     designHighlights: [
       { title: '核心循环', body: '刷取、筛选、强化、套装组合和角色适配共同构成长期追求。' },
       { title: '玩家决策', body: '玩家在体力、定向获取、词条随机和装备复用之间不断取舍。' },
       { title: '机制取舍', body: '随机性制造长期目标，但必须用减负、锁定或转化机制控制挫败感。' },
-      { title: '可验证结果', body: '用统一维度对比三款产品，提炼可迁移的装备系统设计经验。' },
+      { title: '落地状态', body: '用统一维度对比三款产品，提炼可迁移的装备系统设计经验。' },
     ],
     flow: ['获取入口', '词条随机', '强化投入', '套装构筑', '减负设计'],
     media: [
@@ -303,14 +303,14 @@ export const works: WorkItem[] = [
     visualTheme: 'voxel',
     proof: [
       { label: '分析对象', value: '黑神话 / 只狼' },
-      { label: '可见证据', value: '战斗系统差异表' },
+      { label: '档案文件', value: '战斗系统差异表' },
       { label: '核心问题', value: '广度与精度取舍' },
     ],
     designHighlights: [
       { title: '核心循环', body: '黑神话用多手段调度节奏，只狼用弹刀和架势条压缩战斗循环。' },
       { title: '玩家决策', body: '前者鼓励资源与窗口调度，后者强调读招、时机和连续执行。' },
       { title: '机制取舍', body: '外围系统可降低门槛，但过强会稀释核心操作成就。' },
-      { title: '可验证结果', body: '以系统定位、操作深度、服务玩家和设计标签建立对比。' },
+      { title: '落地状态', body: '以系统定位、操作深度、服务玩家和设计标签建立对比。' },
     ],
     flow: ['系统定位', '操作深度', '资源调度', 'Boss 压力', '融合提案'],
     media: [
@@ -340,14 +340,14 @@ export const works: WorkItem[] = [
     visualTheme: 'particles',
     proof: [
       { label: '分析对象', value: 'Hades / Dead Cells' },
-      { label: '可见证据', value: '双循环对比表' },
+      { label: '档案文件', value: '双循环对比表' },
       { label: '核心问题', value: '失败后为何再开一局' },
     ],
     designHighlights: [
       { title: '核心循环', body: '短局战斗和长线解锁共同构成死亡后的继续动力。' },
       { title: '玩家决策', body: '玩家在路线风险、武器池、随机祝福和元进度目标之间建立复盘。' },
       { title: '机制取舍', body: '叙事可缓和失败，操作挑战可延长深度，但都需要给下一局明确理由。' },
-      { title: '可验证结果', body: '从随机控制、Build 多样性、元进度和失败反馈四个维度对比。' },
+      { title: '落地状态', body: '从随机控制、Build 多样性、元进度和失败反馈四个维度对比。' },
     ],
     flow: ['单局构筑', '随机选择', '失败反馈', '局外成长', '下一局目标'],
     media: [

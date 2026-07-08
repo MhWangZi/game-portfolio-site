@@ -14,17 +14,23 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
   return (
     <section className="hero-section" id="top">
       <div className="hero-copy" data-hero-block>
-        <p className="eyebrow">Interactive Game Design Portfolio</p>
+        <p className="eyebrow">BOOT_SEQUENCE / GAME_DESIGN_ARCHIVE</p>
         <h1>杨毓琦｜游戏策划实习作品集</h1>
-        <p className="hero-subtitle">用可玩原型验证玩法，用系统拆解证明设计判断。</p>
+        <p className="hero-subtitle">可运行原型、机制拆解、构建包和设计判断放在同一套档案里。</p>
         <p className="hero-summary">
-          面向游戏策划实习/校招投递。这里展示我能落地的可玩原型、能复查的系统拆解、竞品分析和长期玩家经验，让招聘方在短时间内看到“我做了什么、为什么这样做、证据在哪里”。
+          我把每个作品拆成四件事：规则、玩家选择、机制取舍、可查看文件。先看能运行的版本，再看系统拆解，不用空泛形容词代替作品本身。
         </p>
 
         <div className="hero-pill-row" aria-label="Core position">
-          <span>求职方向：游戏策划实习</span>
-          <span>核心能力：原型验证 / 系统拆解 / 战斗机制</span>
-          <span>工具：Godot / Web / JSON / AI Agent</span>
+          <span>ROLE: 游戏策划实习</span>
+          <span>FOCUS: 原型验证 / 系统拆解 / 战斗机制</span>
+          <span>TOOLS: Godot / Web / JSON / 表格</span>
+        </div>
+
+        <div className="boot-lines" aria-label="Archive boot status">
+          <span>[01] PLAYABLE BUILDS LOADED</span>
+          <span>[02] SYSTEM REPORTS INDEXED</span>
+          <span>[03] DOWNLOAD LINKS ONLINE</span>
         </div>
 
         <div className="hero-actions">
@@ -51,8 +57,11 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
       <aside className="hero-console" aria-label="Portfolio status">
         <div className="console-card hero-feature-mini">
           <div className="console-card-top">
-            <p className="eyebrow">Featured Project</p>
-            <span>{featuredWork.kind}</span>
+            <p className="eyebrow">FILE_01 / FEATURED</p>
+            <span className="status-chip">
+              <i />
+              {featuredWork.kind}
+            </span>
           </div>
           <img src={featuredWork.media[0]?.src} alt={`${featuredWork.title} cover`} />
           <div>

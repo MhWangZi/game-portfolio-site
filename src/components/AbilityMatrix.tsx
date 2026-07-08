@@ -5,9 +5,9 @@ export function AbilityMatrix() {
   return (
     <section className="section-shell" id="abilities">
       <div className="section-heading compact">
-        <p className="eyebrow">Capability Archive</p>
+        <p className="eyebrow">CAPABILITY CHIPS / EVIDENCE MAP</p>
         <h2>能力档案</h2>
-        <p>所有能力都绑定到作品证据，避免空泛自夸。招聘方可以顺着证据回到对应作品、下载包或分析截图。</p>
+        <p>能力不单独写成标签，而是挂到具体作品、下载包和拆解图上。每张卡都能回到上面的项目档案。</p>
       </div>
 
       <div className="ability-grid">

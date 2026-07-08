@@ -48,8 +48,8 @@ export function WorkDetail({ work }: WorkDetailProps) {
         {work.flow?.length ? (
           <div className="detail-flow" aria-label={`${work.title} design flow`}>
             <div className="detail-subhead">
-              <span>Design Loop</span>
-              <strong>流程证据</strong>
+              <span>MECHANIC LOOP</span>
+              <strong>机制流程</strong>
             </div>
             <div className="flow-strip">
               {work.flow.map((step) => (
@@ -73,7 +73,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
       <div className="detail-copy" id={work.id} data-detail-animate>
         <div className="detail-title-block">
-          <p className="eyebrow">Selected Work / {work.kind ?? 'Portfolio Case'}</p>
+          <p className="eyebrow">OPEN FILE / {work.kind ?? 'Portfolio Case'}</p>
           <h2>{work.title}</h2>
           <p className="detail-summary">{work.summary}</p>
         </div>
@@ -142,7 +142,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
               <span>
                 {work.download
                   ? `${work.download.version} / ${work.download.size ?? '待补充大小'}`
-                  : '当前只展示截图、视频或拆解文档证据'}
+                  : '当前提供截图、视频或拆解图；构建包后续补充'}
               </span>
               {work.download?.sha256 ? <code>SHA-256 {formatSha(work.download.sha256)}</code> : null}
             </div>

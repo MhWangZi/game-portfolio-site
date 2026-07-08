@@ -38,9 +38,9 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
   return (
     <section className="section-shell" id="works">
       <div className="section-heading">
-        <p className="eyebrow">Works Registry</p>
+        <p className="eyebrow">PROJECT FILES / INDEX</p>
         <h2>全部作品档案</h2>
-        <p>可玩原型和系统分析分开识别；每张卡片都回答“项目是什么、我负责什么、能看到什么证据”。</p>
+        <p>可玩原型看构建包和机制闭环；系统分析看拆解维度和结论。所有卡片都按同一套档案格式归档。</p>
       </div>
 
       <div className="filter-row" aria-label="Work filters">
@@ -76,9 +76,13 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
               type="button"
               onClick={() => onSelect(work.id)}
             >
+              <span className="card-number-ghost">{String(index + 1).padStart(2, '0')}</span>
               <span className="card-media">
                 <img src={work.media[0]?.src} alt="" aria-hidden="true" />
-                <span className="card-badge">{kind}</span>
+                <span className="card-badge">
+                  <i />
+                  {kind}
+                </span>
                 {work.download ? (
                   <span className="card-download">
                     <Download size={13} />

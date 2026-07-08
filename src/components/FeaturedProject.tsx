@@ -10,9 +10,9 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
   return (
     <section className="featured-section" id="featured">
       <div className="section-heading featured-heading">
-        <p className="eyebrow">Featured Project</p>
+        <p className="eyebrow">SYSTEM FILE / FEATURED BUILD</p>
         <h2>重点原型档案</h2>
-        <p>优先展示最能说明“可玩验证 + 机制取舍”的项目。这里不是项目简介，而是招聘方可以快速判断能力证据的项目档案。</p>
+        <p>这里放最能代表当前方向的可运行项目：先看核心循环，再看操作分工、机制限制和构建包。</p>
       </div>
 
       <article className="featured-card">
@@ -26,7 +26,10 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
 
         <div className="featured-copy">
           <div className="archive-kicker">
-            <span>{work.kind}</span>
+            <span className="status-chip">
+              <i />
+              {work.kind}
+            </span>
             <span>{work.engine}</span>
           </div>
           <h3>{work.title}</h3>

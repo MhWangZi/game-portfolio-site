@@ -10,13 +10,13 @@ type PortfolioSceneProps = {
 function createMotif(theme: VisualTheme) {
   const group = new THREE.Group()
   const lineMaterial = new THREE.MeshBasicMaterial({
-    color: 0x7edce8,
+    color: 0xf2b860,
     wireframe: true,
     transparent: true,
     opacity: 0.72,
   })
   const glassMaterial = new THREE.MeshBasicMaterial({
-    color: 0xd7b46a,
+    color: 0xf2b860,
     transparent: true,
     opacity: 0.16,
     side: THREE.DoubleSide,
@@ -73,8 +73,8 @@ function createParticleField(count: number) {
   const geometry = new THREE.BufferGeometry()
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
-  const colorA = new THREE.Color(0x7edce8)
-  const colorB = new THREE.Color(0xd7b46a)
+  const colorA = new THREE.Color(0xf2b860)
+  const colorB = new THREE.Color(0xc6ccd6)
 
   for (let i = 0; i < count; i += 1) {
     positions[i * 3] = (Math.random() - 0.5) * 8
