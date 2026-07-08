@@ -54,5 +54,8 @@ test('reduced motion keeps content readable', async ({ page }, testInfo) => {
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-motion', 'reduced')
   await expect(page.getByRole('heading', { name: 'STATIC SIGNAL 静默信号' })).toBeVisible()
-  await expect(page.getByRole('link', { name: /下载文件/ }).first()).toHaveAttribute('href', /static-signal-web-package\.zip/)
+  await expect(page.getByRole('link', { name: /下载文件/ }).first()).toHaveAttribute(
+    'href',
+    /static-signal-web-package\.zip/,
+  )
 })

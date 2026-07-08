@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AbilityMatrix } from './components/AbilityMatrix'
+import { BootOverlay } from './components/BootOverlay'
 import { FeaturedProject } from './components/FeaturedProject'
 import { Hero } from './components/Hero'
 import { PortfolioScene } from './components/PortfolioScene'
@@ -46,17 +47,24 @@ function App() {
 
   return (
     <div className="app-shell">
+      <BootOverlay />
+      <div
+        className="ambient-image"
+        style={{ backgroundImage: 'url("./media/generated/archive-console-bg.png")' }}
+        aria-hidden="true"
+      />
       <PortfolioScene theme={selectedWork.visualTheme ?? 'particles'} />
       <div className="content-layer">
         <header className="topbar">
-          <a href="#top" aria-label="Go to top">
-            杨毓琦 Portfolio
+          <a className="brand-mark" href="#top" aria-label="回到首页">
+            <span>YYQ</span>
+            <strong>Game Design Archive</strong>
           </a>
           <nav aria-label="Primary navigation">
-            <a href="#featured">重点</a>
-            <a href="#works">作品</a>
-            <a href="#abilities">能力</a>
-            <a href="#work-detail">下载</a>
+            <a href="#featured">重点原型</a>
+            <a href="#works">作品档案</a>
+            <a href="#abilities">能力证据</a>
+            <a href="#work-detail">下载包</a>
             <a href="#contact">联系</a>
           </nav>
         </header>

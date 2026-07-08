@@ -1,12 +1,40 @@
 import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { ExternalLink, FileDown, FileText, Link, PackageCheck, ShieldCheck } from 'lucide-react'
+import {
+  ExternalLink,
+  FileDown,
+  FileText,
+  Link,
+  PackageCheck,
+  Shield,
+  ShieldCheck,
+  Sparkles,
+  TimerReset,
+} from 'lucide-react'
 import type { WorkItem } from '../types'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
 type WorkDetailProps = {
   work: WorkItem
 }
+
+const parryMechanics = [
+  {
+    title: '普通格挡',
+    body: '稳定防守，但消耗体力；用于承接常规压力。',
+    icon: Shield,
+  },
+  {
+    title: '完美弹反',
+    body: '窗口严格，收益更高；把防守转换成主要进攻来源。',
+    icon: Sparkles,
+  },
+  {
+    title: '闪避',
+    body: '处理 Boss 冲撞和危险站位，避免弹反成为万能解。',
+    icon: TimerReset,
+  },
+]
 
 function formatSha(sha?: string) {
   return sha ? `${sha.slice(0, 12)}...${sha.slice(-8)}` : '未提供校验值'
@@ -23,13 +51,14 @@ export function WorkDetail({ work }: WorkDetailProps) {
   const detailRef = useRef<HTMLElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
   const mainMedia = work.media[0]
+  const mechanicCards = work.id === 'parry-arena' ? parryMechanics : []
 
   useLayoutEffect(() => {
     if (reducedMotion || !detailRef.current) return
     gsap.fromTo(
       detailRef.current.querySelectorAll('[data-detail-animate]'),
       { autoAlpha: 0, y: 18 },
-      { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.055, ease: 'power2.out' },
+      { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.055, ease: 'power2.out' },
     )
   }, [reducedMotion, work.id])
 
@@ -51,11 +80,29 @@ export function WorkDetail({ work }: WorkDetailProps) {
               <span>MECHANIC LOOP</span>
               <strong>机制流程</strong>
             </div>
-            <div className="flow-strip">
-              {work.flow.map((step) => (
-                <span key={step}>{step}</span>
+            <div className="flow-strip detail-flow-strip">
+              {work.flow.map((step, index) => (
+                <span key={step}>
+                  <em>{String(index + 1).padStart(2, '0')}</em>
+                  {step}
+                </span>
               ))}
             </div>
+          </div>
+        ) : null}
+
+        {mechanicCards.length ? (
+          <div className="mechanic-rule-grid" aria-label="Parry Arena mechanic rules">
+            {mechanicCards.map((item) => {
+              const Icon = item.icon
+              return (
+                <article key={item.title}>
+                  <Icon size={18} />
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              )
+            })}
           </div>
         ) : null}
 
@@ -99,7 +146,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
         <div className="highlight-block">
           <div className="detail-subhead">
-            <span>Design Highlights</span>
+            <span>DESIGN EVIDENCE</span>
             <strong>设计亮点</strong>
           </div>
           <div className="highlight-grid">
@@ -115,7 +162,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
         <div className="contribution-block">
           <div className="detail-subhead">
-            <span>My Work</span>
+            <span>MY WORK</span>
             <strong>我负责 / 可证明的部分</strong>
           </div>
           <ul>
@@ -138,11 +185,11 @@ export function WorkDetail({ work }: WorkDetailProps) {
           <div>
             {work.download ? <PackageCheck size={20} /> : <FileText size={20} />}
             <div>
-              <strong>{work.download ? '可下载试玩 / 文件包' : '暂未公开下载包'}</strong>
+              <strong>{work.download ? 'Windows 试玩包 / 项目文件包' : '暂未公开下载包'}</strong>
               <span>
                 {work.download
-                  ? `${work.download.version} / ${work.download.size ?? '待补充大小'}`
-                  : '当前提供截图、视频或拆解图；构建包后续补充'}
+                  ? `${work.download.version} / ${work.download.size ?? '文件大小待补充'}`
+                  : '当前提供截图、视频或拆解图；构建包后续补充。'}
               </span>
               {work.download?.sha256 ? <code>SHA-256 {formatSha(work.download.sha256)}</code> : null}
             </div>

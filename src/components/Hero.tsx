@@ -1,4 +1,4 @@
-import { ArrowDown, Code, Download, ExternalLink, Play } from 'lucide-react'
+import { ArrowDown, Code, Database, Download, ExternalLink, Play, TerminalSquare } from 'lucide-react'
 import type { WorkItem } from '../types'
 
 type HeroProps = {
@@ -8,6 +8,13 @@ type HeroProps = {
   onPrimaryAction: () => void
 }
 
+const posterLinks = [
+  { index: '01', label: 'PLAYABLE', caption: '可玩原型', href: '#works' },
+  { index: '02', label: 'SYSTEM', caption: '系统拆解', href: '#works' },
+  { index: '03', label: 'EVIDENCE', caption: '能力证据', href: '#abilities' },
+  { index: '04', label: 'BUILDS', caption: '下载包', href: '#work-detail' },
+]
+
 export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryAction }: HeroProps) {
   const heroDownload = featuredWork.download?.url ?? './downloads/static-signal-web-package.zip'
 
@@ -16,31 +23,30 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
       <div className="hero-copy" data-hero-block>
         <p className="eyebrow">BOOT_SEQUENCE / GAME_DESIGN_ARCHIVE</p>
         <h1>杨毓琦｜游戏策划实习作品集</h1>
-        <p className="hero-subtitle">可运行原型、机制拆解、构建包和设计判断放在同一套档案里。</p>
+        <p className="hero-subtitle">把玩法规则拆成可验证原型，把系统分析整理成清晰判断。</p>
         <p className="hero-summary">
-          我把每个作品拆成四件事：规则、玩家选择、机制取舍、可查看文件。先看能运行的版本，再看系统拆解，不用空泛形容词代替作品本身。
+          这里集中展示我能落地的可玩原型、能复查的系统拆解、竞品分析和长期玩家经验。重点不是堆截图，
+          而是让招聘方快速看到：我做了什么，为什么这样做，证据在哪里。
         </p>
 
-        <div className="hero-pill-row" aria-label="Core position">
-          <span>ROLE: 游戏策划实习</span>
-          <span>FOCUS: 原型验证 / 系统拆解 / 战斗机制</span>
-          <span>TOOLS: Godot / Web / JSON / 表格</span>
-        </div>
-
-        <div className="boot-lines" aria-label="Archive boot status">
-          <span>[01] PLAYABLE BUILDS LOADED</span>
-          <span>[02] SYSTEM REPORTS INDEXED</span>
-          <span>[03] DOWNLOAD LINKS ONLINE</span>
+        <div className="poster-nav" aria-label="Archive quick navigation">
+          {posterLinks.map((item) => (
+            <a href={item.href} key={item.label}>
+              <span>{item.index}</span>
+              <strong>{item.label}</strong>
+              <em>{item.caption}</em>
+            </a>
+          ))}
         </div>
 
         <div className="hero-actions">
           <button className="primary-action" type="button" onClick={onPrimaryAction}>
             <Play size={18} />
-            查看作品墙
+            查看作品档案
           </button>
           <a className="secondary-action strong" href={heroDownload} download>
             <Download size={18} />
-            下载试玩包
+            下载代表原型
           </a>
           <a
             className="secondary-action"
@@ -52,25 +58,20 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             GitHub 仓库
           </a>
         </div>
+
+        <div className="boot-lines" aria-label="Archive boot status">
+          <span>[01] 可运行原型已索引</span>
+          <span>[02] 系统拆解报告已归档</span>
+          <span>[03] 下载与外部证据入口在线</span>
+        </div>
       </div>
 
       <aside className="hero-console" aria-label="Portfolio status">
-        <div className="console-card hero-feature-mini">
-          <div className="console-card-top">
-            <p className="eyebrow">FILE_01 / FEATURED</p>
-            <span className="status-chip">
-              <i />
-              {featuredWork.kind}
-            </span>
-          </div>
-          <img src={featuredWork.media[0]?.src} alt={`${featuredWork.title} cover`} />
-          <div>
-            <h2>{featuredWork.title}</h2>
-            <p>{featuredWork.oneLine ?? featuredWork.summary}</p>
-          </div>
-        </div>
-
         <div className="console-card hero-panel">
+          <div className="console-title">
+            <TerminalSquare size={18} />
+            <span>STATUS PANEL</span>
+          </div>
           <div className="panel-row">
             <span>作品数量</span>
             <strong>{workCount}</strong>
@@ -88,7 +89,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             <strong>{featuredWork.title}</strong>
           </div>
           <div className="panel-row">
-            <span>技术栈</span>
+            <span>展示技术</span>
             <strong>React / Three.js / GSAP</strong>
           </div>
           <div className="panel-row">
@@ -101,9 +102,34 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
               <ArrowDown size={14} />
             </a>
             <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
-              项目仓库
+              仓库记录
               <ExternalLink size={14} />
             </a>
+          </div>
+        </div>
+
+        <div className="console-card hero-feature-mini">
+          <div className="console-card-top">
+            <p className="eyebrow">FILE_01 / FEATURED BUILD</p>
+            <span className="status-chip">
+              <i />
+              {featuredWork.kind}
+            </span>
+          </div>
+          <img src={featuredWork.media[0]?.src} alt={`${featuredWork.title} cover`} />
+          <div>
+            <h2>{featuredWork.title}</h2>
+            <p>{featuredWork.oneLine ?? featuredWork.summary}</p>
+          </div>
+          <div className="mini-spec-grid">
+            <span>
+              <Database size={14} />
+              {featuredWork.engine}
+            </span>
+            <span>
+              <Download size={14} />
+              {featuredWork.download ? 'Windows Build' : 'Evidence Only'}
+            </span>
           </div>
         </div>
       </aside>

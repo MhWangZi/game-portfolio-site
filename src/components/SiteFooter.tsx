@@ -4,9 +4,12 @@ export function SiteFooter() {
   return (
     <footer className="site-footer" id="contact">
       <div>
-        <p className="eyebrow">Contact / Game Design Internship</p>
+        <p className="eyebrow">CONTACT / GAME DESIGN INTERNSHIP</p>
         <h2>杨毓琦｜游戏策划实习</h2>
-        <p>可提供可玩原型、系统拆解报告、竞品分析与下载包。欢迎通过邮箱联系查看更多文档或安排面试沟通。</p>
+        <p>
+          可提供可玩原型、系统拆解报告、竞品分析和下载包。适合快速查看我的玩法验证能力、
+          系统分析能力，以及把设计想法做成可运行版本的执行记录。
+        </p>
       </div>
       <div className="footer-actions">
         <a href="mailto:3159591298@qq.com">
