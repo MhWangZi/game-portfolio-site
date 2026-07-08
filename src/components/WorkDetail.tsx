@@ -42,6 +42,7 @@ function formatSha(sha?: string) {
 
 function getLinkClass(label: string) {
   if (/bilibili|视频/i.test(label)) return 'video-link'
+  if (/douyin|抖音/i.test(label)) return 'video-link'
   if (/gamejam|活动/i.test(label)) return 'event-link'
   if (/github|仓库/i.test(label)) return 'github-link'
   return 'doc-link'
@@ -53,13 +54,20 @@ export function WorkDetail({ work }: WorkDetailProps) {
   const mainMedia = work.media[0]
   const mechanicCards = work.id === 'parry-arena' ? parryMechanics : []
   const isPrototype = work.kind === 'Playable Prototype'
-  const evidenceMode = work.kind === 'Playable Prototype' ? 'PLAYABLE VALIDATION' : 'SYSTEM ANALYSIS'
-  const downloadTitle = isPrototype ? 'Windows 试玩包 / 项目文件包' : 'Word 拆解文档 / 分析报告'
-  const downloadFallback = isPrototype
-    ? '当前提供截图、视频或拆解图；构建包后续补充。'
-    : '当前提供截图或拆解图；完整 Word 文档后续补充。'
-  const downloadReadout = isPrototype ? '可下载构建包' : '可下载 Word 文档'
-  const downloadButtonLabel = isPrototype ? '下载文件' : '下载文档'
+  const isTooling = work.kind === 'Tooling Project'
+  const evidenceMode = isTooling ? 'TOOLING PROJECT' : isPrototype ? 'PLAYABLE VALIDATION' : 'SYSTEM ANALYSIS'
+  const downloadTitle = isTooling
+    ? 'Godot 插件包 / 工具文件'
+    : isPrototype
+      ? 'Windows 试玩包 / 项目文件包'
+      : 'Word 拆解文档 / 分析报告'
+  const downloadFallback = isTooling
+    ? '当前提供插件功能记录和教程入口；插件包后续补充。'
+    : isPrototype
+      ? '当前提供截图、视频或拆解图；构建包后续补充。'
+      : '当前提供截图或拆解图；完整 Word 文档后续补充。'
+  const downloadReadout = isTooling ? '可下载插件包' : isPrototype ? '可下载构建包' : '可下载 Word 文档'
+  const downloadButtonLabel = isTooling ? '下载插件' : isPrototype ? '下载文件' : '下载文档'
 
   useLayoutEffect(() => {
     if (reducedMotion || !detailRef.current) return
@@ -128,7 +136,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
         <div className="detail-terminal-card">
           <div className="terminal-topline">
             <span>{evidenceMode}</span>
-            <strong>{work.download ? (isPrototype ? 'BUILD ONLINE' : 'DOCX READY') : 'REPORT INDEXED'}</strong>
+            <strong>{work.download ? (isTooling ? 'PLUGIN ZIP' : isPrototype ? 'BUILD ONLINE' : 'DOCX READY') : 'REPORT INDEXED'}</strong>
           </div>
           <div className="terminal-focus">
             <span>FOCUS</span>
@@ -214,7 +222,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
         <div className={work.download ? 'download-box available' : 'download-box'}>
           <div>
-            {work.download && isPrototype ? <PackageCheck size={20} /> : <FileText size={20} />}
+            {work.download && (isPrototype || isTooling) ? <PackageCheck size={20} /> : <FileText size={20} />}
             <div>
               <strong>{work.download ? downloadTitle : '暂未公开下载包'}</strong>
               <span>

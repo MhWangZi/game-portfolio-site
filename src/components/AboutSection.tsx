@@ -4,7 +4,11 @@ const nowItems = [
   { icon: Gamepad2, title: '做小原型', body: '用 Godot 和网页原型验证一个规则是否真的能玩。' },
   { icon: BookOpen, title: '写设计笔记', body: '把玩到的系统、数值、循环和体验问题整理成短文。' },
   { icon: Telescope, title: '观察玩家行为', body: '关心玩家为什么做选择，以及系统如何改变选择。' },
-  { icon: Hammer, title: '整理工具流', body: '尝试用配置、表格和编辑器降低内容扩展成本。' },
+  {
+    icon: Hammer,
+    title: '做新手工具',
+    body: '最近在做 HD2DKit，把遮挡、碰撞、地图、角色和 NPC 配置收进 Godot 侧边栏，让新手少碰节点和脚本。',
+  },
 ]
 
 export function AboutSection() {

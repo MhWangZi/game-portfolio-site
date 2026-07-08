@@ -16,10 +16,12 @@ function getWorkKind(work: WorkItem): WorkKind {
 }
 
 function getArchiveCode(kind: WorkKind, index: number) {
-  return `${kind === 'Playable Prototype' ? 'P' : 'S'}-${String(index + 1).padStart(2, '0')}`
+  const prefix = kind === 'Playable Prototype' ? 'P' : kind === 'Tooling Project' ? 'T' : 'S'
+  return `${prefix}-${String(index + 1).padStart(2, '0')}`
 }
 
 function getLearningLine(work: WorkItem) {
+  if (work.id === 'hd2d-kit') return '我最近在做这个 Godot 插件：把遮挡、碰撞、地图、角色库和 NPC 配置整理成新手能按步骤使用的工具流。'
   if (work.id === 'parry-arena') return '我在这里练习把防守行为做成主要进攻来源，并控制弹反的收益边界。'
   if (work.id === 'anchored-gaze') return '我想看“攻击改变空间结构”能不能带来追击、控场和逃脱之间的取舍。'
   if (work.id === 'static-signal') return '我在尝试让文字冒险不只靠阅读推进，而是有风险、行动点和分支压力。'
@@ -81,12 +83,13 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
           const kind = getWorkKind(work)
           const archiveCode = getArchiveCode(kind, originalIndex)
           const isPrototype = kind === 'Playable Prototype'
-          const downloadLabel = isPrototype ? '可试玩' : '可下载文档'
+          const isTooling = kind === 'Tooling Project'
+          const downloadLabel = isTooling ? '插件包' : isPrototype ? '可试玩' : '可下载文档'
           return (
             <button
               className={[
                 'work-card',
-                isPrototype ? 'prototype-card' : 'analysis-card',
+                isTooling ? 'tooling-card' : isPrototype ? 'prototype-card' : 'analysis-card',
                 work.id === selectedId ? 'active' : '',
               ].join(' ')}
               id={`card-${work.id}`}
@@ -99,7 +102,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
                 <img src={work.media[0]?.src} alt="" aria-hidden="true" />
                 <span className="card-badge">
                   <i />
-                  {isPrototype ? 'Prototype' : 'Note'}
+                  {isTooling ? 'Tool' : isPrototype ? 'Prototype' : 'Note'}
                 </span>
                 {work.download ? (
                   <span className="card-download">

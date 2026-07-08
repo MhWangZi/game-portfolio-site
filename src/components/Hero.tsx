@@ -18,6 +18,10 @@ const posterLinks = [
 
 export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryAction }: HeroProps) {
   const heroDownload = featuredWork.download?.url ?? './downloads/static-signal-web-package.zip'
+  const featuredIsTooling = featuredWork.kind === 'Tooling Project'
+  const featuredIsSystem = featuredWork.kind === 'System Analysis'
+  const heroDownloadLabel = featuredIsTooling ? '下载插件包' : featuredIsSystem ? '下载文档' : '下载可玩原型'
+  const miniDownloadLabel = featuredIsTooling ? '插件包' : featuredIsSystem ? '文档' : '可下载'
 
   return (
     <section className="hero-section module-screen personal-hero" id="top">
@@ -59,7 +63,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
           </button>
           <a className="secondary-action strong" href={heroDownload} download>
             <Download size={18} />
-            下载可玩原型
+            {heroDownloadLabel}
           </a>
           <a
             className="secondary-action"
@@ -88,12 +92,12 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             <strong>{workCount}</strong>
           </div>
           <div className="panel-row">
-            <span>可下载原型</span>
+            <span>可下载入口</span>
             <strong>{downloadableCount}</strong>
           </div>
           <div className="panel-row">
             <span>最近在看</span>
-            <strong>战斗节奏 / 经济循环 / 叙事规则</strong>
+            <strong>Godot 工具 / 战斗节奏 / 系统拆解</strong>
           </div>
           <div className="hero-panel-links">
             <a href="#notes">
@@ -109,7 +113,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
 
         <div className="console-card hero-feature-mini">
           <div className="console-card-top">
-            <p className="eyebrow">RECENT PROTOTYPE</p>
+            <p className="eyebrow">RECENT PROJECT</p>
             <span className="status-chip">
               <i />
               {featuredWork.kind}
@@ -127,7 +131,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             </span>
             <span>
               <Download size={14} />
-              {featuredWork.download ? '可下载' : '观察记录'}
+              {featuredWork.download ? miniDownloadLabel : '观察记录'}
             </span>
           </div>
         </div>

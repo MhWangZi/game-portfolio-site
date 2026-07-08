@@ -1,5 +1,5 @@
 export type VisualTheme = 'particles' | 'voxel' | 'terrain' | 'ui-panels' | 'artifact'
-export type WorkKind = 'Playable Prototype' | 'System Analysis'
+export type WorkKind = 'Playable Prototype' | 'System Analysis' | 'Tooling Project'
 
 export type WorkMedia = {
   type: 'image' | 'video'

@@ -4,6 +4,56 @@ const releaseBase = 'https://github.com/MhWangZi/game-portfolio-site/releases/do
 
 export const works: WorkItem[] = [
   {
+    id: 'hd2d-kit',
+    title: 'HD2DKit Godot 新手工具插件',
+    kind: 'Tooling Project',
+    role: '独立开发 / Godot EditorPlugin / 新手工作流设计',
+    engine: 'Godot 4.x / GDScript / EditorPlugin',
+    period: '2026-06 至 2026-07 / v1.76',
+    summary:
+      '面向 Godot 新手的 HD-2D 场景工具包。把地图底图、Y-Sort 遮挡、碰撞绘制、角色创建、角色库、NPC 对话和商店配置收进一个编辑器侧边栏。',
+    oneLine: '把遮挡、碰撞、地图、角色库和 NPC 配置做成新手能直接点选的 Godot 侧边栏工具。',
+    contribution: [
+      '实现 Godot EditorPlugin 与右侧 Dock，把场景、工具、主角、角色库、NPC、物品和设置组织成分页工作流。',
+      '提供地图底图生成、Camera2D 边界设置、Y-Sort 结构初始化、旧场景升级和场景体检，减少新手手动搭节点的成本。',
+      '实现遮挡物标记、地图遮挡片点选绘制、碰撞 Polygon 转换、脚底碰撞体规范、物件阴影生成等场景制作工具。',
+      '实现主角创建、动画绑定、角色库扫描、便携角色包导出/导入，以及 NPC 对话、巡逻、交易、物品库和商店 UI 配置。',
+    ],
+    skills: ['工具开发', 'Godot 插件', 'EditorPlugin', 'HD-2D', '新手工作流', '角色库', '碰撞与遮挡', 'NPC 系统'],
+    visualTheme: 'ui-panels',
+    featured: true,
+    proof: [
+      { label: '项目类型', value: 'Godot EditorPlugin / Dock 工具' },
+      { label: '当前版本', value: 'v1.76 / 可下载插件包' },
+      { label: '核心用户', value: '不熟悉 Godot 的新手创作者' },
+    ],
+    designHighlights: [
+      { title: '核心目标', body: '把需要理解节点层级、Y-Sort 和脚本绑定的操作，收束成侧边栏按钮、表单和可视化绘制。' },
+      { title: '地图工作流', body: '支持生成 BaseMap、Camera2D 边界、Y-Sort 层级，并提供场景体检和旧场景升级入口。' },
+      { title: '区域编辑', body: '用点选绘制、Polygon 转换和遮挡物标记处理地图遮挡、碰撞、调节区和物件阴影。' },
+      { title: '角色与 NPC', body: '提供主角节点生成、动画绑定、角色库复用、便携角色包、NPC 对话/巡逻/交易和物品库。' },
+    ],
+    flow: ['场景底图', '遮挡绘制', '碰撞规范', '角色库', 'NPC / 商店'],
+    media: [
+      {
+        type: 'image',
+        src: './media/portfolio/hd2d-kit-cover.png',
+        caption: 'HD2DKit 插件封面：基于插件自带角色帧表和 UI 资源整理的功能档案图。',
+      },
+    ],
+    download: {
+      url: './downloads/hd2d-kit-v1.76.zip',
+      version: 'Godot 插件包 / v1.76',
+      size: '约 18.4 MiB',
+    },
+    links: [
+      { label: 'Bilibili 插件教程 01', url: 'https://www.bilibili.com/video/BV1Fx776cErG/' },
+      { label: 'Bilibili 插件教程 02', url: 'https://www.bilibili.com/video/BV1VuJP6HE9Y/' },
+      { label: 'Bilibili 个人空间', url: 'https://space.bilibili.com/94407611' },
+      { label: '抖音个人空间', url: 'https://v.douyin.com/KtkwFjtQ7G8/' },
+    ],
+  },
+  {
     id: 'anchored-gaze',
     title: '万众瞩目 Anchored Gaze',
     kind: 'Playable Prototype',
@@ -67,7 +117,6 @@ export const works: WorkItem[] = [
     ],
     skills: ['可玩原型', '战斗设计', '弹反机制', '波次节奏', '资源取舍', 'Boss 设计'],
     visualTheme: 'artifact',
-    featured: true,
     proof: [
       { label: '项目类型', value: '2D 像素风 / 弹反生存动作' },
       { label: '档案文件', value: 'Windows Build / 五波流程' },
@@ -432,9 +481,9 @@ export const abilityGroups: AbilityGroup[] = [
   },
   {
     title: '工具与编辑器实现',
-    summary: '能把内容、配置和规则从代码中拆出来，降低后续扩展成本。',
-    items: ['JSON 配置', '剧本编辑器', '节点化 UI', '模块化拆分'],
-    evidence: ['静默信号编辑器', 'Godot 原型模块合集'],
+    summary: '能把内容、配置、节点操作和场景制作流程做成工具，降低后续扩展和新手上手成本。',
+    items: ['EditorPlugin', 'JSON 配置', '剧本编辑器', '节点化 UI', '模块化拆分'],
+    evidence: ['HD2DKit Godot 插件', '静默信号编辑器', 'Godot 原型模块合集'],
   },
 ]
 
@@ -444,6 +493,9 @@ export const allSkillTags = [
   '竞品分析',
   'Godot',
   '网页原型',
+  '工具开发',
+  'Godot 插件',
+  'HD-2D',
   '经济系统',
   '数值体系',
   '战斗设计',

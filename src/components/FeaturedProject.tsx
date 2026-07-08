@@ -43,8 +43,20 @@ type Direction = 'next' | 'prev'
 
 const archiveCases: ArchiveCase[] = [
   {
-    id: 'parry-arena',
+    id: 'hd2d-kit',
     caseNo: 'CASE 01',
+    title: 'HD2DKit',
+    subtitle: '给 Godot 新手使用的 HD-2D 场景与角色工具插件',
+    description: '我把遮挡、碰撞、地图底图、角色库、NPC 对话和商店配置整理成编辑器侧边栏，让不熟悉引擎的人也能按流程搭出场景。',
+    image: './media/portfolio/hd2d-kit-cover.png',
+    imageAlt: 'HD2DKit Godot 新手工具插件功能封面',
+    tags: ['Godot', 'Tooling', 'HD-2D', 'No-code'],
+    metrics: ['Tooling', 'EditorPlugin', 'Workflow', 'Tutorial'],
+    buttonLabel: '查看工具记录',
+  },
+  {
+    id: 'parry-arena',
+    caseNo: 'CASE 02',
     title: 'Parry Arena',
     subtitle: '一个围绕“防反时机”构建的战斗原型',
     description: '我用这个原型验证玩家在高压战斗中如何识别攻击节奏、承担风险并获得反馈。',
@@ -56,7 +68,7 @@ const archiveCases: ArchiveCase[] = [
   },
   {
     id: 'anchored-gaze',
-    caseNo: 'CASE 02',
+    caseNo: 'CASE 03',
     title: 'Anchored Gaze',
     subtitle: '关于观察、凝视与空间压迫感的交互实验',
     description: '尝试用视线、距离和环境反馈制造不安感，而不是单纯依赖怪物追逐。',
@@ -68,7 +80,7 @@ const archiveCases: ArchiveCase[] = [
   },
   {
     id: 'static-signal',
-    caseNo: 'CASE 03',
+    caseNo: 'CASE 04',
     title: 'STATIC SIGNAL',
     subtitle: '用规则怪谈搭建文字冒险的压力结构',
     description: '通过行动点、风险值、线索和身份差异文本，让阅读过程也有选择和代价。',
@@ -80,7 +92,7 @@ const archiveCases: ArchiveCase[] = [
   },
   {
     id: 'delta-economy',
-    caseNo: 'CASE 04',
+    caseNo: 'CASE 05',
     title: 'System Breakdown',
     subtitle: '把复杂系统拆成规则、反馈和玩家选择',
     description: '这里记录我如何分析一个机制是否清晰、是否可复用、是否能形成长期决策。',
@@ -114,6 +126,7 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
   const activeCase = archiveCases[activeIndex]
   const activeWork = workMap.get(activeCase.id)
   const activeIsPrototype = activeWork?.kind === 'Playable Prototype'
+  const activeIsTooling = activeWork?.kind === 'Tooling Project'
   const previousCase = archiveCases[wrapIndex(activeIndex - 1)]
   const nextCase = archiveCases[wrapIndex(activeIndex + 1)]
   const progress = ((activeIndex + 1) / archiveCases.length) * 100
@@ -286,7 +299,7 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
             {activeWork?.download ? (
               <a className="secondary-action archive-download-button" href={activeWork.download.url} download>
                 <Download size={16} />
-                {activeIsPrototype ? '构建包' : 'Word 文档'}
+                {activeIsTooling ? '插件包' : activeIsPrototype ? '构建包' : 'Word 文档'}
               </a>
             ) : (
               <span className="archive-file-note">

@@ -23,6 +23,20 @@ const contactItems = [
     external: true,
   },
   {
+    icon: Video,
+    label: 'Bilibili',
+    value: '教程视频与个人空间',
+    href: 'https://space.bilibili.com/94407611',
+    external: true,
+  },
+  {
+    icon: Video,
+    label: '抖音',
+    value: '短视频与更新记录',
+    href: 'https://v.douyin.com/KtkwFjtQ7G8/',
+    external: true,
+  },
+  {
     icon: MapPin,
     label: '回到顶部',
     value: '重新浏览',

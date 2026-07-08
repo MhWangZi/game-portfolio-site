@@ -903,6 +903,21 @@ code {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.tooling-card {
+  background:
+    linear-gradient(145deg, rgba(242, 184, 96, 0.075), rgba(103, 232, 249, 0.035)),
+    var(--panel);
+}
+
+.tooling-card .card-badge {
+  color: #1b1206;
+  background: rgba(242, 184, 96, 0.88);
+}
+
+.tooling-card .card-number-ghost {
+  -webkit-text-stroke-color: rgba(242, 184, 96, 0.22);
+}
+
 .card-number-ghost {
   position: absolute;
   right: 14px;
