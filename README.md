@@ -26,4 +26,28 @@ npm run preview
 
 ## 后台入口
 
-安全后台不放在 GitHub Pages 前端内。Cloudflare Workers 方案位于 `admin-worker/`，密码哈希、pepper 和 session secret 需要通过 Workers Secrets 配置。
+隐藏入口为：
+
+```text
+https://mhwangzi.github.io/game-portfolio-site/#/admin
+```
+
+当前实现是“伪后台”：前端用构建时注入的 SHA-256 hash 做门禁，只展示访问统计等非敏感内容。它能避开普通访客，但不能当作真正安全后台使用。真正需要编辑内容、上传文件或保存私密数据时，使用 `admin-worker/` 里的服务端认证方案。
+
+生成伪后台密码 hash：
+
+```bash
+npm run hash:pseudo-admin -- "你的后台密码"
+```
+
+把输出写入 GitHub 仓库 Secret：
+
+```text
+PSEUDO_ADMIN_HASH=<上一步输出的 64 位 hash>
+```
+
+访问统计 Worker 位于 `visit-counter-worker/`。部署后把 Worker 地址写入 GitHub 仓库 Secret：
+
+```text
+VISIT_COUNTER_URL=https://game-design-visit-counter.<your-subdomain>.workers.dev
+```

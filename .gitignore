@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 admin-worker/.dev.vars
+visit-counter-worker/wrangler.toml
+visit-counter-worker/.dev.vars
 test-results
 playwright-report
 

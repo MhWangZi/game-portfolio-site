@@ -32,6 +32,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_PSEUDO_ADMIN_HASH: ${{ secrets.PSEUDO_ADMIN_HASH }}
+          VITE_VISIT_COUNTER_URL: ${{ secrets.VISIT_COUNTER_URL }}
         run: npm run build
 
       - name: Upload artifact

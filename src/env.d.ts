@@ -5,3 +5,12 @@ interface Window {
     theme: string
   }
 }
+
+interface ImportMetaEnv {
+  readonly VITE_PSEUDO_ADMIN_HASH?: string
+  readonly VITE_VISIT_COUNTER_URL?: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

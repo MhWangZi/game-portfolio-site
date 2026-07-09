@@ -59,3 +59,11 @@ test('reduced motion keeps content readable', async ({ page }, testInfo) => {
     /static-signal-web-package\.zip/,
   )
 })
+
+test('hidden pseudo admin route renders locked access terminal', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Admin route smoke test only runs in the desktop project.')
+  await page.goto('/#/admin')
+  await expect(page.getByRole('heading', { name: 'ACCESS TERMINAL' })).toBeVisible()
+  await expect(page.getByText('PRIVATE GATE')).toBeVisible()
+  await expect(page.getByRole('button', { name: /\[UNLOCK PANEL\]/ })).toBeDisabled()
+})

@@ -1,0 +1,7 @@
+name = "game-design-visit-counter"
+main = "src/worker.js"
+compatibility_date = "2026-07-09"
+
+[[kv_namespaces]]
+binding = "VISIT_COUNTER_KV"
+id = "replace-with-kv-namespace-id"

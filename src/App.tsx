@@ -7,20 +7,28 @@ import { Hero } from './components/Hero'
 import { NotesSection } from './components/NotesSection'
 import { PortfolioScene } from './components/PortfolioScene'
 import { ProcessSection } from './components/ProcessSection'
+import { PseudoAdmin } from './components/PseudoAdmin'
 import { SiteFooter } from './components/SiteFooter'
 import { WorkDetail } from './components/WorkDetail'
 import { WorkRegistry } from './components/WorkRegistry'
 import { works } from './data/works'
 import { useArchiveAnimations } from './hooks/useArchiveAnimations'
+import { useVisitCounter } from './hooks/useVisitCounter'
+
+function isAdminHash(hash: string) {
+  return hash.replace(/^#/, '').replace(/^\/+/, '') === 'admin'
+}
 
 function App() {
   useArchiveAnimations()
 
   const firstWorkId = works[0]?.id ?? ''
   const [selectedId, setSelectedId] = useState(() => {
-    const hash = window.location.hash.replace('#', '')
-    return works.some((work) => work.id === hash) ? hash : firstWorkId
+    const rawHash = window.location.hash
+    const hash = rawHash.replace('#', '')
+    return !isAdminHash(rawHash) && works.some((work) => work.id === hash) ? hash : firstWorkId
   })
+  const [isAdminRoute, setIsAdminRoute] = useState(() => isAdminHash(window.location.hash))
   const selectedWork = useMemo(
     () => works.find((work) => work.id === selectedId) ?? works[0],
     [selectedId],
@@ -30,11 +38,15 @@ function App() {
     [],
   )
   const downloadableCount = useMemo(() => works.filter((work) => work.download).length, [])
+  useVisitCounter(isAdminRoute)
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '')
-      if (works.some((work) => work.id === hash)) setSelectedId(hash)
+      const rawHash = window.location.hash
+      const adminRoute = isAdminHash(rawHash)
+      setIsAdminRoute(adminRoute)
+      const hash = rawHash.replace('#', '')
+      if (!adminRoute && works.some((work) => work.id === hash)) setSelectedId(hash)
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -49,6 +61,20 @@ function App() {
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       block: 'start',
     })
+  }
+
+  if (isAdminRoute) {
+    return (
+      <div className="app-shell pseudo-admin-app">
+        <div
+          className="ambient-image"
+          style={{ backgroundImage: 'url("./media/generated/archive-console-bg.png")' }}
+          aria-hidden="true"
+        />
+        <PortfolioScene theme="ui-panels" />
+        <PseudoAdmin />
+      </div>
+    )
   }
 
   return (

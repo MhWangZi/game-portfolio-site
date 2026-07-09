@@ -3427,3 +3427,453 @@ main > section {
     transition: none !important;
   }
 }
+
+.pseudo-admin-app {
+  min-height: 100vh;
+}
+
+.pseudo-admin-app .ambient-image {
+  opacity: 0.16;
+  filter: grayscale(0.2) contrast(1.08);
+}
+
+.pseudo-admin-shell {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  padding: clamp(24px, 5vw, 64px);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(79, 255, 177, 0.055), transparent 22%),
+    radial-gradient(circle at 76% 28%, rgba(242, 184, 96, 0.11), transparent 30%),
+    linear-gradient(180deg, rgba(8, 10, 15, 0.2), rgba(4, 5, 8, 0.78));
+}
+
+.pseudo-admin-shell::before,
+.pseudo-admin-shell::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.pseudo-admin-shell::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(242, 184, 96, 0.06), transparent),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  mix-blend-mode: screen;
+  opacity: 0.22;
+  animation: pseudoScan 7s linear infinite;
+}
+
+.pseudo-admin-shell::after {
+  background-image:
+    radial-gradient(circle, rgba(242, 184, 96, 0.28) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(95, 255, 174, 0.2) 0 1px, transparent 1.2px);
+  background-position:
+    18px 20px,
+    78px 64px;
+  background-size:
+    128px 128px,
+    178px 178px;
+  opacity: 0.1;
+}
+
+.pseudo-admin-grid {
+  width: min(1120px, 100%);
+  min-height: min(660px, calc(100vh - 72px));
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(420px, 1.15fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.pseudo-terminal-panel,
+.pseudo-login-card,
+.pseudo-dashboard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(242, 184, 96, 0.2);
+  background:
+    linear-gradient(135deg, rgba(18, 23, 35, 0.88), rgba(7, 9, 13, 0.82)),
+    rgba(6, 8, 12, 0.82);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(22px);
+}
+
+.pseudo-terminal-panel::before,
+.pseudo-login-card::before,
+.pseudo-dashboard::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(242, 184, 96, 0.28), transparent 16%, transparent 84%, rgba(242, 184, 96, 0.18)),
+    linear-gradient(180deg, rgba(242, 184, 96, 0.1), transparent 38%);
+  opacity: 0.22;
+}
+
+.pseudo-terminal-panel {
+  min-height: 560px;
+  padding: clamp(22px, 4vw, 42px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pseudo-panel-topline,
+.pseudo-dashboard-header,
+.pseudo-scan-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--accent);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pseudo-panel-topline strong {
+  color: rgba(98, 255, 177, 0.9);
+  font-weight: 800;
+}
+
+.pseudo-terminal-mark {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  border: 1px solid rgba(242, 184, 96, 0.32);
+  background: rgba(242, 184, 96, 0.06);
+  box-shadow:
+    inset 0 0 34px rgba(242, 184, 96, 0.08),
+    0 0 28px rgba(242, 184, 96, 0.1);
+}
+
+.pseudo-terminal-panel h1 {
+  max-width: 640px;
+  margin: 18px 0 12px;
+  color: var(--text);
+  font-size: clamp(3rem, 8vw, 6.3rem);
+  line-height: 0.84;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+}
+
+.pseudo-terminal-panel p:not(.eyebrow) {
+  max-width: 520px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.pseudo-terminal-lines {
+  display: grid;
+  gap: 9px;
+  margin: 32px 0;
+  padding: 16px;
+  border: 1px solid rgba(242, 184, 96, 0.14);
+  background: rgba(0, 0, 0, 0.24);
+  color: rgba(116, 255, 181, 0.86);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.82rem;
+}
+
+.pseudo-terminal-lines span::before {
+  margin-right: 8px;
+  color: var(--accent);
+  content: ">";
+}
+
+.pseudo-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pseudo-admin-actions a,
+.pseudo-admin-actions button,
+.pseudo-login-card button,
+.pseudo-dashboard-header button {
+  min-height: 42px;
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  color: var(--text);
+  border: 1px solid rgba(242, 184, 96, 0.24);
+  background: rgba(242, 184, 96, 0.055);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.pseudo-admin-actions a:hover,
+.pseudo-admin-actions button:hover,
+.pseudo-login-card button:hover,
+.pseudo-dashboard-header button:hover {
+  border-color: rgba(242, 184, 96, 0.55);
+  background: rgba(242, 184, 96, 0.12);
+  box-shadow: 0 0 24px rgba(242, 184, 96, 0.12);
+  transform: translateY(-2px);
+}
+
+.pseudo-admin-actions button,
+.pseudo-login-card button,
+.pseudo-dashboard-header button {
+  color: inherit;
+  font: inherit;
+}
+
+.pseudo-login-card,
+.pseudo-dashboard {
+  padding: clamp(22px, 4vw, 36px);
+  display: grid;
+  align-content: center;
+}
+
+.pseudo-login-card {
+  min-height: 560px;
+}
+
+.pseudo-login-card form {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 16px;
+}
+
+.pseudo-login-card label {
+  display: grid;
+  gap: 10px;
+  color: var(--accent);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+}
+
+.pseudo-login-card input {
+  width: 100%;
+  height: 58px;
+  padding: 0 16px;
+  color: var(--text);
+  outline: none;
+  border: 1px solid rgba(242, 184, 96, 0.26);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 9px
+    ),
+    rgba(5, 7, 11, 0.88);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 1rem;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.pseudo-login-card input:focus {
+  border-color: rgba(242, 184, 96, 0.62);
+  box-shadow:
+    inset 0 0 26px rgba(242, 184, 96, 0.06),
+    0 0 28px rgba(242, 184, 96, 0.12);
+}
+
+.pseudo-login-card input:disabled,
+.pseudo-login-card button:disabled,
+.pseudo-dashboard-header button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
+}
+
+.pseudo-login-card button {
+  width: max-content;
+  color: #141008;
+  background: var(--accent);
+  border-color: var(--accent);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.pseudo-error,
+.pseudo-hint {
+  margin: 0;
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.82rem;
+}
+
+.pseudo-error {
+  color: #ff9e88;
+}
+
+.pseudo-hint {
+  color: var(--muted);
+}
+
+.pseudo-dashboard {
+  min-height: 560px;
+  align-content: start;
+}
+
+.pseudo-dashboard-header {
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.pseudo-dashboard-header h2 {
+  margin: 4px 0;
+  color: var(--text);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.pseudo-dashboard-header span {
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.pseudo-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.pseudo-stat-grid article {
+  position: relative;
+  min-height: 138px;
+  padding: 18px;
+  display: grid;
+  align-content: space-between;
+  border: 1px solid rgba(231, 238, 255, 0.12);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.pseudo-stat-grid article::after {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 18px;
+  height: 18px;
+  border-right: 1px solid rgba(242, 184, 96, 0.52);
+  border-bottom: 1px solid rgba(242, 184, 96, 0.52);
+  content: "";
+}
+
+.pseudo-stat-grid svg {
+  color: var(--accent);
+}
+
+.pseudo-stat-grid span {
+  color: var(--muted);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pseudo-stat-grid strong {
+  color: var(--text);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: clamp(2rem, 5vw, 3.7rem);
+  line-height: 1;
+}
+
+.pseudo-status-console {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 16px;
+  color: rgba(116, 255, 181, 0.82);
+  border: 1px solid rgba(242, 184, 96, 0.12);
+  background: rgba(0, 0, 0, 0.28);
+  font-family: "Roboto Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+@keyframes pseudoScan {
+  from {
+    background-position:
+      -40vw 0,
+      0 0;
+  }
+  to {
+    background-position:
+      120vw 0,
+      0 64px;
+  }
+}
+
+@media (max-width: 900px) {
+  .pseudo-admin-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .pseudo-terminal-panel,
+  .pseudo-login-card,
+  .pseudo-dashboard {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .pseudo-admin-shell {
+    padding: 14px;
+  }
+
+  .pseudo-terminal-panel,
+  .pseudo-login-card,
+  .pseudo-dashboard {
+    padding: 18px;
+  }
+
+  .pseudo-terminal-panel h1 {
+    font-size: clamp(2.6rem, 18vw, 4rem);
+  }
+
+  .pseudo-dashboard-header {
+    display: grid;
+  }
+
+  .pseudo-stat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pseudo-admin-shell::before {
+    animation: none;
+  }
+
+  .pseudo-admin-actions a,
+  .pseudo-admin-actions button,
+  .pseudo-login-card button,
+  .pseudo-dashboard-header button,
+  .pseudo-login-card input {
+    transition: none;
+  }
+}
