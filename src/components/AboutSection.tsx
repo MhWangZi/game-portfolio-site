@@ -1,4 +1,4 @@
-import { BookOpen, Gamepad2, Hammer, Telescope } from 'lucide-react'
+import { BookOpen, Compass, Gamepad2, Hammer, Telescope } from 'lucide-react'
 
 const nowItems = [
   { icon: Gamepad2, title: '原型验证', body: '测试一个机制能否成立。', tags: ['Prototype', 'Loop'] },
@@ -17,7 +17,12 @@ export function AboutSection() {
     <section className="personal-section about-section" id="about">
       <div className="section-heading compact">
         <p className="eyebrow">ABOUT / DESIGN FOCUS</p>
-        <h2>近期设计命题</h2>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Compass size={20} />
+          </span>
+          <h2>近期设计命题</h2>
+        </div>
         <p>四个常用入口：机制、结构、行为与工具流。</p>
       </div>
       <div className="about-grid">

@@ -644,6 +644,57 @@ code {
   max-width: 740px;
 }
 
+.section-heading-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-heading-title h2 {
+  margin: 0;
+}
+
+.section-heading-icon {
+  position: relative;
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background:
+    linear-gradient(145deg, rgba(242, 184, 96, 0.12), rgba(255, 255, 255, 0.02)),
+    rgba(14, 18, 28, 0.68);
+  border: 1px solid rgba(242, 184, 96, 0.28);
+  border-radius: 9px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.section-heading-icon::after {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 8px;
+  height: 8px;
+  content: "";
+  border-right: 1px solid rgba(242, 184, 96, 0.72);
+  border-bottom: 1px solid rgba(242, 184, 96, 0.72);
+}
+
+.personal-section:hover .section-heading-icon,
+.section-shell:hover .section-heading-icon,
+.site-footer:hover .section-heading-icon {
+  border-color: rgba(242, 184, 96, 0.46);
+  box-shadow: 0 0 22px rgba(242, 184, 96, 0.1);
+  transform: translateY(-2px);
+}
+
 .featured-heading {
   max-width: 840px;
 }
@@ -985,20 +1036,32 @@ code {
 .work-card strong {
   position: relative;
   z-index: 1;
+  display: -webkit-box;
+  overflow: hidden;
   font-size: 1.24rem;
   line-height: 1.18;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .card-role,
 .card-summary {
   position: relative;
   z-index: 1;
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--muted);
   line-height: 1.56;
+  -webkit-box-orient: vertical;
+}
+
+.card-role {
+  -webkit-line-clamp: 1;
 }
 
 .card-summary {
   font-size: 0.92rem;
+  -webkit-line-clamp: 1;
 }
 
 .card-proof-line {

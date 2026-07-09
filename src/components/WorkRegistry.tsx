@@ -1,6 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ArrowRight, Download, FileText, Filter, NotebookPen } from 'lucide-react'
+import { ArrowRight, Activity, Download, FileText, Filter, NotebookPen } from 'lucide-react'
 import type { WorkItem, WorkKind } from '../types'
 import { allSkillTags } from '../data/works'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -29,6 +29,20 @@ function getLearningLine(work: WorkItem) {
   return '焦点：路径、资源与取舍。'
 }
 
+function getCardLine(work: WorkItem) {
+  if (work.id === 'hd2d-kit') return '场景工具 / 新手流程'
+  if (work.id === 'parry-arena') return '弹反窗口 / 波次成长'
+  if (work.id === 'anchored-gaze') return '视线压力 / 锚点收集'
+  if (work.id === 'static-signal') return '行动点 / 风险分支'
+  if (work.id === 'godot-prototype-suite') return '移动 / 场景 / 卡牌模块'
+  if (work.id === 'delta-economy') return '货币流 / 回收机制'
+  if (work.id === 'wuthering-values') return '属性层级 / 成长曲线'
+  if (work.id === 'equipment-analysis') return '随机词条 / 长线负担'
+  if (work.id === 'action-combat') return '动作广度 / 操作精度'
+  if (work.id === 'roguelite-systems') return '失败反馈 / 长线动机'
+  return work.oneLine ?? work.summary
+}
+
 export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps) {
   const [filter, setFilter] = useState('全部')
   const gridRef = useRef<HTMLDivElement | null>(null)
@@ -53,7 +67,12 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
     <section className="section-shell projects-section" id="projects">
       <div className="section-heading registry-heading">
         <p className="eyebrow">RECENT / PROTOTYPE LOG</p>
-        <h2>近期原型迭代</h2>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Activity size={20} />
+          </span>
+          <h2>近期原型迭代</h2>
+        </div>
         <p>当前推进中的可玩版本，持续更新规则边界、反馈表现与下一轮调整方向。</p>
       </div>
 
@@ -119,7 +138,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
               </span>
               <strong>{work.title}</strong>
               <span className="card-role">{work.role}</span>
-              <span className="card-summary">{work.oneLine ?? work.summary}</span>
+              <span className="card-summary">{getCardLine(work)}</span>
               <span className="card-learning">
                 <NotebookPen size={14} />
                 {getLearningLine(work)}

@@ -1,12 +1,12 @@
 import {
   ArrowRight,
+  Archive,
   ChevronLeft,
   ChevronRight,
   Download,
   FileText,
   Layers3,
   MousePointer2,
-  Sparkles,
 } from 'lucide-react'
 import {
   useCallback,
@@ -45,8 +45,8 @@ const archiveCases: ArchiveCase[] = [
     id: 'parry-arena',
     caseNo: 'CASE 01',
     title: 'Parry Arena',
-    subtitle: '围绕防反时机构建的战斗原型',
-    description: '通过攻击预兆、判定窗口和反馈节奏，测试高压战斗中的风险与回报。',
+    subtitle: '防反时机与高压战斗',
+    description: '攻击预兆、判定窗口、风险回报。',
     image: './media/portfolio/parry-arena-gameplay.png',
     imageAlt: 'Parry Arena 弹反竞技场实机战斗截图',
     tags: ['Combat', 'Prototype', 'Timing', 'Feedback'],
@@ -57,8 +57,8 @@ const archiveCases: ArchiveCase[] = [
     id: 'anchored-gaze',
     caseNo: 'CASE 02',
     title: 'Anchored Gaze',
-    subtitle: '观察、距离与空间压迫感的交互实验',
-    description: '用视线、环境反馈和移动限制，建立缓慢累积的不安感。',
+    subtitle: '观察、距离与空间压迫',
+    description: '视线压力、移动限制、环境回应。',
     image: './media/portfolio/anchored-gaze-cover.png',
     imageAlt: 'Anchored Gaze 万众瞩目标题界面截图',
     tags: ['Horror', 'Interaction', 'Atmosphere', 'Level Design'],
@@ -69,8 +69,8 @@ const archiveCases: ArchiveCase[] = [
     id: 'hd2d-kit',
     caseNo: 'CASE 03',
     title: 'HD2D Kit',
-    subtitle: '像素场景与镜头层次的视觉实验',
-    description: '整理光照、层级、材质和镜头参数，形成可复用的场景搭建流程。',
+    subtitle: '像素场景与镜头层次',
+    description: '光照、层级、材质、镜头参数。',
     image: './media/portfolio/hd2d-kit-cover.png',
     imageAlt: 'HD2D Kit 工具与像素角色资源封面',
     tags: ['Godot', 'Tooling', 'HD-2D', 'Workflow'],
@@ -82,7 +82,7 @@ const archiveCases: ArchiveCase[] = [
     caseNo: 'CASE 04',
     title: 'STATIC SIGNAL',
     subtitle: '行动点、风险值与分支阅读压力',
-    description: '用身份差异、调查成本和多结局，测试文字冒险的选择重量。',
+    description: '身份差异、调查成本、多结局。',
     image: './media/portfolio/static-signal-interface.png',
     imageAlt: 'STATIC SIGNAL 静默信号网页文字冒险界面截图',
     tags: ['Narrative', 'TRPG', 'Risk', 'Editor'],
@@ -188,7 +188,12 @@ export function FeaturedProject({ work: _work, onSelect }: FeaturedProjectProps)
     <section className="featured-section archive-carousel-section personal-section" id="featured">
       <div className="section-heading archive-carousel-heading">
         <p className="eyebrow">DESIGN ARCHIVE / CASE FILES</p>
-        <h2>设计档案</h2>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Archive size={20} />
+          </span>
+          <h2>设计档案</h2>
+        </div>
         <p>每个条目对应一个具体设计问题。</p>
       </div>
 
@@ -261,14 +266,6 @@ export function FeaturedProject({ work: _work, onSelect }: FeaturedProjectProps)
             {activeCase.tags.map((tag) => (
               <span key={tag}>{tag}</span>
             ))}
-          </div>
-
-          <div className="archive-insight-card">
-            <Sparkles size={17} />
-            <div>
-              <strong>设计问题</strong>
-              <span>{activeCase.description}</span>
-            </div>
           </div>
 
           <div className="archive-panel-actions">

@@ -54,15 +54,15 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
         <div className="hero-actions">
           <button className="primary-action" type="button" onClick={onPrimaryAction}>
             <Play size={18} />
-            进入设计记录
+            进入档案
           </button>
           <a className="secondary-action strong" href="#projects">
             <ArrowDown size={18} />
-            查看近期原型
+            查看近期版本
           </a>
           <a className="secondary-action" href="#notes">
             <Code size={18} />
-            阅读设计笔记
+            阅读笔记
           </a>
         </div>
       </div>
@@ -74,24 +74,24 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             <span>NOW / DOING</span>
           </div>
           <div className="panel-row">
-            <span>记录方向</span>
+            <span>方向</span>
             <strong>机制 / 节奏 / 反馈</strong>
           </div>
           <div className="panel-row">
-            <span>设计条目</span>
+            <span>条目</span>
             <strong>{workCount}</strong>
           </div>
           <div className="panel-row">
-            <span>可下载入口</span>
+            <span>下载</span>
             <strong>{downloadableCount}</strong>
           </div>
           <div className="panel-row">
-            <span>长期命题</span>
+            <span>命题</span>
             <strong>原型 / 系统 / 行为</strong>
           </div>
           <div className="hero-panel-links">
             <a href="#notes">
-              查看近期原型
+              近期版本
               <ArrowDown size={14} />
             </a>
             <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
@@ -121,7 +121,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             </span>
             <span>
               <Download size={14} />
-              {featuredWork.download ? miniDownloadLabel : '观察记录'}
+              {featuredWork.download ? miniDownloadLabel : '观察'}
             </span>
           </div>
         </div>

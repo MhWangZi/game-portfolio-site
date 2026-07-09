@@ -1,4 +1,4 @@
-import { Code, ExternalLink, Mail, Radio, Video } from 'lucide-react'
+import { Code, ExternalLink, Mail, Radio, Send, Video } from 'lucide-react'
 
 const contactItems = [
   {
@@ -11,7 +11,7 @@ const contactItems = [
   {
     icon: Code,
     label: 'GitHub',
-    value: '项目代码与页面记录',
+    value: '代码与页面',
     href: 'https://github.com/MhWangZi/game-portfolio-site',
     external: true,
   },
@@ -25,7 +25,7 @@ const contactItems = [
   {
     icon: Radio,
     label: '抖音',
-    value: '短视频与过程记录',
+    value: '短视频与过程',
     href: 'https://v.douyin.com/KtkwFjtQ7G8/',
     external: true,
   },
@@ -36,8 +36,13 @@ export function SiteFooter() {
     <footer className="site-footer" id="contact">
       <div className="footer-copy">
         <p className="eyebrow">CONTACT / SAY HELLO</p>
-        <h2>保持联系</h2>
-        <p>关于游戏设计、原型制作、像素风项目或实习机会，可以通过以下方式联系。</p>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Send size={20} />
+          </span>
+          <h2>保持联系</h2>
+        </div>
+        <p>游戏设计、原型制作、像素风项目与机会交流。</p>
       </div>
       <div className="contact-card-grid" aria-label="Contact links">
         {contactItems.map((item) => {

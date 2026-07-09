@@ -1,3 +1,5 @@
+import { Workflow } from 'lucide-react'
+
 const processSteps = [
   { title: '观察', body: '路径、误判、失败点。' },
   { title: '拆解', body: '资源、成本、奖励。' },
@@ -11,7 +13,12 @@ export function ProcessSection() {
     <section className="personal-section process-section" id="process">
       <div className="section-heading compact">
         <p className="eyebrow">PROCESS / DESIGN METHOD</p>
-        <h2>原型方法</h2>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Workflow size={20} />
+          </span>
+          <h2>原型方法</h2>
+        </div>
         <p>从问题到版本，再回到问题。</p>
       </div>
       <div className="process-line">

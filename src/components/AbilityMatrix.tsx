@@ -1,4 +1,4 @@
-import { BadgeCheck, Fingerprint } from 'lucide-react'
+import { BadgeCheck, Fingerprint, Radar } from 'lucide-react'
 import { abilityGroups } from '../data/works'
 
 export function AbilityMatrix() {
@@ -6,7 +6,12 @@ export function AbilityMatrix() {
     <section className="section-shell interest-section" id="interests">
       <div className="section-heading compact">
         <p className="eyebrow">INTERESTS / SYSTEM NOTES</p>
-        <h2>长期设计命题</h2>
+        <div className="section-heading-title">
+          <span className="section-heading-icon">
+            <Radar size={20} />
+          </span>
+          <h2>长期设计命题</h2>
+        </div>
         <p>反复回到的系统问题与项目切片。</p>
       </div>
 
