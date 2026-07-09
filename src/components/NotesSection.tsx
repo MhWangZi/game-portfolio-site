@@ -2,30 +2,30 @@ const notes = [
   {
     label: 'Combat',
     question: '弹反为什么容易形成记忆点？',
-    observation: '防御、读招、时机和反击收益被压缩到一个瞬间。',
-    reasoning: '窗口越短，成功反馈越需要清晰；收益越高，失败代价越需要被看见。',
-    adjustment: '继续调整攻击预兆、体力消耗和 Boss 行为，避免单一操作覆盖全部解法。',
+    observation: '防御、读招和反击收益集中在同一瞬间。',
+    adjustment: '强化攻击预兆，保留体力消耗。',
+    result: '成功更清楚，失败代价更可见。',
   },
   {
     label: 'Economy',
     question: '搜打撤经济的风险感来自哪里？',
-    observation: '风险感同时来自入局成本、撤离收益、交易流通和系统回收。',
-    reasoning: '只观察货币产出会漏掉失败损失、仓储压力和下一局动机。',
-    adjustment: '把资源来源、消耗、回收与保险机制拆成同一张流转表继续观察。',
+    observation: '入局成本、撤离收益和仓储压力共同生效。',
+    adjustment: '把来源、消耗、回收放进同一张流转表。',
+    result: '风险判断不只停留在产出数量。',
   },
   {
     label: 'Narrative',
     question: '规则怪谈文字冒险需要什么压力？',
-    observation: '静态文本容易变成线性阅读，行动点和风险值能让阅读产生代价。',
-    reasoning: '身份差异文本和多结局会让同一线索在不同角色下产生不同权重。',
-    adjustment: '减少无效选项，强化关键线索、风险阈值和结局条件之间的关系。',
+    observation: '静态文本容易滑向线性阅读。',
+    adjustment: '用行动点、风险值和身份差异制造代价。',
+    result: '同一线索在不同角色下出现权重差。',
   },
   {
     label: 'Tooling',
     question: '工具插件解决的是哪一步卡点？',
-    observation: '遮挡、碰撞、地图底图、角色库和 NPC 配置容易打断新手制作流程。',
-    reasoning: '高频但重复的节点操作适合被收束成可视化按钮、表单和检查项。',
-    adjustment: '继续把场景体检、旧场景升级和角色包导入导出整理成稳定路径。',
+    observation: '遮挡、碰撞和 NPC 配置容易打断制作节奏。',
+    adjustment: '把高频节点操作收进按钮、表单和检查项。',
+    result: '新手流程更连续，迭代路径更短。',
   },
 ]
 
@@ -35,7 +35,7 @@ export function NotesSection() {
       <div className="section-heading compact">
         <p className="eyebrow">NOTES / DESIGN OBSERVATION</p>
         <h2>设计笔记</h2>
-        <p>关于规则、数值、关卡、反馈和玩家选择的短记录。篇幅不长，重点放在问题本身和推导过程。</p>
+        <p>短问题，短观察，保留可继续调整的入口。</p>
       </div>
       <div className="notes-grid">
         {notes.map((note, index) => (
@@ -48,12 +48,12 @@ export function NotesSection() {
                 <dd>{note.observation}</dd>
               </div>
               <div>
-                <dt>推导</dt>
-                <dd>{note.reasoning}</dd>
+                <dt>调整</dt>
+                <dd>{note.adjustment}</dd>
               </div>
               <div>
-                <dt>可能的调整</dt>
-                <dd>{note.adjustment}</dd>
+                <dt>结果</dt>
+                <dd>{note.result}</dd>
               </div>
             </dl>
           </article>

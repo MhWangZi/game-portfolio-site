@@ -1044,6 +1044,50 @@ code {
   overflow: hidden;
 }
 
+.detail-media-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+}
+
+.detail-media-actions button,
+.detail-media-actions span {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  color: var(--text);
+  background: rgba(8, 10, 15, 0.72);
+  border: 1px solid rgba(242, 184, 96, 0.25);
+  border-radius: 999px;
+  backdrop-filter: blur(14px);
+  font-size: 0.72rem;
+}
+
+.detail-media-actions button {
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.detail-media-actions button:hover,
+.detail-media-actions button:focus-visible {
+  color: var(--accent);
+  background: rgba(242, 184, 96, 0.12);
+  border-color: rgba(242, 184, 96, 0.48);
+  transform: translateY(-2px);
+}
+
 .detail-media img,
 .detail-media video {
   width: 100%;
@@ -1064,22 +1108,30 @@ code {
 
 .detail-media-gallery {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
-.detail-media-gallery figure {
+.detail-media-gallery button {
   position: relative;
   min-width: 0;
   padding: 8px;
   margin: 0;
   overflow: hidden;
+  color: var(--muted);
+  text-align: left;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
 }
 
-.detail-media-gallery figure::after {
+.detail-media-gallery button::after {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -1092,8 +1144,38 @@ code {
   transition: opacity 180ms ease;
 }
 
-.detail-media-gallery figure:hover::after {
+.detail-media-gallery button:hover,
+.detail-media-gallery button:focus-visible,
+.detail-media-gallery button.active {
+  color: var(--text);
+  border-color: rgba(242, 184, 96, 0.42);
+  background:
+    linear-gradient(145deg, rgba(242, 184, 96, 0.1), rgba(255, 255, 255, 0.032)),
+    rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+}
+
+.detail-media-gallery button:hover::after,
+.detail-media-gallery button:focus-visible::after,
+.detail-media-gallery button.active::after {
   opacity: 1;
+}
+
+.detail-media-gallery button > span {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--accent);
+  background: rgba(8, 10, 15, 0.7);
+  border: 1px solid rgba(242, 184, 96, 0.26);
+  border-radius: 999px;
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.68rem;
 }
 
 .detail-media-gallery img {
@@ -1103,11 +1185,17 @@ code {
   border-radius: 5px;
 }
 
-.detail-media-gallery figcaption {
+.detail-media-gallery strong {
+  display: -webkit-box;
+  min-height: 2.8em;
   padding-top: 7px;
+  overflow: hidden;
   color: var(--muted);
   font-size: 0.78rem;
+  font-weight: 520;
   line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .detail-flow {
@@ -2039,6 +2127,19 @@ main > section {
     min-height: 180px;
   }
 
+  .detail-media-actions {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 10px 10px 0;
+  }
+
+  .detail-media-actions button,
+  .detail-media-actions span {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
   .detail-media-gallery {
     grid-template-columns: 1fr;
   }
@@ -2136,6 +2237,18 @@ main > section {
   min-height: 190px;
 }
 
+.focus-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background: rgba(242, 184, 96, 0.08);
+  border: 1px solid rgba(242, 184, 96, 0.25);
+  border-radius: 9px;
+}
+
 .about-card svg,
 .process-step span,
 .note-card span {
@@ -2154,6 +2267,26 @@ main > section {
 .process-step p {
   color: var(--muted);
   line-height: 1.68;
+}
+
+.focus-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.focus-tags span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 9px;
+  color: var(--accent);
+  background: rgba(242, 184, 96, 0.07);
+  border: 1px solid rgba(242, 184, 96, 0.2);
+  border-radius: 999px;
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.72rem;
 }
 
 .notes-grid {

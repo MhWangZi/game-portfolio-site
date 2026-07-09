@@ -77,6 +77,18 @@ const archiveCases: ArchiveCase[] = [
     metrics: ['Tooling', 'Scene', 'Layer', 'Prototype'],
     buttonLabel: '查看记录',
   },
+  {
+    id: 'static-signal',
+    caseNo: 'CASE 04',
+    title: 'STATIC SIGNAL',
+    subtitle: '行动点、风险值与分支阅读压力',
+    description: '用身份差异、调查成本和多结局，测试文字冒险的选择重量。',
+    image: './media/portfolio/static-signal-interface.png',
+    imageAlt: 'STATIC SIGNAL 静默信号网页文字冒险界面截图',
+    tags: ['Narrative', 'TRPG', 'Risk', 'Editor'],
+    metrics: ['Web', 'Text', 'AP', 'Branch'],
+    buttonLabel: '阅读记录',
+  },
 ]
 
 const workMap = new Map(works.map((item) => [item.id, item]))
@@ -177,9 +189,7 @@ export function FeaturedProject({ work: _work, onSelect }: FeaturedProjectProps)
       <div className="section-heading archive-carousel-heading">
         <p className="eyebrow">DESIGN ARCHIVE / CASE FILES</p>
         <h2>设计档案</h2>
-        <p>
-          每个条目对应一个具体设计问题：一次战斗节奏的验证，一组资源循环的拆解，或一个交互原型的形成过程。
-        </p>
+        <p>每个条目对应一个具体设计问题。</p>
       </div>
 
       <div
@@ -257,7 +267,7 @@ export function FeaturedProject({ work: _work, onSelect }: FeaturedProjectProps)
             <Sparkles size={17} />
             <div>
               <strong>设计问题</strong>
-              <span>{activeWork?.oneLine ?? activeWork?.summary ?? activeCase.description}</span>
+              <span>{activeCase.description}</span>
             </div>
           </div>
 

@@ -1,4 +1,4 @@
-import { Code, ExternalLink, Mail, MapPin, Video } from 'lucide-react'
+import { Code, ExternalLink, Mail, Radio, Video } from 'lucide-react'
 
 const contactItems = [
   {
@@ -17,17 +17,17 @@ const contactItems = [
   },
   {
     icon: Video,
-    label: '演示视频',
-    value: '原型与工具演示',
-    href: 'https://www.bilibili.com/video/BV1maTC6REzh/',
+    label: 'Bilibili',
+    value: '教程视频与更新',
+    href: 'https://space.bilibili.com/94407611',
     external: true,
   },
   {
-    icon: MapPin,
-    label: '返回顶部',
-    value: '重新浏览',
-    href: '#top',
-    external: false,
+    icon: Radio,
+    label: '抖音',
+    value: '短视频与过程记录',
+    href: 'https://v.douyin.com/KtkwFjtQ7G8/',
+    external: true,
   },
 ]
 

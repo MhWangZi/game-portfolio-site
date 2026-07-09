@@ -9,10 +9,10 @@ type HeroProps = {
 }
 
 const posterLinks = [
-  { index: '01', label: 'FOCUS', caption: '设计命题', href: '#about' },
-  { index: '02', label: 'LOGS', caption: '原型迭代', href: '#projects' },
-  { index: '03', label: 'NOTES', caption: '设计笔记', href: '#notes' },
-  { index: '04', label: 'PROCESS', caption: '设计方法', href: '#process' },
+  { index: '01', label: 'FOCUS', caption: '当前关注', href: '#about' },
+  { index: '02', label: 'ARCHIVE', caption: '设计档案', href: '#featured' },
+  { index: '03', label: 'LOGS', caption: '近期迭代', href: '#projects' },
+  { index: '04', label: 'NOTES', caption: '设计笔记', href: '#notes' },
   { index: '05', label: 'CONTACT', caption: '保持联系', href: '#contact' },
 ]
 
@@ -26,11 +26,8 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
       <div className="hero-copy" data-hero-block>
         <p className="hero-kicker">GAME DESIGN NOTES / PROTOTYPE LOG</p>
         <h1>玩法原型与系统记录</h1>
-        <p className="hero-subtitle">从规则、节奏到反馈，记录一个设计想法被验证、修正、成形的过程。</p>
-        <p className="hero-summary">
-          收录可运行的小原型、系统拆解、设计笔记与项目复盘。每个条目都围绕一个具体问题展开：
-          规则是否清晰，反馈是否有效，玩家是否愿意继续投入。
-        </p>
+        <p className="hero-subtitle">围绕机制、节奏与反馈展开的长期设计条目。</p>
+        <p className="hero-summary">收录可玩版本、系统分析、设计笔记与近期迭代。</p>
 
         <div className="signal-marquee" aria-hidden="true">
           <div>
@@ -78,7 +75,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
           </div>
           <div className="panel-row">
             <span>记录方向</span>
-            <strong>规则 / 节奏 / 反馈</strong>
+            <strong>机制 / 节奏 / 反馈</strong>
           </div>
           <div className="panel-row">
             <span>设计条目</span>
@@ -90,7 +87,7 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
           </div>
           <div className="panel-row">
             <span>长期命题</span>
-            <strong>原型验证 / 系统拆解 / 玩家选择</strong>
+            <strong>原型 / 系统 / 行为</strong>
           </div>
           <div className="hero-panel-links">
             <a href="#notes">

@@ -1,13 +1,14 @@
 import { BookOpen, Gamepad2, Hammer, Telescope } from 'lucide-react'
 
 const nowItems = [
-  { icon: Gamepad2, title: '原型验证', body: '用可运行版本测试规则是否成立。' },
-  { icon: BookOpen, title: '系统拆解', body: '把数值、循环和反馈关系整理成清晰结构。' },
-  { icon: Telescope, title: '玩家行为观察', body: '记录玩家如何理解目标、做出选择并修正策略。' },
+  { icon: Gamepad2, title: '原型验证', body: '测试一个机制能否成立。', tags: ['Prototype', 'Loop'] },
+  { icon: BookOpen, title: '系统结构', body: '梳理循环、资源与反馈关系。', tags: ['System', 'Flow'] },
+  { icon: Telescope, title: '行为观察', body: '记录选择、误判与调整路径。', tags: ['Player', 'UX'] },
   {
     icon: Hammer,
     title: '工具链整理',
-    body: '优化配置、表格和编辑流程，降低重复成本。',
+    body: '压缩重复流程，提高迭代效率。',
+    tags: ['Tooling', 'Pipeline'],
   },
 ]
 
@@ -17,19 +18,23 @@ export function AboutSection() {
       <div className="section-heading compact">
         <p className="eyebrow">ABOUT / DESIGN FOCUS</p>
         <h2>近期设计命题</h2>
-        <p>
-          规则、节奏、反馈与选择，是整理原型时最常回到的几个入口。每个项目都会从这里开始，
-          被拆开、验证，再重新组合。
-        </p>
+        <p>四个常用入口：机制、结构、行为与工具流。</p>
       </div>
       <div className="about-grid">
         {nowItems.map((item) => {
           const Icon = item.icon
           return (
             <article className="about-card" key={item.title}>
-              <Icon size={18} />
+              <span className="focus-icon">
+                <Icon size={18} />
+              </span>
               <h3>{item.title}</h3>
               <p>{item.body}</p>
+              <div className="focus-tags" aria-label={`${item.title} tags`}>
+                {item.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
             </article>
           )
         })}

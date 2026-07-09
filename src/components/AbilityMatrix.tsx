@@ -7,10 +7,7 @@ export function AbilityMatrix() {
       <div className="section-heading compact">
         <p className="eyebrow">INTERESTS / SYSTEM NOTES</p>
         <h2>长期设计命题</h2>
-        <p>
-          这些条目记录反复出现的问题：玩家为什么继续投入，资源为什么流动，
-          战斗为什么有节奏，一个规则如何变成可玩的体验。
-        </p>
+        <p>反复回到的系统问题与项目切片。</p>
       </div>
 
       <div className="ability-grid">

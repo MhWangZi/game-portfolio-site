@@ -1,9 +1,12 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import {
+  ChevronLeft,
+  ChevronRight,
   ExternalLink,
   FileDown,
   FileText,
+  Images,
   Link,
   PackageCheck,
   Shield,
@@ -51,7 +54,8 @@ function getLinkClass(label: string) {
 export function WorkDetail({ work }: WorkDetailProps) {
   const detailRef = useRef<HTMLElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
-  const mainMedia = work.media[0]
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+  const mainMedia = work.media[activeMediaIndex] ?? work.media[0]
   const mechanicCards = work.id === 'parry-arena' ? parryMechanics : []
   const isPrototype = work.kind === 'Playable Prototype'
   const isTooling = work.kind === 'Tooling Project'
@@ -69,6 +73,15 @@ export function WorkDetail({ work }: WorkDetailProps) {
   const downloadReadout = isTooling ? '可下载插件包' : isPrototype ? '可下载构建包' : '可下载 Word 文档'
   const downloadButtonLabel = isTooling ? '下载插件' : isPrototype ? '下载文件' : '下载文档'
 
+  useEffect(() => {
+    setActiveMediaIndex(0)
+  }, [work.id])
+
+  const switchMedia = (offset: number) => {
+    if (!work.media.length) return
+    setActiveMediaIndex((current) => (current + offset + work.media.length) % work.media.length)
+  }
+
   useLayoutEffect(() => {
     if (reducedMotion || !detailRef.current) return
     gsap.fromTo(
@@ -82,21 +95,47 @@ export function WorkDetail({ work }: WorkDetailProps) {
     <section className="work-detail module-screen" id="work-detail" ref={detailRef}>
       <div className="detail-showcase" data-detail-animate>
         <div className="detail-media">
+          {work.media.length > 1 ? (
+            <div className="detail-media-actions" aria-label={`${work.title} image controls`}>
+              <button type="button" onClick={() => switchMedia(-1)}>
+                <ChevronLeft size={15} />
+                PREV
+              </button>
+              <span>
+                <Images size={15} />
+                {String(activeMediaIndex + 1).padStart(2, '0')} / {String(work.media.length).padStart(2, '0')}
+              </span>
+              <button type="button" onClick={() => switchMedia(1)}>
+                NEXT
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          ) : null}
           {mainMedia?.type === 'video' ? (
-            <video src={mainMedia.src} poster={mainMedia.poster} controls />
+            <video src={mainMedia.src} poster={mainMedia.poster} controls key={mainMedia.src} />
           ) : (
-            <img src={mainMedia?.src ?? './media/portfolio/anchored-gaze.webp'} alt={`${work.title} preview`} />
+            <img
+              src={mainMedia?.src ?? './media/portfolio/anchored-gaze.webp'}
+              alt={mainMedia?.caption ?? `${work.title} preview`}
+              key={mainMedia?.src}
+            />
           )}
           <p>{mainMedia?.caption ?? '项目截图、录屏或网页试玩入口待补充。'}</p>
         </div>
 
         {work.media.length > 1 ? (
-          <div className="detail-media-gallery" aria-label={`${work.title} media gallery`}>
-            {work.media.slice(1).map((item, index) => (
-              <figure key={`${item.src}-${index}`}>
-                <img src={item.poster ?? item.src} alt={item.caption ?? `${work.title} media ${index + 2}`} />
-                <figcaption>{item.caption ?? `记录切片 ${String(index + 2).padStart(2, '0')}`}</figcaption>
-              </figure>
+          <div className="detail-media-gallery" aria-label={`${work.title} media gallery thumbnails`}>
+            {work.media.map((item, index) => (
+              <button
+                type="button"
+                className={index === activeMediaIndex ? 'active' : ''}
+                key={`${item.src}-${index}`}
+                onClick={() => setActiveMediaIndex(index)}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <img src={item.poster ?? item.src} alt={item.caption ?? `${work.title} media ${index + 1}`} />
+                <strong>{item.caption ?? `记录切片 ${String(index + 1).padStart(2, '0')}`}</strong>
+              </button>
             ))}
           </div>
         ) : null}
@@ -162,7 +201,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
           </div>
           <div className="terminal-readout">
             <span>证据入口</span>
-            <span>{work.media[0]?.type === 'video' ? '演示视频' : '截图 / 表格'}</span>
+            <span>{work.media[0]?.type === 'video' ? '演示视频' : '视觉切片'}</span>
             <span>{work.download ? downloadReadout : '拆解档案'}</span>
           </div>
         </div>

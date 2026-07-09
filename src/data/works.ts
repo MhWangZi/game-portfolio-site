@@ -317,13 +317,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/delta-economy-report.jpg',
-        caption: '烽火地带经济拆解图：货币、产出、消耗和回收被放到同一张流转结构中。',
-      },
-      {
-        type: 'image',
-        src: './media/portfolio/delta-economy-table.jpg',
-        caption: '报告表格：资源获取方式、主要用途和风险点的对照记录。',
+        src: './media/portfolio/delta-economy-cover.png',
+        caption: '搜打撤经济主题封面：入局成本、撤离路线、交易与回收被抽象成战术桌面。',
       },
     ],
     download: {
@@ -364,8 +359,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/wuthering-values-report.jpg',
-        caption: '鸣潮数值体系拆解图：属性分层、成长曲线和乘区关系的集中记录。',
+        src: './media/portfolio/wuthering-values-cover.png',
+        caption: 'ARPG 数值体系主题封面：成长曲线、属性层级和战斗收益被抽象成角色构筑画面。',
       },
     ],
     download: {
@@ -406,8 +401,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/equipment-analysis-report.jpg',
-        caption: '装备系统竞品分析长图：声骸、圣遗物和遗器的维度对比。',
+        src: './media/portfolio/equipment-analysis-cover.png',
+        caption: '长线装备系统主题封面：刷取、词条、套装和强化压力被组织为三组装备样张。',
       },
     ],
     download: {
@@ -513,11 +508,6 @@ export const works: WorkItem[] = [
         src: './media/portfolio/roguelite-deadcells-scene.jpg',
         caption: 'Roguelite 拆解素材：Dead Cells 的路线、武器和操作压力。',
       },
-      {
-        type: 'image',
-        src: './media/portfolio/roguelite-system-map.jpg',
-        caption: '双循环对比图：死亡反馈、随机控制和元进度之间的关系。',
-      },
     ],
     download: {
       url: './downloads/roguelite-systems-breakdown.docx',
@@ -530,43 +520,43 @@ export const works: WorkItem[] = [
 export const abilityGroups: AbilityGroup[] = [
   {
     title: '原型验证',
-    summary: '玩法想法会被拆成可运行短循环，通过下载包、演示视频和截图保留验证过程。',
+    summary: '可运行短循环、下载包与截图切片。',
     items: ['Godot 原型', '网页原型', 'Windows Build', '短循环验证'],
     evidence: ['Anchored Gaze', 'Parry Arena', 'STATIC SIGNAL'],
   },
   {
     title: '战斗机制设计',
-    summary: '战斗行为围绕输入、反馈、风险和收益展开，重点记录操作深度的来源。',
+    summary: '输入窗口、风险收益与操作深度。',
     items: ['弹反窗口', '体力消耗', 'Boss 压力', '操作取舍'],
     evidence: ['Parry Arena', '黑神话 × 只狼'],
   },
   {
     title: '系统拆解',
-    summary: '复杂玩法被拆成玩家路径、规则、资源流、循环和设计目的，保留可复查结构。',
+    summary: '玩家路径、资源流与循环目的。',
     items: ['玩家路径', '核心循环', '设计目的', '优化提案'],
     evidence: ['三角洲经济系统', 'Roguelite 系统对比'],
   },
   {
     title: '数值 / 经济分析',
-    summary: '来源、消耗、曲线、乘区、通胀和长期负担是数值与经济观察的主要入口。',
+    summary: '来源、消耗、曲线、乘区和通胀。',
     items: ['资源闭环', '成长曲线', '通胀控制', '乘区结构'],
     evidence: ['三角洲行动', '鸣潮数值体系'],
   },
   {
     title: '叙事系统',
-    summary: '身份、线索、风险、行动点和多结局共同组织文字冒险体验。',
+    summary: '身份、线索、行动点与多结局。',
     items: ['规则怪谈', '线索收集', '多结局', '职业视角'],
     evidence: ['STATIC SIGNAL'],
   },
   {
     title: '竞品分析',
-    summary: '不同产品被放入统一维度比较，观察结果沉淀为可迁移的设计经验。',
+    summary: '统一维度下的产品差异比较。',
     items: ['装备系统', '动作战斗', 'Roguelite', '玩家负担'],
     evidence: ['装备系统竞品分析', '动作战斗系统对比'],
   },
   {
     title: '工具与编辑器实现',
-    summary: '内容、配置、节点操作和场景制作流程被整理为工具，降低后续扩展和新手上手成本。',
+    summary: '配置、节点操作与场景制作工具流。',
     items: ['EditorPlugin', 'JSON 配置', '剧本编辑器', '节点化 UI', '模块化拆分'],
     evidence: ['HD2DKit Godot 插件', '静默信号编辑器', 'Godot 原型模块合集'],
   },

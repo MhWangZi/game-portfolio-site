@@ -21,12 +21,12 @@ function getArchiveCode(kind: WorkKind, index: number) {
 }
 
 function getLearningLine(work: WorkItem) {
-  if (work.id === 'hd2d-kit') return '记录 Godot 新手工具流：遮挡、碰撞、地图、角色库和 NPC 配置被组织成可重复步骤。'
-  if (work.id === 'parry-arena') return '验证防守行为转化为进攻来源时，弹反窗口、体力消耗和敌人压力之间的边界。'
-  if (work.id === 'anchored-gaze') return '测试“攻击改变空间结构”在追击、控场和逃脱之间形成的取舍。'
-  if (work.id === 'static-signal') return '记录文字冒险里的行动点、风险值和分支压力如何改变阅读节奏。'
-  if (work.kind === 'Playable Prototype') return '验证一个小循环能否跑通，以及哪些规则值得进入下一轮。'
-  return '条目记录玩家路径、资源循环和设计取舍，保留可复查的结构。'
+  if (work.id === 'hd2d-kit') return '工具流：遮挡、碰撞、地图与 NPC 配置。'
+  if (work.id === 'parry-arena') return '焦点：弹反窗口、体力消耗、敌人压力。'
+  if (work.id === 'anchored-gaze') return '焦点：视线、距离、空间封锁。'
+  if (work.id === 'static-signal') return '焦点：行动点、风险值、分支压力。'
+  if (work.kind === 'Playable Prototype') return '焦点：短循环与下一版。'
+  return '焦点：路径、资源与取舍。'
 }
 
 export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps) {
@@ -54,9 +54,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
       <div className="section-heading registry-heading">
         <p className="eyebrow">RECENT / PROTOTYPE LOG</p>
         <h2>近期原型迭代</h2>
-        <p>
-          当前推进中的可玩版本，记录规则边界、反馈节奏、操作手感和下一轮调整方向。
-        </p>
+        <p>当前推进中的可玩版本，持续更新规则边界、反馈表现与下一轮调整方向。</p>
       </div>
 
       <div className="filter-row" aria-label="Work filters">
