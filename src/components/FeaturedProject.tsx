@@ -11,7 +11,6 @@ import {
 import {
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -43,23 +42,11 @@ type Direction = 'next' | 'prev'
 
 const archiveCases: ArchiveCase[] = [
   {
-    id: 'hd2d-kit',
-    caseNo: 'CASE 01',
-    title: 'HD2DKit',
-    subtitle: '给 Godot 新手使用的 HD-2D 场景与角色工具插件',
-    description: '我把遮挡、碰撞、地图底图、角色库、NPC 对话和商店配置整理成编辑器侧边栏，让不熟悉引擎的人也能按流程搭出场景。',
-    image: './media/portfolio/hd2d-kit-cover.png',
-    imageAlt: 'HD2DKit Godot 新手工具插件功能封面',
-    tags: ['Godot', 'Tooling', 'HD-2D', 'No-code'],
-    metrics: ['Tooling', 'EditorPlugin', 'Workflow', 'Tutorial'],
-    buttonLabel: '查看工具记录',
-  },
-  {
     id: 'parry-arena',
-    caseNo: 'CASE 02',
+    caseNo: 'CASE 01',
     title: 'Parry Arena',
-    subtitle: '一个围绕“防反时机”构建的战斗原型',
-    description: '我用这个原型验证玩家在高压战斗中如何识别攻击节奏、承担风险并获得反馈。',
+    subtitle: '围绕防反时机构建的战斗原型',
+    description: '通过攻击预兆、判定窗口和反馈节奏，测试高压战斗中的风险与回报。',
     image: './media/portfolio/parry-arena-gameplay.png',
     imageAlt: 'Parry Arena 弹反竞技场实机战斗截图',
     tags: ['Combat', 'Prototype', 'Timing', 'Feedback'],
@@ -68,10 +55,10 @@ const archiveCases: ArchiveCase[] = [
   },
   {
     id: 'anchored-gaze',
-    caseNo: 'CASE 03',
+    caseNo: 'CASE 02',
     title: 'Anchored Gaze',
-    subtitle: '关于观察、凝视与空间压迫感的交互实验',
-    description: '尝试用视线、距离和环境反馈制造不安感，而不是单纯依赖怪物追逐。',
+    subtitle: '观察、距离与空间压迫感的交互实验',
+    description: '用视线、环境反馈和移动限制，建立缓慢累积的不安感。',
     image: './media/portfolio/anchored-gaze-cover.png',
     imageAlt: 'Anchored Gaze 万众瞩目标题界面截图',
     tags: ['Horror', 'Interaction', 'Atmosphere', 'Level Design'],
@@ -79,28 +66,16 @@ const archiveCases: ArchiveCase[] = [
     buttonLabel: '查看设计记录',
   },
   {
-    id: 'static-signal',
-    caseNo: 'CASE 04',
-    title: 'STATIC SIGNAL',
-    subtitle: '用规则怪谈搭建文字冒险的压力结构',
-    description: '通过行动点、风险值、线索和身份差异文本，让阅读过程也有选择和代价。',
-    image: './media/portfolio/static-signal-interface.png',
-    imageAlt: 'STATIC SIGNAL 静默信号身份选择界面截图',
-    tags: ['Narrative', 'TRPG', 'Interaction', 'Editor'],
-    metrics: ['Narrative', 'System', 'UX', 'Tools'],
-    buttonLabel: '查看设计记录',
-  },
-  {
-    id: 'delta-economy',
-    caseNo: 'CASE 05',
-    title: 'System Breakdown',
-    subtitle: '把复杂系统拆成规则、反馈和玩家选择',
-    description: '这里记录我如何分析一个机制是否清晰、是否可复用、是否能形成长期决策。',
-    image: './media/portfolio/delta-economy.webp',
-    imageAlt: '三角洲行动烽火地带经济系统拆解图',
-    tags: ['System', 'Analysis', 'Design Notes'],
-    metrics: ['System', 'Economy', 'Loop', 'Choice'],
-    buttonLabel: '阅读拆解',
+    id: 'hd2d-kit',
+    caseNo: 'CASE 03',
+    title: 'HD2D Kit',
+    subtitle: '像素场景与镜头层次的视觉实验',
+    description: '整理光照、层级、材质和镜头参数，形成可复用的场景搭建流程。',
+    image: './media/portfolio/hd2d-kit-cover.png',
+    imageAlt: 'HD2D Kit 工具与像素角色资源封面',
+    tags: ['Godot', 'Tooling', 'HD-2D', 'Workflow'],
+    metrics: ['Tooling', 'Scene', 'Layer', 'Prototype'],
+    buttonLabel: '查看记录',
   },
 ]
 
@@ -110,12 +85,8 @@ function wrapIndex(index: number) {
   return (index + archiveCases.length) % archiveCases.length
 }
 
-export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
-  const initialIndex = useMemo(() => {
-    const index = archiveCases.findIndex((item) => item.id === work.id)
-    return index >= 0 ? index : 0
-  }, [work.id])
-  const [activeIndex, setActiveIndex] = useState(initialIndex)
+export function FeaturedProject({ work: _work, onSelect }: FeaturedProjectProps) {
+  const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState<Direction>('next')
   const [isHoverPaused, setIsHoverPaused] = useState(false)
   const [pulseKey, setPulseKey] = useState(0)
@@ -204,11 +175,10 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
   return (
     <section className="featured-section archive-carousel-section personal-section" id="featured">
       <div className="section-heading archive-carousel-heading">
-        <p className="eyebrow">DESIGN ARCHIVE / PROTOTYPE LOG</p>
-        <h2>翻开我的近期设计记录</h2>
+        <p className="eyebrow">DESIGN ARCHIVE / CASE FILES</p>
+        <h2>设计档案</h2>
         <p>
-          我把几个项目整理成“打开一页档案”的形式：看截图、看当时想验证的问题，
-          也能直接跳到记录和下载包。
+          每个条目对应一个具体设计问题：一次战斗节奏的验证，一组资源循环的拆解，或一个交互原型的形成过程。
         </p>
       </div>
 
@@ -286,7 +256,7 @@ export function FeaturedProject({ work, onSelect }: FeaturedProjectProps) {
           <div className="archive-insight-card">
             <Sparkles size={17} />
             <div>
-              <strong>这页记录我在看什么</strong>
+              <strong>设计问题</strong>
               <span>{activeWork?.oneLine ?? activeWork?.summary ?? activeCase.description}</span>
             </div>
           </div>

@@ -5,11 +5,11 @@ export function AbilityMatrix() {
   return (
     <section className="section-shell interest-section" id="interests">
       <div className="section-heading compact">
-        <p className="eyebrow">INTERESTS / SYSTEMS I WATCH</p>
-        <h2>我喜欢研究的系统</h2>
+        <p className="eyebrow">INTERESTS / SYSTEM NOTES</p>
+        <h2>长期设计命题</h2>
         <p>
-          这些不是简历式能力标签，而是我反复会回到的几个问题：玩家为什么继续玩、资源为什么流动、
-          战斗为什么有节奏、一个规则如何变成可玩的体验。
+          这些条目记录反复出现的问题：玩家为什么继续投入，资源为什么流动，
+          战斗为什么有节奏，一个规则如何变成可玩的体验。
         </p>
       </div>
 
@@ -29,7 +29,7 @@ export function AbilityMatrix() {
             </div>
             {group.evidence?.length ? (
               <div className="evidence-list">
-                <strong>相关记录</strong>
+                <strong>关联记录</strong>
                 {group.evidence.map((item) => (
                   <span key={item}>
                     <BadgeCheck size={14} />

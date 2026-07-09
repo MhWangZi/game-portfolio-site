@@ -87,8 +87,19 @@ export function WorkDetail({ work }: WorkDetailProps) {
           ) : (
             <img src={mainMedia?.src ?? './media/portfolio/anchored-gaze.webp'} alt={`${work.title} preview`} />
           )}
-          <p>{mainMedia?.caption ?? '作品截图、录屏或网页试玩入口待补充。'}</p>
+          <p>{mainMedia?.caption ?? '项目截图、录屏或网页试玩入口待补充。'}</p>
         </div>
+
+        {work.media.length > 1 ? (
+          <div className="detail-media-gallery" aria-label={`${work.title} media gallery`}>
+            {work.media.slice(1).map((item, index) => (
+              <figure key={`${item.src}-${index}`}>
+                <img src={item.poster ?? item.src} alt={item.caption ?? `${work.title} media ${index + 2}`} />
+                <figcaption>{item.caption ?? `记录切片 ${String(index + 2).padStart(2, '0')}`}</figcaption>
+              </figure>
+            ))}
+          </div>
+        ) : null}
 
         {work.flow?.length ? (
           <div className="detail-flow" aria-label={`${work.title} design flow`}>
@@ -159,7 +170,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
 
       <div className="detail-copy" id={work.id} data-detail-animate>
         <div className="detail-title-block">
-          <p className="eyebrow">OPEN FILE / {work.kind ?? 'Portfolio Case'}</p>
+          <p className="eyebrow">OPEN FILE / {work.kind ?? 'Design Case'}</p>
           <h2>{work.title}</h2>
           <p className="detail-summary">{work.summary}</p>
         </div>
@@ -202,7 +213,7 @@ export function WorkDetail({ work }: WorkDetailProps) {
         <div className="contribution-block">
           <div className="detail-subhead">
             <span>MY WORK</span>
-            <strong>我负责 / 可证明的部分</strong>
+            <strong>执行记录 / 可复查部分</strong>
           </div>
           <ul>
             {work.contribution.map((item) => (

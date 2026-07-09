@@ -21,12 +21,12 @@ function getArchiveCode(kind: WorkKind, index: number) {
 }
 
 function getLearningLine(work: WorkItem) {
-  if (work.id === 'hd2d-kit') return '我最近在做这个 Godot 插件：把遮挡、碰撞、地图、角色库和 NPC 配置整理成新手能按步骤使用的工具流。'
-  if (work.id === 'parry-arena') return '我在这里练习把防守行为做成主要进攻来源，并控制弹反的收益边界。'
-  if (work.id === 'anchored-gaze') return '我想看“攻击改变空间结构”能不能带来追击、控场和逃脱之间的取舍。'
-  if (work.id === 'static-signal') return '我在尝试让文字冒险不只靠阅读推进，而是有风险、行动点和分支压力。'
-  if (work.kind === 'Playable Prototype') return '这个项目主要用于验证一个小循环是否能跑起来，以及哪些规则值得继续做。'
-  return '这是一篇系统观察，我把玩家路径、资源循环和设计取舍整理成可以复查的结构。'
+  if (work.id === 'hd2d-kit') return '记录 Godot 新手工具流：遮挡、碰撞、地图、角色库和 NPC 配置被组织成可重复步骤。'
+  if (work.id === 'parry-arena') return '验证防守行为转化为进攻来源时，弹反窗口、体力消耗和敌人压力之间的边界。'
+  if (work.id === 'anchored-gaze') return '测试“攻击改变空间结构”在追击、控场和逃脱之间形成的取舍。'
+  if (work.id === 'static-signal') return '记录文字冒险里的行动点、风险值和分支压力如何改变阅读节奏。'
+  if (work.kind === 'Playable Prototype') return '验证一个小循环能否跑通，以及哪些规则值得进入下一轮。'
+  return '条目记录玩家路径、资源循环和设计取舍，保留可复查的结构。'
 }
 
 export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps) {
@@ -52,11 +52,10 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
   return (
     <section className="section-shell projects-section" id="projects">
       <div className="section-heading registry-heading">
-        <p className="eyebrow">PROJECTS / RECENT WORK</p>
-        <h2>近期项目</h2>
+        <p className="eyebrow">RECENT / PROTOTYPE LOG</p>
+        <h2>近期原型迭代</h2>
         <p>
-          有些是能下载试玩的小原型，有些是系统拆解和竞品观察。它们共同记录我如何把一个问题拆成规则、
-          循环、玩家选择和下一步改动。
+          当前推进中的可玩版本，记录规则边界、反馈节奏、操作手感和下一轮调整方向。
         </p>
       </div>
 
@@ -133,7 +132,7 @@ export function WorkRegistry({ works, selectedId, onSelect }: WorkRegistryProps)
                 ))}
               </span>
               <span className="card-cta">
-                查看记录
+                查看设计记录
                 <ArrowRight size={15} />
               </span>
             </button>

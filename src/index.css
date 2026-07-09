@@ -1062,6 +1062,54 @@ code {
   font-size: 0.9rem;
 }
 
+.detail-media-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.detail-media-gallery figure {
+  position: relative;
+  min-width: 0;
+  padding: 8px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.detail-media-gallery figure::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(transparent 50%, rgba(255, 255, 255, 0.025) 51%),
+    linear-gradient(110deg, transparent, rgba(242, 184, 96, 0.1), transparent);
+  background-size: 100% 4px, 180% 100%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.detail-media-gallery figure:hover::after {
+  opacity: 1;
+}
+
+.detail-media-gallery img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.detail-media-gallery figcaption {
+  padding-top: 7px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
 .detail-flow {
   display: grid;
   gap: 12px;
@@ -1990,6 +2038,10 @@ main > section {
   .detail-terminal-card {
     min-height: 180px;
   }
+
+  .detail-media-gallery {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2121,6 +2173,32 @@ main > section {
 .note-card h3 {
   font-size: clamp(1.18rem, 1.8vw, 1.48rem);
   line-height: 1.25;
+}
+
+.note-structure {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+
+.note-structure div {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.note-structure dt {
+  margin-bottom: 4px;
+  color: var(--accent);
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.note-structure dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.58;
 }
 
 .process-line {

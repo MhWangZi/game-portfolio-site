@@ -30,7 +30,7 @@ export function BootOverlay() {
           <i />
           <i />
         </div>
-        <div className="boot-title">打开游戏设计笔记</div>
+        <div className="boot-title">载入设计档案</div>
         <div className="boot-progress">
           <span />
         </div>

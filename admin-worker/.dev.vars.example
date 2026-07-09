@@ -1,0 +1,4 @@
+ADMIN_PASSWORD_HASH="$argon2id$v=19$m=65536,t=3,p=1$replace_salt$replace_hash"
+ADMIN_PEPPER="replace_with_long_random_pepper"
+SESSION_SECRET="replace_with_long_random_session_secret"
+SESSION_TTL_SECONDS="7200"

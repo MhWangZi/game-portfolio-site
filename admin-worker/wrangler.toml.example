@@ -1,0 +1,14 @@
+name = "design-archive-admin"
+main = "src/worker.js"
+compatibility_date = "2026-07-09"
+
+# For a real /admin path, put the public site behind Cloudflare and bind this
+# Worker to the same hostname route, for example:
+# route = "example.com/admin*"
+#
+# If the site stays on the default GitHub Pages hostname, deploy this Worker to
+# its workers.dev domain or a Cloudflare custom domain and link to that URL.
+
+[[kv_namespaces]]
+binding = "DESIGN_ARCHIVE_KV"
+id = "replace_with_cloudflare_kv_namespace_id"

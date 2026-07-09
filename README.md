@@ -1,6 +1,6 @@
-# 个人游戏作品集网站
+# 游戏设计笔记
 
-一个面向招聘/实习的游戏作品集网站原型，使用 Vite + React + TypeScript + Tailwind CSS + Three.js + GSAP。
+一个静态个人站点，用于记录玩法原型、系统拆解、设计笔记与项目复盘。前台使用 Vite + React + TypeScript + Three.js + GSAP，部署到 GitHub Pages。
 
 ## 本地运行
 
@@ -9,28 +9,21 @@ npm install
 npm run dev
 ```
 
-## 构建
+## 构建与预览
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## 发布到 GitHub Pages
+## 内容维护
 
-1. 用 GitHub Desktop 登录你的 GitHub 账号。
-2. 添加这个本地仓库：`C:\Users\31595\Documents\Codex\2026-07-08\w\work\game-portfolio-site`
-3. 点击 Publish repository，仓库名建议用 `game-portfolio-site`。
-4. 在 GitHub 网页仓库中打开 Settings -> Pages。
-5. Source 选择 GitHub Actions。
-6. 推送到 `main` 后，`.github/workflows/deploy.yml` 会自动构建并发布 `dist`。
-
-## 替换你的真实内容
-
-- 作品数据：`src/data/works.ts`
+- 条目数据：`src/data/works.ts`
 - 类型定义：`src/types.ts`
-- 截图/视频：`public/media/`
-- Windows EXE 下载包：替换 `public/downloads/windows-demo-placeholder.zip`
-- 联系方式：`src/components/SiteFooter.tsx`
+- 图片与视频：`public/media/`
+- 下载文件：`public/downloads/`
+- 联系入口：`src/components/SiteFooter.tsx`
 
-当前站点只提供“视频/截图 + EXE 下载”的 v1 路线，不在浏览器中直接执行 `.exe`。未来如果有 Godot Web 或 Unity WebGL 构建，可以把作品数据扩展为 iframe/web-playable 入口。
+## 后台入口
+
+安全后台不放在 GitHub Pages 前端内。Cloudflare Workers 方案位于 `admin-worker/`，密码哈希、pepper 和 session secret 需要通过 Workers Secrets 配置。

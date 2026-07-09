@@ -12,7 +12,7 @@ export const works: WorkItem[] = [
     period: '2026-06 至 2026-07 / v1.76',
     summary:
       '面向 Godot 新手的 HD-2D 场景工具包。把地图底图、Y-Sort 遮挡、碰撞绘制、角色创建、角色库、NPC 对话和商店配置收进一个编辑器侧边栏。',
-    oneLine: '把遮挡、碰撞、地图、角色库和 NPC 配置做成新手能直接点选的 Godot 侧边栏工具。',
+    oneLine: '遮挡、碰撞、地图、角色库和 NPC 配置被收束为可直接点选的 Godot 侧边栏工具。',
     contribution: [
       '实现 Godot EditorPlugin 与右侧 Dock，把场景、工具、主角、角色库、NPC、物品和设置组织成分页工作流。',
       '提供地图底图生成、Camera2D 边界设置、Y-Sort 结构初始化、旧场景升级和场景体检，减少新手手动搭节点的成本。',
@@ -28,7 +28,7 @@ export const works: WorkItem[] = [
       { label: '核心用户', value: '不熟悉 Godot 的新手创作者' },
     ],
     designHighlights: [
-      { title: '核心目标', body: '把需要理解节点层级、Y-Sort 和脚本绑定的操作，收束成侧边栏按钮、表单和可视化绘制。' },
+      { title: '核心目标', body: '节点层级、Y-Sort 和脚本绑定被收束成侧边栏按钮、表单和可视化绘制。' },
       { title: '地图工作流', body: '支持生成 BaseMap、Camera2D 边界、Y-Sort 层级，并提供场景体检和旧场景升级入口。' },
       { title: '区域编辑', body: '用点选绘制、Polygon 转换和遮挡物标记处理地图遮挡、碰撞、调节区和物件阴影。' },
       { title: '角色与 NPC', body: '提供主角节点生成、动画绑定、角色库复用、便携角色包、NPC 对话/巡逻/交易和物品库。' },
@@ -66,7 +66,7 @@ export const works: WorkItem[] = [
     contribution: [
       '设计“追击压力 -> 投掷锚石化敌人 -> 生成临时障碍 -> 收集关键锚 -> 倒计时逃脱”的核心循环。',
       '负责 Godot 原型搭建、模块化系统拆分、可调参数资源、中文节点化 UI、教学关卡、音效接入与 Windows 导出。',
-      '将攻击设计为“改变空间结构”而不是简单消灭敌人，让玩家在开路、控场、保命和收集进度之间做取舍。',
+      '攻击会改变空间结构，临时障碍带来开路、控场、保命和收集进度之间的取舍。',
     ],
     skills: ['可玩原型', '核心循环', 'Godot', '关卡教学', '空间控场'],
     visualTheme: 'voxel',
@@ -78,7 +78,7 @@ export const works: WorkItem[] = [
     designHighlights: [
       { title: '核心循环', body: '追击压力、投锚控场、关键锚收集和倒计时逃脱构成完整短局目标。' },
       { title: '玩家决策', body: '玩家需要判断什么时候开路、什么时候保命、什么时候冒险推进收集进度。' },
-      { title: '机制取舍', body: '攻击不直接删除敌人，而是把敌人转化为临时障碍，强化空间规划。' },
+      { title: '机制取舍', body: '敌人会被转化为临时障碍，空间规划成为推进收集目标的关键。' },
       { title: '落地状态', body: '完成可运行 Windows 版本、教学关卡、音效和演示视频，可直接验证玩法。' },
     ],
     flow: ['追击压力', '投掷锚', '石化敌人', '收集关键锚', '倒计时逃脱'],
@@ -87,6 +87,26 @@ export const works: WorkItem[] = [
         type: 'image',
         src: './media/portfolio/anchored-gaze-gameplay.png',
         caption: '万众瞩目实机画面：视线压力、锚点收集与敌群追击的空间关系。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/anchored-gaze-cover.png',
+        caption: '标题界面与主视觉：锚、视线和压迫感被放在同一视觉主题中。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/anchored-gaze-menu.png',
+        caption: '菜单状态：难度、音乐和提示入口为快速测试保留可调参数。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/anchored-gaze-tutorial.png',
+        caption: '教学提示：功能锚、危险锚和回避锚的规则说明。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/anchored-gaze-loading.png',
+        caption: '载入画面：保持同一套红黑手绘视觉符号。',
       },
     ],
     download: {
@@ -109,7 +129,7 @@ export const works: WorkItem[] = [
     period: '2026-06 / 约 1 周',
     summary:
       '2D 像素风弹反生存动作原型。用举盾、精准弹反、闪避和战术补给替代自动攻击堆数值，强调防守反击。',
-    oneLine: '把防守行为变成主要进攻来源，用弹反窗口和体力消耗制造操作选择。',
+    oneLine: '防守行为成为主要进攻来源，弹反窗口和体力消耗制造操作选择。',
     contribution: [
       '构建“波次战斗 -> 宝箱结算 -> 波间商店 -> 道具成长 -> Boss 挑战”的短局循环。',
       '区分普通格挡、完美弹反和闪避：普通格挡稳定但耗体力，完美弹反收益高但有窗口和冷却，Boss 冲撞必须闪避。',
@@ -134,6 +154,26 @@ export const works: WorkItem[] = [
         type: 'image',
         src: './media/portfolio/parry-arena-gameplay.png',
         caption: '弹反竞技场实机画面：波次战斗、敌人站位、体力与资源栏同时构成压力。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/parry-arena-cover.png',
+        caption: '标题界面：高压战斗和弹反主题被压缩成单屏入口。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/parry-arena-shop.png',
+        caption: '波间商店：战斗收益转化为局内成长选择。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/parry-arena-reward.png',
+        caption: '宝箱结算：阶段奖励为下一波构筑方向提供分岔。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/parry-arena-settings.png',
+        caption: '设置界面：用于测试音量、显示和战术补给参数。',
       },
     ],
     download: {
@@ -168,7 +208,7 @@ export const works: WorkItem[] = [
     designHighlights: [
       { title: '核心循环', body: '探索场景、消耗行动点、收集线索、触发风险并进入分支结局。' },
       { title: '玩家决策', body: '玩家要在情报收益、风险增长、身份能力和不可返回地点之间取舍。' },
-      { title: '机制取舍', body: '用 JSON 剧本和编辑器把内容生产从代码中拆开，降低扩展成本。' },
+      { title: '机制取舍', body: 'JSON 剧本和编辑器将内容生产从代码中拆出，降低扩展成本。' },
       { title: '落地状态', body: '提供可下载网页包、默认副本、自定义剧本导入和编辑器测试流程。' },
     ],
     flow: ['选择身份', '调查节点', '2D6 判定', '线索记录', '多结局'],
@@ -177,6 +217,21 @@ export const works: WorkItem[] = [
         type: 'image',
         src: './media/portfolio/static-signal-interface.png',
         caption: '静默信号网页界面：身份差异文本、属性分布与规则怪谈调查入口。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/static-signal-editor.png',
+        caption: '剧本编辑器：节点、选项、条件和效果可以在网页中直接配置。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/static-signal-list.png',
+        caption: '记录列表：线索、状态和历史文本组成调查过程。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/static-signal-story.png',
+        caption: '正文阅读界面：风险提示和选项反馈构成规则怪谈压力。',
       },
     ],
     download: {
@@ -214,7 +269,7 @@ export const works: WorkItem[] = [
     designHighlights: [
       { title: '核心循环', body: '用小型玩法模块验证移动、战斗、场景和 UI 反馈的基本闭环。' },
       { title: '玩家决策', body: '横版射击强调走位与射击节奏，卡牌模块强调出牌顺序和防御结算。' },
-      { title: '机制取舍', body: '优先把场景物件、卡牌和敌人抽到 JSON，减少具体对象耦合。' },
+      { title: '机制取舍', body: '场景物件、卡牌和敌人优先抽到 JSON，减少具体对象耦合。' },
       { title: '落地状态', body: '完成可运行模块、截图证据和可复用配置结构。' },
     ],
     flow: ['移动验证', '场景生成', '碰撞反馈', '卡牌结算', 'UI 刷新'],
@@ -262,8 +317,13 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/delta-economy.webp',
-        caption: '烽火地带货币与资源流转拆解图。',
+        src: './media/portfolio/delta-economy-report.jpg',
+        caption: '烽火地带经济拆解图：货币、产出、消耗和回收被放到同一张流转结构中。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/delta-economy-table.jpg',
+        caption: '报告表格：资源获取方式、主要用途和风险点的对照记录。',
       },
     ],
     download: {
@@ -304,8 +364,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/wuthering-values.webp',
-        caption: '鸣潮属性与成长曲线拆解表格。',
+        src: './media/portfolio/wuthering-values-report.jpg',
+        caption: '鸣潮数值体系拆解图：属性分层、成长曲线和乘区关系的集中记录。',
       },
     ],
     download: {
@@ -346,8 +406,8 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/equipment-analysis.webp',
-        caption: '三款长线养成游戏装备系统对比表。',
+        src: './media/portfolio/equipment-analysis-report.jpg',
+        caption: '装备系统竞品分析长图：声骸、圣遗物和遗器的维度对比。',
       },
     ],
     download: {
@@ -388,8 +448,23 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/action-combat.webp',
-        caption: '黑神话与只狼战斗系统差异拆解表。',
+        src: './media/portfolio/action-combat-dragon.jpg',
+        caption: '动作战斗拆解素材：黑神话高压战斗场景与动作反馈。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/action-combat-wukong-title.jpg',
+        caption: '黑神话标题素材：多手段动作系统的分析对象。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/action-combat-sekiro-title.jpg',
+        caption: '只狼标题素材：高精度弹刀循环的分析对象。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/action-combat-gameplay.jpg',
+        caption: '动作战斗实机素材：读招、窗口和资源调度的观察入口。',
       },
     ],
     download: {
@@ -430,8 +505,18 @@ export const works: WorkItem[] = [
     media: [
       {
         type: 'image',
-        src: './media/portfolio/roguelite-systems.webp',
-        caption: 'Hades 与 Dead Cells 双循环、随机性和元进度对比表。',
+        src: './media/portfolio/roguelite-hades-scene.jpg',
+        caption: 'Roguelite 拆解素材：Hades 的局内战斗与局外叙事推进。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/roguelite-deadcells-scene.jpg',
+        caption: 'Roguelite 拆解素材：Dead Cells 的路线、武器和操作压力。',
+      },
+      {
+        type: 'image',
+        src: './media/portfolio/roguelite-system-map.jpg',
+        caption: '双循环对比图：死亡反馈、随机控制和元进度之间的关系。',
       },
     ],
     download: {
@@ -445,43 +530,43 @@ export const works: WorkItem[] = [
 export const abilityGroups: AbilityGroup[] = [
   {
     title: '原型验证',
-    summary: '能把玩法想法拆成可运行短循环，用下载包、演示视频和截图验证规则是否成立。',
+    summary: '玩法想法会被拆成可运行短循环，通过下载包、演示视频和截图保留验证过程。',
     items: ['Godot 原型', '网页原型', 'Windows Build', '短循环验证'],
     evidence: ['Anchored Gaze', 'Parry Arena', 'STATIC SIGNAL'],
   },
   {
     title: '战斗机制设计',
-    summary: '能围绕输入、反馈、风险和收益设计战斗行为，并说明操作深度的来源。',
+    summary: '战斗行为围绕输入、反馈、风险和收益展开，重点记录操作深度的来源。',
     items: ['弹反窗口', '体力消耗', 'Boss 压力', '操作取舍'],
     evidence: ['Parry Arena', '黑神话 × 只狼'],
   },
   {
     title: '系统拆解',
-    summary: '能把复杂玩法拆成玩家路径、规则、资源流、循环和设计目的，而不是只做描述。',
+    summary: '复杂玩法被拆成玩家路径、规则、资源流、循环和设计目的，保留可复查结构。',
     items: ['玩家路径', '核心循环', '设计目的', '优化提案'],
     evidence: ['三角洲经济系统', 'Roguelite 系统对比'],
   },
   {
     title: '数值 / 经济分析',
-    summary: '能关注来源、消耗、曲线、乘区、通胀和长期负担，并给出结构化判断。',
+    summary: '来源、消耗、曲线、乘区、通胀和长期负担是数值与经济观察的主要入口。',
     items: ['资源闭环', '成长曲线', '通胀控制', '乘区结构'],
     evidence: ['三角洲行动', '鸣潮数值体系'],
   },
   {
     title: '叙事系统',
-    summary: '能用身份、线索、风险、行动点和多结局组织文字冒险体验。',
+    summary: '身份、线索、风险、行动点和多结局共同组织文字冒险体验。',
     items: ['规则怪谈', '线索收集', '多结局', '职业视角'],
     evidence: ['STATIC SIGNAL'],
   },
   {
     title: '竞品分析',
-    summary: '能用统一维度比较不同产品，把观察转化为可迁移的设计经验。',
+    summary: '不同产品被放入统一维度比较，观察结果沉淀为可迁移的设计经验。',
     items: ['装备系统', '动作战斗', 'Roguelite', '玩家负担'],
     evidence: ['装备系统竞品分析', '动作战斗系统对比'],
   },
   {
     title: '工具与编辑器实现',
-    summary: '能把内容、配置、节点操作和场景制作流程做成工具，降低后续扩展和新手上手成本。',
+    summary: '内容、配置、节点操作和场景制作流程被整理为工具，降低后续扩展和新手上手成本。',
     items: ['EditorPlugin', 'JSON 配置', '剧本编辑器', '节点化 UI', '模块化拆分'],
     evidence: ['HD2DKit Godot 插件', '静默信号编辑器', 'Godot 原型模块合集'],
   },

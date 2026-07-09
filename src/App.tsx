@@ -62,14 +62,14 @@ function App() {
       <PortfolioScene theme={selectedWork.visualTheme ?? 'particles'} />
       <div className="content-layer">
         <header className="topbar">
-          <a className="brand-mark" href="#top" aria-label="回到首页">
-            <span>YYQ</span>
+          <a className="brand-mark" href="#top" aria-label="回到顶部">
+            <span>GDN</span>
             <strong>Game Design Notes</strong>
           </a>
           <nav aria-label="Primary navigation">
-            <a href="#about">关于</a>
-            <a href="#projects">项目</a>
-            <a href="#notes">笔记</a>
+            <a href="#about">设计命题</a>
+            <a href="#projects">原型迭代</a>
+            <a href="#notes">设计笔记</a>
             <a href="#process">方法</a>
             <a href="#contact">联系</a>
           </nav>

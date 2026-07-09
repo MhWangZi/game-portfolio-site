@@ -1,13 +1,13 @@
 import { BookOpen, Gamepad2, Hammer, Telescope } from 'lucide-react'
 
 const nowItems = [
-  { icon: Gamepad2, title: '做小原型', body: '用 Godot 和网页原型验证一个规则是否真的能玩。' },
-  { icon: BookOpen, title: '写设计笔记', body: '把玩到的系统、数值、循环和体验问题整理成短文。' },
-  { icon: Telescope, title: '观察玩家行为', body: '关心玩家为什么做选择，以及系统如何改变选择。' },
+  { icon: Gamepad2, title: '原型验证', body: '用可运行版本测试规则是否成立。' },
+  { icon: BookOpen, title: '系统拆解', body: '把数值、循环和反馈关系整理成清晰结构。' },
+  { icon: Telescope, title: '玩家行为观察', body: '记录玩家如何理解目标、做出选择并修正策略。' },
   {
     icon: Hammer,
-    title: '做新手工具',
-    body: '最近在做 HD2DKit，把遮挡、碰撞、地图、角色和 NPC 配置收进 Godot 侧边栏，让新手少碰节点和脚本。',
+    title: '工具链整理',
+    body: '优化配置、表格和编辑流程，降低重复成本。',
   },
 ]
 
@@ -15,11 +15,11 @@ export function AboutSection() {
   return (
     <section className="personal-section about-section" id="about">
       <div className="section-heading compact">
-        <p className="eyebrow">ABOUT / CURRENTLY</p>
-        <h2>关于我最近在想的事</h2>
+        <p className="eyebrow">ABOUT / DESIGN FOCUS</p>
+        <h2>近期设计命题</h2>
         <p>
-          我是杨毓琦，喜欢从规则、系统和玩家行为之间找问题。这个站点会持续放一些可运行的小原型、
-          系统拆解和设计笔记，也记录我把想法做成东西的过程。
+          规则、节奏、反馈与选择，是整理原型时最常回到的几个入口。每个项目都会从这里开始，
+          被拆开、验证，再重新组合。
         </p>
       </div>
       <div className="about-grid">

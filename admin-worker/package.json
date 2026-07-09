@@ -1,0 +1,17 @@
+{
+  "name": "design-archive-admin-worker",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local-protocol=https",
+    "deploy": "wrangler deploy",
+    "hash": "node scripts/generate-argon2id-hash.mjs"
+  },
+  "dependencies": {
+    "hash-wasm": "^4.12.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

@@ -9,29 +9,27 @@ type HeroProps = {
 }
 
 const posterLinks = [
-  { index: '01', label: 'ABOUT', caption: '关于我', href: '#about' },
-  { index: '02', label: 'PROJECTS', caption: '近期项目', href: '#projects' },
+  { index: '01', label: 'FOCUS', caption: '设计命题', href: '#about' },
+  { index: '02', label: 'LOGS', caption: '原型迭代', href: '#projects' },
   { index: '03', label: 'NOTES', caption: '设计笔记', href: '#notes' },
   { index: '04', label: 'PROCESS', caption: '设计方法', href: '#process' },
   { index: '05', label: 'CONTACT', caption: '保持联系', href: '#contact' },
 ]
 
 export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryAction }: HeroProps) {
-  const heroDownload = featuredWork.download?.url ?? './downloads/static-signal-web-package.zip'
   const featuredIsTooling = featuredWork.kind === 'Tooling Project'
   const featuredIsSystem = featuredWork.kind === 'System Analysis'
-  const heroDownloadLabel = featuredIsTooling ? '下载插件包' : featuredIsSystem ? '下载文档' : '下载可玩原型'
   const miniDownloadLabel = featuredIsTooling ? '插件包' : featuredIsSystem ? '文档' : '可下载'
 
   return (
     <section className="hero-section module-screen personal-hero" id="top">
       <div className="hero-copy" data-hero-block>
-        <p className="hero-kicker">YANG YUQI / GAME DESIGNER</p>
-        <h1>游戏设计与原型记录</h1>
-        <p className="hero-subtitle">关于规则、系统与玩家体验的个人笔记</p>
+        <p className="hero-kicker">GAME DESIGN NOTES / PROTOTYPE LOG</p>
+        <h1>玩法原型与系统记录</h1>
+        <p className="hero-subtitle">从规则、节奏到反馈，记录一个设计想法被验证、修正、成形的过程。</p>
         <p className="hero-summary">
-          我关注玩法规则、系统结构与玩家行为，也会把自己的设计想法做成可运行的小原型。
-          这里记录近期项目、拆解观察和一些还在迭代中的设计想法。
+          收录可运行的小原型、系统拆解、设计笔记与项目复盘。每个条目都围绕一个具体问题展开：
+          规则是否清晰，反馈是否有效，玩家是否愿意继续投入。
         </p>
 
         <div className="signal-marquee" aria-hidden="true">
@@ -59,20 +57,15 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
         <div className="hero-actions">
           <button className="primary-action" type="button" onClick={onPrimaryAction}>
             <Play size={18} />
-            看近期项目
+            进入设计记录
           </button>
-          <a className="secondary-action strong" href={heroDownload} download>
-            <Download size={18} />
-            {heroDownloadLabel}
+          <a className="secondary-action strong" href="#projects">
+            <ArrowDown size={18} />
+            查看近期原型
           </a>
-          <a
-            className="secondary-action"
-            href="https://github.com/MhWangZi/game-portfolio-site"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="secondary-action" href="#notes">
             <Code size={18} />
-            GitHub
+            阅读设计笔记
           </a>
         </div>
       </div>
@@ -85,10 +78,10 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
           </div>
           <div className="panel-row">
             <span>记录方向</span>
-            <strong>游戏设计 / 原型 / 拆解</strong>
+            <strong>规则 / 节奏 / 反馈</strong>
           </div>
           <div className="panel-row">
-            <span>近期项目</span>
+            <span>设计条目</span>
             <strong>{workCount}</strong>
           </div>
           <div className="panel-row">
@@ -96,12 +89,12 @@ export function Hero({ workCount, downloadableCount, featuredWork, onPrimaryActi
             <strong>{downloadableCount}</strong>
           </div>
           <div className="panel-row">
-            <span>最近在看</span>
-            <strong>Godot 工具 / 战斗节奏 / 系统拆解</strong>
+            <span>长期命题</span>
+            <strong>原型验证 / 系统拆解 / 玩家选择</strong>
           </div>
           <div className="hero-panel-links">
             <a href="#notes">
-              设计笔记
+              查看近期原型
               <ArrowDown size={14} />
             </a>
             <a href="https://github.com/MhWangZi/game-portfolio-site" target="_blank" rel="noreferrer">
