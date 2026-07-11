@@ -1,67 +1,115 @@
-import { useEffect, useMemo, useState } from 'react'
-import { AboutSection } from './components/AboutSection'
-import { AbilityMatrix } from './components/AbilityMatrix'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { BootOverlay } from './components/BootOverlay'
-import { FeaturedProject } from './components/FeaturedProject'
-import { Hero } from './components/Hero'
-import { NotesSection } from './components/NotesSection'
+import { CaseFiles } from './components/CaseFiles'
+import { ContactSection } from './components/ContactSection'
+import { CurrentBuilds } from './components/CurrentBuilds'
+import { DesignRadar } from './components/DesignRadar'
+import { FieldNotes } from './components/FieldNotes'
+import { GlobalFrame } from './components/GlobalFrame'
 import { PortfolioScene } from './components/PortfolioScene'
-import { ProcessSection } from './components/ProcessSection'
+import { ProjectDossier } from './components/ProjectDossier'
+import { ProjectIndex } from './components/ProjectIndex'
 import { PseudoAdmin } from './components/PseudoAdmin'
-import { SiteFooter } from './components/SiteFooter'
-import { WorkDetail } from './components/WorkDetail'
-import { WorkRegistry } from './components/WorkRegistry'
 import { works } from './data/works'
-import { useArchiveAnimations } from './hooks/useArchiveAnimations'
+import { useChapterController } from './hooks/useChapterController'
+import { useConsoleAnimations } from './hooks/useConsoleAnimations'
+import { useDossierRoute } from './hooks/useDossierRoute'
 import { useVisitCounter } from './hooks/useVisitCounter'
+import type { SceneState, WorkItem } from './types'
 
 function isAdminHash(hash: string) {
   return hash.replace(/^#/, '').replace(/^\/+/, '') === 'admin'
 }
 
-function App() {
-  useArchiveAnimations()
+function DesignConsole() {
+  useConsoleAnimations()
+  const { activeChapter, navigateTo } = useChapterController()
+  const { openWork, openDossier, closeDossier } = useDossierRoute(works)
 
-  const firstWorkId = works[0]?.id ?? ''
-  const [selectedId, setSelectedId] = useState(() => {
-    const rawHash = window.location.hash
-    const hash = rawHash.replace('#', '')
-    return !isAdminHash(rawHash) && works.some((work) => work.id === hash) ? hash : firstWorkId
-  })
-  const [isAdminRoute, setIsAdminRoute] = useState(() => isAdminHash(window.location.hash))
-  const selectedWork = useMemo(
-    () => works.find((work) => work.id === selectedId) ?? works[0],
-    [selectedId],
-  )
-  const featuredWork = useMemo(
-    () => works.find((work) => work.featured) ?? works.find((work) => work.id === 'parry-arena') ?? works[0],
+  const heroWorks = useMemo(
+    () => works.filter((work) => work.heroOrder).sort((left, right) => (left.heroOrder ?? 99) - (right.heroOrder ?? 99)),
     [],
   )
-  const downloadableCount = useMemo(() => works.filter((work) => work.download).length, [])
+  const caseWorks = useMemo(
+    () => works.filter((work) => work.caseOrder).sort((left, right) => (left.caseOrder ?? 99) - (right.caseOrder ?? 99)),
+    [],
+  )
+
+  const [currentBuildId, setCurrentBuildId] = useState(heroWorks[0]?.id ?? works[0].id)
+  const [radarProjectId, setRadarProjectId] = useState('parry-arena')
+  const [caseProjectId, setCaseProjectId] = useState(caseWorks[0]?.id ?? works[0].id)
+  const [indexProjectId, setIndexProjectId] = useState(works[0].id)
+
+  const selectCurrentBuild = useCallback((work: WorkItem) => setCurrentBuildId(work.id), [])
+  const selectRadarProject = useCallback((work: WorkItem) => setRadarProjectId(work.id), [])
+  const selectCaseProject = useCallback((work: WorkItem) => setCaseProjectId(work.id), [])
+  const selectIndexProject = useCallback((work: WorkItem) => setIndexProjectId(work.id), [])
+
+  const activeSceneProjectId = openWork?.id ?? (
+    activeChapter === 'current' ? currentBuildId
+      : activeChapter === 'radar' ? radarProjectId
+        : activeChapter === 'cases' ? caseProjectId
+          : activeChapter === 'projects' ? indexProjectId
+            : currentBuildId
+  )
+  const activeSceneWork = works.find((work) => work.id === activeSceneProjectId) ?? heroWorks[0] ?? works[0]
+  const sceneState: SceneState = {
+    activeChapter,
+    activeProjectId: activeSceneWork.id,
+    preset: activeSceneWork.scenePreset ?? 'neutral',
+  }
+
+  return (
+    <div className="app-shell design-console-site">
+      <BootOverlay />
+      <div
+        className="dc-ambient-image"
+        style={{ backgroundImage: 'url("./media/generated/archive-console-bg.png")' }}
+        aria-hidden="true"
+      />
+      <PortfolioScene state={sceneState} />
+      <GlobalFrame activeChapter={activeChapter} onNavigate={navigateTo} />
+
+      <main className="dc-main">
+        <CurrentBuilds
+          works={heroWorks}
+          onActiveProjectChange={selectCurrentBuild}
+          onOpen={openDossier}
+          onNextChapter={() => navigateTo('radar')}
+        />
+        <DesignRadar works={works} onOpen={openDossier} onProjectPreview={selectRadarProject} />
+        <CaseFiles works={caseWorks} onOpen={openDossier} onActiveProjectChange={selectCaseProject} />
+        <ProjectIndex works={works} onOpen={openDossier} onProjectPreview={selectIndexProject} />
+        <FieldNotes />
+        <ContactSection
+          onBackToTop={() => navigateTo('current')}
+          onOpenRecent={() => openDossier(heroWorks[0]?.id ?? works[0].id)}
+        />
+      </main>
+
+      <ProjectDossier
+        work={openWork}
+        workIndex={openWork ? works.findIndex((work) => work.id === openWork.id) : 0}
+        onClose={closeDossier}
+      />
+    </div>
+  )
+}
+
+function App() {
+  const [isAdminRoute, setIsAdminRoute] = useState(() => isAdminHash(window.location.hash))
   useVisitCounter(isAdminRoute)
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const rawHash = window.location.hash
-      const adminRoute = isAdminHash(rawHash)
-      setIsAdminRoute(adminRoute)
-      const hash = rawHash.replace('#', '')
-      if (!adminRoute && works.some((work) => work.id === hash)) setSelectedId(hash)
-    }
-
+    const handleHashChange = () => setIsAdminRoute(isAdminHash(window.location.hash))
     window.addEventListener('hashchange', handleHashChange)
+    window.addEventListener('popstate', handleHashChange)
     handleHashChange()
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+      window.removeEventListener('popstate', handleHashChange)
+    }
   }, [])
-
-  const selectWork = (id: string) => {
-    setSelectedId(id)
-    window.history.replaceState(null, '', `#${id}`)
-    document.getElementById('work-detail')?.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      block: 'start',
-    })
-  }
 
   if (isAdminRoute) {
     return (
@@ -71,56 +119,13 @@ function App() {
           style={{ backgroundImage: 'url("./media/generated/archive-console-bg.png")' }}
           aria-hidden="true"
         />
-        <PortfolioScene theme="ui-panels" />
+        <PortfolioScene state={{ activeChapter: 'admin', preset: 'signal-branch', activeProjectId: 'admin' }} />
         <PseudoAdmin />
       </div>
     )
   }
 
-  return (
-    <div className="app-shell">
-      <BootOverlay />
-      <div
-        className="ambient-image"
-        style={{ backgroundImage: 'url("./media/generated/archive-console-bg.png")' }}
-        aria-hidden="true"
-      />
-      <PortfolioScene theme={selectedWork.visualTheme ?? 'particles'} />
-      <div className="content-layer">
-        <header className="topbar">
-          <a className="brand-mark" href="#top" aria-label="回到顶部">
-            <span>GDN</span>
-            <strong>Game Design Notes</strong>
-          </a>
-          <nav aria-label="Primary navigation">
-            <a href="#about">设计命题</a>
-            <a href="#projects">原型迭代</a>
-            <a href="#notes">设计笔记</a>
-            <a href="#process">方法</a>
-            <a href="#contact">联系</a>
-          </nav>
-        </header>
-
-        <main>
-          <Hero
-            workCount={works.length}
-            downloadableCount={downloadableCount}
-            featuredWork={featuredWork}
-            onPrimaryAction={() => document.getElementById('projects')?.scrollIntoView()}
-          />
-          <AboutSection />
-          <FeaturedProject work={featuredWork} onSelect={selectWork} />
-          <WorkRegistry works={works} selectedId={selectedId} onSelect={selectWork} />
-          <WorkDetail work={selectedWork} />
-          <NotesSection />
-          <ProcessSection />
-          <AbilityMatrix />
-        </main>
-
-        <SiteFooter />
-      </div>
-    </div>
-  )
+  return <DesignConsole />
 }
 
 export default App

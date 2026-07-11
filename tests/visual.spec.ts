@@ -25,7 +25,8 @@ async function canvasSignature(page: Page) {
 test('desktop scene is visible and reacts to pointer movement', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Desktop scene assertion only runs in the desktop project.')
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: '玩法原型与系统记录' })).toBeVisible()
+  const heroHeading = page.locator('#current h1')
+  await expect(heroHeading).toHaveText('HD2DKit')
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-scene-mode', 'full')
   await page.waitForTimeout(350)
@@ -35,6 +36,10 @@ test('desktop scene is visible and reacts to pointer movement', async ({ page },
   await page.waitForTimeout(450)
   const after = await canvasSignature(page)
   expect(after.signature).not.toBe(before.signature)
+
+  await page.getByRole('button', { name: '下一个项目', exact: true }).click()
+  await expect(heroHeading).toHaveText('Parry Arena')
+  await expect(canvas).toHaveAttribute('data-theme', 'timing-gate')
 })
 
 test('mobile layout does not overflow and uses compact scene mode', async ({ page }, testInfo) => {
@@ -44,7 +49,8 @@ test('mobile layout does not overflow and uses compact scene mode', async ({ pag
   await expect(canvas).toHaveAttribute('data-scene-mode', 'compact')
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(1)
-  await expect(page.getByRole('button', { name: /万众瞩目/ })).toBeVisible()
+  await expect(page.locator('#current h1')).toBeVisible()
+  await expect(page.getByRole('button', { name: '03 Anchored Gaze', exact: true })).toBeVisible()
 })
 
 test('reduced motion keeps content readable', async ({ page }, testInfo) => {
@@ -54,10 +60,19 @@ test('reduced motion keeps content readable', async ({ page }, testInfo) => {
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-motion', 'reduced')
   await expect(page.getByRole('heading', { name: 'STATIC SIGNAL 静默信号' })).toBeVisible()
-  await expect(page.getByRole('link', { name: /下载文件/ }).first()).toHaveAttribute(
-    'href',
-    /static-signal-web-package\.zip/,
-  )
+  await page.getByRole('tab', { name: 'BUILD', exact: true }).click()
+  await expect(page.getByRole('link', { name: '下载文件', exact: true })).toHaveAttribute('href', /static-signal-web-package\.zip/)
+})
+
+test('project dossier supports direct links and restores the project index', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Dossier route assertion only runs in the desktop project.')
+  await page.goto('/#parry-arena')
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole('heading', { name: 'Parry Arena 弹反竞技场' })).toBeVisible()
+  await page.getByRole('button', { name: '关闭项目档案', exact: true }).click()
+  await expect(page).toHaveURL(/#projects$/)
+  await expect(page.getByRole('dialog')).toHaveCount(0)
 })
 
 test('hidden pseudo admin route renders locked access terminal', async ({ page }, testInfo) => {

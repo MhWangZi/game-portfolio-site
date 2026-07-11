@@ -19,10 +19,13 @@ npm run preview
 ## 内容维护
 
 - 条目数据：`src/data/works.ts`
+- 章节、设计命题、笔记与联系方式：`src/data/siteContent.ts`
 - 类型定义：`src/types.ts`
+- 实验控制台样式：`src/console.css`
 - 图片与视频：`public/media/`
 - 下载文件：`public/downloads/`
-- 联系入口：`src/components/SiteFooter.tsx`
+
+主页由六个全屏章节组成。项目标题、设计问题、媒体、下载和外链均从 `works.ts` 生成；点击项目后使用 hash 深链打开全屏档案面板。
 
 ## 后台入口
 

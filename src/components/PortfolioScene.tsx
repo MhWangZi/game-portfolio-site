@@ -1,153 +1,229 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import type { VisualTheme } from '../types'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import type { ChapterId, ScenePreset, SceneState } from '../types'
 
 type PortfolioSceneProps = {
-  theme: VisualTheme
+  state: SceneState
 }
 
-function createMotif(theme: VisualTheme) {
-  const group = new THREE.Group()
-  const lineMaterial = new THREE.MeshBasicMaterial({
-    color: 0xf2b860,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.72,
-  })
-  const glassMaterial = new THREE.MeshBasicMaterial({
-    color: 0xf2b860,
-    transparent: true,
-    opacity: 0.16,
-    side: THREE.DoubleSide,
-  })
+const chapterPhase: Record<ChapterId | 'admin', number> = {
+  current: 0,
+  radar: 1,
+  cases: 2,
+  projects: 3,
+  notes: 4,
+  contact: 5,
+  admin: 6,
+}
 
-  if (theme === 'voxel') {
-    const box = new THREE.BoxGeometry(0.42, 0.42, 0.42)
-    for (let x = -2; x <= 2; x += 1) {
-      for (let y = -1; y <= 1; y += 1) {
-        if ((x + y) % 2 === 0) {
-          const mesh = new THREE.Mesh(box, lineMaterial)
-          mesh.position.set(x * 0.55, y * 0.55, Math.sin(x + y) * 0.38)
-          group.add(mesh)
-        }
-      }
-    }
-  } else if (theme === 'terrain') {
-    const terrain = new THREE.PlaneGeometry(4.8, 2.6, 22, 12)
-    const positions = terrain.attributes.position
-    for (let i = 0; i < positions.count; i += 1) {
-      const x = positions.getX(i)
-      const y = positions.getY(i)
-      positions.setZ(i, Math.sin(x * 2.2) * 0.18 + Math.cos(y * 3.5) * 0.12)
-    }
-    positions.needsUpdate = true
-    terrain.computeVertexNormals()
-    const mesh = new THREE.Mesh(terrain, lineMaterial)
-    mesh.rotation.x = -0.72
-    group.add(mesh)
-  } else if (theme === 'ui-panels') {
-    const panel = new THREE.PlaneGeometry(1.65, 0.92)
-    for (let i = 0; i < 5; i += 1) {
-      const mesh = new THREE.Mesh(panel, i % 2 === 0 ? glassMaterial : lineMaterial)
-      mesh.position.set((i - 2) * 0.74, Math.sin(i) * 0.34, -i * 0.18)
-      mesh.rotation.y = (i - 2) * 0.18
-      group.add(mesh)
-    }
-  } else if (theme === 'artifact') {
-    const torus = new THREE.Mesh(new THREE.TorusKnotGeometry(0.78, 0.13, 96, 10), lineMaterial)
-    group.add(torus)
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.45, 0.01, 8, 90), glassMaterial)
-    ring.rotation.x = Math.PI / 2
-    group.add(ring)
-  } else {
-    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.15, 1), lineMaterial)
-    group.add(core)
-  }
-
-  group.position.set(1.6, -0.2, -1.5)
-  return group
+const presetPhase: Record<ScenePreset, number> = {
+  'tool-grid': 0,
+  'timing-gate': 1,
+  'anchor-field': 2,
+  'signal-branch': 3,
+  'terrain-map': 4,
+  'economy-orbit': 5,
+  'value-lattice': 6,
+  'artifact-rings': 7,
+  'combat-cross': 8,
+  'run-cycle': 9,
+  neutral: 10,
 }
 
 function createParticleField(count: number) {
   const geometry = new THREE.BufferGeometry()
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
-  const colorA = new THREE.Color(0xf2b860)
-  const colorB = new THREE.Color(0xc6ccd6)
+  const amber = new THREE.Color(0xe7a94f)
+  const silver = new THREE.Color(0xc7ced8)
 
-  for (let i = 0; i < count; i += 1) {
-    positions[i * 3] = (Math.random() - 0.5) * 8
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 4.8
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 5
-    const color = i % 3 === 0 ? colorB : colorA
-    colors[i * 3] = color.r
-    colors[i * 3 + 1] = color.g
-    colors[i * 3 + 2] = color.b
+  for (let index = 0; index < count; index += 1) {
+    positions[index * 3] = (Math.random() - 0.5) * 9
+    positions[index * 3 + 1] = (Math.random() - 0.5) * 5.4
+    positions[index * 3 + 2] = (Math.random() - 0.5) * 5
+    const color = index % 4 === 0 ? silver : amber
+    colors[index * 3] = color.r
+    colors[index * 3 + 1] = color.g
+    colors[index * 3 + 2] = color.b
   }
 
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
-  const material = new THREE.PointsMaterial({
-    size: 0.045,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.88,
-  })
-
-  return new THREE.Points(geometry, material)
+  return new THREE.Points(
+    geometry,
+    new THREE.PointsMaterial({ size: 0.042, vertexColors: true, transparent: true, opacity: 0.76 }),
+  )
 }
 
-export function PortfolioScene({ theme }: PortfolioSceneProps) {
+function createTimingGate() {
+  const group = new THREE.Group()
+
+  for (let index = 0; index < 5; index += 1) {
+    const box = new THREE.BoxGeometry(1.5, 1.06, 0.08)
+    const edges = new THREE.EdgesGeometry(box)
+    box.dispose()
+    const frame = new THREE.LineSegments(
+      edges,
+      new THREE.LineBasicMaterial({
+        color: index === 0 ? 0xf0b45a : 0xd2d8e1,
+        transparent: true,
+        opacity: Math.max(0.14, 0.64 - index * 0.09),
+      }),
+    )
+    frame.userData.frameIndex = index
+    group.add(frame)
+  }
+
+  for (let index = 0; index < 3; index += 1) {
+    const panel = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.35, 0.78),
+      new THREE.MeshBasicMaterial({
+        color: 0xe7a94f,
+        transparent: true,
+        opacity: 0.04 + index * 0.025,
+        side: THREE.DoubleSide,
+      }),
+    )
+    panel.userData.panelIndex = index
+    group.add(panel)
+  }
+
+  return group
+}
+
+function createShards(count: number) {
+  const group = new THREE.Group()
+  const geometry = new THREE.TetrahedronGeometry(0.18, 0)
+  for (let index = 0; index < count; index += 1) {
+    const shard = new THREE.Mesh(
+      geometry.clone(),
+      new THREE.MeshBasicMaterial({ color: 0xcbd2dc, wireframe: true, transparent: true, opacity: 0.18 }),
+    )
+    shard.position.set((Math.random() - 0.5) * 6.6, (Math.random() - 0.5) * 3.8, -Math.random() * 4)
+    shard.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI)
+    group.add(shard)
+  }
+  geometry.dispose()
+  return group
+}
+
+function setFrameTarget(frame: THREE.Object3D, frameIndex: number, preset: ScenePreset, chapter: number) {
+  const mode = presetPhase[preset]
+  let x = 0
+  let y = 0
+  let z = -frameIndex * 0.28
+  let rotationX = 0
+  let rotationY = 0
+  let rotationZ = 0
+  let scale = 1 - frameIndex * 0.1
+
+  if (preset === 'tool-grid') {
+    x = (frameIndex - 2) * 0.58
+    y = (frameIndex % 2 === 0 ? -1 : 1) * 0.28
+    z = -Math.abs(frameIndex - 2) * 0.18
+    rotationY = (frameIndex - 2) * 0.2
+    scale = 0.72
+  } else if (preset === 'timing-gate') {
+    z = -frameIndex * 0.34
+    rotationZ = frameIndex * 0.08
+    scale = 1.12 - frameIndex * 0.12
+  } else if (preset === 'anchor-field') {
+    x = (frameIndex - 2) * 0.22
+    y = (frameIndex - 2) * 0.18
+    rotationZ = (frameIndex % 2 === 0 ? -1 : 1) * 0.55
+    rotationY = (frameIndex - 2) * 0.14
+    scale = 0.86 - frameIndex * 0.04
+  } else if (preset === 'signal-branch') {
+    x = (frameIndex - 2) * 0.42
+    y = Math.sin(frameIndex * 1.7) * 0.36
+    rotationZ = (frameIndex - 2) * 0.22
+    scale = 0.7
+  } else if (preset === 'economy-orbit' || preset === 'artifact-rings' || preset === 'run-cycle') {
+    const angle = frameIndex / 5 * Math.PI * 2 + mode * 0.12
+    x = Math.cos(angle) * (0.45 + frameIndex * 0.12)
+    y = Math.sin(angle) * (0.36 + frameIndex * 0.08)
+    rotationZ = angle
+    rotationY = angle * 0.35
+    scale = 0.58 + frameIndex * 0.06
+  } else if (preset === 'combat-cross') {
+    x = frameIndex % 2 === 0 ? (frameIndex - 2) * 0.32 : 0
+    y = frameIndex % 2 === 1 ? (frameIndex - 2) * 0.24 : 0
+    rotationZ = frameIndex % 2 === 0 ? 0 : Math.PI / 2
+    scale = 0.7
+  } else {
+    x = Math.sin(mode + frameIndex) * 0.42
+    y = Math.cos(mode * 0.7 + frameIndex) * 0.3
+    rotationX = (mode % 3) * 0.14
+    rotationY = (frameIndex - 2) * 0.18
+    rotationZ = mode * 0.07 + frameIndex * 0.09
+    scale = 0.68 + (frameIndex % 2) * 0.12
+  }
+
+  frame.userData.target = { x, y, z: z - chapter * 0.035, rotationX, rotationY, rotationZ, scale }
+}
+
+export function PortfolioScene({ state }: PortfolioSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const stateRef = useRef(state)
+  const renderOnceRef = useRef<(() => void) | null>(null)
   const reducedMotion = usePrefersReducedMotion()
+
+  useEffect(() => {
+    stateRef.current = state
+    const canvas = canvasRef.current
+    if (canvas) {
+      canvas.dataset.theme = state.preset
+      canvas.dataset.sceneChapter = state.activeChapter
+      canvas.dataset.project = state.activeProjectId ?? 'none'
+    }
+    window.__portfolioSceneState = {
+      mode: window.innerWidth < 760 ? 'compact' : 'full',
+      motion: reducedMotion ? 'reduced' : 'normal',
+      theme: state.preset,
+      chapter: state.activeChapter,
+      project: state.activeProjectId,
+    }
+    if (reducedMotion) window.requestAnimationFrame(() => renderOnceRef.current?.())
+  }, [reducedMotion, state])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
     const compact = window.innerWidth < 760
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      preserveDrawingBuffer: true,
-      powerPreference: 'high-performance',
-    })
+    let renderer: THREE.WebGLRenderer
+
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        preserveDrawingBuffer: true,
+        powerPreference: 'high-performance',
+      })
+    } catch {
+      canvas.dataset.renderer = 'fallback'
+      return
+    }
+
     renderer.setClearColor(0x000000, 0)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.15 : 1.6))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.1 : 1.55))
 
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100)
+    const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 100)
     camera.position.set(0, 0, 6)
 
-    const particles = createParticleField(compact ? 48 : 120)
-    scene.add(particles)
-
-    const shards = new THREE.Group()
-    const shardMaterial = new THREE.MeshBasicMaterial({
-      color: 0xeef4f7,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.22,
-    })
-    const shardGeometry = new THREE.TetrahedronGeometry(0.22, 0)
-    const shardCount = compact ? 8 : 18
-    for (let i = 0; i < shardCount; i += 1) {
-      const shard = new THREE.Mesh(shardGeometry, shardMaterial)
-      shard.position.set((Math.random() - 0.5) * 5.8, (Math.random() - 0.5) * 3.2, -Math.random() * 4)
-      shard.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI)
-      shards.add(shard)
-    }
-    scene.add(shards)
-
-    const motif = createMotif(theme)
-    scene.add(motif)
+    const particles = createParticleField(compact ? 52 : 138)
+    const shards = createShards(compact ? 7 : 18)
+    const timingGate = createTimingGate()
+    scene.add(particles, shards, timingGate)
 
     const pointer = new THREE.Vector2()
-    const target = new THREE.Vector2()
-    let frame = 0
+    const targetPointer = new THREE.Vector2()
+    const gateTarget = new THREE.Vector3()
+    let frameCount = 0
     let animationId = 0
 
     const resize = () => {
@@ -159,35 +235,71 @@ export function PortfolioScene({ theme }: PortfolioSceneProps) {
     }
 
     const handlePointerMove = (event: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      target.x = ((event.clientX - rect.left) / rect.width - 0.5) * 2
-      target.y = ((event.clientY - rect.top) / rect.height - 0.5) * -2
+      targetPointer.x = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2
+      targetPointer.y = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * -2
     }
 
     const render = () => {
-      frame += 1
-      pointer.lerp(target, reducedMotion ? 0.04 : 0.08)
-      particles.rotation.y += reducedMotion ? 0 : 0.0009
-      particles.rotation.x = pointer.y * 0.05
-      shards.rotation.y += reducedMotion ? 0 : 0.002
-      shards.rotation.x = pointer.y * 0.08
-      motif.rotation.y = pointer.x * 0.22 + frame * (reducedMotion ? 0 : 0.003)
-      motif.rotation.x = pointer.y * 0.16
-      camera.position.x = pointer.x * 0.18
-      camera.position.y = pointer.y * 0.12
+      frameCount += 1
+      const currentState = stateRef.current
+      const chapter = chapterPhase[currentState.activeChapter]
+      const preset = currentState.preset
+      const lerpAmount = reducedMotion ? 1 : 0.055
+
+      pointer.lerp(targetPointer, reducedMotion ? 1 : 0.07)
+      gateTarget.set(compact ? 0.45 : 1.55 + chapter * 0.04, -0.08 + Math.sin(chapter) * 0.08, -1.3)
+      timingGate.position.lerp(gateTarget, lerpAmount)
+      timingGate.rotation.x = THREE.MathUtils.lerp(timingGate.rotation.x, pointer.y * 0.08 + chapter * 0.025, lerpAmount)
+      timingGate.rotation.y = THREE.MathUtils.lerp(timingGate.rotation.y, pointer.x * 0.18 + presetPhase[preset] * 0.035, lerpAmount)
+      timingGate.rotation.z += reducedMotion ? 0 : 0.00045 + chapter * 0.00005
+
+      timingGate.children.forEach((child) => {
+        const frameIndex = child.userData.frameIndex as number | undefined
+        const panelIndex = child.userData.panelIndex as number | undefined
+
+        if (frameIndex !== undefined) {
+          setFrameTarget(child, frameIndex, preset, chapter)
+          const target = child.userData.target as {
+            x: number
+            y: number
+            z: number
+            rotationX: number
+            rotationY: number
+            rotationZ: number
+            scale: number
+          }
+          child.position.x = THREE.MathUtils.lerp(child.position.x, target.x, lerpAmount)
+          child.position.y = THREE.MathUtils.lerp(child.position.y, target.y, lerpAmount)
+          child.position.z = THREE.MathUtils.lerp(child.position.z, target.z, lerpAmount)
+          child.rotation.x = THREE.MathUtils.lerp(child.rotation.x, target.rotationX, lerpAmount)
+          child.rotation.y = THREE.MathUtils.lerp(child.rotation.y, target.rotationY, lerpAmount)
+          child.rotation.z = THREE.MathUtils.lerp(child.rotation.z, target.rotationZ, lerpAmount)
+          const scale = THREE.MathUtils.lerp(child.scale.x, target.scale, lerpAmount)
+          child.scale.setScalar(scale)
+        }
+
+        if (panelIndex !== undefined) {
+          child.position.set((panelIndex - 1) * 0.62, Math.sin(panelIndex + chapter) * 0.18, -0.7 - panelIndex * 0.18)
+          child.rotation.y = (panelIndex - 1) * 0.18 + pointer.x * 0.08
+        }
+      })
+
+      particles.rotation.y += reducedMotion ? 0 : 0.00065 + chapter * 0.00008
+      particles.rotation.x = pointer.y * 0.035
+      shards.rotation.y += reducedMotion ? 0 : 0.0014
+      shards.rotation.x = pointer.y * 0.08 + frameCount * (reducedMotion ? 0 : 0.00025)
+      camera.position.x = pointer.x * 0.16
+      camera.position.y = pointer.y * 0.11
       camera.lookAt(0, 0, 0)
       renderer.render(scene, camera)
+
       if (!reducedMotion) animationId = window.requestAnimationFrame(render)
     }
 
+    renderOnceRef.current = render
     canvas.dataset.sceneMode = compact ? 'compact' : 'full'
     canvas.dataset.motion = reducedMotion ? 'reduced' : 'normal'
-    canvas.dataset.theme = theme
-    window.__portfolioSceneState = {
-      mode: compact ? 'compact' : 'full',
-      motion: reducedMotion ? 'reduced' : 'normal',
-      theme,
-    }
+    canvas.dataset.renderer = 'webgl'
 
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(canvas)
@@ -196,22 +308,20 @@ export function PortfolioScene({ theme }: PortfolioSceneProps) {
     render()
 
     return () => {
+      renderOnceRef.current = null
       window.cancelAnimationFrame(animationId)
       window.removeEventListener('pointermove', handlePointerMove)
       resizeObserver.disconnect()
       scene.traverse((object) => {
-        const mesh = object as THREE.Mesh
-        mesh.geometry?.dispose()
-        const material = mesh.material
-        if (Array.isArray(material)) {
-          material.forEach((item) => item.dispose())
-        } else {
-          material?.dispose()
-        }
+        const renderable = object as THREE.Mesh
+        renderable.geometry?.dispose()
+        const material = renderable.material
+        if (Array.isArray(material)) material.forEach((item) => item.dispose())
+        else material?.dispose()
       })
       renderer.dispose()
     }
-  }, [reducedMotion, theme])
+  }, [reducedMotion])
 
-  return <canvas ref={canvasRef} className="scene-canvas" data-testid="portfolio-three-canvas" aria-hidden="true" />
+  return <canvas ref={canvasRef} className="scene-canvas dc-scene-canvas" data-testid="portfolio-three-canvas" aria-hidden="true" />
 }

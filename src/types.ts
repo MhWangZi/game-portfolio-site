@@ -1,5 +1,24 @@
 export type VisualTheme = 'particles' | 'voxel' | 'terrain' | 'ui-panels' | 'artifact'
 export type WorkKind = 'Playable Prototype' | 'System Analysis' | 'Tooling Project'
+export type ChapterId = 'current' | 'radar' | 'cases' | 'projects' | 'notes' | 'contact'
+export type ScenePreset =
+  | 'tool-grid'
+  | 'timing-gate'
+  | 'anchor-field'
+  | 'signal-branch'
+  | 'terrain-map'
+  | 'economy-orbit'
+  | 'value-lattice'
+  | 'artifact-rings'
+  | 'combat-cross'
+  | 'run-cycle'
+  | 'neutral'
+
+export type SceneState = {
+  activeChapter: ChapterId | 'admin'
+  activeProjectId?: string
+  preset: ScenePreset
+}
 
 export type WorkMedia = {
   type: 'image' | 'video'
@@ -39,6 +58,12 @@ export type WorkItem = {
   period?: string
   summary: string
   oneLine?: string
+  shortTitle?: string
+  designQuestion?: string
+  archiveSummary?: string
+  heroOrder?: number
+  caseOrder?: number
+  scenePreset?: ScenePreset
   contribution: string[]
   skills: string[]
   visualTheme?: VisualTheme

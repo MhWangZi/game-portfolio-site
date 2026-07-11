@@ -3,6 +3,8 @@ interface Window {
     mode: 'full' | 'compact'
     motion: 'normal' | 'reduced'
     theme: string
+    chapter: string
+    project?: string
   }
 }
 
