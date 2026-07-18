@@ -1,5 +1,7 @@
 import { ArrowRight, Download, FileText, Filter, PackageCheck } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem, WorkKind } from '../types'
 import {
   getArchiveCode,
@@ -29,6 +31,8 @@ const filters: Array<{ id: FilterId; label: string; kind?: WorkKind }> = [
 export function ProjectIndex({ works, onOpen, onProjectPreview }: ProjectIndexProps) {
   const [filterId, setFilterId] = useState<FilterId>('all')
   const [activeId, setActiveId] = useState(works[0]?.id ?? '')
+  const rootRef = useRef<HTMLElement | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
   const activeFilter = filters.find((filter) => filter.id === filterId) ?? filters[0]
   const visibleWorks = useMemo(
     () => activeFilter.kind ? works.filter((work) => getWorkKind(work) === activeFilter.kind) : works,
@@ -47,8 +51,80 @@ export function ProjectIndex({ works, onOpen, onProjectPreview }: ProjectIndexPr
     onProjectPreview(work)
   }
 
+  useGSAP(
+    () => {
+      if (!rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const rows = selector('.dc-command-list > button')
+
+      if (reducedMotion) {
+        gsap.set(rows, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      gsap.fromTo(
+        rows,
+        { autoAlpha: 0, x: -18, clipPath: 'inset(0 0 0 8%)' },
+        {
+          autoAlpha: 1,
+          x: 0,
+          clipPath: 'inset(0 0 0 0%)',
+          duration: 0.45,
+          stagger: 0.035,
+          ease: 'power3.out',
+        },
+      )
+    },
+    { scope: rootRef, dependencies: [filterId, reducedMotion], revertOnUpdate: true },
+  )
+
+  useGSAP(
+    () => {
+      if (!activeWork || !rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const previewTargets = selector('.dc-index-preview, .dc-index-preview-copy > *')
+
+      if (reducedMotion) {
+        gsap.set(previewTargets, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      timeline
+        .fromTo(
+          selector('.dc-index-preview'),
+          { autoAlpha: 0, x: 34, clipPath: 'inset(0 0 0 13%)' },
+          {
+            autoAlpha: 1,
+            x: 0,
+            clipPath: 'inset(0 0 0 0%)',
+            duration: 0.58,
+            overwrite: 'auto',
+          },
+          0,
+        )
+        .fromTo(
+          selector('.dc-index-preview-media img, .dc-index-preview-media .dc-image-fallback'),
+          { scale: 1.07, xPercent: 2 },
+          { scale: 1, xPercent: 0, duration: 0.72, ease: 'expo.out' },
+          0,
+        )
+        .fromTo(
+          selector('.dc-index-preview-copy > *'),
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.035 },
+          0.18,
+        )
+    },
+    {
+      scope: rootRef,
+      dependencies: [activeWork?.id, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
   return (
-    <section className="dc-chapter dc-project-index" id="projects" data-chapter>
+    <section className="dc-chapter dc-project-index" id="projects" data-chapter ref={rootRef}>
       <div className="dc-section-heading dc-index-heading" data-reveal>
         <div><span>04</span><strong>PROJECT INDEX</strong></div>
         <h2>全部项目索引</h2>

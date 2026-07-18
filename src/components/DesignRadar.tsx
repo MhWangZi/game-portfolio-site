@@ -1,7 +1,9 @@
 import { ArrowUpRight, CircuitBoard, Crosshair, Gamepad2, ScanSearch, Wrench } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { abilityGroups } from '../data/works'
 import { focusItems } from '../data/siteContent'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import { getKindShortLabel } from '../utils/workPresentation'
 
@@ -27,6 +29,8 @@ const abilityIndexes = {
 
 export function DesignRadar({ works, onOpen, onProjectPreview }: DesignRadarProps) {
   const [activeId, setActiveId] = useState(focusItems[0].id)
+  const rootRef = useRef<HTMLElement | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
   const activeFocus = focusItems.find((item) => item.id === activeId) ?? focusItems[0]
   const ActiveIcon = focusIcons[activeFocus.id]
   const evidence = activeFocus.evidenceIds
@@ -37,8 +41,72 @@ export function DesignRadar({ works, onOpen, onProjectPreview }: DesignRadarProp
     [activeFocus.id],
   )
 
+  useGSAP(
+    () => {
+      if (!rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const targets = selector(
+        '.dc-radar-core, .dc-radar-panel > *, .dc-skill-lattice > span, .dc-evidence-stack > *',
+      )
+
+      if (reducedMotion) {
+        gsap.set(targets, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      timeline
+        .fromTo(
+          selector('.dc-radar-core'),
+          { autoAlpha: 0, scale: 0.76, rotation: 7 },
+          { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.52, ease: 'back.out(1.45)' },
+          0,
+        )
+        .fromTo(
+          selector('.dc-radar-panel > .dc-panel-kicker, .dc-radar-panel > h3, .dc-radar-panel > p'),
+          { autoAlpha: 0, x: 24, clipPath: 'inset(0 0 34% 0)' },
+          {
+            autoAlpha: 1,
+            x: 0,
+            clipPath: 'inset(0 0 0% 0)',
+            duration: 0.48,
+            stagger: 0.055,
+          },
+          0.08,
+        )
+        .fromTo(
+          selector('.dc-skill-lattice > span'),
+          { autoAlpha: 0, y: 12, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.34, stagger: 0.03 },
+          0.24,
+        )
+        .fromTo(
+          selector('.dc-evidence-stack > *'),
+          { autoAlpha: 0, x: 18 },
+          { autoAlpha: 1, x: 0, duration: 0.4, stagger: 0.045 },
+          0.32,
+        )
+        .fromTo(
+          selector('.dc-radar-node.active'),
+          { boxShadow: '0 0 0 rgba(231, 169, 79, 0)', scale: 0.97 },
+          {
+            boxShadow: '0 0 28px rgba(231, 169, 79, 0.14)',
+            scale: 1,
+            duration: 0.44,
+            clearProps: 'boxShadow,scale',
+          },
+          0.04,
+        )
+    },
+    {
+      scope: rootRef,
+      dependencies: [activeFocus.id, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
   return (
-    <section className="dc-chapter dc-design-radar" id="radar" data-chapter>
+    <section className="dc-chapter dc-design-radar" id="radar" data-chapter ref={rootRef}>
       <div className="dc-section-heading" data-reveal>
         <div><span>02</span><strong>DESIGN RADAR</strong></div>
         <h2>近期设计命题</h2>

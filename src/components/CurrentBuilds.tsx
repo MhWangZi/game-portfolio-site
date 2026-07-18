@@ -1,6 +1,8 @@
 import { ArrowDown, ArrowLeft, ArrowRight, Download, ExternalLink, Play, Timer } from 'lucide-react'
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from 'react'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { useProjectRotation } from '../hooks/useProjectRotation'
+import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import { getDownloadLabel, getKindLabel, getWorkImageSources } from '../utils/workPresentation'
 import { SafeImage } from './SafeImage'
@@ -15,11 +17,96 @@ type CurrentBuildsProps = {
 export function CurrentBuilds({ works, onActiveProjectChange, onOpen, onNextChapter }: CurrentBuildsProps) {
   const rotation = useProjectRotation({ length: works.length, delay: 6600 })
   const activeWork = works[rotation.activeIndex] ?? works[0]
+  const rootRef = useRef<HTMLElement | null>(null)
   const touchStartX = useRef<number | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (activeWork) onActiveProjectChange(activeWork)
   }, [activeWork, onActiveProjectChange])
+
+  useGSAP(
+    () => {
+      if (!activeWork || !rootRef.current) return
+
+      const selector = gsap.utils.selector(rootRef.current)
+      const animatedTargets = selector(
+        '.dc-build-image, .dc-build-copy > *, .dc-build-telemetry, .dc-build-telemetry > *, .dc-build-controls',
+      )
+
+      if (reducedMotion) {
+        gsap.set(animatedTargets, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      const direction = rotation.direction === 'next' ? 1 : -1
+      const initialDelay = document.documentElement.dataset.archiveReady === 'true' ? 0 : 1.18
+      const timeline = gsap.timeline({
+        delay: initialDelay,
+        defaults: { ease: 'power3.out' },
+      })
+
+      timeline
+        .fromTo(
+          selector('.dc-build-image'),
+          {
+            autoAlpha: 0,
+            x: direction * 58,
+            scale: 1.075,
+            clipPath: direction > 0 ? 'inset(0 0 0 34%)' : 'inset(0 34% 0 0)',
+          },
+          {
+            autoAlpha: 1,
+            x: 0,
+            scale: 1,
+            clipPath: 'inset(0 0% 0 0%)',
+            duration: 0.88,
+          },
+          0,
+        )
+        .fromTo(
+          selector('.dc-build-image img, .dc-build-image .dc-image-fallback'),
+          { xPercent: direction * 2.5, scale: 1.075 },
+          { xPercent: 0, scale: 1.025, duration: 1.05, ease: 'expo.out' },
+          0.02,
+        )
+        .fromTo(
+          selector('.dc-build-copy > *'),
+          { autoAlpha: 0, y: 34, clipPath: 'inset(0 0 38% 0)' },
+          {
+            autoAlpha: 1,
+            y: 0,
+            clipPath: 'inset(0 0 0% 0)',
+            duration: 0.62,
+            stagger: 0.048,
+          },
+          0.14,
+        )
+        .fromTo(
+          selector('.dc-build-telemetry'),
+          { autoAlpha: 0, y: 26, scale: 0.975 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.68 },
+          0.36,
+        )
+        .fromTo(
+          selector('.dc-build-telemetry > *'),
+          { autoAlpha: 0, x: 12 },
+          { autoAlpha: 1, x: 0, duration: 0.38, stagger: 0.045 },
+          0.48,
+        )
+        .fromTo(
+          selector('.dc-build-controls'),
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.52 },
+          0.56,
+        )
+    },
+    {
+      scope: rootRef,
+      dependencies: [activeWork?.id, rotation.direction, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
 
   if (!activeWork) return null
 
@@ -42,7 +129,7 @@ export function CurrentBuilds({ works, onActiveProjectChange, onOpen, onNextChap
   }
 
   return (
-    <section className="dc-chapter dc-current-builds" id="current" data-chapter>
+    <section className="dc-chapter dc-current-builds" id="current" data-chapter ref={rootRef}>
       <div
         className={`dc-build-stage direction-${rotation.direction}`}
         tabIndex={0}

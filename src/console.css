@@ -251,7 +251,6 @@
   overflow: hidden;
   color: var(--dc-text);
   background: #030407;
-  animation: dcBootOverlayOut 420ms ease 1260ms forwards;
 }
 
 .dc-boot-overlay::before,
@@ -283,7 +282,6 @@
   width: 50%;
   z-index: 2;
   background: #030407;
-  animation: dcBootShutter 440ms cubic-bezier(0.7, 0, 0.25, 1) 1230ms forwards;
 }
 
 .dc-boot-shutter-left {
@@ -322,37 +320,37 @@
 
 .dc-boot-gate i:nth-child(1),
 .dc-boot-gate i:nth-child(3) {
-  width: 0;
+  width: 100%;
   height: 1px;
-  animation: dcDrawHorizontal 360ms ease forwards;
+  transform: scaleX(0);
 }
 
 .dc-boot-gate i:nth-child(2),
 .dc-boot-gate i:nth-child(4) {
   width: 1px;
-  height: 0;
-  animation: dcDrawVertical 360ms ease forwards;
+  height: 100%;
+  transform: scaleY(0);
 }
 
 .dc-boot-gate i:nth-child(1) { top: 0; left: 0; }
-.dc-boot-gate i:nth-child(2) { top: 0; right: 0; animation-delay: 160ms; }
-.dc-boot-gate i:nth-child(3) { right: 0; bottom: 0; animation-delay: 320ms; }
-.dc-boot-gate i:nth-child(4) { bottom: 0; left: 0; animation-delay: 480ms; }
+.dc-boot-gate i:nth-child(2) { top: 0; right: 0; }
+.dc-boot-gate i:nth-child(3) { right: 0; bottom: 0; }
+.dc-boot-gate i:nth-child(4) { bottom: 0; left: 0; }
 
 .dc-boot-gate span:nth-of-type(1) {
   top: 16px;
+  right: 16px;
   left: 16px;
-  width: 0;
   height: 1px;
-  animation: dcDrawHorizontal 340ms ease 540ms forwards;
+  transform: scaleX(0);
 }
 
 .dc-boot-gate span:nth-of-type(2) {
   top: 16px;
+  bottom: 16px;
   left: 16px;
   width: 1px;
-  height: 0;
-  animation: dcDrawVertical 340ms ease 680ms forwards;
+  transform: scaleY(0);
 }
 
 .dc-boot-heading {
@@ -395,8 +393,6 @@
 
 .dc-boot-log span {
   opacity: 0;
-  animation: dcBootLine 260ms steps(2, end) forwards;
-  animation-delay: calc(var(--boot-index) * 130ms + 240ms);
 }
 
 .dc-boot-progress {
@@ -414,10 +410,13 @@
   box-shadow: 0 0 20px rgba(231, 169, 79, 0.38);
   transform: scaleX(0);
   transform-origin: left;
-  animation: dcBootProgress 1.15s cubic-bezier(0.3, 0.7, 0.2, 1) 150ms forwards;
 }
 
 /* Global frame */
+.dc-global-frame {
+  display: contents;
+}
+
 .dc-topbar {
   position: fixed;
   top: 16px;
@@ -542,9 +541,11 @@
 .dc-rail-line i {
   display: block;
   width: 100%;
-  height: 28%;
+  height: 100%;
   background: var(--dc-amber);
   box-shadow: 0 0 14px rgba(231, 169, 79, 0.32);
+  transform: scaleY(0.14);
+  transform-origin: top center;
 }
 
 .dc-chapter-rail button {
@@ -678,11 +679,6 @@
 
 .dc-build-image {
   z-index: 0;
-  animation: dcBuildImageIn 780ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.direction-previous .dc-build-image {
-  animation-name: dcBuildImageInPrevious;
 }
 
 .dc-build-image img,
@@ -722,7 +718,6 @@
   width: min(720px, 59%);
   gap: 13px;
   transform: translateY(-52%);
-  animation: dcBuildCopyIn 600ms ease both;
 }
 
 .dc-kicker-row {
@@ -826,7 +821,6 @@
   border-radius: 4px;
   box-shadow: 0 18px 54px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(14px);
-  animation: dcTelemetryIn 620ms ease both;
 }
 
 .dc-telemetry-title {
@@ -1063,7 +1057,6 @@
   border: 1px solid var(--dc-line-strong);
   clip-path: polygon(16% 0, 100% 0, 100% 84%, 84% 100%, 0 100%, 0 16%);
   transform: translate(-50%, -50%);
-  animation: dcRadarCoreIn 420ms ease both;
 }
 
 .dc-radar-core::before,
@@ -1136,7 +1129,6 @@
   gap: 16px;
   min-height: 540px;
   padding: 26px;
-  animation: dcPanelIn 440ms ease both;
 }
 
 .dc-panel-kicker {
@@ -1265,13 +1257,10 @@
   background: rgba(9, 13, 20, 0.96);
   border: 1px solid var(--dc-line);
   border-radius: 5px;
-  transform: rotateX(var(--case-tilt-x)) rotateY(var(--case-tilt-y));
   transform-style: preserve-3d;
-  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
-  animation: dcCaseIn 540ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
-.direction-previous .dc-case-card { animation-name: dcCaseInPrevious; }
 .dc-case-shell:hover .dc-case-card { border-color: var(--dc-line-strong); box-shadow: 0 26px 86px rgba(0, 0, 0, 0.5), 0 0 32px rgba(231, 169, 79, 0.08); }
 
 .dc-case-media {
@@ -1362,8 +1351,8 @@
 
 .dc-case-ghost img,
 .dc-case-ghost .dc-image-fallback { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.42) brightness(0.58); }
-.dc-case-ghost.ghost-previous { left: -3%; transform: translate(var(--case-drift-x), var(--case-drift-y)) rotate(-3deg) scale(0.82); }
-.dc-case-ghost.ghost-next { right: -3%; transform: translate(calc(var(--case-drift-x) * -1), calc(var(--case-drift-y) * -1)) rotate(3deg) scale(0.84); }
+.dc-case-ghost.ghost-previous { left: -3%; transform: rotate(-3deg) scale(0.82); }
+.dc-case-ghost.ghost-next { right: -3%; transform: rotate(3deg) scale(0.84); }
 .dc-case-shell:hover .dc-case-ghost { opacity: 0.24; }
 
 .dc-case-console {
@@ -1374,7 +1363,6 @@
   gap: 15px;
   min-height: 560px;
   padding: 24px;
-  animation: dcPanelIn 460ms ease both;
 }
 
 .dc-case-number {
@@ -1385,7 +1373,7 @@
 }
 
 .dc-case-number span { color: var(--dc-amber); font-size: 0.68rem; }
-.dc-case-number strong { font-size: 5rem; line-height: 0.78; animation: dcNumberFlash 440ms steps(2, end) both; }
+.dc-case-number strong { font-size: 5rem; line-height: 0.78; }
 .dc-case-number em { color: var(--dc-faint); font-size: 0.82rem; font-style: normal; }
 .dc-case-console h3 { font-size: 2.4rem; line-height: 1.03; }
 .dc-case-question { color: var(--dc-text); font-size: 1.06rem; font-weight: 650; line-height: 1.5; }
@@ -1427,11 +1415,12 @@
 
 .dc-case-progress i {
   display: block;
-  width: var(--case-progress);
+  width: 100%;
   height: 100%;
   background: var(--dc-amber-bright);
   box-shadow: 0 0 16px rgba(231, 169, 79, 0.32);
-  transition: width 360ms ease;
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 .dc-case-tabs {
@@ -1549,7 +1538,6 @@
   display: grid;
   min-height: 458px;
   grid-template-rows: minmax(230px, 1fr) auto;
-  animation: dcPanelIn 420ms ease both;
 }
 
 .dc-index-preview-media {
@@ -1559,7 +1547,7 @@
 }
 
 .dc-index-preview-media img,
-.dc-index-preview-media > .dc-image-fallback { width: 100%; height: 100%; min-height: 240px; object-fit: cover; filter: saturate(0.86) contrast(1.07) brightness(0.8); animation: dcPreviewImageIn 460ms ease both; }
+.dc-index-preview-media > .dc-image-fallback { width: 100%; height: 100%; min-height: 240px; object-fit: cover; filter: saturate(0.86) contrast(1.07) brightness(0.8); }
 .dc-index-preview-media > span { position: absolute; top: 12px; left: 12px; padding: 6px 8px; color: var(--dc-amber); background: rgba(5, 8, 13, 0.76); border: 1px solid rgba(231, 169, 79, 0.28); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.61rem; }
 
 .dc-index-preview-copy {
@@ -1632,7 +1620,6 @@
   min-height: 420px;
   gap: 20px;
   padding: 28px;
-  animation: dcPanelIn 420ms ease both;
 }
 
 .dc-log-status {
@@ -1812,7 +1799,6 @@
   background:
     radial-gradient(circle at 18% 18%, rgba(231, 169, 79, 0.1), transparent 26%),
     rgba(4, 6, 10, 0.985);
-  animation: dcDossierOpen 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .dc-dossier-noise {
@@ -1882,7 +1868,6 @@
   overflow: hidden;
   background: #030509;
   border: 1px solid var(--dc-line);
-  animation: dcDossierMediaIn 540ms ease both;
 }
 
 .dc-dossier-media-frame img,
@@ -1971,8 +1956,15 @@
 .dc-dossier-tabs button.active { color: var(--dc-text); background: rgba(231, 169, 79, 0.08); border-color: var(--dc-line-strong); }
 .dc-dossier-tabs button.active svg { color: var(--dc-amber); }
 
-.dc-dossier-channel {
-  animation: dcChannelIn 340ms ease both;
+.dc-dossier-channel {}
+
+.dc-build-image,
+.dc-case-card,
+.dc-index-preview,
+.dc-dossier,
+.dc-dossier-media-frame,
+.dc-ambient-image {
+  will-change: transform, opacity, clip-path;
 }
 
 .dc-overview-channel,

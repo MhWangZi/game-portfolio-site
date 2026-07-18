@@ -17,6 +17,8 @@ import {
   X,
 } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import {
   getArchiveCode,
@@ -55,8 +57,11 @@ function formatSha(sha?: string) {
 export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps) {
   const [activeTab, setActiveTab] = useState<DossierTab>('overview')
   const [mediaIndex, setMediaIndex] = useState(0)
+  const rootRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const previousFocus = useRef<HTMLElement | null>(null)
+  const closingRef = useRef(false)
+  const reducedMotion = usePrefersReducedMotion()
 
   const tabs = useMemo(() => {
     const next: DossierTab[] = ['overview']
@@ -66,6 +71,164 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
     if (work?.links?.length) next.push('links')
     return next
   }, [work])
+
+  const { contextSafe } = useGSAP(
+    () => {
+      if (!work || !rootRef.current) return
+      closingRef.current = false
+      const selector = gsap.utils.selector(rootRef.current)
+      const targets = selector(
+        '.dc-dossier-header, .dc-dossier-visual, .dc-dossier-title-block > *, .dc-dossier-tabs > button',
+      )
+
+      if (reducedMotion) {
+        gsap.set([rootRef.current, ...targets], {
+          autoAlpha: 1,
+          clearProps: 'transform,clipPath,filter',
+        })
+        return
+      }
+
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      timeline
+        .fromTo(
+          rootRef.current,
+          { autoAlpha: 0, clipPath: 'inset(48% 4% 48% 4%)' },
+          { autoAlpha: 1, clipPath: 'inset(0% 0% 0% 0%)', duration: 0.62, ease: 'power4.inOut' },
+          0,
+        )
+        .fromTo(
+          selector('.dc-dossier-header'),
+          { autoAlpha: 0, y: -18 },
+          { autoAlpha: 1, y: 0, duration: 0.46 },
+          0.28,
+        )
+        .fromTo(
+          selector('.dc-dossier-visual'),
+          { autoAlpha: 0, x: -42, clipPath: 'inset(0 12% 0 0)' },
+          { autoAlpha: 1, x: 0, clipPath: 'inset(0 0% 0 0)', duration: 0.68 },
+          0.2,
+        )
+        .fromTo(
+          selector('.dc-dossier-title-block > *'),
+          { autoAlpha: 0, y: 22, clipPath: 'inset(0 0 30% 0)' },
+          {
+            autoAlpha: 1,
+            y: 0,
+            clipPath: 'inset(0 0 0% 0)',
+            duration: 0.5,
+            stagger: 0.055,
+          },
+          0.3,
+        )
+        .fromTo(
+          selector('.dc-dossier-tabs > button'),
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.36, stagger: 0.035 },
+          0.5,
+        )
+    },
+    {
+      scope: rootRef,
+      dependencies: [work?.id, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
+  useGSAP(
+    () => {
+      if (!work || !rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const mediaTargets = selector('.dc-dossier-media-frame, .dc-dossier-media-status')
+
+      if (reducedMotion) {
+        gsap.set(mediaTargets, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      gsap.fromTo(
+        selector('.dc-dossier-media-frame'),
+        { autoAlpha: 0, x: 28, scale: 1.025, clipPath: 'inset(0 0 0 14%)' },
+        {
+          autoAlpha: 1,
+          x: 0,
+          scale: 1,
+          clipPath: 'inset(0 0% 0 0%)',
+          duration: 0.58,
+          ease: 'power3.out',
+        },
+      )
+      gsap.fromTo(
+        selector('.dc-dossier-media-status'),
+        { autoAlpha: 0, y: 10 },
+        { autoAlpha: 1, y: 0, duration: 0.34, delay: 0.18, ease: 'power2.out' },
+      )
+    },
+    {
+      scope: rootRef,
+      dependencies: [work?.id, mediaIndex, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
+  useGSAP(
+    () => {
+      if (!work || !rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const channelItems = selector(
+        '.dc-dossier-channel > div > *, .dc-dossier-channel article, .dc-dossier-channel dl > div',
+      )
+
+      if (reducedMotion) {
+        gsap.set(channelItems, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      gsap.fromTo(
+        channelItems,
+        { autoAlpha: 0, y: 18, clipPath: 'inset(0 0 18% 0)' },
+        {
+          autoAlpha: 1,
+          y: 0,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.42,
+          stagger: 0.035,
+          ease: 'power3.out',
+        },
+      )
+    },
+    {
+      scope: rootRef,
+      dependencies: [work?.id, activeTab, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
+  const requestClose = contextSafe(() => {
+    if (closingRef.current) return
+    if (reducedMotion || !rootRef.current) {
+      onClose()
+      return
+    }
+
+    closingRef.current = true
+    gsap.timeline({ onComplete: onClose })
+      .to(
+        rootRef.current.querySelectorAll('.dc-dossier-layout, .dc-dossier-header'),
+        { autoAlpha: 0, y: -10, duration: 0.2, ease: 'power2.in' },
+        0,
+      )
+      .to(
+        rootRef.current,
+        {
+          clipPath: 'inset(49% 5% 49% 5%)',
+          autoAlpha: 0,
+          duration: 0.38,
+          ease: 'power4.inOut',
+        },
+        0.12,
+      )
+  })
 
   useEffect(() => {
     if (!work) return
@@ -85,7 +248,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
   useEffect(() => {
     if (!work) return
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') requestClose()
       if (activeTab === 'media' && event.key === 'ArrowRight') {
         setMediaIndex((current) => (current + 1) % work.media.length)
       }
@@ -95,7 +258,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeTab, onClose, work])
+  }, [activeTab, requestClose, work])
 
   if (!work) return null
 
@@ -109,7 +272,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
   }
 
   return (
-    <div className="dc-dossier" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
+    <div className="dc-dossier" role="dialog" aria-modal="true" aria-labelledby="dossier-title" ref={rootRef}>
       <div className="dc-dossier-noise" aria-hidden="true" />
       <header className="dc-dossier-header">
         <div className="dc-dossier-id">
@@ -120,7 +283,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
           <span>OPEN FILE</span>
           <strong>{work.shortTitle ?? work.title}</strong>
         </div>
-        <button ref={closeButtonRef} type="button" onClick={onClose} aria-label="关闭项目档案">
+        <button ref={closeButtonRef} type="button" onClick={requestClose} aria-label="关闭项目档案">
           <span>ESC</span><X size={18} />
         </button>
       </header>

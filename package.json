@@ -12,6 +12,7 @@
     "hash:pseudo-admin": "node scripts/generate-pseudo-admin-hash.mjs"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.3.2",
     "gsap": "^3.15.0",
     "lucide-react": "^1.23.0",

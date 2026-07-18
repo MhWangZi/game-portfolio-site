@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BootOverlay } from './components/BootOverlay'
 import { CaseFiles } from './components/CaseFiles'
 import { ContactSection } from './components/ContactSection'
@@ -22,7 +22,8 @@ function isAdminHash(hash: string) {
 }
 
 function DesignConsole() {
-  useConsoleAnimations()
+  const consoleRef = useRef<HTMLDivElement | null>(null)
+  useConsoleAnimations(consoleRef)
   const { activeChapter, navigateTo } = useChapterController()
   const { openWork, openDossier, closeDossier } = useDossierRoute(works)
 
@@ -60,7 +61,7 @@ function DesignConsole() {
   }
 
   return (
-    <div className="app-shell design-console-site">
+    <div className="app-shell design-console-site" ref={consoleRef}>
       <BootOverlay />
       <div
         className="dc-ambient-image"

@@ -1,13 +1,56 @@
 import { ArrowRight, BookOpen, ChevronDown, FlaskConical, TerminalSquare, Workflow } from 'lucide-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { fieldNotes, processSteps } from '../data/siteContent'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { gsap, useGSAP } from '../lib/gsap'
 
 export function FieldNotes() {
   const [activeNoteId, setActiveNoteId] = useState(fieldNotes[0].id)
+  const rootRef = useRef<HTMLElement | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
   const activeNote = fieldNotes.find((note) => note.id === activeNoteId) ?? fieldNotes[0]
 
+  useGSAP(
+    () => {
+      if (!rootRef.current) return
+      const selector = gsap.utils.selector(rootRef.current)
+      const targets = selector('.dc-log-detail, .dc-log-detail > *, .dc-log-fields > div')
+
+      if (reducedMotion) {
+        gsap.set(targets, { autoAlpha: 1, clearProps: 'transform,clipPath' })
+        return
+      }
+
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      timeline
+        .fromTo(
+          selector('.dc-log-detail'),
+          { autoAlpha: 0, x: 34, clipPath: 'inset(0 0 0 12%)' },
+          { autoAlpha: 1, x: 0, clipPath: 'inset(0 0 0 0%)', duration: 0.58 },
+          0,
+        )
+        .fromTo(
+          selector('.dc-log-status, .dc-log-detail > h3'),
+          { autoAlpha: 0, y: 18 },
+          { autoAlpha: 1, y: 0, duration: 0.44, stagger: 0.06 },
+          0.12,
+        )
+        .fromTo(
+          selector('.dc-log-fields > div'),
+          { autoAlpha: 0, y: 22, scale: 0.98 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.055 },
+          0.24,
+        )
+    },
+    {
+      scope: rootRef,
+      dependencies: [activeNote.id, reducedMotion],
+      revertOnUpdate: true,
+    },
+  )
+
   return (
-    <section className="dc-chapter dc-field-notes" id="notes" data-chapter>
+    <section className="dc-chapter dc-field-notes" id="notes" data-chapter ref={rootRef}>
       <div className="dc-section-heading" data-reveal>
         <div><span>05</span><strong>FIELD NOTES</strong></div>
         <h2>设计笔记与方法轨道</h2>
