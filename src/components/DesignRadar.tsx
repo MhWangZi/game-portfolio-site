@@ -151,15 +151,15 @@ export function DesignRadar({
         <aside className="dc-radar-panel" key={`panel-${activeFocus.id}`} data-reveal>
           <div className="dc-panel-kicker"><ActiveIcon size={17} />ACTIVE VECTOR / {activeFocus.index}</div>
           <h3>{activeFocus.title}</h3>
-          <p>{activeFocus.summary}</p>
-          <div className="dc-radar-anomaly-row">
-            <span>UNCOMMITTED FIELD</span>
+          <p>
+            {activeFocus.summary} 相关项目
             <CorruptedFragment
               fragmentId="fragment-02"
               isRecovered={isFragmentRecovered('fragment-02')}
               onRecover={onRecoverFragment}
             />
-          </div>
+            会随议题更新。
+          </p>
 
           <div className="dc-skill-lattice">
             {skillPool.map((skill) => <span key={skill}>{skill}</span>)}

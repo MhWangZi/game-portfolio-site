@@ -137,12 +137,6 @@ export function CorruptedFragment({
       >
         <span ref={textRef}>{isRecovered ? fragment.recoveredText : fragment.corruptedText}</span>
       </button>
-      <span className="index-zero-fragment-status system-label" aria-hidden={!isRecovered}>
-        FRAGMENT {fragment.index} / RECOVERED
-      </span>
-      <span className="sr-only" aria-live="polite">
-        {isRecovered ? `片段 ${fragment.index} 已恢复` : ''}
-      </span>
     </span>
   )
 }

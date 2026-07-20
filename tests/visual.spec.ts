@@ -1,7 +1,23 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const INDEX_ZERO_STORAGE_KEY = 'gdn:index0:puzzle:v1'
+const LEGACY_INDEX_ZERO_STORAGE_KEY = 'gdn:index0:puzzle:v1'
 const INDEX_ZERO_RECOVERY_PHRASE = '被删除的记录仍在继续编写'
+const INDEX_ZERO_FRAGMENT_LOCATIONS = [
+  ['01', '#current'],
+  ['04', '#current'],
+  ['02', '#radar'],
+  ['03', '#cases'],
+  ['05', '#notes'],
+] as const
+
+async function recoverAllIndexZeroFragments(page: Page) {
+  for (const [index, section] of INDEX_ZERO_FRAGMENT_LOCATIONS) {
+    await page.locator(section).scrollIntoViewIfNeeded()
+    const fragment = page.getByTestId(`index-zero-fragment-${index}`)
+    await expect(fragment).toBeVisible()
+    await fragment.click()
+  }
+}
 
 async function canvasSignature(page: Page) {
   return page.locator('[data-testid="portfolio-three-canvas"]').evaluate((canvas) => {
@@ -86,9 +102,23 @@ test('hidden pseudo admin route renders locked access terminal', async ({ page }
   await expect(page.getByRole('button', { name: /\[UNLOCK PANEL\]/ })).toBeDisabled()
 })
 
+test('INDEX-0 exploration resets completely after a page refresh', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Puzzle refresh behavior runs in the desktop project.')
+  await page.goto('/')
+
+  const fragment = page.getByTestId('index-zero-fragment-01')
+  await fragment.click()
+  await expect(page.getByTestId('archive-integrity')).toContainText('1 / 5')
+
+  await page.reload()
+  await expect(page.getByTestId('archive-integrity')).toContainText('0 / 5')
+  await expect(page.getByTestId('index-zero-fragment-01')).toHaveAttribute('aria-label', '发现异常片段 01')
+  const legacyStorage = await page.evaluate((storageKey) => window.localStorage.getItem(storageKey), LEGACY_INDEX_ZERO_STORAGE_KEY)
+  expect(legacyStorage).toBeNull()
+})
+
 test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Full INDEX-0 flow runs in the desktop project.')
-  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
   await page.goto('/')
 
   const firstFragment = page.getByTestId('index-zero-fragment-01')
@@ -97,6 +127,7 @@ test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page },
   await expect(firstFragment).toBeFocused()
   await page.keyboard.press('Enter')
   await expect(firstFragment).toHaveAttribute('aria-label', /已恢复：被删除/)
+  await expect(page.locator('.dc-telemetry-revision dd')).toContainText('下一轮将继｜续调整操作反馈与战斗节奏。')
 
   const fragmentLocations = [
     ['04', '#current'],
@@ -112,15 +143,20 @@ test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page },
     await fragment.click()
   }
 
+  await expect(page.locator('.index-zero-fragment-status')).toHaveCount(0)
+  await expect(page.locator('.dc-telemetry-revision dd')).toContainText('下一轮将继续调整操作反馈与战斗节奏。')
+  for (const index of ['01', '02', '03', '04', '05']) {
+    const parentTag = await page.getByTestId(`index-zero-fragment-${index}`).evaluate(
+      (element) => element.parentElement?.parentElement?.tagName,
+    )
+    expect(['P', 'DD']).toContain(parentTag)
+  }
+
   const integrity = page.getByTestId('archive-integrity')
   await expect(integrity).toContainText('5 FRAGMENTS RECOVERED')
   await expect(integrity).toContainText('UNREGISTERED ENTRY FOUND')
-
-  const storedState = await page.evaluate((storageKey) => (
-    JSON.parse(window.localStorage.getItem(storageKey) ?? '{}')
-  ), INDEX_ZERO_STORAGE_KEY)
-  expect(storedState.recoveredFragmentIds).toHaveLength(5)
-  expect(storedState.phraseVerified).toBe(false)
+  const legacyStorage = await page.evaluate((storageKey) => window.localStorage.getItem(storageKey), LEGACY_INDEX_ZERO_STORAGE_KEY)
+  expect(legacyStorage).toBeNull()
 
   const recoveryLink = page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })
   await expect(recoveryLink).toBeVisible()
@@ -144,12 +180,20 @@ test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page },
   await expect(page).toHaveURL(/#current$/)
   await expect(page.getByTestId('current-build-status')).toHaveText('OBSERVATION COMPLETE')
   await page.locator('#contact').scrollIntoViewIfNeeded()
-  await expect(page.getByText('当前页面已记住本次阅读。')).toBeVisible()
+  await expect(page.getByText('当前页面暂存本次阅读；刷新后清除。')).toBeVisible()
+
+  await page.evaluate(() => {
+    window.location.hash = '/case-00'
+  })
+  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
+  await page.reload()
+  await expect(page).toHaveURL(/#\/recovery$/)
+  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
+  await expect(page.locator('.recovery-interface-topbar strong')).toContainText('0 / 5')
 })
 
 test('CASE-00 redirects to recovery before phrase verification', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Route guard smoke test runs in the desktop project.')
-  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
   await page.goto('/#/case-00')
   await expect(page).toHaveURL(/#\/recovery$/)
   await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
@@ -157,14 +201,12 @@ test('CASE-00 redirects to recovery before phrase verification', async ({ page }
 
 test('mobile visitors can recover all five fragments without overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'Mobile puzzle flow only runs in the mobile project.')
-  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
   await page.goto('/')
 
-  for (const index of ['01', '02', '03', '04', '05']) {
-    await page.getByTestId(`index-zero-fragment-${index}`).click()
-  }
+  await recoverAllIndexZeroFragments(page)
 
   await expect(page.getByTestId('archive-integrity')).toContainText('5 FRAGMENTS RECOVERED')
+  await page.locator('#contact').scrollIntoViewIfNeeded()
   await expect(page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })).toBeVisible()
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(1)
@@ -173,21 +215,12 @@ test('mobile visitors can recover all five fragments without overflow', async ({
 test('reduced motion renders the restored CASE-00 document immediately', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced CASE-00 flow only runs in the reduced-motion project.')
   await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.addInitScript(({ storageKey }) => {
-    window.localStorage.setItem(storageKey, JSON.stringify({
-      version: 1,
-      recoveredFragmentIds: [
-        'fragment-01',
-        'fragment-02',
-        'fragment-03',
-        'fragment-04',
-        'fragment-05',
-      ],
-      phraseVerified: true,
-    }))
-  }, { storageKey: INDEX_ZERO_STORAGE_KEY })
-
-  await page.goto('/#/case-00')
+  await page.goto('/')
+  await recoverAllIndexZeroFragments(page)
+  await page.locator('#contact').scrollIntoViewIfNeeded()
+  await page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ }).click()
+  await page.getByTestId('recovery-phrase').fill(INDEX_ZERO_RECOVERY_PHRASE)
+  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
   await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
   const finalMessage = page.locator('[data-final-observer-text]')
   await expect(finalMessage).toContainText('你没有进入后台。')

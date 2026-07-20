@@ -172,15 +172,15 @@ export function CurrentBuilds({
           <p className="dc-site-title">玩法原型与系统记录</p>
           <h1>{activeWork.shortTitle ?? activeWork.title}</h1>
           <p className="dc-build-question">{activeWork.designQuestion}</p>
-          <p className="dc-build-summary">{activeWork.archiveSummary ?? activeWork.oneLine}</p>
-          <p className="dc-index-anomaly-note">
-            PUBLIC INDEX / 一段
+          <p className="dc-build-summary">
+            {activeWork.archiveSummary ?? activeWork.oneLine}
+            {' '}当前版本保留少量
             <CorruptedFragment
               fragmentId="fragment-01"
               isRecovered={isFragmentRecovered('fragment-01')}
               onRecover={onRecoverFragment}
             />
-            的条目未能对齐当前版本。
+            的迭代说明。
           </p>
 
           <div className="dc-build-tags" aria-label={`${activeWork.title} 标签`}>
@@ -216,11 +216,13 @@ export function CurrentBuilds({
             <div className="dc-telemetry-revision">
               <dt>REVISION</dt>
               <dd>
+                下一轮将
                 <CorruptedFragment
                   fragmentId="fragment-04"
                   isRecovered={isFragmentRecovered('fragment-04')}
                   onRecover={onRecoverFragment}
                 />
+                调整操作反馈与战斗节奏。
               </dd>
             </div>
           </dl>

@@ -1,17 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import {
-  INDEX_ZERO_STORAGE_KEY,
   indexZeroFragmentIds,
   type FragmentId,
 } from '../data/indexZeroArchive'
 
-type StoredPuzzleState = {
+type PuzzleState = {
   version: 1
   recoveredFragmentIds: FragmentId[]
   phraseVerified: boolean
 }
 
-const emptyPuzzleState: StoredPuzzleState = {
+const emptyPuzzleState: PuzzleState = {
   version: 1,
   recoveredFragmentIds: [],
   phraseVerified: false,
@@ -19,100 +18,30 @@ const emptyPuzzleState: StoredPuzzleState = {
 
 const fragmentIdSet = new Set<string>(indexZeroFragmentIds)
 
-function sanitizePuzzleState(value: unknown): StoredPuzzleState {
-  if (!value || typeof value !== 'object') return emptyPuzzleState
-
-  const candidate = value as Partial<StoredPuzzleState>
-  if (candidate.version !== 1) return emptyPuzzleState
-
-  const recoveredFragmentIds = Array.isArray(candidate.recoveredFragmentIds)
-    ? [...new Set(candidate.recoveredFragmentIds.filter(
-      (id): id is FragmentId => typeof id === 'string' && fragmentIdSet.has(id),
-    ))]
-    : []
-
-  const phraseVerified = candidate.phraseVerified === true
-
-  return {
-    version: 1,
-    recoveredFragmentIds: phraseVerified ? [...indexZeroFragmentIds] : recoveredFragmentIds,
-    phraseVerified,
-  }
-}
-
-function readPuzzleState() {
-  try {
-    const rawState = window.localStorage.getItem(INDEX_ZERO_STORAGE_KEY)
-    return rawState ? sanitizePuzzleState(JSON.parse(rawState)) : emptyPuzzleState
-  } catch {
-    return emptyPuzzleState
-  }
-}
-
-function persistPuzzleState(state: StoredPuzzleState) {
-  try {
-    window.localStorage.setItem(INDEX_ZERO_STORAGE_KEY, JSON.stringify(state))
-  } catch {
-    // The in-memory React state remains usable when storage is blocked.
-  }
-}
-
 export function useIndexZeroPuzzle() {
-  const [state, setState] = useState<StoredPuzzleState>(readPuzzleState)
-
-  useEffect(() => {
-    const syncStoredState = (event: StorageEvent) => {
-      if (event.key !== INDEX_ZERO_STORAGE_KEY) return
-      if (!event.newValue) {
-        setState(emptyPuzzleState)
-        return
-      }
-
-      try {
-        setState(sanitizePuzzleState(JSON.parse(event.newValue)))
-      } catch {
-        setState(emptyPuzzleState)
-      }
-    }
-
-    window.addEventListener('storage', syncStoredState)
-    return () => window.removeEventListener('storage', syncStoredState)
-  }, [])
-
-  const updateState = useCallback((update: (current: StoredPuzzleState) => StoredPuzzleState) => {
-    setState((current) => {
-      const nextState = sanitizePuzzleState(update(current))
-      persistPuzzleState(nextState)
-      return nextState
-    })
-  }, [])
+  const [state, setState] = useState<PuzzleState>(emptyPuzzleState)
 
   const recoverFragment = useCallback((id: FragmentId) => {
     if (!fragmentIdSet.has(id)) return
 
-    updateState((current) => {
+    setState((current) => {
       if (current.recoveredFragmentIds.includes(id)) return current
       return {
         ...current,
         recoveredFragmentIds: [...current.recoveredFragmentIds, id],
       }
     })
-  }, [updateState])
+  }, [])
 
   const completeRecovery = useCallback(() => {
-    updateState(() => ({
+    setState({
       version: 1,
       recoveredFragmentIds: [...indexZeroFragmentIds],
       phraseVerified: true,
-    }))
-  }, [updateState])
+    })
+  }, [])
 
   const resetPuzzle = useCallback(() => {
-    try {
-      window.localStorage.removeItem(INDEX_ZERO_STORAGE_KEY)
-    } catch {
-      // Reset the in-memory state even if storage removal is blocked.
-    }
     setState(emptyPuzzleState)
   }, [])
 

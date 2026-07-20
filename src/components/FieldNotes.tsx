@@ -61,7 +61,15 @@ export function FieldNotes({ isFragmentRecovered, onRecoverFragment }: FieldNote
       <div className="dc-section-heading" data-reveal>
         <div><span>05</span><strong>FIELD NOTES</strong></div>
         <h2>设计笔记与方法轨道</h2>
-        <p>短问题、短观察，留下下一轮调整入口。</p>
+        <p>
+          短问题、短观察，条目随迭代持续
+          <CorruptedFragment
+            fragmentId="fragment-05"
+            isRecovered={isFragmentRecovered('fragment-05')}
+            onRecover={onRecoverFragment}
+          />
+          。
+        </p>
       </div>
 
       <div className="dc-notes-console">
@@ -106,18 +114,6 @@ export function FieldNotes({ isFragmentRecovered, onRecoverFragment }: FieldNote
         </div>
       </div>
 
-      <aside className="dc-notes-margin-anomaly margin-note" data-reveal>
-        <span>HAND NOTE / NO COMMIT SOURCE</span>
-        <p>
-          当前页边缘仍有一处文字在
-          <CorruptedFragment
-            fragmentId="fragment-05"
-            isRecovered={isFragmentRecovered('fragment-05')}
-            onRecover={onRecoverFragment}
-          />
-          未完成的条目。
-        </p>
-      </aside>
     </section>
   )
 }

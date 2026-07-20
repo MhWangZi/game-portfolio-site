@@ -14,7 +14,6 @@ export type IndexZeroFragment = {
   location: string
 }
 
-export const INDEX_ZERO_STORAGE_KEY = 'gdn:index0:puzzle:v1'
 export const INDEX_ZERO_RECOVERY_PHRASE = '被删除的记录仍在继续编写'
 
 export const indexZeroFragments: IndexZeroFragment[] = [

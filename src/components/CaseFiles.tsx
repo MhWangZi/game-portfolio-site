@@ -251,16 +251,16 @@ export function CaseFiles({
           </div>
           <div className="dc-panel-kicker"><FolderOpen size={16} />DESIGN QUESTION</div>
           <h3>{activeWork.title}</h3>
-          <p className="dc-case-question">{activeWork.designQuestion}</p>
-          <p className="dc-case-summary">{activeWork.archiveSummary ?? activeWork.oneLine}</p>
-          <div className="dc-case-anomaly-status">
-            <span>CAROUSEL INDEX / STATUS</span>
+          <p className="dc-case-question">
+            {activeWork.designQuestion} 当前条目
             <CorruptedFragment
               fragmentId="fragment-03"
               isRecovered={isFragmentRecovered('fragment-03')}
               onRecover={onRecoverFragment}
             />
-          </div>
+            维护。
+          </p>
+          <p className="dc-case-summary">{activeWork.archiveSummary ?? activeWork.oneLine}</p>
 
           <div className="dc-case-tags">
             {activeWork.skills.slice(0, 4).map((skill) => <span key={skill}>{skill}</span>)}

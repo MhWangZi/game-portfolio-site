@@ -87,7 +87,7 @@ export function ContactSection({
       <footer className="dc-contact-footer">
         <span>DESIGN ARCHIVE / GAME DESIGN NOTES</span>
         <span>2026 / CONTINUOUS LOG</span>
-        {recoveryCompleted ? <span className="index-zero-memory-note">当前页面已记住本次阅读。</span> : null}
+        {recoveryCompleted ? <span className="index-zero-memory-note">当前页面暂存本次阅读；刷新后清除。</span> : null}
       </footer>
     </section>
   )
