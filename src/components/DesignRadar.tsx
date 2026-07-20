@@ -1,16 +1,20 @@
 import { ArrowUpRight, CircuitBoard, Crosshair, Gamepad2, ScanSearch, Wrench } from 'lucide-react'
 import { useMemo, useRef, useState } from 'react'
+import type { FragmentId } from '../data/indexZeroArchive'
 import { abilityGroups } from '../data/works'
 import { focusItems } from '../data/siteContent'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import { getKindShortLabel } from '../utils/workPresentation'
+import { CorruptedFragment } from './index-zero/CorruptedFragment'
 
 type DesignRadarProps = {
   works: WorkItem[]
   onOpen: (id: string) => void
   onProjectPreview: (work: WorkItem) => void
+  isFragmentRecovered: (id: FragmentId) => boolean
+  onRecoverFragment: (id: FragmentId) => void
 }
 
 const focusIcons = {
@@ -27,7 +31,13 @@ const abilityIndexes = {
   tooling: [6],
 }
 
-export function DesignRadar({ works, onOpen, onProjectPreview }: DesignRadarProps) {
+export function DesignRadar({
+  works,
+  onOpen,
+  onProjectPreview,
+  isFragmentRecovered,
+  onRecoverFragment,
+}: DesignRadarProps) {
   const [activeId, setActiveId] = useState(focusItems[0].id)
   const rootRef = useRef<HTMLElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
@@ -142,6 +152,14 @@ export function DesignRadar({ works, onOpen, onProjectPreview }: DesignRadarProp
           <div className="dc-panel-kicker"><ActiveIcon size={17} />ACTIVE VECTOR / {activeFocus.index}</div>
           <h3>{activeFocus.title}</h3>
           <p>{activeFocus.summary}</p>
+          <div className="dc-radar-anomaly-row">
+            <span>UNCOMMITTED FIELD</span>
+            <CorruptedFragment
+              fragmentId="fragment-02"
+              isRecovered={isFragmentRecovered('fragment-02')}
+              onRecover={onRecoverFragment}
+            />
+          </div>
 
           <div className="dc-skill-lattice">
             {skillPool.map((skill) => <span key={skill}>{skill}</span>)}

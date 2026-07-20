@@ -1,5 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 
+const INDEX_ZERO_STORAGE_KEY = 'gdn:index0:puzzle:v1'
+const INDEX_ZERO_RECOVERY_PHRASE = '被删除的记录仍在继续编写'
+
 async function canvasSignature(page: Page) {
   return page.locator('[data-testid="portfolio-three-canvas"]').evaluate((canvas) => {
     const source = canvas as HTMLCanvasElement
@@ -81,4 +84,114 @@ test('hidden pseudo admin route renders locked access terminal', async ({ page }
   await expect(page.getByRole('heading', { name: 'ACCESS TERMINAL' })).toBeVisible()
   await expect(page.getByText('PRIVATE GATE')).toBeVisible()
   await expect(page.getByRole('button', { name: /\[UNLOCK PANEL\]/ })).toBeDisabled()
+})
+
+test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Full INDEX-0 flow runs in the desktop project.')
+  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
+  await page.goto('/')
+
+  const firstFragment = page.getByTestId('index-zero-fragment-01')
+  await expect(firstFragment).toBeVisible()
+  await firstFragment.focus()
+  await expect(firstFragment).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(firstFragment).toHaveAttribute('aria-label', /已恢复：被删除/)
+
+  const fragmentLocations = [
+    ['04', '#current'],
+    ['02', '#radar'],
+    ['03', '#cases'],
+    ['05', '#notes'],
+  ] as const
+
+  for (const [index, section] of fragmentLocations) {
+    await page.locator(section).scrollIntoViewIfNeeded()
+    const fragment = page.getByTestId(`index-zero-fragment-${index}`)
+    await expect(fragment).toBeVisible()
+    await fragment.click()
+  }
+
+  const integrity = page.getByTestId('archive-integrity')
+  await expect(integrity).toContainText('5 FRAGMENTS RECOVERED')
+  await expect(integrity).toContainText('UNREGISTERED ENTRY FOUND')
+
+  const storedState = await page.evaluate((storageKey) => (
+    JSON.parse(window.localStorage.getItem(storageKey) ?? '{}')
+  ), INDEX_ZERO_STORAGE_KEY)
+  expect(storedState.recoveredFragmentIds).toHaveLength(5)
+  expect(storedState.phraseVerified).toBe(false)
+
+  const recoveryLink = page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })
+  await expect(recoveryLink).toBeVisible()
+  await recoveryLink.click()
+  await expect(page).toHaveURL(/#\/recovery$/)
+  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
+
+  const phraseInput = page.getByTestId('recovery-phrase')
+  await phraseInput.fill('顺序错误的文本')
+  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
+  await expect(page.locator('#recovery-response')).not.toContainText('口令匹配')
+
+  await phraseInput.fill(INDEX_ZERO_RECOVERY_PHRASE)
+  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
+  await expect(page.getByText('口令匹配。')).toBeVisible()
+  await expect(page).toHaveURL(/#\/case-00$/, { timeout: 6_000 })
+  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
+  await expect(page.getByText('第零号档案 / 未被编写的记录')).toBeVisible()
+
+  await page.getByRole('button', { name: /RETURN TO PUBLIC INDEX/ }).click()
+  await expect(page).toHaveURL(/#current$/)
+  await expect(page.getByTestId('current-build-status')).toHaveText('OBSERVATION COMPLETE')
+  await page.locator('#contact').scrollIntoViewIfNeeded()
+  await expect(page.getByText('当前页面已记住本次阅读。')).toBeVisible()
+})
+
+test('CASE-00 redirects to recovery before phrase verification', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Route guard smoke test runs in the desktop project.')
+  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
+  await page.goto('/#/case-00')
+  await expect(page).toHaveURL(/#\/recovery$/)
+  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
+})
+
+test('mobile visitors can recover all five fragments without overflow', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Mobile puzzle flow only runs in the mobile project.')
+  await page.addInitScript((storageKey) => window.localStorage.removeItem(storageKey), INDEX_ZERO_STORAGE_KEY)
+  await page.goto('/')
+
+  for (const index of ['01', '02', '03', '04', '05']) {
+    await page.getByTestId(`index-zero-fragment-${index}`).click()
+  }
+
+  await expect(page.getByTestId('archive-integrity')).toContainText('5 FRAGMENTS RECOVERED')
+  await expect(page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })).toBeVisible()
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+  expect(overflow).toBeLessThanOrEqual(1)
+})
+
+test('reduced motion renders the restored CASE-00 document immediately', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced CASE-00 flow only runs in the reduced-motion project.')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.addInitScript(({ storageKey }) => {
+    window.localStorage.setItem(storageKey, JSON.stringify({
+      version: 1,
+      recoveredFragmentIds: [
+        'fragment-01',
+        'fragment-02',
+        'fragment-03',
+        'fragment-04',
+        'fragment-05',
+      ],
+      phraseVerified: true,
+    }))
+  }, { storageKey: INDEX_ZERO_STORAGE_KEY })
+
+  await page.goto('/#/case-00')
+  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
+  const finalMessage = page.locator('[data-final-observer-text]')
+  await expect(finalMessage).toContainText('你没有进入后台。')
+  await expect(finalMessage).toContainText('你只是完成了它缺少的那一段。')
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+  expect(overflow).toBeLessThanOrEqual(1)
 })

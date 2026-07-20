@@ -1,16 +1,20 @@
 import { ArrowLeft, ArrowRight, Download, FileText, FolderOpen, MousePointer2 } from 'lucide-react'
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from 'react'
+import type { FragmentId } from '../data/indexZeroArchive'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { useProjectRotation } from '../hooks/useProjectRotation'
 import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import { getDownloadLabel, getKindLabel, getWorkImageSources } from '../utils/workPresentation'
+import { CorruptedFragment } from './index-zero/CorruptedFragment'
 import { SafeImage } from './SafeImage'
 
 type CaseFilesProps = {
   works: WorkItem[]
   onOpen: (id: string) => void
   onActiveProjectChange: (work: WorkItem) => void
+  isFragmentRecovered: (id: FragmentId) => boolean
+  onRecoverFragment: (id: FragmentId) => void
 }
 
 function wrapIndex(index: number, length: number) {
@@ -26,7 +30,13 @@ type TiltController = {
   nextY: (value: number) => void
 }
 
-export function CaseFiles({ works, onOpen, onActiveProjectChange }: CaseFilesProps) {
+export function CaseFiles({
+  works,
+  onOpen,
+  onActiveProjectChange,
+  isFragmentRecovered,
+  onRecoverFragment,
+}: CaseFilesProps) {
   const rotation = useProjectRotation({ length: works.length, delay: 7200 })
   const rootRef = useRef<HTMLDivElement | null>(null)
   const touchStartX = useRef<number | null>(null)
@@ -243,6 +253,14 @@ export function CaseFiles({ works, onOpen, onActiveProjectChange }: CaseFilesPro
           <h3>{activeWork.title}</h3>
           <p className="dc-case-question">{activeWork.designQuestion}</p>
           <p className="dc-case-summary">{activeWork.archiveSummary ?? activeWork.oneLine}</p>
+          <div className="dc-case-anomaly-status">
+            <span>CAROUSEL INDEX / STATUS</span>
+            <CorruptedFragment
+              fragmentId="fragment-03"
+              isRecovered={isFragmentRecovered('fragment-03')}
+              onRecover={onRecoverFragment}
+            />
+          </div>
 
           <div className="dc-case-tags">
             {activeWork.skills.slice(0, 4).map((skill) => <span key={skill}>{skill}</span>)}

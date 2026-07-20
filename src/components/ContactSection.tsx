@@ -1,9 +1,11 @@
-import { ArrowUp, ArrowUpRight, Code, Mail, Radio, Send, Video } from 'lucide-react'
+import { ArrowUp, ArrowUpRight, Code, FileKey2, Mail, Radio, Send, Video } from 'lucide-react'
 import { contactItems } from '../data/siteContent'
 
 type ContactSectionProps = {
   onBackToTop: () => void
   onOpenRecent: () => void
+  recoveryAvailable: boolean
+  recoveryCompleted: boolean
 }
 
 const contactIcons = {
@@ -13,7 +15,12 @@ const contactIcons = {
   radio: Radio,
 }
 
-export function ContactSection({ onBackToTop, onOpenRecent }: ContactSectionProps) {
+export function ContactSection({
+  onBackToTop,
+  onOpenRecent,
+  recoveryAvailable,
+  recoveryCompleted,
+}: ContactSectionProps) {
   return (
     <section className="dc-chapter dc-contact" id="contact" data-chapter>
       <div className="dc-contact-copy" data-reveal>
@@ -56,9 +63,31 @@ export function ContactSection({ onBackToTop, onOpenRecent }: ContactSectionProp
         })}
       </div>
 
-      <footer className="dc-contact-footer" aria-hidden="true">
+      <div
+        className={`index-zero-recovery-gate ${recoveryAvailable ? 'is-available' : ''}`}
+        data-testid="recovery-gate"
+      >
+        <div className="index-zero-gate-redaction" aria-hidden="true">
+          <i /><i />
+          <span>ENTRY / ███████████</span>
+        </div>
+        {recoveryAvailable ? (
+          <a href="#/recovery" className="index-zero-recovery-link">
+            <FileKey2 size={15} />
+            [OPEN RECOVERY INTERFACE]
+            <ArrowUpRight size={14} />
+          </a>
+        ) : (
+          <span className="index-zero-gate-locked system-label" aria-hidden="true">
+            UNREGISTERED ENTRY / INCOMPLETE
+          </span>
+        )}
+      </div>
+
+      <footer className="dc-contact-footer">
         <span>DESIGN ARCHIVE / GAME DESIGN NOTES</span>
         <span>2026 / CONTINUOUS LOG</span>
+        {recoveryCompleted ? <span className="index-zero-memory-note">当前页面已记住本次阅读。</span> : null}
       </footer>
     </section>
   )

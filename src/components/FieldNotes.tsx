@@ -1,10 +1,17 @@
 import { ArrowRight, BookOpen, ChevronDown, FlaskConical, TerminalSquare, Workflow } from 'lucide-react'
 import { useRef, useState } from 'react'
+import type { FragmentId } from '../data/indexZeroArchive'
 import { fieldNotes, processSteps } from '../data/siteContent'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
+import { CorruptedFragment } from './index-zero/CorruptedFragment'
 
-export function FieldNotes() {
+type FieldNotesProps = {
+  isFragmentRecovered: (id: FragmentId) => boolean
+  onRecoverFragment: (id: FragmentId) => void
+}
+
+export function FieldNotes({ isFragmentRecovered, onRecoverFragment }: FieldNotesProps) {
   const [activeNoteId, setActiveNoteId] = useState(fieldNotes[0].id)
   const rootRef = useRef<HTMLElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
@@ -98,6 +105,19 @@ export function FieldNotes() {
           ))}
         </div>
       </div>
+
+      <aside className="dc-notes-margin-anomaly margin-note" data-reveal>
+        <span>HAND NOTE / NO COMMIT SOURCE</span>
+        <p>
+          当前页边缘仍有一处文字在
+          <CorruptedFragment
+            fragmentId="fragment-05"
+            isRecovered={isFragmentRecovered('fragment-05')}
+            onRecover={onRecoverFragment}
+          />
+          未完成的条目。
+        </p>
+      </aside>
     </section>
   )
 }

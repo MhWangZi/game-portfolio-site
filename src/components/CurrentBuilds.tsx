@@ -1,10 +1,12 @@
 import { ArrowDown, ArrowLeft, ArrowRight, Download, ExternalLink, Play, Timer } from 'lucide-react'
 import { useEffect, useRef, type KeyboardEvent, type PointerEvent } from 'react'
+import type { FragmentId } from '../data/indexZeroArchive'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { useProjectRotation } from '../hooks/useProjectRotation'
 import { gsap, useGSAP } from '../lib/gsap'
 import type { WorkItem } from '../types'
 import { getDownloadLabel, getKindLabel, getWorkImageSources } from '../utils/workPresentation'
+import { CorruptedFragment } from './index-zero/CorruptedFragment'
 import { SafeImage } from './SafeImage'
 
 type CurrentBuildsProps = {
@@ -12,9 +14,20 @@ type CurrentBuildsProps = {
   onActiveProjectChange: (work: WorkItem) => void
   onOpen: (id: string) => void
   onNextChapter: () => void
+  isFragmentRecovered: (id: FragmentId) => boolean
+  onRecoverFragment: (id: FragmentId) => void
+  showObservationComplete: boolean
 }
 
-export function CurrentBuilds({ works, onActiveProjectChange, onOpen, onNextChapter }: CurrentBuildsProps) {
+export function CurrentBuilds({
+  works,
+  onActiveProjectChange,
+  onOpen,
+  onNextChapter,
+  isFragmentRecovered,
+  onRecoverFragment,
+  showObservationComplete,
+}: CurrentBuildsProps) {
   const rotation = useProjectRotation({ length: works.length, delay: 6600 })
   const activeWork = works[rotation.activeIndex] ?? works[0]
   const rootRef = useRef<HTMLElement | null>(null)
@@ -160,6 +173,15 @@ export function CurrentBuilds({ works, onActiveProjectChange, onOpen, onNextChap
           <h1>{activeWork.shortTitle ?? activeWork.title}</h1>
           <p className="dc-build-question">{activeWork.designQuestion}</p>
           <p className="dc-build-summary">{activeWork.archiveSummary ?? activeWork.oneLine}</p>
+          <p className="dc-index-anomaly-note">
+            PUBLIC INDEX / 一段
+            <CorruptedFragment
+              fragmentId="fragment-01"
+              isRecovered={isFragmentRecovered('fragment-01')}
+              onRecover={onRecoverFragment}
+            />
+            的条目未能对齐当前版本。
+          </p>
 
           <div className="dc-build-tags" aria-label={`${activeWork.title} 标签`}>
             {activeWork.skills.slice(0, 4).map((skill) => <span key={skill}>{skill}</span>)}
@@ -182,8 +204,25 @@ export function CurrentBuilds({ works, onActiveProjectChange, onOpen, onNextChap
           <dl>
             <div><dt>TYPE</dt><dd>{getKindLabel(activeWork)}</dd></div>
             <div><dt>ENGINE</dt><dd>{activeWork.engine ?? 'DESIGN FILE'}</dd></div>
-            <div><dt>STATUS</dt><dd>{activeWork.download ? 'BUILD AVAILABLE' : 'LOG INDEXED'}</dd></div>
+            <div>
+              <dt>STATUS</dt>
+              <dd data-testid="current-build-status">
+                {showObservationComplete
+                  ? 'OBSERVATION COMPLETE'
+                  : activeWork.download ? 'BUILD AVAILABLE' : 'LOG INDEXED'}
+              </dd>
+            </div>
             <div><dt>PERIOD</dt><dd>{activeWork.period ?? '2026'}</dd></div>
+            <div className="dc-telemetry-revision">
+              <dt>REVISION</dt>
+              <dd>
+                <CorruptedFragment
+                  fragmentId="fragment-04"
+                  isRecovered={isFragmentRecovered('fragment-04')}
+                  onRecover={onRecoverFragment}
+                />
+              </dd>
+            </div>
           </dl>
           {activeWork.links?.[0] ? (
             <a href={activeWork.links[0].url} target="_blank" rel="noreferrer">
