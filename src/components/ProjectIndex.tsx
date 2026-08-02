@@ -176,7 +176,7 @@ export function ProjectIndex({ works, onOpen, onProjectPreview }: ProjectIndexPr
           <aside className="dc-index-preview" key={activeWork.id} data-reveal-media>
             <div className="dc-index-preview-media">
               <SafeImage
-                sources={getWorkImageSources(activeWork)}
+                sources={getWorkImageSources(activeWork, 0, reducedMotion)}
                 alt={`${activeWork.title} 项目预览`}
                 fallbackLabel={activeWork.shortTitle ?? activeWork.title}
               />

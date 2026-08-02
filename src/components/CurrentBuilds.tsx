@@ -145,6 +145,7 @@ export function CurrentBuilds({
     <section className="dc-chapter dc-current-builds" id="current" data-chapter ref={rootRef}>
       <div
         className={`dc-build-stage direction-${rotation.direction}`}
+        data-project={activeWork.id}
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
@@ -154,7 +155,7 @@ export function CurrentBuilds({
       >
         <div className="dc-build-image" key={`image-${activeWork.id}`} data-reveal-media>
           <SafeImage
-            sources={getWorkImageSources(activeWork)}
+            sources={getWorkImageSources(activeWork, 0, reducedMotion)}
             alt={`${activeWork.title} 项目主视觉`}
             fallbackLabel={activeWork.shortTitle ?? activeWork.title}
             eager

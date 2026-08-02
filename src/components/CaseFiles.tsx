@@ -216,16 +216,16 @@ export function CaseFiles({
       >
         <div className="dc-case-stage" data-reveal-media>
           <div className="dc-case-ghost ghost-previous" aria-hidden="true">
-            <SafeImage sources={getWorkImageSources(previousWork)} alt="" fallbackLabel={previousWork.shortTitle ?? previousWork.title} />
+            <SafeImage sources={getWorkImageSources(previousWork, 0, reducedMotion)} alt="" fallbackLabel={previousWork.shortTitle ?? previousWork.title} />
           </div>
           <div className="dc-case-ghost ghost-next" aria-hidden="true">
-            <SafeImage sources={getWorkImageSources(nextWork)} alt="" fallbackLabel={nextWork.shortTitle ?? nextWork.title} />
+            <SafeImage sources={getWorkImageSources(nextWork, 0, reducedMotion)} alt="" fallbackLabel={nextWork.shortTitle ?? nextWork.title} />
           </div>
 
           <article className="dc-case-card" key={`case-${activeWork.id}`}>
             <div className="dc-case-media">
               <SafeImage
-                sources={getWorkImageSources(activeWork)}
+                sources={getWorkImageSources(activeWork, 0, reducedMotion)}
                 alt={`${activeWork.title} 项目画面`}
                 fallbackLabel={activeWork.shortTitle ?? activeWork.title}
               />

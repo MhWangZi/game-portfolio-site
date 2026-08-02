@@ -2,6 +2,7 @@ export type VisualTheme = 'particles' | 'voxel' | 'terrain' | 'ui-panels' | 'art
 export type WorkKind = 'Playable Prototype' | 'System Analysis' | 'Tooling Project'
 export type ChapterId = 'current' | 'radar' | 'cases' | 'projects' | 'notes' | 'contact'
 export type ScenePreset =
+  | 'countdown-grid'
   | 'tool-grid'
   | 'timing-gate'
   | 'anchor-field'

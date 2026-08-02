@@ -45,9 +45,19 @@ test('desktop scene is visible and reacts to pointer movement', async ({ page },
   test.skip(testInfo.project.name !== 'desktop', 'Desktop scene assertion only runs in the desktop project.')
   await page.goto('/')
   const heroHeading = page.locator('#current h1')
-  await expect(heroHeading).toHaveText('HD2DKit')
+  await expect(heroHeading).toHaveText('CLICK\\\\DOWN')
+  const titleMetrics = await heroHeading.evaluate((element) => {
+    const styles = getComputedStyle(element)
+    return {
+      height: element.getBoundingClientRect().height,
+      lineHeight: Number.parseFloat(styles.lineHeight),
+    }
+  })
+  expect(titleMetrics.height).toBeLessThanOrEqual(titleMetrics.lineHeight * 1.25)
   const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
   await expect(canvas).toHaveAttribute('data-scene-mode', 'full')
+  await expect(canvas).toHaveAttribute('data-theme', 'countdown-grid')
+  await expect(page.locator('.dc-build-image img')).toHaveAttribute('src', /click-down-network\.gif/)
   await page.waitForTimeout(350)
   const before = await canvasSignature(page)
   expect(before.colored).toBeGreaterThan(60)
@@ -57,8 +67,11 @@ test('desktop scene is visible and reacts to pointer movement', async ({ page },
   expect(after.signature).not.toBe(before.signature)
 
   await page.getByRole('button', { name: '下一个项目', exact: true }).click()
-  await expect(heroHeading).toHaveText('Parry Arena')
-  await expect(canvas).toHaveAttribute('data-theme', 'timing-gate')
+  await expect(heroHeading).toHaveText('HD2DKit')
+  await expect(canvas).toHaveAttribute('data-theme', 'tool-grid')
+
+  await page.goto('/#cases')
+  await expect(page.getByRole('button', { name: '01 CLICK\\\\DOWN', exact: true })).toBeVisible()
 })
 
 test('mobile layout does not overflow and uses compact scene mode', async ({ page }, testInfo) => {
@@ -69,7 +82,7 @@ test('mobile layout does not overflow and uses compact scene mode', async ({ pag
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(1)
   await expect(page.locator('#current h1')).toBeVisible()
-  await expect(page.getByRole('button', { name: '03 Anchored Gaze', exact: true })).toBeVisible()
+  await expect(page.getByRole('button', { name: '01 CLICK\\\\DOWN', exact: true })).toBeVisible()
 })
 
 test('reduced motion keeps content readable', async ({ page }, testInfo) => {
@@ -81,6 +94,20 @@ test('reduced motion keeps content readable', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { name: 'STATIC SIGNAL 静默信号' })).toBeVisible()
   await page.getByRole('tab', { name: 'BUILD', exact: true }).click()
   await expect(page.getByRole('link', { name: '下载文件', exact: true })).toHaveAttribute('href', /static-signal-web-package\.zip/)
+})
+
+test('CLICK\\\\DOWN uses a static poster until reduced-motion visitors request the GIF', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'reduced-motion', 'Animated media fallback only runs in the reduced-motion project.')
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/#click-down')
+
+  const dialog = page.getByRole('dialog')
+  await expect(dialog.getByRole('heading', { name: 'CLICK\\\\DOWN' })).toBeVisible()
+  const media = dialog.locator('.dc-dossier-media-frame img')
+  await expect(media).toHaveAttribute('src', /click-down-network-poster\.png/)
+
+  await dialog.getByRole('button', { name: '播放动图', exact: true }).click()
+  await expect(media).toHaveAttribute('src', /click-down-network\.gif/)
 })
 
 test('project dossier supports direct links and restores the project index', async ({ page }, testInfo) => {

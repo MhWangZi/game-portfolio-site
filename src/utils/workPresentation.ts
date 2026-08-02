@@ -31,8 +31,14 @@ export function getDownloadLabel(work: WorkItem) {
   return '下载 Word 文档'
 }
 
-export function getWorkImageSources(work: WorkItem, preferredIndex = 0) {
+export function getWorkImageSources(work: WorkItem, preferredIndex = 0, preferPoster = false) {
   const preferred = work.media[preferredIndex]
   const remaining = work.media.filter((_, index) => index !== preferredIndex)
-  return [preferred?.poster ?? preferred?.src, ...remaining.map((item) => item.poster ?? item.src)]
+  const ordered = preferred ? [preferred, ...remaining] : remaining
+
+  return ordered.flatMap((item) => (
+    preferPoster
+      ? [item.poster ?? item.src, item.src]
+      : [item.src, item.poster]
+  ))
 }

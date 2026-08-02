@@ -57,6 +57,7 @@ function formatSha(sha?: string) {
 export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps) {
   const [activeTab, setActiveTab] = useState<DossierTab>('overview')
   const [mediaIndex, setMediaIndex] = useState(0)
+  const [playAnimatedImage, setPlayAnimatedImage] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
   const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const previousFocus = useRef<HTMLElement | null>(null)
@@ -234,6 +235,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
     if (!work) return
     setActiveTab('overview')
     setMediaIndex(0)
+    setPlayAnimatedImage(false)
     previousFocus.current = document.activeElement as HTMLElement | null
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -244,6 +246,10 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
       previousFocus.current?.focus()
     }
   }, [work])
+
+  useEffect(() => {
+    setPlayAnimatedImage(false)
+  }, [mediaIndex, reducedMotion])
 
   useEffect(() => {
     if (!work) return
@@ -263,6 +269,9 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
   if (!work) return null
 
   const activeMedia = work.media[mediaIndex] ?? work.media[0]
+  const activeMediaIsAnimatedImage = activeMedia?.type === 'image'
+    && /\.gif(?:$|\?)/i.test(activeMedia.src)
+    && Boolean(activeMedia.poster)
   const archiveCode = getArchiveCode(work, workIndex)
   const sha = formatSha(work.download?.sha256)
 
@@ -272,7 +281,14 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
   }
 
   return (
-    <div className="dc-dossier" role="dialog" aria-modal="true" aria-labelledby="dossier-title" ref={rootRef}>
+    <div
+      className="dc-dossier"
+      data-project={work.id}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dossier-title"
+      ref={rootRef}
+    >
       <div className="dc-dossier-noise" aria-hidden="true" />
       <header className="dc-dossier-header">
         <div className="dc-dossier-id">
@@ -295,7 +311,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
               <video src={activeMedia.src} poster={activeMedia.poster} controls />
             ) : (
               <SafeImage
-                sources={getWorkImageSources(work, mediaIndex)}
+                sources={getWorkImageSources(work, mediaIndex, reducedMotion && !playAnimatedImage)}
                 alt={activeMedia?.caption ?? `${work.title} 项目画面`}
                 fallbackLabel={work.shortTitle ?? work.title}
                 eager
@@ -304,7 +320,18 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
             <span className="dc-media-scan" aria-hidden="true" />
             <div className="dc-dossier-media-status">
               <span>MEDIA {String(mediaIndex + 1).padStart(2, '0')} / {String(work.media.length).padStart(2, '0')}</span>
-              <strong>{activeMedia?.type === 'video' ? 'VIDEO SOURCE' : 'IMAGE SOURCE'}</strong>
+              <div className="dc-dossier-media-meta">
+                <strong>{activeMedia?.type === 'video' ? 'VIDEO SOURCE' : 'IMAGE SOURCE'}</strong>
+                {reducedMotion && activeMediaIsAnimatedImage ? (
+                  <button
+                    className="dc-dossier-motion-toggle"
+                    type="button"
+                    onClick={() => setPlayAnimatedImage((current) => !current)}
+                  >
+                    {playAnimatedImage ? '静态画面' : '播放动图'}
+                  </button>
+                ) : null}
+              </div>
             </div>
           </div>
 

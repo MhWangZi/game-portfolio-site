@@ -18,17 +18,18 @@ const chapterPhase: Record<ChapterId | 'admin', number> = {
 }
 
 const presetPhase: Record<ScenePreset, number> = {
-  'tool-grid': 0,
-  'timing-gate': 1,
-  'anchor-field': 2,
-  'signal-branch': 3,
-  'terrain-map': 4,
-  'economy-orbit': 5,
-  'value-lattice': 6,
-  'artifact-rings': 7,
-  'combat-cross': 8,
-  'run-cycle': 9,
-  neutral: 10,
+  'countdown-grid': 0,
+  'tool-grid': 1,
+  'timing-gate': 2,
+  'anchor-field': 3,
+  'signal-branch': 4,
+  'terrain-map': 5,
+  'economy-orbit': 6,
+  'value-lattice': 7,
+  'artifact-rings': 8,
+  'combat-cross': 9,
+  'run-cycle': 10,
+  neutral: 11,
 }
 
 function createParticleField(count: number) {
@@ -119,7 +120,22 @@ function setFrameTarget(frame: THREE.Object3D, frameIndex: number, preset: Scene
   let rotationZ = 0
   let scale = 1 - frameIndex * 0.1
 
-  if (preset === 'tool-grid') {
+  if (preset === 'countdown-grid') {
+    const nodes = [
+      [-0.82, 0.56],
+      [0.72, 0.56],
+      [0.72, -0.56],
+      [-0.82, -0.56],
+      [0, 0],
+    ]
+    const [nodeX, nodeY] = nodes[frameIndex] ?? nodes[4]
+    x = nodeX
+    y = nodeY
+    z = frameIndex === 4 ? -0.5 : -0.18 - frameIndex * 0.05
+    rotationZ = (frameIndex - 1.5) * 0.09
+    rotationY = (frameIndex - 2) * 0.08
+    scale = frameIndex === 4 ? 0.42 : 0.5
+  } else if (preset === 'tool-grid') {
     x = (frameIndex - 2) * 0.58
     y = (frameIndex % 2 === 0 ? -1 : 1) * 0.28
     z = -Math.abs(frameIndex - 2) * 0.18
@@ -274,13 +290,26 @@ export function PortfolioScene({ state }: PortfolioSceneProps) {
           child.rotation.x = THREE.MathUtils.lerp(child.rotation.x, target.rotationX, lerpAmount)
           child.rotation.y = THREE.MathUtils.lerp(child.rotation.y, target.rotationY, lerpAmount)
           child.rotation.z = THREE.MathUtils.lerp(child.rotation.z, target.rotationZ, lerpAmount)
-          const scale = THREE.MathUtils.lerp(child.scale.x, target.scale, lerpAmount)
+          const countdownBeat = Math.floor(frameCount / 42) % 4
+          const countdownPulse = preset === 'countdown-grid'
+            && frameIndex === countdownBeat
+            && !reducedMotion
+            ? 1 + Math.max(0, Math.sin((frameCount % 42) / 42 * Math.PI)) * 0.14
+            : 1
+          const scale = THREE.MathUtils.lerp(child.scale.x, target.scale * countdownPulse, lerpAmount)
           child.scale.setScalar(scale)
         }
 
         if (panelIndex !== undefined) {
-          child.position.set((panelIndex - 1) * 0.62, Math.sin(panelIndex + chapter) * 0.18, -0.7 - panelIndex * 0.18)
-          child.rotation.y = (panelIndex - 1) * 0.18 + pointer.x * 0.08
+          if (preset === 'countdown-grid') {
+            const angle = panelIndex / 3 * Math.PI * 2 + Math.PI / 6
+            child.position.set(Math.cos(angle) * 0.72, Math.sin(angle) * 0.48, -0.82 - panelIndex * 0.12)
+            child.rotation.z = angle + Math.PI / 2
+            child.rotation.y = pointer.x * 0.06
+          } else {
+            child.position.set((panelIndex - 1) * 0.62, Math.sin(panelIndex + chapter) * 0.18, -0.7 - panelIndex * 0.18)
+            child.rotation.y = (panelIndex - 1) * 0.18 + pointer.x * 0.08
+          }
         }
       })
 

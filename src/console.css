@@ -756,6 +756,13 @@
   text-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
 }
 
+.dc-build-stage[data-project="click-down"] .dc-build-copy h1 {
+  font-size: clamp(4.1rem, 5.5vw, 5.75rem);
+  overflow-wrap: normal;
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
 .dc-build-question {
   max-width: 720px;
   color: var(--dc-text);
@@ -1315,6 +1322,33 @@
 
 .dc-case-media-label span,
 .dc-dossier-media-status span { color: var(--dc-amber); }
+
+.dc-dossier-media-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.dc-dossier-motion-toggle {
+  min-height: 26px;
+  padding: 0 8px;
+  color: var(--dc-amber);
+  background: rgba(231, 169, 79, 0.08);
+  border: 1px solid rgba(231, 169, 79, 0.34);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.6rem;
+}
+
+.dc-dossier-motion-toggle:hover,
+.dc-dossier-motion-toggle:focus-visible {
+  color: #171008;
+  background: var(--dc-amber-bright);
+  border-color: var(--dc-amber-bright);
+  outline: none;
+}
 
 .dc-case-card-title {
   display: grid;
@@ -1925,6 +1959,11 @@
 
 .dc-dossier-title-block > p { color: var(--dc-amber); font-family: "Cascadia Code", Consolas, monospace; font-size: 0.66rem; }
 .dc-dossier-title-block h2 { font-size: 3.6rem; line-height: 0.96; letter-spacing: 0; overflow-wrap: anywhere; }
+.dc-dossier[data-project="click-down"] .dc-dossier-title-block h2 {
+  font-size: clamp(2.35rem, 4.3vw, 3.2rem);
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
 .dc-dossier-title-block > strong { color: var(--dc-muted); font-size: 1rem; line-height: 1.5; }
 
 .dc-dossier-tabs {
@@ -2354,6 +2393,9 @@
   .dc-kicker-row { font-size: 0.58rem; }
   .dc-site-title { font-size: 0.84rem; }
   .dc-build-copy h1 { font-size: 3.5rem; line-height: 0.95; }
+  .dc-build-stage[data-project="click-down"] .dc-build-copy h1 {
+    font-size: clamp(2.3rem, 10vw, 3.4rem);
+  }
   .dc-build-question { font-size: 1.06rem; }
   .dc-build-summary { font-size: 0.86rem; }
   .dc-build-telemetry { position: relative; right: auto; bottom: auto; order: 2; width: auto; margin: 0 20px 16px; }
