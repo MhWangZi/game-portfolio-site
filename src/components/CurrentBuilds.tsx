@@ -192,6 +192,9 @@ export function CurrentBuilds({
             <button type="button" className="dc-primary-button" onClick={() => onOpen(activeWork.id)}>
               <Play size={16} />打开项目档案<ArrowRight size={15} />
             </button>
+            {activeWork.playUrl ? (
+              <a className="dc-secondary-button" href={activeWork.playUrl} target="_blank" rel="noreferrer">浏览器直接玩 ↗</a>
+            ) : null}
             {activeWork.download ? (
               <a className="dc-secondary-button" href={activeWork.download.url} download>
                 <Download size={16} />{getDownloadLabel(activeWork)}

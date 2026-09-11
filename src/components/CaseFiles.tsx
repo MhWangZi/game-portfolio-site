@@ -270,6 +270,9 @@ export function CaseFiles({
             <button className="dc-primary-button" type="button" onClick={() => onOpen(activeWork.id)}>
               打开档案<ArrowRight size={15} />
             </button>
+            {activeWork.playUrl ? (
+              <a className="dc-secondary-button" href={activeWork.playUrl} target="_blank" rel="noreferrer">浏览器直接玩 ↗</a>
+            ) : null}
             {activeWork.download ? (
               <a className="dc-secondary-button" href={activeWork.download.url} download>
                 <Download size={15} />{getDownloadLabel(activeWork)}

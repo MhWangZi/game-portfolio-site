@@ -74,6 +74,7 @@ export type WorkItem = {
   flow?: string[]
   featured?: boolean
   download?: WorkDownload
+  playUrl?: string
   links?: WorkLink[]
 }
 

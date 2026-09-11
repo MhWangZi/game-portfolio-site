@@ -5,6 +5,7 @@ const releaseBase = 'https://github.com/MhWangZi/game-portfolio-site/releases/do
 export const works: WorkItem[] = [
   {
     id: 'click-down',
+    playUrl: './games/clickdown/',
     title: 'CLICK\\\\DOWN',
     kind: 'Playable Prototype',
     shortTitle: 'CLICK\\\\DOWN',
@@ -145,6 +146,7 @@ export const works: WorkItem[] = [
   },
   {
     id: 'anchored-gaze',
+    playUrl: './games/anchored-gaze/',
     title: '万众瞩目 Anchored Gaze',
     kind: 'Playable Prototype',
     shortTitle: 'Anchored Gaze',

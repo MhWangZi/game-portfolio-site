@@ -475,6 +475,7 @@ export function ProjectDossier({ work, workIndex, onClose }: ProjectDossierProps
                   <div><dt>SIZE</dt><dd>{work.download.size ?? '未标注'}</dd></div>
                   {sha ? <div><dt>SHA-256</dt><dd><code>{sha}</code></dd></div> : null}
                 </dl>
+                {work.playUrl ? <a className="dc-primary-button" href={work.playUrl} target="_blank" rel="noreferrer">浏览器直接玩 ↗</a> : null}
                 <a className="dc-primary-button" href={work.download.url} download>
                   <Download size={17} />下载文件<ArrowRight size={15} />
                 </a>
