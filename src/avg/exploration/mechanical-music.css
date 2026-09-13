@@ -1,0 +1,41 @@
+.avg-modal:has(.mechanical-box) {width:min(1080px,94vw);max-width:1080px;background:radial-gradient(ellipse at 30% 35%,#33291b,#151b17 75%);border-color:#8a765243;}
+.mechanical-box {max-width:none;margin:auto;color:#d6c3a0;display:grid;grid-template-columns:1.2fr 1fr;gap:0 22px;align-items:start;}
+.mechanical-art {grid-column:1;grid-row:1 / span 4;align-self:center;}
+.cylinder-label,.mechanical-controls,.cylinder-drawer {grid-column:2;}
+.custom-cylinder {grid-column:1;}
+.box-note {grid-column:2;align-self:center;}
+.mechanical-art {position:relative;aspect-ratio:3/2;overflow:hidden;border:1px solid #92714342;background:#10130f;}
+.mechanical-art>img {display:block;width:100%;height:100%;object-fit:cover;}
+.wind-key {position:absolute;left:65%;top:48%;width:15%;height:24%;padding:0;border:0;background:transparent!important;border-radius:50%;}
+.wind-key:focus-visible,.wind-key:hover {outline:1px solid #ecd09b66;outline-offset:3px;}
+.wind-key span {position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:#d5bf8f;background:#20190dce;padding:5px 9px;opacity:0;}
+.wind-key:hover span,.wind-key:focus-visible span {opacity:1;}
+.mechanism-state {position:absolute;bottom:3%;left:0;right:0;text-align:center;font-size:11px;color:#bda985;text-shadow:1px 2px 4px #000;}
+.cylinder-glimmer {position:absolute;left:37%;top:40%;width:25%;height:12%;pointer-events:none;opacity:0;background:repeating-linear-gradient(100deg,transparent 0 5%,#ffedb116 5.5% 6%,transparent 6.5% 13%);transform:rotate(12deg);}
+.box-playing .cylinder-glimmer {opacity:.75;animation:cylinder-turn 2s linear infinite;}
+.changing-cylinder .mechanical-art {animation:cylinder-change .72s ease;}
+.winding-box .wind-key {outline:none;}
+.cylinder-label {position:relative;padding:16px 12px 12px;border-bottom:1px solid #8a735342;}
+.cylinder-label small {display:block;letter-spacing:2px;font-size:9px;color:#a49577;margin-bottom:7px;}
+.cylinder-label strong {display:block;font-size:17px;font-weight:400;padding-right:65px;}
+.cylinder-label output {position:absolute;right:12px;bottom:14px;color:#968b73;font-size:12px;}
+.mechanical-controls {display:flex;gap:20px;align-items:center;padding:16px 0;}
+.mechanical-controls button {background:#312718;border-color:#a1895559;color:#e7d3a6;font-size:12px;}
+.mechanical-controls label {display:flex;align-items:center;gap:12px;font-size:11px;color:#ad9e82;}
+.mechanical-controls input {accent-color:#af955f;max-width:140px;}
+.cylinder-drawer {display:grid;grid-template-columns:1fr;gap:7px;padding:10px;background:#100f0bf0;box-shadow:inset 0 3px 18px #000;border:1px solid #66533755;max-height:320px;overflow:auto;}
+.music-cylinder {display:flex;align-items:center;gap:12px;text-align:left;padding:9px 10px;min-height:64px;border:1px solid #76614232;border-radius:2px;background:linear-gradient(#2b2419,#17160f);color:#c7b794;}
+.music-cylinder[aria-pressed=true] {border-color:#d0ad687d;background:linear-gradient(#3b3020,#211c12);}
+.music-cylinder>i {display:block;flex:none;width:50px;height:24px;position:relative;border:1px solid #ab915c88;border-radius:40%/15%;background:repeating-linear-gradient(90deg,transparent 0 7px,#3a2d15aa 8px 9px),linear-gradient(#715a30,#d2b576 38%,#957a44 55%,#4c3b1e);box-shadow:2px 4px 5px #000;}
+.music-cylinder>i:before,.music-cylinder>i:after {content:'';position:absolute;top:8px;width:7px;height:6px;background:#857044;border:1px solid #b69f6b88;}
+.music-cylinder>i:before {left:-7px}.music-cylinder>i:after {right:-7px}
+.music-cylinder span {min-width:0}.music-cylinder small {display:block;font-size:8px;color:#9c8c6a;letter-spacing:1px;}
+.music-cylinder strong {font-size:12px;display:block;line-height:1.5;font-weight:400;margin:4px 0;}
+.music-cylinder em {font-size:8px;color:#8d876f;font-style:normal;line-height:1.4;display:block;}
+.custom-cylinder {display:block;cursor:pointer;text-align:center;font-size:11px;color:#b4a17c;border:1px dashed #8f784448;padding:12px;margin-top:14px;}
+.custom-cylinder input {display:block;font-size:10px;margin:8px auto 0;max-width:90%;}
+.box-note {font-size:10px!important;color:#8a8d79!important;line-height:1.8!important;margin:12px 0 0;}
+@keyframes cylinder-turn {to{background-position:90px 0}}
+@keyframes cylinder-change {50%{filter:brightness(.8);transform:translateY(2px)}}
+@keyframes wind-key-turn {50%{transform:rotate(20deg)}}
+@media(max-width:750px){.mechanical-box{display:block}.cylinder-drawer{grid-template-columns:1fr}.mechanical-controls{gap:10px;flex-wrap:wrap}.cylinder-label strong{font-size:14px}.music-cylinder{min-height:70px}.mechanism-state{font-size:9px}.mechanical-art{max-height:280px;aspect-ratio:3/2}.mechanical-art>img{object-fit:contain}}

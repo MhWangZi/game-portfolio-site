@@ -1,0 +1,26 @@
+/* Every current route has its own movement. The image swaps under a fully opaque middle frame. */
+.cinematic-site .room-transition.route-motion{background:#131b18;backdrop-filter:none;animation:route-fade var(--route-time) ease both;overflow:hidden}
+.cinematic-site .route-motion>div,.cinematic-site .route-motion>span{display:none}
+.cinematic-site .route-motion[data-direction="-1"]{animation-direction:reverse}
+.cinematic-site .route-motion.kind-light{background:radial-gradient(ellipse at 22% 60%,#9b7846,#3b3925 55%,#18211c);animation-name:route-warm}
+.cinematic-site .route-motion.kind-swing{background:linear-gradient(90deg,#0f1714,#302c20 90%,#7f7656);animation-name:route-swing}
+.cinematic-site .route-motion.kind-seam{background:linear-gradient(90deg,#162327 49.7%,#566866 50%,#162327 50.3%);animation-name:route-seam}
+.cinematic-site .route-motion.kind-aisle{background:linear-gradient(90deg,#22291f,#101810 50%,#32362a);animation-name:route-aisle}
+.cinematic-site .route-motion.kind-rain{background:repeating-linear-gradient(104deg,#15272e 0 2px,#22353c 3px 26px);animation-name:route-rain}
+.cinematic-site .route-motion.kind-roll{background:repeating-linear-gradient(0deg,#292d27 0 13px,#161e1c 14px 16px);animation-name:route-roll}
+.cinematic-site .route-motion.kind-iris{background:radial-gradient(circle,#242b22,#0d1511);animation-name:route-iris}
+.cinematic-site .route-motion.kind-diagonal{background:linear-gradient(125deg,#3d3828,#121c16);animation-name:route-diagonal}
+.cinematic-site .route-motion.kind-film{background:repeating-linear-gradient(0deg,#151b18 0 3px,#1b211d 4px 5px);animation-name:route-film;box-shadow:inset 0 0 100px #0009}
+.cinematic-site .route-motion.kind-low{background:linear-gradient(#302f23,#101712,#272a20);animation-name:route-low}
+@keyframes route-fade{0%,100%{opacity:0}40%,60%{opacity:1}}
+@keyframes route-warm{0%{opacity:0;clip-path:circle(0% at 22% 60%)}40%,60%{opacity:1;clip-path:circle(150% at 22% 60%)}100%{opacity:0;clip-path:circle(150% at 22% 60%)}}
+@keyframes route-swing{0%{clip-path:inset(0 100% 0 0)}40%,60%{clip-path:inset(0)}100%{clip-path:inset(0 0 0 100%)}}
+@keyframes route-seam{0%{clip-path:inset(0 50%)}40%,60%{clip-path:inset(0)}100%{clip-path:inset(0 50%)}}
+@keyframes route-aisle{0%{opacity:0;clip-path:inset(0 0 0 85%)}40%,60%{opacity:1;clip-path:inset(0)}100%{opacity:0;clip-path:inset(0 85% 0 0)}}
+@keyframes route-rain{0%{opacity:0;transform:translateY(35%)}40%,60%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-35%)}}
+@keyframes route-roll{0%{clip-path:inset(100% 0 0)}40%,60%{clip-path:inset(0)}100%{clip-path:inset(0 0 100%)}}
+@keyframes route-iris{0%{clip-path:circle(0% at 58% 48%)}40%,60%{clip-path:circle(150% at 58% 48%)}100%{clip-path:circle(0% at 58% 48%)}}
+@keyframes route-diagonal{0%{clip-path:polygon(0 0,0 0,0 0)}40%,60%{clip-path:polygon(0 0,200% 0,0 200%)}100%{clip-path:polygon(100% 100%,100% 100%,100% 100%)}}
+@keyframes route-film{0%{opacity:0;transform:translateY(80%)}40%,60%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-80%)}}
+@keyframes route-low{0%{clip-path:inset(50% 0)}40%,60%{clip-path:inset(0)}100%{clip-path:inset(50% 0)}}
+@media(prefers-reduced-motion:reduce){.cinematic-site .room-transition.route-motion{animation-name:route-fade;transform:none;clip-path:none}}

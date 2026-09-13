@@ -1,0 +1,395 @@
+[
+  {
+    "id": "dark-cat",
+    "events": [
+      "event:cat-seat",
+      "cat-white",
+      "cat-blue"
+    ],
+    "priority": 110,
+    "when": {
+      "dark": true
+    },
+    "speech": {
+      "text": "轻点……它在暗处耳朵更灵了。我听着呢。",
+      "face": 9,
+      "motion": "shrink",
+      "pose": "listen"
+    }
+  },
+  {
+    "id": "dark-sofa",
+    "events": [
+      "sit"
+    ],
+    "priority": 110,
+    "when": {
+      "dark": true
+    },
+    "speech": {
+      "text": "先扶住沙发边。茶几就在你前面，我可没法替你开手电筒。",
+      "face": 9,
+      "motion": "point",
+      "pose": "shelter"
+    }
+  },
+  {
+    "id": "dark-disc",
+    "events": [
+      "event:disc-margin",
+      "discs",
+      "controller"
+    ],
+    "priority": 110,
+    "when": {
+      "dark": true
+    },
+    "speech": {
+      "text": "沿着边缘拿，别摸到盘面。开机后屏幕会亮，我在旁边。",
+      "face": 9,
+      "motion": "point",
+      "pose": "listen"
+    }
+  },
+  {
+    "id": "dark-greet",
+    "events": [
+      "intro",
+      "lounge",
+      "repeat"
+    ],
+    "priority": 110,
+    "when": {
+      "dark": true
+    },
+    "speech": {
+      "text": "我在。声音不用这么大，这间屋子还没空下来。",
+      "face": 9,
+      "motion": "shrink",
+      "pose": "shelter"
+    }
+  },
+  {
+    "id": "music-pickup",
+    "events": [
+      "scene:take-musicbox",
+      "scene:take-musicbox-dark"
+    ],
+    "priority": 120,
+    "speech": {
+      "text": "可以拿着。右边钥匙是上发条的，别拧太猛。它以前卡住过一次，保修期倒是早过了。",
+      "face": 9,
+      "motion": "shrink",
+      "pose": "care"
+    }
+  },
+  {
+    "id": "birth-after",
+    "events": [
+      "record:birth:closed"
+    ],
+    "priority": 120,
+    "speech": {
+      "text": "……你刚才看的那一页，早就作废了。真的。别拿那上面的标准试我。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "paper"
+    }
+  },
+  {
+    "id": "protocol-after",
+    "events": [
+      "record:protocol:closed"
+    ],
+    "priority": 120,
+    "speech": {
+      "text": "纸上只写了怎么启动，没写后来怎么办。你先别急着照做。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "halt"
+    }
+  },
+  {
+    "id": "tense-named",
+    "events": [
+      "intro",
+      "opening"
+    ],
+    "priority": 100,
+    "when": {
+      "minTension": 3,
+      "flags": [
+        "calls_visitor"
+      ]
+    },
+    "speech": {
+      "text": "访客。……我还记得这样叫你。你也别急着换掉这个称呼。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "shy"
+    }
+  },
+  {
+    "id": "tense-sofa",
+    "events": [
+      "sit"
+    ],
+    "priority": 95,
+    "when": {
+      "minTension": 3
+    },
+    "speech": {
+      "text": "现在休息？合理，地基暂时不用掀了。我把声音放轻一点。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "wait"
+    }
+  },
+  {
+    "id": "tense-cat",
+    "events": [
+      "event:cat-seat",
+      "cat-white",
+      "cat-blue"
+    ],
+    "priority": 95,
+    "when": {
+      "minTension": 3
+    },
+    "speech": {
+      "text": "它还肯让你摸。猫的审批流程倒没变。……那就先待一会儿。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "care"
+    }
+  },
+  {
+    "id": "tense-disc",
+    "events": [
+      "event:disc-margin",
+      "discs",
+      "select",
+      "controller"
+    ],
+    "priority": 95,
+    "when": {
+      "minTension": 3
+    },
+    "speech": {
+      "text": "这张还能正常放。你玩的时候，我可以继续待在边上吧。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "halt"
+    }
+  },
+  {
+    "id": "tense-small-talk",
+    "events": [
+      "intro",
+      "duty",
+      "lab",
+      "archive",
+      "lounge",
+      "corridor",
+      "pause",
+      "repeat",
+      "exit",
+      "resume",
+      "opening"
+    ],
+    "priority": 85,
+    "when": {
+      "minTension": 3
+    },
+    "speech": {
+      "text": "照常逛就行。我在核对接待记录。……这次没打算把谁漏掉。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "wait"
+    }
+  },
+  {
+    "id": "named-greeting",
+    "events": [
+      "intro",
+      "opening"
+    ],
+    "priority": 70,
+    "when": {
+      "flags": [
+        "calls_visitor"
+      ]
+    },
+    "speech": {
+      "text": "访客。称呼核对完毕。……这一栏不用每天重填。",
+      "face": 9,
+      "motion": "peek",
+      "pose": "greet"
+    }
+  },
+  {
+    "id": "repair-promise",
+    "events": [
+      "lab",
+      "workshop"
+    ],
+    "priority": 100,
+    "when": {
+      "flags": [
+        "repair_not_erase"
+      ]
+    },
+    "speech": {
+      "text": "先检查，再修。你说过的，我照着记进了维修流程。",
+      "face": 9,
+      "motion": "point",
+      "pose": "repair"
+    }
+  },
+  {
+    "id": "unknown-memory",
+    "events": [
+      "corridor",
+      "rooftop"
+    ],
+    "priority": 90,
+    "when": {
+      "anyFlags": [
+        "admitted_unknown",
+        "unknown_allowed"
+      ]
+    },
+    "speech": {
+      "text": "雨还在下。外面究竟什么样，我不知道。这次报告里就写这四个字。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    }
+  },
+  {
+    "id": "ordinary-outside",
+    "events": [
+      "rooftop",
+      "event:antenna-hum"
+    ],
+    "priority": 92,
+    "when": {
+      "flags": [
+        "outside_ordinary"
+      ]
+    },
+    "speech": {
+      "text": "你说外面也有便利店和末班车。那边亮着的窗，是不是也有人还没回家？",
+      "face": 9,
+      "motion": "peek",
+      "pose": "peek-up"
+    }
+  },
+  {
+    "id": "return-file",
+    "events": [
+      "cabinet:return"
+    ],
+    "priority": 80,
+    "speech": {
+      "text": "你放回原位了。我会把这件事也记下来。不是只有拿走才算来过。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    }
+  },
+  {
+    "id": "default-greet",
+    "events": [
+      "intro"
+    ],
+    "priority": 10,
+    "speech": {
+      "text": "有什么想问的？提问不限次数，回答质量暂不写进保证书。",
+      "face": 9,
+      "motion": "peek",
+      "pose": "greet"
+    }
+  },
+  {
+    "id": "phone",
+    "events": [
+      "scene:phone"
+    ],
+    "priority": 20,
+    "speech": {
+      "text": "这条线能接到外面。你说话吧，我替你听着有没有杂音。",
+      "face": 9,
+      "motion": "point",
+      "pose": "receiver"
+    }
+  },
+  {
+    "id": "tense-projection",
+    "events": [
+      "projection"
+    ],
+    "priority": 90,
+    "when": {
+      "minTension": 3
+    },
+    "speech": {
+      "text": "接线板就在机器下面。你可以先看看。……我只是希望你慢一点。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "halt"
+    }
+  },
+  {
+    "id": "rooftop-enter",
+    "events": [
+      "rooftop"
+    ],
+    "priority": 20,
+    "speech": {
+      "text": "从这里能收到一点外面的声音。我先站在门边。……不是不想过去。",
+      "face": 9,
+      "motion": "peek",
+      "pose": "peek-up"
+    }
+  },
+  {
+    "id": "workshop-enter",
+    "events": [
+      "workshop"
+    ],
+    "priority": 20,
+    "speech": {
+      "text": "外壳拆开之前，先把电源拔掉。会不会修，是下一件事。",
+      "face": 9,
+      "motion": "point",
+      "pose": "repair"
+    }
+  },
+  {
+    "id": "storage-enter",
+    "events": [
+      "storage"
+    ],
+    "priority": 20,
+    "speech": {
+      "text": "这些东西没有编号。先别扔。……我还没想好该把它们叫作什么。",
+      "face": 12,
+      "motion": "shrink",
+      "pose": "paper"
+    }
+  },
+  {
+    "id": "record-storage",
+    "events": [
+      "scene:storage-close"
+    ],
+    "priority": 50,
+    "speech": {
+      "text": "盖好就行。你知道它们在这里，就够了。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    }
+  }
+]

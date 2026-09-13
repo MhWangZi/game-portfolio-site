@@ -1,0 +1,2686 @@
+[
+  {
+    "id": "duty",
+    "image": "./media/exploration/duty.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [
+      [
+        [
+          24,
+          46
+        ],
+        [
+          47,
+          27
+        ],
+        [
+          59,
+          39
+        ],
+        [
+          59,
+          45
+        ],
+        [
+          38,
+          59
+        ]
+      ]
+    ],
+    "objects": [
+      {
+        "id": "door-lounge",
+        "label": "开门去游戏房",
+        "polygon": [
+          [
+            13,
+            28
+          ],
+          [
+            22,
+            20
+          ],
+          [
+            22,
+            54
+          ],
+          [
+            13,
+            62
+          ]
+        ],
+        "approach": [
+          22,
+          63
+        ],
+        "action": {
+          "type": "room",
+          "target": "lounge"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-corridor",
+        "label": "开门去雨声走廊",
+        "polygon": [
+          [
+            84,
+            23
+          ],
+          [
+            92,
+            31
+          ],
+          [
+            92,
+            60
+          ],
+          [
+            84,
+            55
+          ]
+        ],
+        "approach": [
+          82,
+          65
+        ],
+        "action": {
+          "type": "room",
+          "target": "corridor"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "terminal",
+        "label": "和私人助手打招呼",
+        "polygon": [
+          [
+            27,
+            31
+          ],
+          [
+            31,
+            28
+          ],
+          [
+            34,
+            31
+          ],
+          [
+            34,
+            36
+          ],
+          [
+            30,
+            39
+          ],
+          [
+            27,
+            36
+          ]
+        ],
+        "approach": [
+          29,
+          58
+        ],
+        "action": {
+          "type": "say",
+          "event": "intro"
+        },
+        "kind": "screen",
+        "depth": 57
+      },
+      {
+        "id": "register",
+        "label": "翻开访客登记簿",
+        "polygon": [
+          [
+            39,
+            38
+          ],
+          [
+            43,
+            36
+          ],
+          [
+            45,
+            38
+          ],
+          [
+            42,
+            41
+          ]
+        ],
+        "approach": [
+          44,
+          58
+        ],
+        "action": {
+          "type": "panel",
+          "id": "manual"
+        },
+        "depth": 59
+      },
+      {
+        "id": "bulletin",
+        "label": "阅读值班守则",
+        "polygon": [
+          [
+            58,
+            11
+          ],
+          [
+            67,
+            18
+          ],
+          [
+            67,
+            27
+          ],
+          [
+            58,
+            21
+          ]
+        ],
+        "approach": [
+          63,
+          46
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:protocol"
+        }
+      },
+      {
+        "id": "clock",
+        "label": "检查停下来的时钟",
+        "polygon": [
+          [
+            44,
+            5
+          ],
+          [
+            49,
+            5
+          ],
+          [
+            49,
+            18
+          ],
+          [
+            44,
+            18
+          ]
+        ],
+        "approach": [
+          61,
+          46
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:playlist"
+        }
+      }
+    ],
+    "foreground": [
+      {
+        "id": "reception-desk",
+        "polygon": [
+          [
+            24.6,
+            35
+          ],
+          [
+            47.5,
+            24.5
+          ],
+          [
+            59,
+            28
+          ],
+          [
+            59,
+            44
+          ],
+          [
+            38,
+            56.5
+          ],
+          [
+            24.6,
+            46.5
+          ]
+        ],
+        "depth": 58
+      },
+      {
+        "id": "coat-rack",
+        "polygon": [
+          [
+            6,
+            40
+          ],
+          [
+            12,
+            40
+          ],
+          [
+            13,
+            65
+          ],
+          [
+            7,
+            67
+          ]
+        ],
+        "depth": 67
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "lounge": [
+        20,
+        65
+      ],
+      "corridor": [
+        81,
+        67
+      ]
+    }
+  },
+  {
+    "id": "corridor",
+    "image": "./media/exploration/corridor.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        6,
+        64
+      ],
+      [
+        48,
+        33
+      ],
+      [
+        95,
+        64
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        90
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [],
+    "objects": [
+      {
+        "id": "door-duty",
+        "label": "开门回值班室",
+        "polygon": [
+          [
+            9,
+            29
+          ],
+          [
+            18,
+            22
+          ],
+          [
+            18,
+            52
+          ],
+          [
+            9,
+            59
+          ]
+        ],
+        "approach": [
+          21,
+          63
+        ],
+        "action": {
+          "type": "room",
+          "target": "duty"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-lab",
+        "label": "开门去实验间",
+        "polygon": [
+          [
+            36,
+            9
+          ],
+          [
+            44,
+            4
+          ],
+          [
+            44,
+            35
+          ],
+          [
+            36,
+            40
+          ]
+        ],
+        "approach": [
+          44,
+          44
+        ],
+        "action": {
+          "type": "room",
+          "target": "lab"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-archive",
+        "label": "开门去档案室",
+        "polygon": [
+          [
+            83,
+            23
+          ],
+          [
+            92,
+            29
+          ],
+          [
+            92,
+            58
+          ],
+          [
+            83,
+            53
+          ]
+        ],
+        "approach": [
+          82,
+          62
+        ],
+        "action": {
+          "type": "room",
+          "target": "archive"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "phone",
+        "label": "拿起走廊电话",
+        "polygon": [
+          [
+            76,
+            25
+          ],
+          [
+            78,
+            23
+          ],
+          [
+            81,
+            26
+          ],
+          [
+            81,
+            33
+          ],
+          [
+            78,
+            35
+          ],
+          [
+            76,
+            32
+          ]
+        ],
+        "approach": [
+          78,
+          55
+        ],
+        "action": {
+          "type": "panel",
+          "id": "contact"
+        },
+        "kind": "phone",
+        "depth": 51
+      },
+      {
+        "id": "board",
+        "label": "查看楼层示意图",
+        "polygon": [
+          [
+            65,
+            15
+          ],
+          [
+            76,
+            22
+          ],
+          [
+            76,
+            34
+          ],
+          [
+            65,
+            28
+          ]
+        ],
+        "approach": [
+          71,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "map"
+        }
+      },
+      {
+        "id": "coat",
+        "label": "看看留下的外套",
+        "polygon": [
+          [
+            68,
+            37
+          ],
+          [
+            76,
+            37
+          ],
+          [
+            76,
+            48
+          ],
+          [
+            68,
+            48
+          ]
+        ],
+        "approach": [
+          71,
+          54
+        ],
+        "action": {
+          "type": "say",
+          "event": "corridor-coat"
+        },
+        "depth": 50
+      }
+    ],
+    "foreground": [
+      {
+        "id": "bench",
+        "polygon": [
+          [
+            60,
+            33
+          ],
+          [
+            67,
+            33
+          ],
+          [
+            76,
+            40
+          ],
+          [
+            76,
+            49
+          ],
+          [
+            73,
+            50
+          ],
+          [
+            60,
+            42
+          ]
+        ],
+        "depth": 49
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "duty": [
+        20,
+        64
+      ],
+      "lab": [
+        45,
+        45
+      ],
+      "archive": [
+        81,
+        64
+      ]
+    }
+  },
+  {
+    "id": "lounge",
+    "image": "./media/exploration/lounge.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [
+      [
+        [
+          61,
+          66
+        ],
+        [
+          78,
+          47
+        ],
+        [
+          88,
+          54
+        ],
+        [
+          89,
+          66
+        ],
+        [
+          72,
+          80
+        ],
+        [
+          59,
+          74
+        ]
+      ]
+    ],
+    "objects": [
+      {
+        "id": "door-duty",
+        "label": "开门回值班室",
+        "polygon": [
+          [
+            5,
+            31
+          ],
+          [
+            14,
+            24
+          ],
+          [
+            14,
+            55
+          ],
+          [
+            5,
+            63
+          ]
+        ],
+        "approach": [
+          21,
+          65
+        ],
+        "action": {
+          "type": "room",
+          "target": "duty"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "sofa",
+        "label": "坐下玩游戏",
+        "polygon": [
+          [
+            63,
+            62
+          ],
+          [
+            78,
+            46
+          ],
+          [
+            89,
+            50
+          ],
+          [
+            90,
+            64
+          ],
+          [
+            72,
+            78
+          ],
+          [
+            63,
+            72
+          ]
+        ],
+        "approach": [
+          58,
+          66
+        ],
+        "action": {
+          "type": "sit"
+        },
+        "depth": 80
+      },
+      {
+        "id": "television",
+        "label": "打开电视选一张游戏",
+        "polygon": [
+          [
+            32,
+            21
+          ],
+          [
+            44,
+            15
+          ],
+          [
+            47,
+            20
+          ],
+          [
+            47,
+            31
+          ],
+          [
+            36,
+            39
+          ],
+          [
+            32,
+            34
+          ]
+        ],
+        "approach": [
+          41,
+          53
+        ],
+        "action": {
+          "type": "sit"
+        },
+        "kind": "screen",
+        "depth": 47
+      },
+      {
+        "id": "music",
+        "label": "打开音乐盒",
+        "polygon": [
+          [
+            25,
+            32
+          ],
+          [
+            30,
+            30
+          ],
+          [
+            34,
+            33
+          ],
+          [
+            34,
+            36
+          ],
+          [
+            27,
+            40
+          ],
+          [
+            25,
+            37
+          ]
+        ],
+        "approach": [
+          31,
+          55
+        ],
+        "action": {
+          "type": "panel",
+          "id": "music"
+        },
+        "kind": "screen",
+        "depth": 52
+      },
+      {
+        "id": "lamp",
+        "label": "拉动台灯开关",
+        "polygon": [
+          [
+            87,
+            43
+          ],
+          [
+            92,
+            38
+          ],
+          [
+            94,
+            47
+          ],
+          [
+            92,
+            62
+          ],
+          [
+            89,
+            64
+          ],
+          [
+            88,
+            58
+          ]
+        ],
+        "approach": [
+          88,
+          68
+        ],
+        "action": {
+          "type": "say",
+          "event": "lamp"
+        },
+        "kind": "lamp",
+        "depth": 67
+      },
+      {
+        "id": "trophies",
+        "label": "查看奖杯与纪念物",
+        "polygon": [
+          [
+            56,
+            10
+          ],
+          [
+            64,
+            10
+          ],
+          [
+            64,
+            20
+          ],
+          [
+            56,
+            20
+          ]
+        ],
+        "approach": [
+          63,
+          46
+        ],
+        "action": {
+          "type": "panel",
+          "id": "collection"
+        }
+      },
+      {
+        "id": "discs",
+        "label": "翻开藏在光盘旁的歌单",
+        "polygon": [
+          [
+            21,
+            42
+          ],
+          [
+            25,
+            40
+          ],
+          [
+            27,
+            42
+          ],
+          [
+            27,
+            47
+          ],
+          [
+            21,
+            49
+          ]
+        ],
+        "approach": [
+          25,
+          57
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:playlist"
+        },
+        "depth": 53
+      },
+      {
+        "id": "dark-mark",
+        "label": "拾取检修印记",
+        "polygon": [
+          [
+            82,
+            68
+          ],
+          [
+            85,
+            66
+          ],
+          [
+            85,
+            69
+          ],
+          [
+            83,
+            71
+          ]
+        ],
+        "approach": [
+          85,
+          72
+        ],
+        "action": {
+          "type": "collect",
+          "id": "dark"
+        },
+        "when": "dark"
+      }
+    ],
+    "foreground": [
+      {
+        "id": "side-table",
+        "polygon": [
+          [
+            57,
+            65
+          ],
+          [
+            61,
+            62
+          ],
+          [
+            65,
+            65
+          ],
+          [
+            65,
+            74
+          ],
+          [
+            60,
+            76
+          ],
+          [
+            57,
+            72
+          ]
+        ],
+        "depth": 77
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "duty": [
+        21,
+        65
+      ]
+    }
+  },
+  {
+    "id": "lab",
+    "image": "./media/exploration/lab.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [],
+    "objects": [
+      {
+        "id": "door-corridor",
+        "label": "开门回雨声走廊",
+        "polygon": [
+          [
+            5,
+            30
+          ],
+          [
+            13,
+            24
+          ],
+          [
+            13,
+            54
+          ],
+          [
+            5,
+            61
+          ]
+        ],
+        "approach": [
+          19,
+          65
+        ],
+        "action": {
+          "type": "room",
+          "target": "corridor"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-projection",
+        "label": "开门去旧放映间",
+        "polygon": [
+          [
+            86,
+            25
+          ],
+          [
+            94,
+            31
+          ],
+          [
+            94,
+            60
+          ],
+          [
+            86,
+            56
+          ]
+        ],
+        "approach": [
+          82,
+          65
+        ],
+        "action": {
+          "type": "room",
+          "target": "projection"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "toolkit",
+        "label": "检查Godot工具箱",
+        "polygon": [
+          [
+            19,
+            33
+          ],
+          [
+            23,
+            30
+          ],
+          [
+            26,
+            31
+          ],
+          [
+            26,
+            38
+          ],
+          [
+            21,
+            41
+          ],
+          [
+            19,
+            39
+          ]
+        ],
+        "approach": [
+          29,
+          57
+        ],
+        "action": {
+          "type": "work",
+          "id": "hd2d-kit"
+        },
+        "kind": "screen",
+        "depth": 55
+      },
+      {
+        "id": "prototype",
+        "label": "试着理解桌上的原型",
+        "polygon": [
+          [
+            34,
+            29
+          ],
+          [
+            39,
+            29
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            34,
+            34
+          ]
+        ],
+        "approach": [
+          42,
+          51
+        ],
+        "action": {
+          "type": "work",
+          "id": "parry-arena"
+        },
+        "depth": 48
+      },
+      {
+        "id": "test-paper",
+        "label": "阅读应答测试",
+        "polygon": [
+          [
+            30,
+            34
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            35,
+            35
+          ],
+          [
+            32,
+            37
+          ]
+        ],
+        "approach": [
+          36,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:birth"
+        },
+        "depth": 51
+      },
+      {
+        "id": "patchbay",
+        "label": "检查启动接线板",
+        "polygon": [
+          [
+            25,
+            38
+          ],
+          [
+            30,
+            35
+          ],
+          [
+            33,
+            38
+          ],
+          [
+            28,
+            41
+          ]
+        ],
+        "approach": [
+          33,
+          56
+        ],
+        "action": {
+          "type": "panel",
+          "id": "recovery"
+        },
+        "depth": 55
+      },
+      {
+        "id": "recorder",
+        "label": "检查废弃录音",
+        "polygon": [
+          [
+            74,
+            28
+          ],
+          [
+            80,
+            28
+          ],
+          [
+            82,
+            34
+          ],
+          [
+            82,
+            39
+          ],
+          [
+            74,
+            36
+          ]
+        ],
+        "approach": [
+          74,
+          56
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:protocol"
+        },
+        "depth": 55
+      }
+    ],
+    "foreground": [
+      {
+        "id": "stool",
+        "polygon": [
+          [
+            33,
+            39
+          ],
+          [
+            37,
+            37
+          ],
+          [
+            39,
+            39
+          ],
+          [
+            39,
+            47
+          ],
+          [
+            35,
+            50
+          ],
+          [
+            33,
+            47
+          ]
+        ],
+        "depth": 50
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "corridor": [
+        20,
+        65
+      ],
+      "projection": [
+        81,
+        65
+      ]
+    }
+  },
+  {
+    "id": "archive",
+    "image": "./media/exploration/archive.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [
+      [
+        [
+          38,
+          60
+        ],
+        [
+          48,
+          52
+        ],
+        [
+          63,
+          61
+        ],
+        [
+          62,
+          67
+        ],
+        [
+          49,
+          76
+        ]
+      ]
+    ],
+    "objects": [
+      {
+        "id": "door-corridor",
+        "label": "开门回雨声走廊",
+        "polygon": [
+          [
+            13,
+            29
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            22,
+            54
+          ],
+          [
+            13,
+            62
+          ]
+        ],
+        "approach": [
+          22,
+          66
+        ],
+        "action": {
+          "type": "room",
+          "target": "corridor"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-projection",
+        "label": "开门去旧放映间",
+        "polygon": [
+          [
+            84,
+            24
+          ],
+          [
+            91,
+            29
+          ],
+          [
+            91,
+            59
+          ],
+          [
+            84,
+            54
+          ]
+        ],
+        "approach": [
+          81,
+          67
+        ],
+        "action": {
+          "type": "room",
+          "target": "projection"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "phone",
+        "label": "拿起桌上的电话",
+        "polygon": [
+          [
+            52,
+            52
+          ],
+          [
+            54,
+            50
+          ],
+          [
+            56,
+            52
+          ],
+          [
+            56,
+            56
+          ],
+          [
+            53,
+            57
+          ],
+          [
+            51,
+            55
+          ]
+        ],
+        "approach": [
+          64,
+          66
+        ],
+        "action": {
+          "type": "panel",
+          "id": "contact"
+        },
+        "kind": "phone",
+        "depth": 75
+      },
+      {
+        "id": "files",
+        "label": "翻阅桌面档案",
+        "polygon": [
+          [
+            46,
+            48
+          ],
+          [
+            49,
+            45
+          ],
+          [
+            52,
+            48
+          ],
+          [
+            50,
+            51
+          ]
+        ],
+        "approach": [
+          54,
+          78
+        ],
+        "action": {
+          "type": "panel",
+          "id": "works"
+        },
+        "depth": 75
+      },
+      {
+        "id": "playlist",
+        "label": "查看留下的歌单",
+        "polygon": [
+          [
+            56,
+            50
+          ],
+          [
+            58,
+            49
+          ],
+          [
+            60,
+            51
+          ],
+          [
+            59,
+            53
+          ],
+          [
+            56,
+            53
+          ]
+        ],
+        "approach": [
+          65,
+          65
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:playlist"
+        },
+        "depth": 74
+      },
+      {
+        "id": "drawer-1",
+        "label": "打开第1格档案：来访明信片",
+        "polygon": [
+          [
+            47.8,
+            24
+          ],
+          [
+            51.4,
+            25.6
+          ],
+          [
+            51.4,
+            29.5
+          ],
+          [
+            47.8,
+            27.9
+          ]
+        ],
+        "approach": [
+          54,
+          47
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:postcard"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-2",
+        "label": "打开第2格档案：未完成的歌单",
+        "polygon": [
+          [
+            47.8,
+            28.6
+          ],
+          [
+            51.4,
+            30.200000000000003
+          ],
+          [
+            51.4,
+            34.1
+          ],
+          [
+            47.8,
+            32.5
+          ]
+        ],
+        "approach": [
+          54,
+          47
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:playlist"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-3",
+        "label": "打开第3格档案：清除规程",
+        "polygon": [
+          [
+            47.8,
+            33.2
+          ],
+          [
+            51.4,
+            34.800000000000004
+          ],
+          [
+            51.4,
+            38.7
+          ],
+          [
+            47.8,
+            37.1
+          ]
+        ],
+        "approach": [
+          54,
+          47
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:protocol"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-4",
+        "label": "打开第4格档案：应答测试",
+        "polygon": [
+          [
+            47.8,
+            37.8
+          ],
+          [
+            51.4,
+            39.4
+          ],
+          [
+            51.4,
+            43.3
+          ],
+          [
+            47.8,
+            41.699999999999996
+          ]
+        ],
+        "approach": [
+          54,
+          47
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:birth"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-5",
+        "label": "打开第5格档案：CLICKDOWN",
+        "polygon": [
+          [
+            54.3,
+            19
+          ],
+          [
+            57.9,
+            20.6
+          ],
+          [
+            57.9,
+            24.5
+          ],
+          [
+            54.3,
+            22.9
+          ]
+        ],
+        "approach": [
+          58,
+          49
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:click-down"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-6",
+        "label": "打开第6格档案：万众瞩目",
+        "polygon": [
+          [
+            54.3,
+            23.6
+          ],
+          [
+            57.9,
+            25.200000000000003
+          ],
+          [
+            57.9,
+            29.1
+          ],
+          [
+            54.3,
+            27.5
+          ]
+        ],
+        "approach": [
+          58,
+          49
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:anchored-gaze"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-7",
+        "label": "打开第7格档案：Godot工具箱",
+        "polygon": [
+          [
+            54.3,
+            28.2
+          ],
+          [
+            57.9,
+            29.8
+          ],
+          [
+            57.9,
+            33.7
+          ],
+          [
+            54.3,
+            32.1
+          ]
+        ],
+        "approach": [
+          58,
+          49
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:hd2d-kit"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-8",
+        "label": "打开第8格档案：Parry Arena",
+        "polygon": [
+          [
+            54.3,
+            32.8
+          ],
+          [
+            57.9,
+            34.4
+          ],
+          [
+            57.9,
+            38.3
+          ],
+          [
+            54.3,
+            36.699999999999996
+          ]
+        ],
+        "approach": [
+          58,
+          49
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:parry-arena"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-9",
+        "label": "打开第9格档案：原型索引",
+        "polygon": [
+          [
+            58.4,
+            21.1
+          ],
+          [
+            62,
+            22.700000000000003
+          ],
+          [
+            62,
+            26.6
+          ],
+          [
+            58.4,
+            25
+          ]
+        ],
+        "approach": [
+          62,
+          51
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:rhythm-island"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-10",
+        "label": "打开第10格档案：设计记录",
+        "polygon": [
+          [
+            58.4,
+            25.700000000000003
+          ],
+          [
+            62,
+            27.300000000000004
+          ],
+          [
+            62,
+            31.200000000000003
+          ],
+          [
+            58.4,
+            29.6
+          ]
+        ],
+        "approach": [
+          62,
+          51
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:anomalies"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-11",
+        "label": "打开第11格档案：实验索引",
+        "polygon": [
+          [
+            58.4,
+            30.3
+          ],
+          [
+            62,
+            31.900000000000002
+          ],
+          [
+            62,
+            35.8
+          ],
+          [
+            58.4,
+            34.2
+          ]
+        ],
+        "approach": [
+          62,
+          51
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:daily-paper"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-12",
+        "label": "打开第12格档案：旧项目目录",
+        "polygon": [
+          [
+            58.4,
+            34.9
+          ],
+          [
+            62,
+            36.5
+          ],
+          [
+            62,
+            40.4
+          ],
+          [
+            58.4,
+            38.8
+          ]
+        ],
+        "approach": [
+          62,
+          51
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:tarot"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-13",
+        "label": "打开第13格档案：影像记录",
+        "polygon": [
+          [
+            62.5,
+            23.2
+          ],
+          [
+            66.1,
+            24.8
+          ],
+          [
+            66.1,
+            28.7
+          ],
+          [
+            62.5,
+            27.099999999999998
+          ]
+        ],
+        "approach": [
+          66,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:ai-game"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-14",
+        "label": "打开第14格档案：未分类记录",
+        "polygon": [
+          [
+            62.5,
+            27.799999999999997
+          ],
+          [
+            66.1,
+            29.4
+          ],
+          [
+            66.1,
+            33.3
+          ],
+          [
+            62.5,
+            31.699999999999996
+          ]
+        ],
+        "approach": [
+          66,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "work:prototype"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-15",
+        "label": "打开第15格档案：作品总目",
+        "polygon": [
+          [
+            62.5,
+            32.4
+          ],
+          [
+            66.1,
+            34
+          ],
+          [
+            66.1,
+            37.9
+          ],
+          [
+            62.5,
+            36.3
+          ]
+        ],
+        "approach": [
+          66,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "works"
+        },
+        "kind": "drawer",
+        "depth": 44
+      },
+      {
+        "id": "drawer-16",
+        "label": "打开第16格档案：私人助手说明",
+        "polygon": [
+          [
+            62.5,
+            37
+          ],
+          [
+            66.1,
+            38.6
+          ],
+          [
+            66.1,
+            42.5
+          ],
+          [
+            62.5,
+            40.9
+          ]
+        ],
+        "approach": [
+          66,
+          53
+        ],
+        "action": {
+          "type": "panel",
+          "id": "manual"
+        },
+        "kind": "drawer",
+        "depth": 44
+      }
+    ],
+    "foreground": [
+      {
+        "id": "reading-desk",
+        "polygon": [
+          [
+            37.5,
+            47
+          ],
+          [
+            44,
+            41.5
+          ],
+          [
+            62,
+            52.5
+          ],
+          [
+            62,
+            64
+          ],
+          [
+            50.5,
+            75.5
+          ],
+          [
+            37.5,
+            62
+          ]
+        ],
+        "depth": 76
+      },
+      {
+        "id": "visitor-chair",
+        "polygon": [
+          [
+            40.5,
+            57
+          ],
+          [
+            45,
+            56
+          ],
+          [
+            49,
+            60
+          ],
+          [
+            49,
+            76
+          ],
+          [
+            45,
+            78
+          ],
+          [
+            42,
+            74
+          ]
+        ],
+        "depth": 78
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "corridor": [
+        22,
+        66
+      ],
+      "projection": [
+        81,
+        68
+      ]
+    }
+  },
+  {
+    "id": "projection",
+    "image": "./media/exploration/projection.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [
+      [
+        [
+          28,
+          57
+        ],
+        [
+          33,
+          53
+        ],
+        [
+          51,
+          69
+        ],
+        [
+          53,
+          75
+        ],
+        [
+          47,
+          78
+        ],
+        [
+          29,
+          65
+        ]
+      ],
+      [
+        [
+          56,
+          53
+        ],
+        [
+          63,
+          49
+        ],
+        [
+          69,
+          53
+        ],
+        [
+          69,
+          66
+        ],
+        [
+          65,
+          69
+        ],
+        [
+          55,
+          63
+        ]
+      ]
+    ],
+    "objects": [
+      {
+        "id": "door-lab",
+        "label": "开门回实验间",
+        "polygon": [
+          [
+            5,
+            30
+          ],
+          [
+            14,
+            25
+          ],
+          [
+            14,
+            56
+          ],
+          [
+            5,
+            61
+          ]
+        ],
+        "approach": [
+          20,
+          66
+        ],
+        "action": {
+          "type": "room",
+          "target": "lab"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "door-sealed",
+        "label": "检查未登记的门",
+        "polygon": [
+          [
+            87,
+            27
+          ],
+          [
+            95,
+            33
+          ],
+          [
+            95,
+            62
+          ],
+          [
+            87,
+            57
+          ]
+        ],
+        "approach": [
+          83,
+          65
+        ],
+        "action": {
+          "type": "panel",
+          "id": "recovery"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "screen",
+        "label": "辨认幕布上的人影",
+        "polygon": [
+          [
+            22,
+            19
+          ],
+          [
+            43,
+            6
+          ],
+          [
+            43,
+            32
+          ],
+          [
+            22,
+            45
+          ]
+        ],
+        "approach": [
+          30,
+          52
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:birth"
+        }
+      },
+      {
+        "id": "projector",
+        "label": "检查放映机的接线",
+        "polygon": [
+          [
+            56,
+            41
+          ],
+          [
+            61,
+            36
+          ],
+          [
+            66,
+            43
+          ],
+          [
+            66,
+            49
+          ],
+          [
+            62,
+            53
+          ],
+          [
+            57,
+            49
+          ]
+        ],
+        "approach": [
+          71,
+          64
+        ],
+        "action": {
+          "type": "panel",
+          "id": "recovery"
+        },
+        "depth": 70
+      },
+      {
+        "id": "tapes",
+        "label": "翻开旧胶片标签",
+        "polygon": [
+          [
+            64,
+            12
+          ],
+          [
+            72,
+            17
+          ],
+          [
+            82,
+            24
+          ],
+          [
+            82,
+            51
+          ],
+          [
+            64,
+            43
+          ]
+        ],
+        "approach": [
+          75,
+          57
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:protocol"
+        }
+      }
+    ],
+    "foreground": [
+      {
+        "id": "three-chairs",
+        "polygon": [
+          [
+            29,
+            48
+          ],
+          [
+            35,
+            51
+          ],
+          [
+            37,
+            56
+          ],
+          [
+            41,
+            53
+          ],
+          [
+            45,
+            57
+          ],
+          [
+            46,
+            62
+          ],
+          [
+            49,
+            60
+          ],
+          [
+            52,
+            65
+          ],
+          [
+            52,
+            74
+          ],
+          [
+            48,
+            78
+          ],
+          [
+            41,
+            71
+          ],
+          [
+            35,
+            69
+          ],
+          [
+            30,
+            64
+          ]
+        ],
+        "depth": 78
+      },
+      {
+        "id": "projector-trolley",
+        "polygon": [
+          [
+            55,
+            50
+          ],
+          [
+            62,
+            46
+          ],
+          [
+            68,
+            50
+          ],
+          [
+            68,
+            67
+          ],
+          [
+            64,
+            70
+          ],
+          [
+            55,
+            63
+          ]
+        ],
+        "depth": 70
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "lab": [
+        20,
+        66
+      ],
+      "archive": [
+        80,
+        66
+      ],
+      "secret": [
+        82,
+        66
+      ]
+    }
+  },
+  {
+    "id": "secret",
+    "image": "./media/exploration/secret.png",
+    "spawn": [
+      49,
+      78
+    ],
+    "floor": [
+      [
+        5,
+        67
+      ],
+      [
+        50,
+        34
+      ],
+      [
+        96,
+        65
+      ],
+      [
+        55,
+        94
+      ],
+      [
+        49,
+        89
+      ],
+      [
+        42,
+        94
+      ]
+    ],
+    "obstacles": [],
+    "objects": [
+      {
+        "id": "door-projection",
+        "label": "回到有人等着的地方",
+        "polygon": [
+          [
+            4,
+            29
+          ],
+          [
+            13,
+            22
+          ],
+          [
+            13,
+            55
+          ],
+          [
+            4,
+            61
+          ]
+        ],
+        "approach": [
+          21,
+          66
+        ],
+        "action": {
+          "type": "room",
+          "target": "projection"
+        },
+        "kind": "door"
+      },
+      {
+        "id": "last-terminal",
+        "label": "播放没有被清空的记录",
+        "polygon": [
+          [
+            67,
+            25
+          ],
+          [
+            71,
+            23
+          ],
+          [
+            74,
+            26
+          ],
+          [
+            74,
+            32
+          ],
+          [
+            71,
+            35
+          ],
+          [
+            67,
+            31
+          ]
+        ],
+        "approach": [
+          76,
+          60
+        ],
+        "action": {
+          "type": "hidden"
+        },
+        "kind": "screen",
+        "depth": 54
+      },
+      {
+        "id": "mirror",
+        "label": "看看镜子里的空房间",
+        "polygon": [
+          [
+            20,
+            19
+          ],
+          [
+            28,
+            13
+          ],
+          [
+            30,
+            47
+          ],
+          [
+            21,
+            52
+          ]
+        ],
+        "approach": [
+          32,
+          57
+        ],
+        "action": {
+          "type": "say",
+          "event": "secret-mirror"
+        }
+      },
+      {
+        "id": "remaining-note",
+        "label": "阅读最后一张便签",
+        "polygon": [
+          [
+            72,
+            35
+          ],
+          [
+            74,
+            33
+          ],
+          [
+            77,
+            35
+          ],
+          [
+            75,
+            37
+          ]
+        ],
+        "approach": [
+          77,
+          61
+        ],
+        "action": {
+          "type": "panel",
+          "id": "record:birth"
+        },
+        "depth": 54
+      }
+    ],
+    "foreground": [
+      {
+        "id": "empty-chair",
+        "polygon": [
+          [
+            57,
+            33
+          ],
+          [
+            61,
+            36
+          ],
+          [
+            62,
+            40
+          ],
+          [
+            66,
+            42
+          ],
+          [
+            67,
+            51
+          ],
+          [
+            63,
+            52
+          ],
+          [
+            58,
+            49
+          ]
+        ],
+        "depth": 53
+      }
+    ],
+    "tint": "#b9d3c0",
+    "sound": 155,
+    "arrivals": {
+      "projection": [
+        21,
+        66
+      ]
+    }
+  }
+]

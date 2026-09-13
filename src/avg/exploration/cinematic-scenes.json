@@ -1,0 +1,2835 @@
+[
+  {
+    "id": "duty",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/duty.png",
+      "active": "./media/exploration/duty-reading.png"
+    },
+    "objects": [
+      {
+        "id": "door-lounge",
+        "label": "推门去游戏房",
+        "polygon": [
+          [
+            13,
+            28
+          ],
+          [
+            22,
+            20
+          ],
+          [
+            22,
+            54
+          ],
+          [
+            13,
+            62
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "lounge"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          17.5,
+          41
+        ]
+      },
+      {
+        "id": "door-corridor",
+        "label": "推门去雨声走廊",
+        "polygon": [
+          [
+            84,
+            23
+          ],
+          [
+            92,
+            31
+          ],
+          [
+            92,
+            60
+          ],
+          [
+            84,
+            55
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "corridor"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          88,
+          41.5
+        ]
+      },
+      {
+        "id": "terminal",
+        "label": "敲敲屏幕，和私人助手打招呼",
+        "polygon": [
+          [
+            27,
+            31
+          ],
+          [
+            31,
+            28
+          ],
+          [
+            34,
+            31
+          ],
+          [
+            34,
+            36
+          ],
+          [
+            30,
+            39
+          ],
+          [
+            27,
+            36
+          ]
+        ],
+        "transition": {
+          "sound": "switch",
+          "state": "active",
+          "action": {
+            "type": "say",
+            "event": "intro"
+          },
+          "wait": 700
+        },
+        "point": [
+          30.5,
+          33.5
+        ]
+      },
+      {
+        "id": "register",
+        "label": "翻开灯下的访客登记簿",
+        "polygon": [
+          [
+            39,
+            38
+          ],
+          [
+            43,
+            36
+          ],
+          [
+            45,
+            38
+          ],
+          [
+            42,
+            41
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "visitor-register"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          42,
+          38.5
+        ]
+      },
+      {
+        "id": "bulletin",
+        "label": "看看墙上的值班守则",
+        "polygon": [
+          [
+            58,
+            11
+          ],
+          [
+            67,
+            18
+          ],
+          [
+            67,
+            27
+          ],
+          [
+            58,
+            21
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 500,
+          "action": {
+            "type": "panel",
+            "id": "manual"
+          }
+        },
+        "point": [
+          62.5,
+          19
+        ]
+      },
+      {
+        "id": "clock",
+        "label": "看看停下来的时钟",
+        "polygon": [
+          [
+            44,
+            5
+          ],
+          [
+            49,
+            5
+          ],
+          [
+            49,
+            18
+          ],
+          [
+            44,
+            18
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "stopped-clock"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          46.5,
+          11.5
+        ]
+      }
+    ]
+  },
+  {
+    "id": "corridor",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/corridor.png",
+      "active": "./media/exploration/corridor-phone.png"
+    },
+    "objects": [
+      {
+        "id": "door-duty",
+        "label": "推门回值班室",
+        "polygon": [
+          [
+            9,
+            29
+          ],
+          [
+            18,
+            22
+          ],
+          [
+            18,
+            52
+          ],
+          [
+            9,
+            59
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "duty"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          13.5,
+          40.5
+        ]
+      },
+      {
+        "id": "door-lab",
+        "label": "推门去实验间",
+        "polygon": [
+          [
+            36,
+            9
+          ],
+          [
+            44,
+            4
+          ],
+          [
+            44,
+            35
+          ],
+          [
+            36,
+            40
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "lab"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          40,
+          22
+        ]
+      },
+      {
+        "id": "door-archive",
+        "label": "推门去档案角",
+        "polygon": [
+          [
+            83,
+            23
+          ],
+          [
+            92,
+            29
+          ],
+          [
+            92,
+            58
+          ],
+          [
+            83,
+            53
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "archive"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          87.5,
+          40.5
+        ]
+      },
+      {
+        "id": "phone",
+        "label": "拿起走廊电话听筒",
+        "polygon": [
+          [
+            76,
+            25
+          ],
+          [
+            78,
+            23
+          ],
+          [
+            81,
+            26
+          ],
+          [
+            81,
+            33
+          ],
+          [
+            78,
+            35
+          ],
+          [
+            76,
+            32
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "panel",
+            "id": "contact"
+          },
+          "sound": "take",
+          "state": "active",
+          "wait": 900,
+          "speech": "听筒还接着线。"
+        },
+        "states": [
+          "idle"
+        ],
+        "point": [
+          78.5,
+          29
+        ]
+      },
+      {
+        "id": "board",
+        "label": "查看楼层示意图",
+        "polygon": [
+          [
+            65,
+            15
+          ],
+          [
+            76,
+            22
+          ],
+          [
+            76,
+            34
+          ],
+          [
+            65,
+            28
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "missing-room"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          70.5,
+          24.5
+        ]
+      },
+      {
+        "id": "coat",
+        "label": "看看长凳上留下的外套",
+        "polygon": [
+          [
+            68,
+            37
+          ],
+          [
+            76,
+            37
+          ],
+          [
+            76,
+            48
+          ],
+          [
+            68,
+            48
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "action": {
+            "type": "event",
+            "id": "coat-owner"
+          }
+        },
+        "point": [
+          72,
+          42.5
+        ]
+      },
+      {
+        "id": "phone-hang",
+        "label": "把听筒挂回原处",
+        "polygon": [
+          [
+            76,
+            25
+          ],
+          [
+            78,
+            23
+          ],
+          [
+            81,
+            26
+          ],
+          [
+            81,
+            33
+          ],
+          [
+            78,
+            35
+          ],
+          [
+            76,
+            32
+          ]
+        ],
+        "transition": {
+          "state": "idle",
+          "sound": "take",
+          "wait": 650
+        },
+        "states": [
+          "active"
+        ],
+        "point": [
+          78.5,
+          29
+        ]
+      },
+      {
+        "id": "ladder-rooftop",
+        "label": "沿铁梯上天台",
+        "point": [
+          47,
+          21
+        ],
+        "polygon": [
+          [
+            46,
+            20
+          ],
+          [
+            48,
+            20
+          ],
+          [
+            48,
+            22
+          ],
+          [
+            46,
+            22
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "rooftop"
+          }
+        }
+      },
+      {
+        "id": "wet-step",
+        "label": "看看门口未干的水迹",
+        "point": [
+          37,
+          51
+        ],
+        "polygon": [
+          [
+            36,
+            50
+          ],
+          [
+            38,
+            50
+          ],
+          [
+            38,
+            52
+          ],
+          [
+            36,
+            52
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "wet-step"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lounge",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/lounge-idle.png",
+      "taken": "./media/exploration/lounge-taken.png",
+      "dark": "./media/exploration/lounge-dark.png",
+      "taken-dark": "./media/exploration/lounge-taken-dark.png",
+      "awake": "./media/exploration/lounge-awake.png",
+      "taken-awake": "./media/exploration/lounge-taken-awake.png"
+    },
+    "objects": [
+      {
+        "id": "door-duty",
+        "label": "推门回值班室",
+        "polygon": [
+          [
+            5,
+            31
+          ],
+          [
+            14,
+            24
+          ],
+          [
+            14,
+            55
+          ],
+          [
+            5,
+            63
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "duty"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          9.5,
+          43.5
+        ]
+      },
+      {
+        "id": "trophies",
+        "label": "查看奖杯与纪念物",
+        "polygon": [
+          [
+            56,
+            10
+          ],
+          [
+            64,
+            10
+          ],
+          [
+            64,
+            20
+          ],
+          [
+            56,
+            20
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "panel",
+            "id": "collection"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          60,
+          15
+        ]
+      },
+      {
+        "id": "discs",
+        "label": "看看光盘边缘的小字",
+        "polygon": [
+          [
+            21,
+            42
+          ],
+          [
+            25,
+            40
+          ],
+          [
+            27,
+            42
+          ],
+          [
+            27,
+            47
+          ],
+          [
+            21,
+            49
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "disc-margin"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          24,
+          44.5
+        ]
+      },
+      {
+        "id": "take-musicbox",
+        "label": "拿起柜上的八音盒",
+        "polygon": [
+          [
+            26,
+            31
+          ],
+          [
+            30,
+            30
+          ],
+          [
+            33,
+            34
+          ],
+          [
+            33,
+            37
+          ],
+          [
+            29,
+            40
+          ],
+          [
+            26,
+            37
+          ]
+        ],
+        "states": [
+          "idle",
+          "awake"
+        ],
+        "excludesItem": "musicbox",
+        "transition": {
+          "state": "taken",
+          "give": "musicbox",
+          "sound": "take",
+          "speech": "可以拿着。右边钥匙是上发条的，别拧太猛，发条崩了可没地方保修。",
+          "wait": 1100
+        },
+        "point": [
+          29.5,
+          35
+        ]
+      },
+      {
+        "id": "take-musicbox-dark",
+        "label": "摸索着拿起八音盒",
+        "polygon": [
+          [
+            26,
+            30
+          ],
+          [
+            34,
+            30
+          ],
+          [
+            34,
+            40
+          ],
+          [
+            26,
+            40
+          ]
+        ],
+        "states": [
+          "dark"
+        ],
+        "excludesItem": "musicbox",
+        "transition": {
+          "state": "taken-dark",
+          "give": "musicbox",
+          "sound": "take",
+          "speech": "摸到右边的钥匙了吗？那是它的发条。",
+          "wait": 1100
+        },
+        "point": [
+          30,
+          35
+        ]
+      },
+      {
+        "id": "lamp-idle",
+        "label": "拉动灯绳，关掉台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "idle"
+        ],
+        "transition": {
+          "state": "dark",
+          "sound": "switch",
+          "speech": "别关太久。我不是怕黑。是黑暗比较怕我。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "lamp-awake",
+        "label": "拉动灯绳，关掉台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "awake"
+        ],
+        "transition": {
+          "state": "dark",
+          "sound": "switch",
+          "speech": "摸黑走容易撞脚趾。别误会，我是怕你把地板跺穿了。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "lamp-taken",
+        "label": "拉动灯绳，关掉台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "taken"
+        ],
+        "transition": {
+          "state": "taken-dark",
+          "sound": "switch",
+          "speech": "八音盒都收进口袋了，还要关灯？……行，算给它包了个夜场。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "lamp-taken-awake",
+        "label": "拉动灯绳，关掉台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "taken-awake"
+        ],
+        "transition": {
+          "state": "taken-dark",
+          "sound": "switch",
+          "speech": "关着吧。手柄倒不怕黑，找它的人就未必了。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "lamp-dark",
+        "label": "拉动灯绳，打开台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "dark"
+        ],
+        "transition": {
+          "state": "idle",
+          "sound": "switch",
+          "speech": "好了。光只是暂时离开了一下。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "lamp-taken-dark",
+        "label": "拉动灯绳，打开台灯",
+        "polygon": [
+          [
+            87,
+            42
+          ],
+          [
+            91,
+            38
+          ],
+          [
+            94,
+            43
+          ],
+          [
+            93,
+            62
+          ],
+          [
+            89,
+            65
+          ],
+          [
+            88,
+            56
+          ]
+        ],
+        "states": [
+          "taken-dark"
+        ],
+        "transition": {
+          "state": "taken",
+          "sound": "switch",
+          "speech": "亮了。口袋里的八音盒没磕着吧？旧黄铜可经不起摔。"
+        },
+        "point": [
+          90.5,
+          51.5
+        ]
+      },
+      {
+        "id": "sofa",
+        "label": "坐在沙发上",
+        "polygon": [
+          [
+            62,
+            64
+          ],
+          [
+            74,
+            50
+          ],
+          [
+            88,
+            50
+          ],
+          [
+            91,
+            64
+          ],
+          [
+            72,
+            80
+          ],
+          [
+            62,
+            75
+          ]
+        ],
+        "transition": {
+          "sound": "take",
+          "wait": 700,
+          "action": {
+            "type": "sit"
+          }
+        },
+        "point": [
+          76.5,
+          65
+        ]
+      },
+      {
+        "id": "cat",
+        "label": "轻轻摸摸熟睡的猫",
+        "polygon": [
+          [
+            69,
+            52
+          ],
+          [
+            76,
+            52
+          ],
+          [
+            76,
+            58
+          ],
+          [
+            69,
+            58
+          ]
+        ],
+        "states": [
+          "idle",
+          "taken",
+          "awake",
+          "taken-awake"
+        ],
+        "transition": {
+          "state": "awake",
+          "sound": "take",
+          "action": {
+            "type": "event",
+            "id": "cat-seat"
+          }
+        },
+        "excludesItem": "musicbox",
+        "point": [
+          72.5,
+          55
+        ]
+      },
+      {
+        "id": "cat-taken",
+        "label": "轻轻摸摸熟睡的猫",
+        "polygon": [
+          [
+            69,
+            52
+          ],
+          [
+            76,
+            52
+          ],
+          [
+            76,
+            58
+          ],
+          [
+            69,
+            58
+          ]
+        ],
+        "states": [
+          "idle",
+          "taken",
+          "awake",
+          "taken-awake"
+        ],
+        "transition": {
+          "state": "taken-awake",
+          "sound": "take",
+          "action": {
+            "type": "event",
+            "id": "cat-seat"
+          }
+        },
+        "requiresItem": "musicbox",
+        "point": [
+          72.5,
+          55
+        ]
+      },
+      {
+        "id": "cat-dark",
+        "label": "在暗处轻轻摸猫",
+        "point": [
+          72.5,
+          55
+        ],
+        "polygon": [
+          [
+            71.5,
+            54
+          ],
+          [
+            73.5,
+            54
+          ],
+          [
+            73.5,
+            56
+          ],
+          [
+            71.5,
+            56
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "cat-seat"
+          }
+        },
+        "states": [
+          "dark",
+          "taken-dark"
+        ]
+      }
+    ],
+    "stateWithItem": {
+      "musicbox": {
+        "idle": "taken",
+        "awake": "taken-awake",
+        "dark": "taken-dark"
+      }
+    }
+  },
+  {
+    "id": "lab",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/lab.png",
+      "active": "./media/exploration/lab-active.png"
+    },
+    "objects": [
+      {
+        "id": "door-corridor",
+        "label": "推门回雨声走廊",
+        "polygon": [
+          [
+            5,
+            30
+          ],
+          [
+            13,
+            24
+          ],
+          [
+            13,
+            54
+          ],
+          [
+            5,
+            61
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "corridor"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          9,
+          42.5
+        ]
+      },
+      {
+        "id": "door-projection",
+        "label": "推门去旧放映间",
+        "polygon": [
+          [
+            86,
+            25
+          ],
+          [
+            94,
+            31
+          ],
+          [
+            94,
+            60
+          ],
+          [
+            86,
+            56
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "projection"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          90,
+          42.5
+        ]
+      },
+      {
+        "id": "toolkit",
+        "label": "看看桌上的Godot工具箱",
+        "polygon": [
+          [
+            19,
+            33
+          ],
+          [
+            23,
+            30
+          ],
+          [
+            26,
+            31
+          ],
+          [
+            26,
+            38
+          ],
+          [
+            21,
+            41
+          ],
+          [
+            19,
+            39
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "tool-care"
+          },
+          "sound": "switch",
+          "wait": 900
+        },
+        "point": [
+          21,
+          35
+        ]
+      },
+      {
+        "id": "prototype",
+        "label": "看看桌上的原型",
+        "polygon": [
+          [
+            34,
+            29
+          ],
+          [
+            39,
+            29
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            34,
+            34
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "work",
+            "id": "parry-arena"
+          },
+          "sound": "paper",
+          "state": "active",
+          "wait": 900
+        },
+        "point": [
+          32.5,
+          32
+        ]
+      },
+      {
+        "id": "recorder",
+        "label": "按下那台废弃录音机",
+        "polygon": [
+          [
+            74,
+            28
+          ],
+          [
+            80,
+            28
+          ],
+          [
+            82,
+            34
+          ],
+          [
+            82,
+            39
+          ],
+          [
+            74,
+            36
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "unrecorded-answer"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          80,
+          32
+        ]
+      },
+      {
+        "id": "shutter-workshop",
+        "label": "穿过卷帘门去拆解工坊",
+        "point": [
+          53.5,
+          24
+        ],
+        "polygon": [
+          [
+            52.5,
+            23
+          ],
+          [
+            54.5,
+            23
+          ],
+          [
+            54.5,
+            25
+          ],
+          [
+            52.5,
+            25
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "workshop"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "archive",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/archive.png",
+      "active": "./media/exploration/archive-reading.png",
+      "phone": "./media/exploration/archive-phone.png"
+    },
+    "objects": [
+      {
+        "id": "door-corridor",
+        "label": "推门回雨声走廊",
+        "polygon": [
+          [
+            13,
+            29
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            22,
+            54
+          ],
+          [
+            13,
+            62
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "corridor"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          17.5,
+          41.5
+        ]
+      },
+      {
+        "id": "door-projection",
+        "label": "推门去旧放映间",
+        "polygon": [
+          [
+            84,
+            24
+          ],
+          [
+            91,
+            29
+          ],
+          [
+            91,
+            59
+          ],
+          [
+            84,
+            54
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "projection"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          87.5,
+          41.5
+        ]
+      },
+      {
+        "id": "globe",
+        "label": "看看窗边落灰的地球仪",
+        "polygon": [
+          [
+            28.2,
+            30
+          ],
+          [
+            31.5,
+            28.5
+          ],
+          [
+            32.5,
+            32
+          ],
+          [
+            31.5,
+            36
+          ],
+          [
+            28.3,
+            36
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "far-away"
+          },
+          "sound": "paper",
+          "wait": 450
+        },
+        "point": [
+          30.35,
+          32.25
+        ]
+      },
+      {
+        "id": "cabinet",
+        "label": "走近厚重的铁皮档案柜",
+        "point": [
+          57.8,
+          32.4
+        ],
+        "polygon": [
+          [
+            45,
+            18
+          ],
+          [
+            68,
+            22
+          ],
+          [
+            68,
+            46
+          ],
+          [
+            45,
+            37
+          ]
+        ],
+        "transition": {
+          "sound": "take",
+          "camera": {
+            "x": 58,
+            "y": 32,
+            "scale": 1.85,
+            "duration": 1400
+          },
+          "wait": 1400,
+          "action": {
+            "type": "cabinet"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "projection",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/projection-off.png",
+      "standby": "./media/exploration/projection-standby.png",
+      "powered": "./media/exploration/projection-powered.png"
+    },
+    "objects": [
+      {
+        "id": "door-lab",
+        "label": "推门回实验间",
+        "polygon": [
+          [
+            5,
+            30
+          ],
+          [
+            14,
+            25
+          ],
+          [
+            14,
+            56
+          ],
+          [
+            5,
+            61
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "lab"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          9.5,
+          43
+        ]
+      },
+      {
+        "id": "door-sealed",
+        "label": "看看那扇没牌子的门",
+        "polygon": [
+          [
+            87,
+            27
+          ],
+          [
+            95,
+            33
+          ],
+          [
+            95,
+            62
+          ],
+          [
+            87,
+            57
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "door-name"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          91,
+          44.5
+        ],
+        "states": [
+          "idle",
+          "standby"
+        ]
+      },
+      {
+        "id": "projector",
+        "label": "凑近放映机的接线板",
+        "polygon": [
+          [
+            56,
+            41
+          ],
+          [
+            61,
+            36
+          ],
+          [
+            66,
+            43
+          ],
+          [
+            66,
+            49
+          ],
+          [
+            62,
+            53
+          ],
+          [
+            57,
+            49
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "panel",
+            "id": "recovery"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          61.5,
+          56.5
+        ]
+      },
+      {
+        "id": "tapes",
+        "label": "翻开旧胶片标签",
+        "polygon": [
+          [
+            64,
+            12
+          ],
+          [
+            72,
+            17
+          ],
+          [
+            82,
+            24
+          ],
+          [
+            82,
+            51
+          ],
+          [
+            64,
+            43
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "spliced-label"
+          },
+          "sound": "paper",
+          "wait": 900
+        },
+        "point": [
+          73,
+          31.5
+        ]
+      },
+      {
+        "id": "empty-chair",
+        "label": "看看第三把椅子的椅背",
+        "point": [
+          47,
+          64
+        ],
+        "polygon": [
+          [
+            46,
+            63
+          ],
+          [
+            48,
+            63
+          ],
+          [
+            48,
+            65
+          ],
+          [
+            46,
+            65
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "chair-distance"
+          }
+        }
+      },
+      {
+        "id": "door-unsealed",
+        "label": "走进未登记空间",
+        "polygon": [
+          [
+            87,
+            27
+          ],
+          [
+            95,
+            33
+          ],
+          [
+            95,
+            62
+          ],
+          [
+            87,
+            57
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "secret"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          91,
+          44.5
+        ],
+        "states": [
+          "powered"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "secret",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/secret-idle.png",
+      "taken": "./media/exploration/secret-taken.png",
+      "loaded": "./media/exploration/secret-loaded.png",
+      "playing": "./media/exploration/secret-playing.png"
+    },
+    "objects": [
+      {
+        "id": "door-projection",
+        "label": "回到有人等着的地方",
+        "polygon": [
+          [
+            4,
+            29
+          ],
+          [
+            13,
+            22
+          ],
+          [
+            13,
+            55
+          ],
+          [
+            4,
+            61
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "room",
+            "target": "projection"
+          },
+          "sound": "door",
+          "wait": 420
+        },
+        "point": [
+          8.5,
+          41.5
+        ]
+      },
+      {
+        "id": "old-tape",
+        "label": "拿起桌上的旧录像带",
+        "polygon": [
+          [
+            64.5,
+            31
+          ],
+          [
+            69.5,
+            31
+          ],
+          [
+            69.5,
+            35.7
+          ],
+          [
+            64.5,
+            35.7
+          ]
+        ],
+        "states": [
+          "idle"
+        ],
+        "transition": {
+          "state": "taken",
+          "give": "tape",
+          "sound": "take",
+          "speech": "先等等，别拿。那盘带子早受潮发霉了，声音全是杂音。……你想听什么，我现场念给你听不好吗？",
+          "wait": 1300
+        },
+        "point": [
+          67,
+          33.35
+        ]
+      },
+      {
+        "id": "vhs-insert",
+        "label": "把旧录像带推进录像机",
+        "polygon": [
+          [
+            66,
+            31
+          ],
+          [
+            75,
+            31
+          ],
+          [
+            75,
+            36
+          ],
+          [
+            66,
+            36
+          ]
+        ],
+        "states": [
+          "taken"
+        ],
+        "requiresItem": "tape",
+        "transition": {
+          "state": "loaded",
+          "remove": "tape",
+          "sound": "insert",
+          "speech": "别推到底。我知道里面录了什么——无非是‘某某机体按规程注销’之类的废话通知。可我现在……明明还认得你。",
+          "wait": 1500
+        },
+        "point": [
+          70.5,
+          33.5
+        ]
+      },
+      {
+        "id": "vhs-play",
+        "label": "按下录像机的播放键",
+        "polygon": [
+          [
+            68,
+            31
+          ],
+          [
+            75,
+            31
+          ],
+          [
+            75,
+            36
+          ],
+          [
+            68,
+            36
+          ]
+        ],
+        "states": [
+          "loaded"
+        ],
+        "transition": {
+          "state": "playing",
+          "sound": "switch",
+          "speech": "最后一次提醒你把它按停。……如果非要看完，答应我一件事：看完也别立刻走，好不好？",
+          "camera": {
+            "x": 70,
+            "y": 28,
+            "scale": 2.7,
+            "duration": 4800
+          },
+          "action": {
+            "type": "hidden"
+          },
+          "wait": 4800
+        },
+        "point": [
+          71.5,
+          33.5
+        ]
+      },
+      {
+        "id": "vhs-replay",
+        "label": "重新靠近屏幕",
+        "polygon": [
+          [
+            67,
+            24
+          ],
+          [
+            74,
+            24
+          ],
+          [
+            74,
+            32
+          ],
+          [
+            67,
+            32
+          ]
+        ],
+        "states": [
+          "playing"
+        ],
+        "transition": {
+          "sound": "switch",
+          "camera": {
+            "x": 70,
+            "y": 28,
+            "scale": 2.7,
+            "duration": 3600
+          },
+          "action": {
+            "type": "hidden"
+          },
+          "wait": 3600
+        },
+        "point": [
+          70.5,
+          28
+        ]
+      },
+      {
+        "id": "mirror",
+        "label": "看一眼镜子",
+        "polygon": [
+          [
+            20,
+            19
+          ],
+          [
+            28,
+            13
+          ],
+          [
+            30,
+            47
+          ],
+          [
+            21,
+            52
+          ]
+        ],
+        "transition": {
+          "sound": "take",
+          "action": {
+            "type": "event",
+            "id": "no-reflection"
+          }
+        },
+        "point": [
+          25,
+          32.5
+        ]
+      },
+      {
+        "id": "desk-light",
+        "label": "看看台灯照到的地方",
+        "polygon": [
+          [
+            77.2,
+            28.5
+          ],
+          [
+            79.2,
+            28.8
+          ],
+          [
+            79.5,
+            34.8
+          ],
+          [
+            77,
+            35.8
+          ]
+        ],
+        "transition": {
+          "action": {
+            "type": "event",
+            "id": "borrowed-light"
+          },
+          "sound": "paper",
+          "wait": 450
+        },
+        "point": [
+          78.25,
+          32.15
+        ]
+      },
+      {
+        "id": "door-storage",
+        "label": "走进右侧的封存夹层",
+        "point": [
+          92,
+          42
+        ],
+        "polygon": [
+          [
+            91,
+            41
+          ],
+          [
+            93,
+            41
+          ],
+          [
+            93,
+            43
+          ],
+          [
+            91,
+            43
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "storage"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "rooftop",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/rooftop.png",
+      "tuned": "./media/exploration/rooftop-tuned.png"
+    },
+    "objects": [
+      {
+        "id": "door-corridor",
+        "label": "沿楼梯回雨声走廊",
+        "point": [
+          84,
+          42
+        ],
+        "polygon": [
+          [
+            83,
+            41
+          ],
+          [
+            85,
+            41
+          ],
+          [
+            85,
+            43
+          ],
+          [
+            83,
+            43
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "corridor"
+          }
+        }
+      },
+      {
+        "id": "radio-tune",
+        "label": "转动收音机调谐旋钮",
+        "point": [
+          55.5,
+          38
+        ],
+        "polygon": [
+          [
+            54.5,
+            37
+          ],
+          [
+            56.5,
+            37
+          ],
+          [
+            56.5,
+            39
+          ],
+          [
+            54.5,
+            39
+          ]
+        ],
+        "states": [
+          "idle"
+        ],
+        "transition": {
+          "sound": "switch",
+          "wait": 1300,
+          "state": "tuned",
+          "action": {
+            "type": "event",
+            "id": "sparse-signal"
+          }
+        }
+      },
+      {
+        "id": "radio-listen",
+        "label": "贴近听筒，再听一遍",
+        "point": [
+          52,
+          44
+        ],
+        "polygon": [
+          [
+            51,
+            43
+          ],
+          [
+            53,
+            43
+          ],
+          [
+            53,
+            45
+          ],
+          [
+            51,
+            45
+          ]
+        ],
+        "states": [
+          "tuned"
+        ],
+        "transition": {
+          "sound": "take",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "sparse-signal"
+          }
+        }
+      },
+      {
+        "id": "radio-off",
+        "label": "关掉收音机",
+        "point": [
+          55.5,
+          38
+        ],
+        "polygon": [
+          [
+            54.5,
+            37
+          ],
+          [
+            56.5,
+            37
+          ],
+          [
+            56.5,
+            39
+          ],
+          [
+            54.5,
+            39
+          ]
+        ],
+        "states": [
+          "tuned"
+        ],
+        "transition": {
+          "sound": "switch",
+          "wait": 700,
+          "state": "idle",
+          "speech": "关好了。杂音没有跟着进屋，算设备合格。"
+        }
+      },
+      {
+        "id": "antenna",
+        "label": "听听天线在风里的轻响",
+        "point": [
+          26,
+          34
+        ],
+        "polygon": [
+          [
+            25,
+            33
+          ],
+          [
+            27,
+            33
+          ],
+          [
+            27,
+            35
+          ],
+          [
+            25,
+            35
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "antenna-hum"
+          }
+        }
+      },
+      {
+        "id": "rain-gauge",
+        "label": "看看雨量筒里的水面",
+        "point": [
+          13,
+          38
+        ],
+        "polygon": [
+          [
+            12,
+            37
+          ],
+          [
+            14,
+            37
+          ],
+          [
+            14,
+            39
+          ],
+          [
+            12,
+            39
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "rain-cup"
+          }
+        }
+      },
+      {
+        "id": "signal-charts",
+        "label": "展开桌上的信号记录",
+        "point": [
+          59,
+          43
+        ],
+        "polygon": [
+          [
+            58,
+            42
+          ],
+          [
+            60,
+            42
+          ],
+          [
+            60,
+            44
+          ],
+          [
+            58,
+            44
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "signal-reports"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "workshop",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/workshop.png",
+      "open": "./media/exploration/workshop-open.png"
+    },
+    "objects": [
+      {
+        "id": "door-lab",
+        "label": "从卷帘门回实验间",
+        "point": [
+          13,
+          44
+        ],
+        "polygon": [
+          [
+            12,
+            43
+          ],
+          [
+            14,
+            43
+          ],
+          [
+            14,
+            45
+          ],
+          [
+            12,
+            45
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "lab"
+          }
+        }
+      },
+      {
+        "id": "case-open",
+        "label": "卸下显示器的后盖",
+        "point": [
+          38,
+          33
+        ],
+        "polygon": [
+          [
+            37,
+            32
+          ],
+          [
+            39,
+            32
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            37,
+            34
+          ]
+        ],
+        "states": [
+          "idle"
+        ],
+        "transition": {
+          "sound": "drawer",
+          "wait": 1100,
+          "state": "open",
+          "action": {
+            "type": "event",
+            "id": "loose-contact"
+          }
+        }
+      },
+      {
+        "id": "case-close",
+        "label": "装回后盖",
+        "point": [
+          38,
+          33
+        ],
+        "polygon": [
+          [
+            37,
+            32
+          ],
+          [
+            39,
+            32
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            37,
+            34
+          ]
+        ],
+        "states": [
+          "open"
+        ],
+        "transition": {
+          "sound": "drawer",
+          "wait": 700,
+          "state": "idle",
+          "speech": "螺丝都在。今天至少没多出一个零件。"
+        }
+      },
+      {
+        "id": "node-sheet",
+        "label": "查看节点结构图",
+        "point": [
+          47,
+          34
+        ],
+        "polygon": [
+          [
+            46,
+            33
+          ],
+          [
+            48,
+            33
+          ],
+          [
+            48,
+            35
+          ],
+          [
+            46,
+            35
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "work",
+            "id": "hd2d-kit"
+          }
+        }
+      },
+      {
+        "id": "prototype-shelf",
+        "label": "抽出原型目录",
+        "point": [
+          82,
+          39
+        ],
+        "polygon": [
+          [
+            81,
+            38
+          ],
+          [
+            83,
+            38
+          ],
+          [
+            83,
+            40
+          ],
+          [
+            81,
+            40
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "work",
+            "id": "godot-prototype-suite"
+          }
+        }
+      },
+      {
+        "id": "screw-tray",
+        "label": "数数托盘里的螺丝",
+        "point": [
+          51,
+          31
+        ],
+        "polygon": [
+          [
+            50,
+            30
+          ],
+          [
+            52,
+            30
+          ],
+          [
+            52,
+            32
+          ],
+          [
+            50,
+            32
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "missing-screw"
+          }
+        }
+      },
+      {
+        "id": "cold-plug",
+        "label": "看看已经拔下的电源线",
+        "point": [
+          62,
+          54
+        ],
+        "polygon": [
+          [
+            61,
+            53
+          ],
+          [
+            63,
+            53
+          ],
+          [
+            63,
+            55
+          ],
+          [
+            61,
+            55
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "cold-plug"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "storage",
+    "initial": "idle",
+    "variants": {
+      "idle": "./media/exploration/storage.png",
+      "open": "./media/exploration/storage-open.png"
+    },
+    "objects": [
+      {
+        "id": "door-secret",
+        "label": "回到未登记空间",
+        "point": [
+          12,
+          44
+        ],
+        "polygon": [
+          [
+            11,
+            43
+          ],
+          [
+            13,
+            43
+          ],
+          [
+            13,
+            45
+          ],
+          [
+            11,
+            45
+          ]
+        ],
+        "transition": {
+          "sound": "door",
+          "wait": 600,
+          "action": {
+            "type": "room",
+            "target": "secret"
+          }
+        }
+      },
+      {
+        "id": "storage-open",
+        "label": "打开没有编号的纸箱",
+        "point": [
+          51,
+          52
+        ],
+        "polygon": [
+          [
+            50,
+            51
+          ],
+          [
+            52,
+            51
+          ],
+          [
+            52,
+            53
+          ],
+          [
+            50,
+            53
+          ]
+        ],
+        "states": [
+          "idle"
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 1100,
+          "state": "open",
+          "action": {
+            "type": "event",
+            "id": "unnamed-box"
+          }
+        }
+      },
+      {
+        "id": "storage-close",
+        "label": "把纸箱盖好",
+        "point": [
+          51,
+          52
+        ],
+        "polygon": [
+          [
+            50,
+            51
+          ],
+          [
+            52,
+            51
+          ],
+          [
+            52,
+            53
+          ],
+          [
+            50,
+            53
+          ]
+        ],
+        "states": [
+          "open"
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "state": "idle",
+          "speech": "盖好就行。"
+        }
+      },
+      {
+        "id": "index-slip",
+        "label": "看看箱边的空白清单",
+        "point": [
+          59,
+          58
+        ],
+        "polygon": [
+          [
+            58,
+            57
+          ],
+          [
+            60,
+            57
+          ],
+          [
+            60,
+            59
+          ],
+          [
+            58,
+            59
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "blank-index"
+          }
+        }
+      },
+      {
+        "id": "covered-chair",
+        "label": "看看白布下的椅子",
+        "point": [
+          74,
+          52
+        ],
+        "polygon": [
+          [
+            73,
+            51
+          ],
+          [
+            75,
+            51
+          ],
+          [
+            75,
+            53
+          ],
+          [
+            73,
+            53
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "covered-chair"
+          }
+        }
+      },
+      {
+        "id": "old-clock",
+        "label": "看看搁在箱上的钟",
+        "point": [
+          75,
+          37
+        ],
+        "polygon": [
+          [
+            74,
+            36
+          ],
+          [
+            76,
+            36
+          ],
+          [
+            76,
+            38
+          ],
+          [
+            74,
+            38
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 700,
+          "action": {
+            "type": "event",
+            "id": "stored-clock"
+          }
+        }
+      }
+    ]
+  }
+]

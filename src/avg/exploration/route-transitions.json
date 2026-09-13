@@ -1,0 +1,110 @@
+{
+  "default": {
+    "kind": "still",
+    "duration": 400,
+    "swap": 200,
+    "material": "wood"
+  },
+  "routes": [
+    {
+      "rooms": [
+        "duty",
+        "lounge"
+      ],
+      "kind": "light",
+      "duration": 620,
+      "swap": 310,
+      "material": "wood"
+    },
+    {
+      "rooms": [
+        "duty",
+        "corridor"
+      ],
+      "kind": "swing",
+      "duration": 600,
+      "swap": 300,
+      "material": "wood"
+    },
+    {
+      "rooms": [
+        "corridor",
+        "lab"
+      ],
+      "kind": "seam",
+      "duration": 620,
+      "swap": 310,
+      "material": "iron"
+    },
+    {
+      "rooms": [
+        "corridor",
+        "archive"
+      ],
+      "kind": "aisle",
+      "duration": 680,
+      "swap": 340,
+      "material": "wood"
+    },
+    {
+      "rooms": [
+        "corridor",
+        "rooftop"
+      ],
+      "kind": "rain",
+      "duration": 760,
+      "swap": 380,
+      "material": "iron"
+    },
+    {
+      "rooms": [
+        "lab",
+        "workshop"
+      ],
+      "kind": "roll",
+      "duration": 720,
+      "swap": 360,
+      "material": "roller"
+    },
+    {
+      "rooms": [
+        "lab",
+        "projection"
+      ],
+      "kind": "iris",
+      "duration": 780,
+      "swap": 390,
+      "material": "iron"
+    },
+    {
+      "rooms": [
+        "archive",
+        "projection"
+      ],
+      "kind": "diagonal",
+      "duration": 680,
+      "swap": 340,
+      "material": "wood"
+    },
+    {
+      "rooms": [
+        "projection",
+        "secret"
+      ],
+      "kind": "film",
+      "duration": 960,
+      "swap": 480,
+      "material": "iron"
+    },
+    {
+      "rooms": [
+        "secret",
+        "storage"
+      ],
+      "kind": "low",
+      "duration": 820,
+      "swap": 410,
+      "material": "wood"
+    }
+  ]
+}

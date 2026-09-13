@@ -1,0 +1,14 @@
+{
+  "method": "Built-in image_gen, no user API key",
+  "generatedOn": "2026-09-12",
+  "sources": {
+    "archive": "exec-26892cca-d1c0-4096-b49f-37ad4907411e.png",
+    "duty": "exec-1086e31e-e855-4579-8619-a29bf7da590d.png",
+    "lounge": "exec-ed9de60d-e48c-4348-a3b2-d6cafb73a8bf.png",
+    "lab": "exec-933ac0e3-8bf9-4b41-aa6e-70f786aa404e.png",
+    "corridor": "exec-f49b1b97-9b53-469f-bb07-bce757713dcd.png",
+    "projection": "exec-f5fe23ed-7058-4372-8de4-ed49fb5be2a0.png",
+    "secret": "exec-8a28d199-e307-41ab-a5c2-8347b19d94f4.png"
+  },
+  "layerMethod": "Exact original pixels clipped by editable SVG polygons. No separately generated replacement furniture."
+}

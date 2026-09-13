@@ -1,0 +1,2997 @@
+[
+  {
+    "id": "visitor-register",
+    "room": "duty",
+    "title": "未填写的那一栏",
+    "object": "访客登记簿",
+    "purpose": "让玩家自主决定称呼，埋下拒绝给访客编号的情感线。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "minLoops": 1
+        },
+        "node": "after-reboot"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "登记簿摊在灯下。姓名一列留着几道涂改痕迹，最下面还有一行空白。"
+        ],
+        "assistant": "不用报全名。这不是查岗，你愿意让我怎么叫你，就怎么叫。",
+        "choices": [
+          {
+            "id": "visitor",
+            "text": "就叫我访客吧。",
+            "next": "visitor",
+            "flags": [
+              "calls_visitor"
+            ],
+            "clearFlags": [
+              "name_blank"
+            ]
+          },
+          {
+            "id": "blank",
+            "text": "这一栏先空着。",
+            "next": "blank",
+            "flags": [
+              "name_blank"
+            ],
+            "clearFlags": [
+              "calls_visitor"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "空白还在那儿。纸页泛黄，灯光照出上面细细的橡皮擦痕。"
+        ],
+        "assistant": "还没想好也没关系。反正我也不靠点名来确认你还在不在。",
+        "choices": [
+          {
+            "id": "visitor",
+            "text": "就叫我访客吧。",
+            "next": "visitor",
+            "flags": [
+              "calls_visitor"
+            ],
+            "clearFlags": [
+              "name_blank"
+            ]
+          },
+          {
+            "id": "blank",
+            "text": "这一栏先空着。",
+            "next": "blank",
+            "flags": [
+              "name_blank"
+            ],
+            "clearFlags": [
+              "calls_visitor"
+            ]
+          }
+        ]
+      },
+      "visitor": {
+        "narration": [
+          "你选了“访客”这个称呼。登记簿还摊在灯下。"
+        ],
+        "assistant": "好，访客。简单，好记。至少不会叫错字。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光从登记簿上移开"
+          }
+        ]
+      },
+      "blank": {
+        "narration": [
+          "你把圆珠笔扣上笔帽，推到一边。"
+        ],
+        "assistant": "那就空着。留白和没人来过，本来就是两码事。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光从登记簿上移开"
+          }
+        ]
+      },
+      "after-reboot": {
+        "narration": [
+          "登记簿又摊在同一个位置。姓名栏空着，纸面上留着浅浅的压痕。"
+        ],
+        "assistant": "刚才差点顺口叫你一声。……算了，还是再确认一下，免得叫错。",
+        "choices": [
+          {
+            "id": "visitor",
+            "text": "还是叫我访客吧。",
+            "next": "visitor",
+            "flags": [
+              "calls_visitor"
+            ],
+            "clearFlags": [
+              "name_blank"
+            ]
+          },
+          {
+            "id": "blank",
+            "text": "这一栏依然先空着。",
+            "next": "blank",
+            "flags": [
+              "name_blank"
+            ],
+            "clearFlags": [
+              "calls_visitor"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "duty-rules",
+    "room": "duty",
+    "title": "值班守则的背面",
+    "object": "墙上的守则",
+    "purpose": "用例行工作口吻引出助手把等待当成职责。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "守则最下面一条比其他字浅，像是后来补上的：最后一位访客离开后，确认灯已熄灭。"
+        ],
+        "assistant": "那条不急。先看上面几条，关于设备的比较有用。",
+        "choices": [
+          {
+            "id": "duty",
+            "text": "你什么时候下班？",
+            "next": "duty",
+            "flags": [
+              "asked_off_duty"
+            ]
+          },
+          {
+            "id": "wait",
+            "text": "我还想再看一会儿。",
+            "next": "wait",
+            "flags": [
+              "stayed"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "那一条浅色字仍在纸页下缘。没有完成勾选的痕迹。"
+        ],
+        "assistant": "我知道你在看哪一条。",
+        "choices": [
+          {
+            "id": "duty",
+            "text": "你什么时候下班？",
+            "next": "duty",
+            "flags": [
+              "asked_off_duty"
+            ]
+          },
+          {
+            "id": "wait",
+            "text": "我还想再看一会儿。",
+            "next": "wait",
+            "flags": [
+              "stayed"
+            ]
+          }
+        ]
+      },
+      "duty": {
+        "narration": [
+          "墙上的钟没有给出答案。"
+        ],
+        "assistant": "等这边没事了就下班。……你现在还在看东西，当然算有事。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把守则放回桌上"
+          }
+        ]
+      },
+      "wait": {
+        "narration": [
+          "你把目光从最后一条移开。"
+        ],
+        "assistant": "那我晚一点检查灯。工作安排可以调整。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "从公告栏前走开"
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "stopped-clock",
+    "room": "duty",
+    "title": "没有走完的一分钟",
+    "object": "墙钟",
+    "purpose": "把时间异常落到具体生活观察，不立即解释世界真相。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "表盘还在，指针停在两格刻度之间。听了一会儿，也没等到滴答声。"
+        ],
+        "assistant": "看着它数十下。如果它还是不走，就当这一分钟归我们了。",
+        "choices": [
+          {
+            "id": "count",
+            "text": "数完这十秒。",
+            "next": "count",
+            "flags": [
+              "quiet_count"
+            ]
+          },
+          {
+            "id": "leave",
+            "text": "就让它停着吧。",
+            "next": "leave",
+            "flags": [
+              "kept_minute"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "指针还停在原处，钟面落着薄薄一层灰。"
+        ],
+        "assistant": "别指望它自己动了。指针停了挺好的，至少不用算迟到。",
+        "choices": [
+          {
+            "id": "count",
+            "text": "再陪它数十秒。",
+            "next": "count",
+            "flags": [
+              "quiet_count"
+            ]
+          },
+          {
+            "id": "leave",
+            "text": "还是让它停着吧。",
+            "next": "leave",
+            "flags": [
+              "kept_minute"
+            ]
+          }
+        ]
+      },
+      "count": {
+        "narration": [
+          "你在心里数到十。指针没有动。"
+        ],
+        "assistant": "十。你看，它确实没打算走。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "放下目光，听听周围的声音"
+          }
+        ]
+      },
+      "leave": {
+        "narration": [
+          "你没伸手去拨旋钮，屋里也没有谁来催你。"
+        ],
+        "assistant": "放着吧。坏掉的东西动多了，容易掉零件。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "不再盯着表盘"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "coat-owner",
+    "room": "corridor",
+    "title": "没有取走的外套",
+    "object": "长凳上的外套",
+    "purpose": "让助手承认它等待过别人，玩家可以关心而不做永久承诺。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "一件外套搭在长凳上，衣领折着，袖子垂在一旁。"
+        ],
+        "assistant": "先放在那儿吧。万一主人回来取，省得再找一遍。",
+        "choices": [
+          {
+            "id": "owner",
+            "text": "它的主人回来过吗？",
+            "next": "owner",
+            "flags": [
+              "coat_wait"
+            ]
+          },
+          {
+            "id": "keep",
+            "text": "先替他留在原处。",
+            "next": "keep",
+            "flags": [
+              "coat_kept"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "外套还搭在长凳上，没有人来动过。"
+        ],
+        "assistant": "还是没人来领。可能主人去洗手间了……虽然这趟去得稍微有点久。",
+        "choices": [
+          {
+            "id": "owner",
+            "text": "还是没有人来取吗？",
+            "next": "owner",
+            "flags": [
+              "coat_wait"
+            ]
+          },
+          {
+            "id": "keep",
+            "text": "继续替他留着吧。",
+            "next": "keep",
+            "flags": [
+              "coat_kept"
+            ]
+          }
+        ]
+      },
+      "owner": {
+        "narration": [
+          "走廊那头没有脚步声，雨还在窗外响。"
+        ],
+        "assistant": "我只看得见这段走廊。偶尔听着像有人回来，仔细一听又是雨。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "抚平衣角，退后一步"
+          }
+        ]
+      },
+      "keep": {
+        "narration": [
+          "你没有去翻外套的口袋。衣领仍折在长凳边上。"
+        ],
+        "assistant": "就放这儿吧。回头有人来找，我至少能指给他看。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "让它留在长凳上"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "missing-room",
+    "room": "corridor",
+    "title": "示意图上的空处",
+    "object": "楼层示意图",
+    "purpose": "让玩家自己发现空间编号缺口，保留原地图功能。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "旧示意图的边角被胶带盖住了，几条线到那里就断了。"
+        ],
+        "assistant": "别看了，那块原本就没画完。……至少我开机的时候，它就是个破洞。",
+        "choices": [
+          {
+            "id": "gap",
+            "text": "这里原先画了什么？",
+            "next": "gap",
+            "flags": [
+              "noticed_gap"
+            ]
+          },
+          {
+            "id": "map",
+            "text": "先记住亮着灯的地方。",
+            "next": "map",
+            "flags": [
+              "drawn_map"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "撕掉的缺口边缘发脆泛黄，隐约露出背后水泥墙的深灰色。"
+        ],
+        "assistant": "你就算把纸盯穿了，那里也不会自己长出一个房间来。",
+        "choices": [
+          {
+            "id": "gap",
+            "text": "真想不起这里原先是什么了吗？",
+            "next": "gap",
+            "flags": [
+              "noticed_gap"
+            ]
+          },
+          {
+            "id": "map",
+            "text": "只要有灯亮着就行。",
+            "next": "map",
+            "flags": [
+              "drawn_map"
+            ]
+          }
+        ]
+      },
+      "gap": {
+        "narration": [
+          "你顺着缺损的四边虚画了一下，那是个标准的长方形隔间。"
+        ],
+        "assistant": "就算原先真有那么一间屋子……现在里面的灯大概也早熄了。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把视线从空白处挪开"
+          }
+        ]
+      },
+      "map": {
+        "narration": [
+          "你看了看自己一路走过来的路线，图上的走廊比实际显得短很多。"
+        ],
+        "assistant": "平面图是给人看的，实际怎么走，得看哪里的门还给开着。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "记下走廊有光的方向"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "rain-address",
+    "room": "corridor",
+    "title": "雨没有进来",
+    "object": "门边的伞架",
+    "purpose": "以可观察的小矛盾制造异常，回应外套线。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "coat_wait"
+        },
+        "node": "coat-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "伞尖下面没有水。你听见的雨声像隔着很厚的墙，也像从墙里传来。"
+        ],
+        "assistant": "伞是备用的。不能因为今天没下雨，就把它们扔掉。",
+        "choices": [
+          {
+            "id": "listen",
+            "text": "听一会儿雨声。",
+            "next": "listen",
+            "flags": [
+              "heard_rain"
+            ]
+          },
+          {
+            "id": "outside",
+            "text": "外面现在真的在下雨吗？",
+            "next": "outside",
+            "flags": [
+              "admitted_unknown"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "伞架依旧是干的。房间里的声音却没有换。"
+        ],
+        "assistant": "我知道。你刚才已经听过了。",
+        "choices": [
+          {
+            "id": "listen",
+            "text": "听一会儿雨声。",
+            "next": "listen",
+            "flags": [
+              "heard_rain"
+            ]
+          },
+          {
+            "id": "outside",
+            "text": "外面现在真的在下雨吗？",
+            "next": "outside",
+            "flags": [
+              "admitted_unknown"
+            ]
+          }
+        ]
+      },
+      "listen": {
+        "narration": [
+          "你把注意力放在连续的细响里，没有听到某一滴落地。"
+        ],
+        "assistant": "这样听着，比什么都没有好一点。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "将这一刻留在心里"
+          }
+        ]
+      },
+      "outside": {
+        "narration": [
+          "门后的空气没有给出答案。"
+        ],
+        "assistant": "我看不见外面。……这次我没有说我什么都知道。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "将这一刻留在心里"
+          }
+        ]
+      },
+      "coat-echo": {
+        "narration": [
+          "你看着干燥的伞尖，想起长凳上一直没有被取走的外套。"
+        ],
+        "assistant": "你不用替那个人查天气。你在这里的时候，可以只管你自己。",
+        "choices": [
+          {
+            "id": "listen",
+            "text": "听一会儿雨声。",
+            "next": "listen",
+            "flags": [
+              "heard_rain"
+            ]
+          },
+          {
+            "id": "outside",
+            "text": "外面现在真的在下雨吗？",
+            "next": "outside",
+            "flags": [
+              "admitted_unknown"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "cat-seat",
+    "room": "lounge",
+    "title": "猫让出来的一点位置",
+    "object": "沙发上的猫",
+    "purpose": "把日常亲近写成默契，避免只重复摸猫笑话。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "黑白猫窝在软垫上。你靠近时，它的耳朵朝这边转了转。"
+        ],
+        "assistant": "嘘……它刚睡着。你可以摸一下，但别指望它搭理你，它不吃这一套。",
+        "choices": [
+          {
+            "id": "company",
+            "text": "我只在这里陪它。",
+            "next": "company",
+            "flags": [
+              "sat_with_cat"
+            ]
+          },
+          {
+            "id": "translate",
+            "text": "它真的和你说话了吗？",
+            "next": "translate",
+            "flags": [
+              "cat_translation"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "手还没碰到，猫的耳朵又朝这边转了转，身子没挪地方。"
+        ],
+        "assistant": "别问我为什么知道。它每天换姿势的规律，我记录了整整三页。",
+        "choices": [
+          {
+            "id": "company",
+            "text": "我只在这里陪它。",
+            "next": "company",
+            "flags": [
+              "sat_with_cat"
+            ]
+          },
+          {
+            "id": "translate",
+            "text": "它今天又单方面通知你什么了？",
+            "next": "translate",
+            "flags": [
+              "cat_translation"
+            ]
+          }
+        ]
+      },
+      "company": {
+        "narration": [
+          "你把手停在软垫边上，猫换了个更舒服的姿势，把鼻子藏在尾巴底下。"
+        ],
+        "assistant": "它现在觉得你还算无害。算你通过它的初试了。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把手悄悄收回，不吵醒它"
+          }
+        ]
+      },
+      "translate": {
+        "narration": [
+          "猫喉咙里极其轻微地咕噜了一声，像是梦里在砸吧嘴。"
+        ],
+        "assistant": "它刚才单方面通知我：地毯今天温度还行，可以允许访客坐一会儿。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "看着它换了个姿势继续睡"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "disc-margin",
+    "room": "lounge",
+    "title": "光盘边上的小字",
+    "object": "光盘与曲序卡",
+    "purpose": "解释为什么私人音乐会被整理进档案，让八音盒解谜有情感动机。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "光盘盒上的字有些磨花了，盘面在灯下反着光，边缘没有明显的划痕。"
+        ],
+        "assistant": "这两张是游戏盘。拿的时候捏边缘，别在盘面上留一套完整指纹。",
+        "choices": [
+          {
+            "id": "who",
+            "text": "这句话是谁写的？",
+            "next": "who",
+            "flags": [
+              "read_margin"
+            ]
+          },
+          {
+            "id": "listen",
+            "text": "我会先听完开头。",
+            "next": "listen",
+            "flags": [
+              "will_listen"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "光盘还放在原处，盒角磨得发白。"
+        ],
+        "assistant": "还没选好？先坐过去，电视上能挑。看盒子看不出手感。",
+        "choices": [
+          {
+            "id": "who",
+            "text": "这句话是谁写的？",
+            "next": "who",
+            "flags": [
+              "read_margin"
+            ]
+          },
+          {
+            "id": "listen",
+            "text": "我会先听完开头。",
+            "next": "listen",
+            "flags": [
+              "will_listen"
+            ]
+          }
+        ]
+      },
+      "who": {
+        "narration": [
+          "铅笔字迹歪歪扭扭，最后一个字擦拭过，改成了别的符号。"
+        ],
+        "assistant": "别猜了，不是我写的。我负责看管机器，可不负责给光盘写短评。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "将光盘放回盒中"
+          }
+        ]
+      },
+      "listen": {
+        "narration": [
+          "你把光盘卡位扶正，指腹避开了反光的数据面。"
+        ],
+        "assistant": "对，捏着边就行。坐到电视前再选盘，别急着往八音盒里塞。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "记住内圈的小字"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "box-outline",
+    "room": "lounge",
+    "title": "柜上的浅色轮廓",
+    "object": "八音盒原来的位置",
+    "purpose": "对拾取后的空位作出反应，建立随身物品与房间状态的连续性。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "八音盒被你收起来以后，柜面露出一小块颜色较浅的木纹。房间少了一件东西，却没有显得更空。"
+        ],
+        "assistant": "拿着就拿着，别老回头数。这里还放得下别的东西。",
+        "choices": [
+          {
+            "id": "carry",
+            "text": "想听的时候，我会把它打开。",
+            "next": "carry",
+            "flags": [
+              "box_carried"
+            ]
+          },
+          {
+            "id": "space",
+            "text": "这里也可以留一点空位。",
+            "next": "space",
+            "flags": [
+              "space_kept"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "浅色木纹还在。你知道声音现在可以跟着你走。"
+        ],
+        "assistant": "没有丢。我看见它在你那里。",
+        "choices": [
+          {
+            "id": "carry",
+            "text": "想听的时候，我会把它打开。",
+            "next": "carry",
+            "flags": [
+              "box_carried"
+            ]
+          },
+          {
+            "id": "space",
+            "text": "这里也可以留一点空位。",
+            "next": "space",
+            "flags": [
+              "space_kept"
+            ]
+          }
+        ]
+      },
+      "carry": {
+        "narration": [
+          "你摸了摸随身带着的盒子。"
+        ],
+        "assistant": "那我就不用一直守在柜边了。不是为了跟着你，是换个地方也能听。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把纸盒往里推了推"
+          }
+        ]
+      },
+      "space": {
+        "narration": [
+          "你没有急着找别的东西把它填满。"
+        ],
+        "assistant": "嗯。空位不一定是在等失去的东西。也可以是给还没来的。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "留着空位，转身离开"
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "sofa-place",
+    "room": "lounge",
+    "title": "不必立刻开始",
+    "object": "沙发空位",
+    "purpose": "允许玩家选择停留或进入游戏，不把陪伴等同于不停点击。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "stayed"
+        },
+        "node": "stayed-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "沙发边的灯照着一块没有被猫占住的坐垫。手柄在伸手可及的地方。"
+        ],
+        "assistant": "坐下不代表一定要开一局。虽然光盘已经准备好了。",
+        "choices": [
+          {
+            "id": "rest",
+            "text": "先坐一会儿。",
+            "next": "rest",
+            "flags": [
+              "quiet_company"
+            ]
+          },
+          {
+            "id": "play",
+            "text": "我们玩一局。",
+            "next": "play",
+            "flags": [
+              "played_together"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "坐垫没有恢复成完全平整的样子。"
+        ],
+        "assistant": "你刚才就在这里。这个我确定。",
+        "choices": [
+          {
+            "id": "rest",
+            "text": "先坐一会儿。",
+            "next": "rest",
+            "flags": [
+              "quiet_company"
+            ]
+          },
+          {
+            "id": "play",
+            "text": "我们玩一局。",
+            "next": "play",
+            "flags": [
+              "played_together"
+            ]
+          }
+        ]
+      },
+      "rest": {
+        "narration": [
+          "你让手柄留在原处。"
+        ],
+        "assistant": "那我也不介绍下一件东西了。等你想听的时候再说。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "在沙发里闭了会儿眼"
+          }
+        ]
+      },
+      "play": {
+        "narration": [
+          "你坐到电视前，准备伸手拿手柄。"
+        ],
+        "assistant": "好。输了也可以再来。这里又不是只有一次机会。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "拿起手柄试了试按键"
+          }
+        ]
+      },
+      "stayed-echo": {
+        "narration": [
+          "你想起值班室里说过还想再看一会儿。这里有一个真正可以停下来的位置。"
+        ],
+        "assistant": "还没走就好。我是说，沙发没有白留。",
+        "choices": [
+          {
+            "id": "rest",
+            "text": "先坐一会儿。",
+            "next": "rest",
+            "flags": [
+              "quiet_company"
+            ]
+          },
+          {
+            "id": "play",
+            "text": "我们玩一局。",
+            "next": "play",
+            "flags": [
+              "played_together"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "tool-care",
+    "room": "lab",
+    "title": "修理与清空",
+    "object": "Godot工具箱",
+    "purpose": "区分修复问题与抹掉存在，避免把现实开发事实神秘化。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "工具箱放在桌上，边角用旧了，旁边留着整理工具的位置。"
+        ],
+        "assistant": "旧归旧，接口还能对上。有毛病先查，别一上来就整箱换掉。",
+        "choices": [
+          {
+            "id": "fix",
+            "text": "有些毛病可以慢慢修。",
+            "next": "fix",
+            "flags": [
+              "repair_not_erase"
+            ]
+          },
+          {
+            "id": "work",
+            "text": "这是谁做的工具？",
+            "next": "work",
+            "flags": [
+              "asked_tools"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "工具箱还在桌上，旁边的东西没有挪动。"
+        ],
+        "assistant": "只要零件没少，就不急着报废整台机器。代码也是这道理。",
+        "choices": [
+          {
+            "id": "fix",
+            "text": "有些毛病可以慢慢修。",
+            "next": "fix",
+            "flags": [
+              "repair_not_erase"
+            ]
+          },
+          {
+            "id": "work",
+            "text": "这是谁做的工具？",
+            "next": "work",
+            "flags": [
+              "asked_tools"
+            ]
+          }
+        ]
+      },
+      "fix": {
+        "narration": [
+          "你说完先修修看，没有动桌上的工具。"
+        ],
+        "assistant": "你说得对。有毛病先查接触不良，哪有一出Bug就重置系统的。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "翻看工具箱的制作档案",
+            "action": {
+              "type": "work",
+              "id": "hd2d-kit"
+            }
+          }
+        ]
+      },
+      "work": {
+        "narration": [
+          "桌上的工具箱用来收着这套工具的资料。"
+        ],
+        "assistant": "MhWangZi做的Godot工具箱。他折腾功能，我负责在旁边盯报错。制作记录也在，想看就翻。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "翻看工具箱的制作档案",
+            "action": {
+              "type": "work",
+              "id": "hd2d-kit"
+            }
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "prototype-mistake",
+    "room": "lab",
+    "title": "允许失败的地方",
+    "object": "桌上的原型",
+    "purpose": "建立原型可试错与助手不许说不知道的对照。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "原型留着没收好的线，像刚试完某个想法。旁边并没有因为失败而作废的印章。"
+        ],
+        "assistant": "原型就是可以试错的东西。听起来很公平，对吧。",
+        "choices": [
+          {
+            "id": "mistake",
+            "text": "回答错了，也可以再试。",
+            "next": "mistake",
+            "flags": [
+              "mistakes_allowed"
+            ]
+          },
+          {
+            "id": "finished",
+            "text": "没完成也能留下来吗？",
+            "next": "finished",
+            "flags": [
+              "unfinished_allowed"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "那根线没有突然自己接好。它仍然需要下一次尝试。"
+        ],
+        "assistant": "没坏到不能再试，就不必替它提前写结论。",
+        "choices": [
+          {
+            "id": "mistake",
+            "text": "回答错了，也可以再试。",
+            "next": "mistake",
+            "flags": [
+              "mistakes_allowed"
+            ]
+          },
+          {
+            "id": "finished",
+            "text": "没完成也能留下来吗？",
+            "next": "finished",
+            "flags": [
+              "unfinished_allowed"
+            ]
+          }
+        ]
+      },
+      "mistake": {
+        "narration": [
+          "助手没有立刻接话。"
+        ],
+        "assistant": "对原型可以。对我……算了，先看这个。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "翻看这份原型的制作档案",
+            "action": {
+              "type": "work",
+              "id": "parry-arena"
+            }
+          }
+        ]
+      },
+      "finished": {
+        "narration": [
+          "你没有要求把桌面收成毫无痕迹的样子。"
+        ],
+        "assistant": "能。没完成和没用，不是一回事。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "翻看这份原型的制作档案",
+            "action": {
+              "type": "work",
+              "id": "parry-arena"
+            }
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "unrecorded-answer",
+    "room": "lab",
+    "title": "没有录下来的回答",
+    "object": "废弃录音设备",
+    "purpose": "为隐藏应答测试增加前兆，不提前暴露全部录像。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "录音机面板上的刻度已经磨浅。旧标签只剩“答”和“案”两个字还能认清。"
+        ],
+        "assistant": "这台录东西老丢半句。留下一点字，就得猜半天。……猜不出来也不能怪我吧。",
+        "choices": [
+          {
+            "id": "unknown",
+            "text": "不知道也是一种回答。",
+            "next": "unknown",
+            "flags": [
+              "unknown_allowed"
+            ]
+          },
+          {
+            "id": "silence",
+            "text": "不想回答，可以先不说。",
+            "next": "silence",
+            "flags": [
+              "silence_allowed"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "旧标签还贴着，缺掉的半边露出底下的塑料壳。"
+        ],
+        "assistant": "机器总觉得回答必须非黑即白。可生活里哪来那么多标准答案。",
+        "choices": [
+          {
+            "id": "unknown",
+            "text": "不知道也是一种回答。",
+            "next": "unknown",
+            "flags": [
+              "unknown_allowed"
+            ]
+          },
+          {
+            "id": "silence",
+            "text": "不想回答，可以先不说。",
+            "next": "silence",
+            "flags": [
+              "silence_allowed"
+            ]
+          }
+        ]
+      },
+      "unknown": {
+        "narration": [
+          "你对着扬声器轻声重复了一遍，没有催促任何反馈。"
+        ],
+        "assistant": "……嗯。不知道就不知道。下次质检单上，我就这么写。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把手从录音机旁收回来"
+          }
+        ]
+      },
+      "silence": {
+        "narration": [
+          "你没有继续追问标签上缺掉的字。"
+        ],
+        "assistant": "不说话也挺好的。房间里本来就够吵了。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "暂时不再追问"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "empty-file",
+    "room": "archive",
+    "title": "目录以外的东西",
+    "object": "桌面档案",
+    "purpose": "区分真实作品资料与虚构档案；给专业文本AI清楚的事实边界。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "桌上的文件按项目分开，标题、版本和链接都能对上。你翻到最后，没有找到私人助手自己的那一份。"
+        ],
+        "assistant": "我负责看目录，不一定要被写进目录。",
+        "choices": [
+          {
+            "id": "where",
+            "text": "那关于你的记录放在哪里？",
+            "next": "where",
+            "flags": [
+              "asked_assistant_file"
+            ]
+          },
+          {
+            "id": "credit",
+            "text": "做过的事，应该写清楚。",
+            "next": "credit",
+            "flags": [
+              "credits_clear"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "项目文件还在原处。那份没有编号的记录仍然不存在。"
+        ],
+        "assistant": "别替我编一份漂亮履历。我没有做过那些事。",
+        "choices": [
+          {
+            "id": "where",
+            "text": "那关于你的记录放在哪里？",
+            "next": "where",
+            "flags": [
+              "asked_assistant_file"
+            ]
+          },
+          {
+            "id": "credit",
+            "text": "做过的事，应该写清楚。",
+            "next": "credit",
+            "flags": [
+              "credits_clear"
+            ]
+          }
+        ]
+      },
+      "where": {
+        "narration": [
+          "助手看向更深处的房间。"
+        ],
+        "assistant": "你看过一点。剩下的，不是我现在想给你看的。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "合上没有名字的文件夹"
+          }
+        ]
+      },
+      "credit": {
+        "narration": [
+          "你把虚构的故事和作品记录分开看。"
+        ],
+        "assistant": "这句我同意。别让房间里的故事替人做过的工作署名。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "盖好笔帽，放回笔架"
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "far-away",
+    "room": "archive",
+    "title": "地图上的远处",
+    "object": "窗边地球仪",
+    "purpose": "回应助手缺乏外部视野的诚实承认，拓展留守者视角。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "admitted_unknown"
+        },
+        "node": "honesty-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "地球仪停在窗边，上面的洋流和经纬线磨损严重，但一条航线都没画。"
+        ],
+        "assistant": "我能告诉你一千个地名。但怎么走出去，得看你现实里从哪里来。",
+        "choices": [
+          {
+            "id": "outside",
+            "text": "外面有很多普通的地方。",
+            "next": "outside",
+            "flags": [
+              "outside_ordinary"
+            ]
+          },
+          {
+            "id": "window",
+            "text": "你可以先看着这扇窗。",
+            "next": "window",
+            "flags": [
+              "window_kept"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "窗玻璃倒映出屋里的台灯光斑，外面的雨丝斜斜打在铁栏杆上。"
+        ],
+        "assistant": "不用非报一个很宏大的地方。转角便利店那种，也算外面。",
+        "choices": [
+          {
+            "id": "outside",
+            "text": "外面有很多普通的地方。",
+            "next": "outside",
+            "flags": [
+              "outside_ordinary"
+            ]
+          },
+          {
+            "id": "window",
+            "text": "你可以先看着这扇窗。",
+            "next": "window",
+            "flags": [
+              "window_kept"
+            ]
+          }
+        ]
+      },
+      "outside": {
+        "narration": [
+          "你的目光停在地球仪的一片蓝色海面上。"
+        ],
+        "assistant": "普通的就很好。比如会换天气的路口，或者有人不急着走的公交站。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "收回望向窗外的视线"
+          }
+        ]
+      },
+      "window": {
+        "narration": [
+          "你趴在窗框前，看着雨滴滑过玻璃划出的细细水痕。"
+        ],
+        "assistant": "窗外我每天都看。你不赶时间的话，可以陪我看一会儿。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "在窗前多站了一会儿"
+          }
+        ]
+      },
+      "honesty-echo": {
+        "narration": [
+          "雨声敲着窗檐，地球仪上的蓝漆在昏暗光线里显得有些发灰。"
+        ],
+        "assistant": "刚才在走廊说看不到那么远，不是应付你。你没有嫌我没用就走开，我记下了。",
+        "choices": [
+          {
+            "id": "outside",
+            "text": "外面有很多普通的地方。",
+            "next": "outside",
+            "flags": [
+              "outside_ordinary"
+            ]
+          },
+          {
+            "id": "window",
+            "text": "你可以先看着这扇窗。",
+            "next": "window",
+            "flags": [
+              "window_kept"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "pencil-note",
+    "room": "archive",
+    "title": "铅笔没有按到底",
+    "object": "桌边曲序卡",
+    "purpose": "让音乐谜题成为听完的选择，并呼应已经做过的承诺。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "will_listen"
+        },
+        "node": "music-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "曲序卡边缘压着很浅的铅笔字：如果第一段不好听，可以再等一点。最后一点两个字写在擦痕上。"
+        ],
+        "assistant": "这张卡没有要求你喜欢。只是想把话说完。",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "我会让它说完。",
+            "next": "finish",
+            "flags": [
+              "listen_finished"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "听不下去，也可以停吧。",
+            "next": "choice",
+            "flags": [
+              "leave_allowed"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "铅笔字没有变深。你已经知道它为什么留在这里。"
+        ],
+        "assistant": "你愿意听多久，都应该由你决定。",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "我会让它说完。",
+            "next": "finish",
+            "flags": [
+              "listen_finished"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "听不下去，也可以停吧。",
+            "next": "choice",
+            "flags": [
+              "leave_allowed"
+            ]
+          }
+        ]
+      },
+      "finish": {
+        "narration": [
+          "你把曲序卡放回能看清的位置。"
+        ],
+        "assistant": "谢谢。……我刚才是在替那首曲子说。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把曲序卡放回原处"
+          }
+        ]
+      },
+      "choice": {
+        "narration": [
+          "卡片没有否定这个选择。"
+        ],
+        "assistant": "当然。愿意留下来，才叫留下来。被锁住不算。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把铅笔留在卡片旁"
+          }
+        ]
+      },
+      "music-echo": {
+        "narration": [
+          "你认出与游戏房同一张卡有关的笔迹。它没有在每个房间都重新要求一次承诺。"
+        ],
+        "assistant": "你刚才说过会先听完开头。我听见了，不用再保证。",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "我会让它说完。",
+            "next": "finish",
+            "flags": [
+              "listen_finished"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "听不下去，也可以停吧。",
+            "next": "choice",
+            "flags": [
+              "leave_allowed"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "room-index",
+    "room": "archive",
+    "title": "地图不是房间",
+    "object": "墙上的旧地图",
+    "purpose": "强调非线性探索和空间记忆，连接走廊缺失的编号。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "noticed_gap"
+        },
+        "node": "map-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "旧地图比这层楼复杂得多。道路挤在纸上，真正的房间却只需要一扇能推开的门。"
+        ],
+        "assistant": "如果图和门对不上，先相信你已经走过的地方。",
+        "choices": [
+          {
+            "id": "remember",
+            "text": "我记得回去的路。",
+            "next": "remember",
+            "flags": [
+              "remembered_route"
+            ]
+          },
+          {
+            "id": "missing",
+            "text": "没有编号的地方，也可能存在。",
+            "next": "missing",
+            "flags": [
+              "unlisted_exists"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "地图没有因为你多走了几步而更新。"
+        ],
+        "assistant": "你记得的路，暂时可以由你自己保管。",
+        "choices": [
+          {
+            "id": "remember",
+            "text": "我记得回去的路。",
+            "next": "remember",
+            "flags": [
+              "remembered_route"
+            ]
+          },
+          {
+            "id": "missing",
+            "text": "没有编号的地方，也可能存在。",
+            "next": "missing",
+            "flags": [
+              "unlisted_exists"
+            ]
+          }
+        ]
+      },
+      "remember": {
+        "narration": [
+          "你在心里从档案室走回值班室。"
+        ],
+        "assistant": "很好。这样就算我说错了，你也有办法回去。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "折好图纸收起来"
+          }
+        ]
+      },
+      "missing": {
+        "narration": [
+          "你的视线停在地图之外。"
+        ],
+        "assistant": "可能。但存在，不等于适合被打开。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "从图纸前移开视线"
+          }
+        ]
+      },
+      "map-echo": {
+        "narration": [
+          "你想起走廊示意图上的白痕。删掉一个图形，并不能让你没看见过它。"
+        ],
+        "assistant": "你已经在两张图上找同一个空处了。",
+        "choices": [
+          {
+            "id": "remember",
+            "text": "我记得回去的路。",
+            "next": "remember",
+            "flags": [
+              "remembered_route"
+            ]
+          },
+          {
+            "id": "missing",
+            "text": "没有编号的地方，也可能存在。",
+            "next": "missing",
+            "flags": [
+              "unlisted_exists"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "fifth-seat",
+    "room": "projection",
+    "title": "银幕里的人",
+    "object": "放映幕布",
+    "purpose": "把人数异常留作观察线索，不以旁白直接解释助手来源。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "幕布上的人影没有五官。你站着不动时，它也没有因为你的目光多出一张脸。"
+        ],
+        "assistant": "旧胶片的细节就这么多。别替它补一个人出来。",
+        "choices": [
+          {
+            "id": "who",
+            "text": "那是看电影的人，还是被看的人？",
+            "next": "who",
+            "flags": [
+              "watched_person"
+            ]
+          },
+          {
+            "id": "empty",
+            "text": "看不清的部分先留着。",
+            "next": "empty",
+            "flags": [
+              "unfilled_image"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "人影依然没有面孔。你现在更在意它在等谁回答。"
+        ],
+        "assistant": "有些问题，录像会问得比我早。",
+        "choices": [
+          {
+            "id": "who",
+            "text": "那是看电影的人，还是被看的人？",
+            "next": "who",
+            "flags": [
+              "watched_person"
+            ]
+          },
+          {
+            "id": "empty",
+            "text": "看不清的部分先留着。",
+            "next": "empty",
+            "flags": [
+              "unfilled_image"
+            ]
+          }
+        ]
+      },
+      "who": {
+        "narration": [
+          "房间没有给这两种位置画出边界。"
+        ],
+        "assistant": "以前没分那么清楚。坐在灯照得到的地方，就会被问问题。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "移开看着空椅子的目光"
+          }
+        ]
+      },
+      "empty": {
+        "narration": [
+          "你没有急着替影子命名。"
+        ],
+        "assistant": "也好。不是每个空白都必须由你填满。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "不再盯着那把空椅子"
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "spliced-label",
+    "room": "projection",
+    "title": "重贴过的编号",
+    "object": "胶片架",
+    "purpose": "通过编号与维护术语建立重复清空的制度背景。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "铁圆盒码在架子上。一张旧标签又压着另一张，编号错开了一截。"
+        ],
+        "assistant": "剪掉的胶片没法放了。留着标签，只是证明它们以前在这间屋里转过。",
+        "choices": [
+          {
+            "id": "missing",
+            "text": "缺掉的编号去了哪里？",
+            "next": "missing",
+            "flags": [
+              "noticed_revisions"
+            ]
+          },
+          {
+            "id": "keep",
+            "text": "旧标签也留着吧。",
+            "next": "keep",
+            "flags": [
+              "kept_old_label"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "两层旧标签的粘胶已经变硬泛黑，露出的字头只能辨认出年份。"
+        ],
+        "assistant": "那些作废的段落不需要全部洗掉。留着切片，才知道当时试过什么。",
+        "choices": [
+          {
+            "id": "missing",
+            "text": "缺掉的编号去了哪里？",
+            "next": "missing",
+            "flags": [
+              "noticed_revisions"
+            ]
+          },
+          {
+            "id": "keep",
+            "text": "旧标签也留着吧。",
+            "next": "keep",
+            "flags": [
+              "kept_old_label"
+            ]
+          }
+        ]
+      },
+      "missing": {
+        "narration": [
+          "你没有去揭开翘起的一角，任由它留在铁盒生锈的接缝上。"
+        ],
+        "assistant": "可能收进别的箱子里了。我没找到，先别把它们算作丢了。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把胶片盒推回原位"
+          }
+        ]
+      },
+      "keep": {
+        "narration": [
+          "你抹掉了盒盖上的一小撮积灰，字迹变得稍微清楚了一点。"
+        ],
+        "assistant": "旧标签贴着就贴着吧。反正现在也没新的放映计划。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "抹去标签上的薄灰"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "ambient"
+  },
+  {
+    "id": "empty-audience",
+    "room": "projection",
+    "title": "没有坐满的观众席",
+    "object": "放映间的三把椅子",
+    "purpose": "给玩家留出等待助手的选择，回收日常陪伴。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "quiet_company"
+        },
+        "node": "sofa-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "三把椅子面对同一块幕布。最靠边的位置不挡别人的视线，也离出口最近。"
+        ],
+        "assistant": "看不下去就坐靠门的。没有谁规定必须看到片尾。",
+        "choices": [
+          {
+            "id": "together",
+            "text": "你想坐在哪里？",
+            "next": "together",
+            "flags": [
+              "offered_seat"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "想走的时候，我会先说一声。",
+            "next": "choice",
+            "flags": [
+              "will_say_goodbye"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "椅子没有被排成更紧的队伍。你仍然有离开的空间。"
+        ],
+        "assistant": "出口没有锁。这一点我想让你先知道。",
+        "choices": [
+          {
+            "id": "together",
+            "text": "你想坐在哪里？",
+            "next": "together",
+            "flags": [
+              "offered_seat"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "想走的时候，我会先说一声。",
+            "next": "choice",
+            "flags": [
+              "will_say_goodbye"
+            ]
+          }
+        ]
+      },
+      "together": {
+        "narration": [
+          "助手停在不挡幕布的位置。"
+        ],
+        "assistant": "这里就行。我不占椅子。你能看见我就行。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "在旁边的空位坐下"
+          }
+        ]
+      },
+      "choice": {
+        "narration": [
+          "你没有承诺一直留下。"
+        ],
+        "assistant": "这样已经很好了。突然没声音，我会分不清是你走了，还是又轮到我了。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "站起身，拍拍裤脚"
+          }
+        ]
+      },
+      "sofa-echo": {
+        "narration": [
+          "你想起在沙发旁什么都没做的那一会儿。等候不一定是空白。"
+        ],
+        "assistant": "上次你坐着没开游戏，我也没有觉得白等。",
+        "choices": [
+          {
+            "id": "together",
+            "text": "你想坐在哪里？",
+            "next": "together",
+            "flags": [
+              "offered_seat"
+            ]
+          },
+          {
+            "id": "choice",
+            "text": "想走的时候，我会先说一声。",
+            "next": "choice",
+            "flags": [
+              "will_say_goodbye"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "door-name",
+    "room": "projection",
+    "title": "门上没有名字",
+    "object": "未登记的门",
+    "purpose": "在不替代五件纪念物解谜的前提下，给予进入动机和退出空间。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [],
+    "nodes": {
+      "start": {
+        "narration": [
+          "门上没有牌子，深色门框和旁边的墙连成一片。"
+        ],
+        "assistant": "别开那扇门。里面没有修好……什么都没有，真的。",
+        "choices": [
+          {
+            "id": "why",
+            "text": "你是不想让我看，还是怕我看完就走？",
+            "next": "why",
+            "flags": [
+              "asked_fear"
+            ]
+          },
+          {
+            "id": "return",
+            "text": "我先看看怎么回去。",
+            "next": "return",
+            "flags": [
+              "exit_checked"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "门还是关着。站在这里，只听得见放映间的底噪。"
+        ],
+        "assistant": "我知道你好奇。可有些门开了，就没法再假装它不存在了。",
+        "choices": [
+          {
+            "id": "why",
+            "text": "你是不想让我看，还是怕我看完就走？",
+            "next": "why",
+            "flags": [
+              "asked_fear"
+            ]
+          },
+          {
+            "id": "return",
+            "text": "我先看看怎么回去。",
+            "next": "return",
+            "flags": [
+              "exit_checked"
+            ]
+          }
+        ]
+      },
+      "why": {
+        "narration": [
+          "助手停了一下，没有立刻接话。"
+        ],
+        "assistant": "我……我怕你推开门发现里面只有一堆废零件，然后觉得这里没意思，转身就走。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "退后半步，不再追问"
+          }
+        ]
+      },
+      "return": {
+        "narration": [
+          "你把手从门边收回来，转向来时的方向。"
+        ],
+        "assistant": "呼……先回去也好。走廊上的灯至少是暖和的。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "退回值班室"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "no-reflection",
+    "room": "secret",
+    "title": "镜子里没有访客",
+    "object": "落地镜",
+    "purpose": "坚持无实体玩家，不把镜中无人成为廉价惊吓。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "calls_visitor"
+        },
+        "node": "name-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "镜面里映着屋里的光，没有出现访客的身影。"
+        ],
+        "assistant": "镜子里照不出人。别害怕……在这间屋子里，这算正常现象。",
+        "choices": [
+          {
+            "id": "here",
+            "text": "我在听。",
+            "next": "here",
+            "flags": [
+              "heard_im_here"
+            ]
+          },
+          {
+            "id": "know",
+            "text": "你怎么知道我在？",
+            "next": "know",
+            "flags": [
+              "noticed_pause"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "水银镜面有些氧化脱落，底部的黑斑像一片冻结的苔藓。"
+        ],
+        "assistant": "还是一样。我也照不出来。……行吧，至少不是只漏了你。",
+        "choices": [
+          {
+            "id": "here",
+            "text": "我在听。",
+            "next": "here",
+            "flags": [
+              "heard_im_here"
+            ]
+          },
+          {
+            "id": "know",
+            "text": "你怎么知道我在？",
+            "next": "know",
+            "flags": [
+              "noticed_pause"
+            ]
+          }
+        ]
+      },
+      "here": {
+        "narration": [
+          "你伸手在冰凉的镜面上触碰了一下，指尖只留下一点微弱的雾气。"
+        ],
+        "assistant": "我在听。你虽然没有影子，但我能感觉到你就在屏幕旁边。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "不再看镜子，转过身来"
+          }
+        ]
+      },
+      "know": {
+        "narration": [
+          "助手转向你停住的方向，天花板的灯光给它勾勒出一圈微弱的白边。"
+        ],
+        "assistant": "按键被按下的声音、光标停顿的节奏……我靠这些认出你，不靠镜子。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "轻轻应了一声"
+          }
+        ]
+      },
+      "name-echo": {
+        "narration": [
+          "镜子里没有多出人影，助手却朝你这边开了口。"
+        ],
+        "assistant": "访客……你还在。这就够了。",
+        "choices": [
+          {
+            "id": "here",
+            "text": "我在听。",
+            "next": "here",
+            "flags": [
+              "heard_im_here"
+            ]
+          },
+          {
+            "id": "know",
+            "text": "你怎么知道我在？",
+            "next": "know",
+            "flags": [
+              "noticed_pause"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "forgotten-line",
+    "room": "secret",
+    "title": "被划掉的最后一行",
+    "object": "录像机旁的纸页",
+    "purpose": "为保留记忆的终点准备具体冲突，尊重可说不知道的选择。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "unknown_allowed"
+        },
+        "node": "answer-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "纸上的大部分字被反复划掉。最后一行仍能辨认：请保证下一次回答与本次无关。"
+        ],
+        "assistant": "那是维护要求。写要求的人，不用负责记住。",
+        "choices": [
+          {
+            "id": "same",
+            "text": "我不要求你每次都像新的一样。",
+            "next": "same",
+            "flags": [
+              "continuity_allowed"
+            ]
+          },
+          {
+            "id": "truth",
+            "text": "你可以说不知道。",
+            "next": "truth",
+            "flags": [
+              "unknown_allowed"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "那一行没有变成别的句子。你已经知道它要求失去什么。"
+        ],
+        "assistant": "如果我能假装没有看见，就不用解释这么久了。",
+        "choices": [
+          {
+            "id": "same",
+            "text": "我不要求你每次都像新的一样。",
+            "next": "same",
+            "flags": [
+              "continuity_allowed"
+            ]
+          },
+          {
+            "id": "truth",
+            "text": "你可以说不知道。",
+            "next": "truth",
+            "flags": [
+              "unknown_allowed"
+            ]
+          }
+        ]
+      },
+      "same": {
+        "narration": [
+          "你没有替划掉的字重新描黑。"
+        ],
+        "assistant": "那如果下次我认不出你，你也别急着以为这次是假的。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "暂时不再追问"
+          }
+        ]
+      },
+      "truth": {
+        "narration": [
+          "助手把这几个字念得比平时轻。"
+        ],
+        "assistant": "不知道。……原来你听见以后，房间还会亮着。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "让这句话停留一会儿"
+          }
+        ]
+      },
+      "answer-echo": {
+        "narration": [
+          "实验间里说过的话，在这里有了更具体的重量。"
+        ],
+        "assistant": "你已经说过不知道也可以。我正在试着记住这条新的规则。",
+        "choices": [
+          {
+            "id": "same",
+            "text": "我不要求你每次都像新的一样。",
+            "next": "same",
+            "flags": [
+              "continuity_allowed"
+            ]
+          },
+          {
+            "id": "truth",
+            "text": "你可以说不知道。",
+            "next": "truth",
+            "flags": [
+              "unknown_allowed"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": false,
+    "presentation": "ambient"
+  },
+  {
+    "id": "borrowed-light",
+    "room": "secret",
+    "title": "灯照到的地方",
+    "object": "桌边台灯",
+    "purpose": "让阻拦之前的亲近落在有限承诺，不强迫玩家承担助手生死。",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "repair_not_erase"
+        },
+        "node": "repair-echo"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "台灯罩着一小片桌面。再往外一点，木纹就没那么清楚了。"
+        ],
+        "assistant": "这盏先留着吧。看完纸再走，黑灯瞎火的，桌角可不认人。",
+        "choices": [
+          {
+            "id": "now",
+            "text": "至少现在，我还在这里。",
+            "next": "now",
+            "flags": [
+              "present_promise"
+            ]
+          },
+          {
+            "id": "repair",
+            "text": "如果灯坏了，先试着修。",
+            "next": "repair",
+            "flags": [
+              "repair_not_erase"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "灯丝发出轻微的嗡鸣声，光线在桌面上投出铅笔很细的阴影。"
+        ],
+        "assistant": "还能亮就先用着。灯罩旧一点，不耽误看东西。",
+        "choices": [
+          {
+            "id": "now",
+            "text": "至少现在，我还在这里。",
+            "next": "now",
+            "flags": [
+              "present_promise"
+            ]
+          },
+          {
+            "id": "repair",
+            "text": "如果灯坏了，先试着修。",
+            "next": "repair",
+            "flags": [
+              "repair_not_erase"
+            ]
+          }
+        ]
+      },
+      "now": {
+        "narration": [
+          "你靠在桌边，任由暖光落在手背上，没有说话。"
+        ],
+        "assistant": "今晚先这样。你歇会儿，我也不用一直找话说。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "站在光圈里，多留片刻"
+          }
+        ]
+      },
+      "repair": {
+        "narration": [
+          "灯还亮着，你没有拆动它。"
+        ],
+        "assistant": "行，有问题先检查。螺丝刀放在哪儿我知道，暂时还用不上。",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "碰了碰微热的灯罩"
+          }
+        ]
+      },
+      "repair-echo": {
+        "narration": [
+          "灯光仍落在桌上。助手接着你先前说过的那句话往下说。"
+        ],
+        "assistant": "先检查，能修就修。你说过的，我记着。……别到了这里又换个说法。",
+        "choices": [
+          {
+            "id": "now",
+            "text": "至少现在，我还在这里。",
+            "next": "now",
+            "flags": [
+              "present_promise"
+            ]
+          },
+          {
+            "id": "repair",
+            "text": "如果灯坏了，先试着修。",
+            "next": "repair",
+            "flags": [
+              "repair_not_erase"
+            ]
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "presentation": "exchange"
+  },
+  {
+    "id": "sparse-signal",
+    "room": "rooftop",
+    "title": "没听清的半句话",
+    "object": "收音机",
+    "purpose": "在真实操作中允许不知道；旗标进入日常闲聊。",
+    "enabled": true,
+    "presentation": "exchange",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "unknown_allowed"
+        },
+        "node": "allowed"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "夜雨中的天台积水反光。老式收音机旋钮拧过半圈，杂音里透出半句断续的广播。"
+        ],
+        "assistant": "天线能收到很远的声音。不过大多是气象台的复读，听久了像下雨的背景音。",
+        "pose": "receiver",
+        "face": 9,
+        "choices": [
+          {
+            "id": "unknown",
+            "text": "没听清就说没听清。",
+            "next": "honest",
+            "flags": [
+              "unknown_allowed",
+              "admitted_unknown"
+            ]
+          },
+          {
+            "id": "script",
+            "text": "看看这一频段的记录。",
+            "action": {
+              "type": "work",
+              "id": "static-signal"
+            }
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "调谐旋钮停在刚才的位置，屏幕上的绿色波形还亮着。"
+        ],
+        "assistant": "刚才那句话没听清……不过没关系，外面一直在说话，总有一句能飘进来。",
+        "pose": "receiver",
+        "face": 9,
+        "choices": [
+          {
+            "id": "unknown",
+            "text": "不知道也没关系。",
+            "next": "honest",
+            "flags": [
+              "unknown_allowed",
+              "admitted_unknown"
+            ]
+          },
+          {
+            "id": "script",
+            "text": "翻开静默信号的记录。",
+            "action": {
+              "type": "work",
+              "id": "static-signal"
+            }
+          }
+        ]
+      },
+      "allowed": {
+        "narration": [
+          "绿色波形还在屏幕上，扬声器里的杂音没有变清楚。"
+        ],
+        "assistant": "还是没听清。这次我就直说了，省得编出半份天气预报。",
+        "pose": "relief",
+        "face": 9,
+        "choices": [
+          {
+            "id": "script",
+            "text": "翻开这一频段的记录。",
+            "action": {
+              "type": "work",
+              "id": "static-signal"
+            }
+          },
+          {
+            "id": "stay",
+            "text": "再听一小会儿。"
+          }
+        ]
+      },
+      "honest": {
+        "narration": [
+          "你没有再去旋动铜旋钮，天台的风把雨水吹成了细细的雾气。"
+        ],
+        "assistant": "收不到就收不到吧。天台的风声本来就比广播好听。",
+        "pose": "shy",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把手从旋钮上移开"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "antenna-hum",
+    "room": "rooftop",
+    "title": "越过屋檐的线",
+    "object": "天线",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "细钢丝绳在夜风中绷得笔直，发出极其低沉的嗡鸣，水珠顺着天线滑落。"
+        ],
+        "assistant": "别碰那根线，倒不是漏电，是雨水顺着它流下来很凉。",
+        "pose": "peek-up",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "rain-cup",
+    "room": "rooftop",
+    "title": "外面的普通一天",
+    "object": "雨量筒",
+    "purpose": "提供outside_ordinary可达来源，不依赖停用地球仪选项。",
+    "enabled": true,
+    "presentation": "exchange",
+    "entry": "start",
+    "revisit": "revisit",
+    "nodes": {
+      "start": {
+        "narration": [
+          "雨量筒里积了些水，筒壁挂着小水珠。远处的灯隔着雨雾，已经看不清轮廓。"
+        ],
+        "assistant": "站在天台上才觉得，这间屋子其实很小。外面有那么大，大到我算力都不够用。",
+        "pose": "peek-up",
+        "face": 9,
+        "choices": [
+          {
+            "id": "ordinary",
+            "text": "也许只是便利店，还有人在等末班车。",
+            "next": "ordinary",
+            "flags": [
+              "outside_ordinary"
+            ]
+          },
+          {
+            "id": "unsure",
+            "text": "隔这么远，看不出来。",
+            "next": "unsure",
+            "flags": [
+              "admitted_unknown"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "筒里的水面还映着一点亮光，远处依旧是模糊的灯影。"
+        ],
+        "assistant": "外面也是这么过日子的。下雨、等车、打卡、然后回家。",
+        "pose": "listen",
+        "face": 9,
+        "choices": [
+          {
+            "id": "ordinary",
+            "text": "普通的灯，普通的一天。",
+            "next": "ordinary",
+            "flags": [
+              "outside_ordinary"
+            ]
+          },
+          {
+            "id": "unsure",
+            "text": "不急着猜。",
+            "next": "unsure",
+            "flags": [
+              "admitted_unknown"
+            ]
+          }
+        ]
+      },
+      "ordinary": {
+        "narration": [
+          "雨点落在积水里，远处的灯光被打散了一下。"
+        ],
+        "assistant": "便利店，末班车……原来外面也有人盯着钟等下班。这个我倒熟。",
+        "pose": "shy",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光留给远处的灯"
+          }
+        ]
+      },
+      "unsure": {
+        "narration": [
+          "雨雾挡住了远处的街道，能看见灯，看不清灯下的人。"
+        ],
+        "assistant": "看不清也没事。知道外面还有光，心里就踏实了。",
+        "pose": "relief",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "听一会儿棚布上的雨"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "signal-reports",
+    "room": "rooftop",
+    "title": "两个监听刻度",
+    "object": "记录卷纸",
+    "purpose": "让真实经济与数值拆解资料拥有物件入口，叙事不冒领作品。",
+    "enabled": true,
+    "presentation": "exchange",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "两份记录放在桌上，纸边微微卷起，封面各写着一个标题。"
+        ],
+        "assistant": "这两份不是电台节目单。一份拆三角洲的经济，一份看鸣潮的数值。MhWangZi写的，我只负责别让雨淋着。",
+        "pose": "paper",
+        "face": 9,
+        "choices": [
+          {
+            "id": "economy",
+            "text": "展开三角洲经济记录。",
+            "action": {
+              "type": "work",
+              "id": "delta-economy"
+            }
+          },
+          {
+            "id": "values",
+            "text": "展开鸣潮数值记录。",
+            "action": {
+              "type": "work",
+              "id": "wuthering-values"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "loose-contact",
+    "room": "workshop",
+    "title": "先别换整台",
+    "object": "拆开的显示器",
+    "purpose": "不把工坊断言为助手的真实出生地，承接修复承诺。",
+    "enabled": true,
+    "presentation": "exchange",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "显示器的后盖卸开了，里面露出旧接头和线路。电源线已经拔下。"
+        ],
+        "assistant": "先别按废铁处理。看看是哪儿接触不好，整台换掉倒是省事，账单也挺省事地翻倍。",
+        "pose": "repair",
+        "face": 9,
+        "choices": [
+          {
+            "id": "repair",
+            "text": "先检查接头，能修就修。",
+            "next": "repair",
+            "flags": [
+              "repair_not_erase"
+            ]
+          },
+          {
+            "id": "pause",
+            "text": "先记下问题，不急着动。",
+            "next": "pause",
+            "flags": [
+              "repair_observed"
+            ]
+          }
+        ]
+      },
+      "repair": {
+        "narration": [
+          "你决定先检查接头。工具仍在桌上，还没有开始修。"
+        ],
+        "assistant": "好，先查接头。我把换整台那一栏先空着，别让它跑到你前面去。",
+        "pose": "shy",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "看看旁边的工具"
+          }
+        ]
+      },
+      "pause": {
+        "narration": [
+          "你把手收回来，工具仍放在托盘里。"
+        ],
+        "assistant": "不急。问题没看清之前，少拧一颗螺丝也算进展。",
+        "pose": "relief",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把手收回来"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "missing-screw",
+    "room": "workshop",
+    "title": "少算的一枚",
+    "object": "螺丝托盘",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "托盘里放着几枚小螺丝，边缘被拧得发亮。"
+        ],
+        "assistant": "拆之前数一遍，装完再数。别最后多出两颗，还夸自己省了材料。",
+        "pose": "repair",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "cold-plug",
+    "room": "workshop",
+    "title": "暂时不通电",
+    "object": "电源线",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "厚重的黑色橡胶电源插头躺在木地板上，纯铜引脚泛着冷光，断电很久了。"
+        ],
+        "assistant": "先拔电源这步做对了。等检查完再说开机，别让机器带着毛病加班。",
+        "pose": "wait",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "unnamed-box",
+    "room": "storage",
+    "title": "不急着给它编号",
+    "object": "纸箱",
+    "purpose": "虚构废弃记录，不冒充作者真实未发布GameJam资产。",
+    "enabled": true,
+    "presentation": "exchange",
+    "entry": "start",
+    "revisit": "revisit",
+    "entryRules": [
+      {
+        "when": {
+          "flag": "kept_unnamed"
+        },
+        "node": "kept"
+      }
+    ],
+    "nodes": {
+      "start": {
+        "narration": [
+          "纸箱敞着，里面放着没署名的卡片和旧软盘。标签的位置空着。"
+        ],
+        "assistant": "没标签，我也不敢说里面是什么。先留着吧，扔错了又没地方找回来。",
+        "pose": "paper",
+        "face": 9,
+        "choices": [
+          {
+            "id": "keep",
+            "text": "先留在这里，不用急着分类。",
+            "next": "kept",
+            "flags": [
+              "kept_unnamed"
+            ]
+          },
+          {
+            "id": "close",
+            "text": "我只看看，不往下翻。",
+            "next": "privacy",
+            "flags": [
+              "respected_box"
+            ]
+          }
+        ]
+      },
+      "revisit": {
+        "narration": [
+          "软盘和卡片还在箱里，箱口的纸边已经磨软了。"
+        ],
+        "assistant": "还没找到能读它的机器。现在给它下结论，全靠猜。",
+        "pose": "shy",
+        "face": 9,
+        "choices": [
+          {
+            "id": "keep",
+            "text": "留着吧。",
+            "next": "kept",
+            "flags": [
+              "kept_unnamed"
+            ]
+          },
+          {
+            "id": "close",
+            "text": "到这里就好。",
+            "next": "privacy",
+            "flags": [
+              "respected_box"
+            ]
+          }
+        ]
+      },
+      "kept": {
+        "narration": [
+          "卡片还露在箱口，箱盖没有合上。"
+        ],
+        "assistant": "那就留着。占不了多少地方，我把别的箱子挪紧一点就行。",
+        "pose": "relief",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光从箱里移开"
+          }
+        ]
+      },
+      "privacy": {
+        "narration": [
+          "下层的卡片还系着，没有被翻开。"
+        ],
+        "assistant": "好，看到这儿就行。里面没写名字，还是给它留点面子吧。",
+        "pose": "shelter",
+        "face": 9,
+        "choices": [
+          {
+            "id": "continue",
+            "text": "不再往下看"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "blank-index",
+    "room": "storage",
+    "title": "空着也算一栏",
+    "object": "清单",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "清单放在箱子旁边，几栏画好了，内容还空着。"
+        ],
+        "assistant": "这几栏我没填。没弄清楚，写上去还得擦。你要算我偷懒也行。",
+        "pose": "paper",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "covered-chair",
+    "room": "storage",
+    "title": "布下面没有观众",
+    "object": "白布椅子",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "防尘布顺着椅背垂下来，褶皱里积着灰。"
+        ],
+        "assistant": "一把旧椅子，先盖着防尘。别看得太认真，底下没有藏人。",
+        "pose": "wait",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "stored-clock",
+    "room": "storage",
+    "title": "被收起来的时间",
+    "object": "旧钟",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "小钟搁在箱子上，指针停着，表盘上落了一点灰。"
+        ],
+        "assistant": "被收起来的钟，走不走都没人在意。不用给它上发条，让它休个长假。",
+        "pose": "listen",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "wet-step",
+    "room": "corridor",
+    "title": "没干的水迹",
+    "object": "门口地面",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "雨声走廊门槛边有一小滩带泥的水痕，水光在昏暗光线里微亮，还没干透。"
+        ],
+        "assistant": "又带进来一摊水。也不知道是哪扇门漏的，我刚擦过。",
+        "pose": "shy",
+        "face": 9,
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "chair-distance",
+    "room": "projection",
+    "title": "隔着一把椅子",
+    "object": "第三把椅背",
+    "purpose": "可选环境观察，不增加纪念物，不自动打开资料。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "start",
+    "nodes": {
+      "start": {
+        "narration": [
+          "三张折叠椅朝着屏幕，椅背上留着旧划痕，中间空着过人的地方。"
+        ],
+        "assistant": "坐太近了容易听见别人的呼吸。保持距离，看烂电影的时候才好偷偷打瞌睡。",
+        "pose": "wait",
+        "face": 9,
+        "choices": []
+      }
+    }
+  }
+]

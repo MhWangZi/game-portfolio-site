@@ -1,0 +1,29 @@
+.action-sprite{overflow:hidden}
+.companion[data-gesture] .companion-body{animation:none!important}
+.companion[data-gesture] .action-sprite{transform-origin:50% 85%;animation-duration:1.5s;animation-timing-function:ease-in-out;animation-fill-mode:both}
+.companion[data-gesture=greet] .action-sprite{animation-name:gesture-greet}
+.companion[data-gesture=listen] .action-sprite{animation-name:gesture-listen}
+.companion[data-gesture=paper] .action-sprite{animation-name:gesture-paper}
+.companion[data-gesture=halt] .action-sprite{animation-name:gesture-halt}
+.companion[data-gesture=shy] .action-sprite{animation-name:gesture-shy}
+.companion[data-gesture=peek-up] .action-sprite{animation-name:gesture-peek}
+.companion[data-gesture=care] .action-sprite{animation-name:gesture-care}
+.companion[data-gesture=repair] .action-sprite{animation-name:gesture-repair}
+.companion[data-gesture=receiver] .action-sprite{animation-name:gesture-receiver}
+.companion[data-gesture=shelter] .action-sprite{animation-name:gesture-shelter}
+.companion[data-gesture=wait] .action-sprite{animation-name:gesture-wait}
+.companion[data-gesture=relief] .action-sprite{animation-name:gesture-relief}
+@keyframes gesture-greet{25%{transform:rotate(-6deg)}55%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}}
+@keyframes gesture-listen{40%,80%{transform:rotate(7deg) translateX(3px)}}
+@keyframes gesture-paper{35%{transform:scale(.96,.98) translateY(2px)}70%{transform:translateX(-1px)}}
+@keyframes gesture-halt{30%{transform:translateX(-5px) scale(1.03)}65%{transform:translateX(-2px)}}
+@keyframes gesture-shy{45%,85%{transform:rotate(-4deg) translateY(4px) scale(.96)}}
+@keyframes gesture-peek{45%,75%{transform:translateY(-7px) rotate(-3deg)}}
+@keyframes gesture-care{35%{transform:rotate(3deg)}70%{transform:rotate(-2deg)}}
+@keyframes gesture-repair{30%{transform:rotate(-3deg) translateY(-2px)}65%{transform:rotate(3deg)}}
+@keyframes gesture-receiver{45%,80%{transform:rotate(5deg) scale(1.02)}}
+@keyframes gesture-shelter{40%,70%{transform:scale(.97) translateY(2px)}}
+@keyframes gesture-wait{50%,100%{transform:translateY(4px) scale(1.01,.96)}}
+@keyframes gesture-relief{25%{transform:translateY(-3px) scale(.98,1.03)}80%,100%{transform:translateY(2px)}}
+.reduced-motion .action-sprite{animation:none!important}
+@media(prefers-reduced-motion:reduce){.action-sprite{animation:none!important}}

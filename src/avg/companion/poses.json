@@ -1,0 +1,14 @@
+[
+  {"id":"greet","label":"拘谨招手","cell":0,"animation":"greeting"},
+  {"id":"listen","label":"侧身倾听","cell":1,"animation":"listening"},
+  {"id":"paper","label":"攥紧纸页","cell":2,"animation":"paper-hold"},
+  {"id":"halt","label":"抬手挽留","cell":3,"animation":"hesitate"},
+  {"id":"shy","label":"低头嘴硬","cell":4,"animation":"avert"},
+  {"id":"peek-up","label":"探身仰望","cell":5,"animation":"look-up"},
+  {"id":"care","label":"护住滚筒","cell":6,"animation":"cradle"},
+  {"id":"repair","label":"握紧扳手","cell":7,"animation":"tool-check"},
+  {"id":"receiver","label":"贴近听筒","cell":8,"animation":"tune-in"},
+  {"id":"shelter","label":"护住微光","cell":9,"animation":"shelter-light"},
+  {"id":"wait","label":"抱膝等候","cell":10,"animation":"settle-wait"},
+  {"id":"relief","label":"缓缓松气","cell":11,"animation":"exhale"}
+]

@@ -1,0 +1,192 @@
+{
+  "title": "档案柜",
+  "note": "左侧三层小柜，右侧三列四层大柜。读完以后，记得放回原位。",
+  "images": {
+    "cabinet": "./media/exploration/archive-cabinet.png",
+    "closed": "./media/exploration/archive-folder-closed.png",
+    "open": "./media/exploration/archive-folder-open.png"
+  },
+  "returnToken": "dark",
+  "drawers": [
+    {
+      "id": "drawer-1",
+      "label": "来访明信片",
+      "point": [
+        29.4,
+        50.5
+      ],
+      "action": {
+        "type": "panel",
+        "id": "record:postcard"
+      }
+    },
+    {
+      "id": "drawer-2",
+      "label": "曲序卡",
+      "point": [
+        29.4,
+        62
+      ],
+      "action": {
+        "type": "panel",
+        "id": "record:playlist"
+      }
+    },
+    {
+      "id": "drawer-3",
+      "label": "启动流程",
+      "point": [
+        29.4,
+        73.1
+      ],
+      "action": {
+        "type": "panel",
+        "id": "record:protocol"
+      }
+    },
+    {
+      "id": "drawer-4",
+      "label": "应答测试",
+      "point": [
+        48.7,
+        36.5
+      ],
+      "action": {
+        "type": "panel",
+        "id": "record:birth"
+      }
+    },
+    {
+      "id": "drawer-5",
+      "label": "CLICKDOWN",
+      "point": [
+        59.45,
+        38.15
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:click-down"
+      }
+    },
+    {
+      "id": "drawer-6",
+      "label": "HD2DKit工具箱",
+      "point": [
+        70.2,
+        39.8
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:hd2d-kit"
+      }
+    },
+    {
+      "id": "drawer-7",
+      "label": "万众瞩目",
+      "point": [
+        48.7,
+        48.65
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:anchored-gaze"
+      }
+    },
+    {
+      "id": "drawer-8",
+      "label": "Parry Arena",
+      "point": [
+        59.45,
+        50.3
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:parry-arena"
+      }
+    },
+    {
+      "id": "drawer-9",
+      "label": "静默信号",
+      "point": [
+        70.2,
+        51.949999999999996
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:static-signal"
+      }
+    },
+    {
+      "id": "drawer-10",
+      "label": "Godot原型集",
+      "point": [
+        48.7,
+        60.8
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:godot-prototype-suite"
+      }
+    },
+    {
+      "id": "drawer-11",
+      "label": "三角洲经济研究",
+      "point": [
+        59.45,
+        62.449999999999996
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:delta-economy"
+      }
+    },
+    {
+      "id": "drawer-12",
+      "label": "鸣潮数值研究",
+      "point": [
+        70.2,
+        64.1
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:wuthering-values"
+      }
+    },
+    {
+      "id": "drawer-13",
+      "label": "装备分析",
+      "point": [
+        48.7,
+        72.95
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:equipment-analysis"
+      }
+    },
+    {
+      "id": "drawer-14",
+      "label": "动作战斗设计",
+      "point": [
+        59.45,
+        74.60000000000001
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:action-combat"
+      }
+    },
+    {
+      "id": "drawer-15",
+      "label": "Roguelite系统",
+      "point": [
+        70.2,
+        76.25
+      ],
+      "action": {
+        "type": "panel",
+        "id": "work:roguelite-systems"
+      }
+    }
+  ]
+}

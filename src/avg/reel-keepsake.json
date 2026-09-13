@@ -1,0 +1,9 @@
+{
+ "storage":"mw-reel-keepsake-v1",
+ "track":{"id":"reel-keepsake","title":"Childishly fresh eyes","credit":"The Caretaker","src":"./music/childishly-fresh-eyes.mp3"},
+ "reactions":[
+  {"afterMs":0,"text":"……等等。这一小段，我是不是听过？","pose":"listen"},
+  {"afterMs":6500,"text":"下一声要落在哪里，我好像知道。可我不记得是谁放给我听的。","pose":"peek-up"},
+  {"afterMs":14500,"text":"先别换，好吗？不是想起什么了……只是听着，觉得你以前也在。","pose":"care"}
+ ]
+}

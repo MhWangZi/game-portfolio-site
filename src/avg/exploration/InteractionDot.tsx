@@ -1,0 +1,11 @@
+import type { CSSProperties } from 'react';
+import type { Point } from './types';
+
+export function InteractionDot({point,label,onClick,disabled=false,visited=false,reveal=false,onHover,objectId,kind='observe'}:{
+  point:Point;label:string;onClick:()=>void;disabled?:boolean;visited?:boolean;reveal?:boolean;onHover?:(active:boolean)=>void;objectId?:string;kind?:'door'|'take'|'observe';
+}) {
+  return <button className={`interaction-dot ${visited?'is-visited':''} ${reveal?'is-revealed':''}`} style={{left:`${point[0]}%`,top:`${point[1]}%`} as CSSProperties}
+    aria-label={label} disabled={disabled} data-object={objectId} data-kind={kind} onClick={onClick} onMouseEnter={()=>onHover?.(true)} onMouseLeave={()=>onHover?.(false)} onFocus={()=>onHover?.(true)} onBlur={()=>onHover?.(false)}>
+    <i aria-hidden="true"/><span className="dot-label">{label}</span>
+  </button>;
+}
