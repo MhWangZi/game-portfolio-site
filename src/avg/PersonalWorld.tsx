@@ -482,6 +482,22 @@ export function PersonalWorld() {
         /^\//,
         "",
       );
+      if (hash === "play") {
+        const openChooser = () => {
+          setRoom("lounge");
+          setPanel(null);
+          setStage("choose");
+          setSpeechVisible(false);
+        };
+        if (hostRef.current.status === "ready") {
+          void hostRef.current.command("pause").then(openChooser).catch((error) => {
+            setNotice((error as Error).message);
+          });
+        } else {
+          openChooser();
+        }
+        return;
+      }
       if (works.some((w) => w.id === hash)) {
         setPanel("work:" + hash);
         return;
