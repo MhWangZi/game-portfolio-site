@@ -5,6 +5,7 @@ import { archiveDrawers, embeddedMusic } from "./sceneObjects";
 import type { RoomId } from "./world";
 import type { StorySave } from "./useStory";
 import { contactItems } from "../data/siteContent";
+import {TerminalStamp} from './exploration/TerminalStamp';
 import { isPatchComplete } from './exploration/patching';
 function Prop({ index }: { index: number }) {
   const clip = useId();
@@ -190,7 +191,7 @@ export function KeyConsole({
             disabled={save.unlocked||!slots[i]}
             onClick={() => {onChange(slots.filter((_,j)=>j!==i));setError('');}}
           >
-            <small>{["一","二","三","四","五"][i]}</small>
+            <TerminalStamp/><small>{["一","二","三","四","五"][i]}</small>
             <strong>
               {tokens.find((t) => t.id === slots[i])?.icon || "·"}
             </strong>
@@ -207,7 +208,7 @@ export function KeyConsole({
               setError("");
             }}
           >
-            <span>{save.keys.includes(t.id) ? t.icon : "?"}</span>
+            {save.keys.includes(t.id)&&<TerminalStamp/>}<span>{save.keys.includes(t.id) ? t.icon : "?"}</span>
             <strong>{save.keys.includes(t.id) ? t.name : "未找到"}</strong>
             <small>{save.keys.includes(t.id)?t.hint:"还有一件小东西，留在房间里。"}</small>
           </button>

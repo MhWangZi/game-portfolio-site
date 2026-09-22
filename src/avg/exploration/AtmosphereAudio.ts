@@ -1,6 +1,7 @@
 import type { Foley } from './cinematicTypes';
 import profiles from './room-sound.json';
 import settings from './acoustics.json';
+import feedback from './feedback.json';
 import { RoomAcoustics } from './RoomAcoustics';
 /** Original low-level room tone and physical Foley. No network samples. */
 export class AtmosphereAudio {
@@ -15,13 +16,14 @@ export class AtmosphereAudio {
   private roomFilter:BiquadFilterNode|null=null;
   private acoustics:RoomAcoustics|null=null;
   private room='duty';
+  private doorEnvelope:{target:string;until:number}|null=null;
   enabled = true;
   tape = false;
   musicPlaying = false;
-  private buffer(c: AudioContext, seconds: number) {
+  private buffer(c: AudioContext, seconds: number, air=false) {
     const buffer = c.createBuffer(1, Math.ceil(c.sampleRate * seconds), c.sampleRate);
     const data = buffer.getChannelData(0); let low = 0;
-    for (let i = 0; i < data.length; i++) { const white = Math.random() * 2 - 1; low = (low + .02 * white) / 1.02; data[i] = low * 4; }
+    for (let i = 0; i < data.length; i++) { const white = Math.random() * 2 - 1; low = (low + .02 * white) / 1.02; data[i] = low * 4 + (air ? white*.16 : 0); }
     return buffer;
   }
   unlock() {
@@ -29,7 +31,7 @@ export class AtmosphereAudio {
       const c = new AudioContext(); this.context = c;
       const master = c.createGain(); master.gain.value = this.enabled ? .55 : 0; master.connect(c.destination); this.master = master;
       this.acoustics=new RoomAcoustics(c,master);this.acoustics.setRoom(this.room);
-      const source = c.createBufferSource(); source.buffer = this.buffer(c, 9); source.loop = true;
+      const source = c.createBufferSource(); source.buffer = this.buffer(c, 9, true); source.loop = true;
       const room = c.createGain(); room.gain.value = this.profile.gain; this.roomGain = room;
       const lowpass = c.createBiquadFilter(); lowpass.type = 'lowpass'; lowpass.frequency.value = 570;
       this.roomFilter=lowpass;lowpass.frequency.value=this.profile.filter;
@@ -53,10 +55,10 @@ export class AtmosphereAudio {
     o.connect(g).connect(this.master); o.start(t); o.stop(t+duration+.02);
   }
   setEnabled(enabled: boolean) { this.enabled = enabled; if (this.context) this.master?.gain.setTargetAtTime(enabled ? .55 : 0, this.context.currentTime, .25); }
-  setRoom(room:string){this.room=room;this.acoustics?.setRoom(room);this.profile=profiles[room as keyof typeof profiles]??profiles.duty;this.themeIndex=0;if(this.context){this.roomFilter?.frequency.setTargetAtTime(this.profile.filter,this.context.currentTime,.9);this.roomGain?.gain.setTargetAtTime(this.tape?.014:this.musicPlaying?this.profile.gain*.4:this.profile.gain,this.context.currentTime,.9);}}
+  setRoom(room:string){this.room=room;this.acoustics?.setRoom(room);this.profile=profiles[room as keyof typeof profiles]??profiles.duty;this.themeIndex=0;if(this.context&&!(this.doorEnvelope?.target===room&&this.context.currentTime<this.doorEnvelope.until)){this.roomFilter?.frequency.setTargetAtTime(this.profile.filter,this.context.currentTime,.9);this.roomGain?.gain.setTargetAtTime(this.tape?.014:this.musicPlaying?this.profile.gain*.4:this.profile.gain,this.context.currentTime,.9);}}
   setTape(tape: boolean) { this.tape = tape; if (this.context) { this.hissGain?.gain.setTargetAtTime(tape ? .26 : 0, this.context.currentTime, 1.2); this.roomGain?.gain.setTargetAtTime(tape ? .014 : this.profile.gain, this.context.currentTime, .8); } }
   setMusic(playing: boolean) { this.musicPlaying=playing; if (this.context && !this.tape) this.roomGain?.gain.setTargetAtTime(playing ? this.profile.gain*.4 : this.profile.gain, this.context.currentTime, .7); }
-  playDoor(material:string,durationMs:number,target:string) {
+  playDoor(material:string,durationMs:number,target:string,swapMs=durationMs/2) {
     this.unlock();const c=this.context;if(!c||!this.master||!this.enabled)return;
     const cfg=settings.doors[material as keyof typeof settings.doors]??settings.doors.wood;
     const out=this.acoustics?.input??this.master,now=c.currentTime,duration=Math.max(.18,durationMs/1000);
@@ -65,10 +67,26 @@ export class AtmosphereAudio {
     const friction=c.createBufferSource(),filter=c.createBiquadFilter(),g=c.createGain(),length=duration*.65;
     friction.buffer=this.buffer(c,length);filter.type='bandpass';filter.Q.value=2;filter.frequency.setValueAtTime(cfg.hinge,now+.04);filter.frequency.linearRampToValueAtTime(cfg.hinge*1.8,now+length);g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(cfg.gain*1.2,now+.08);g.gain.exponentialRampToValueAtTime(.0001,now+length);friction.connect(filter).connect(g).connect(out);friction.start(now+.04);friction.stop(now+length+.05);friction.onended=()=>{friction.disconnect();filter.disconnect();g.disconnect();};
     tone(now+duration*.72,cfg.impact,cfg.gain,.14);
-    // A short filtered preview of the destination room bleeds through the opening.
-    const profile=profiles[target as keyof typeof profiles]??profiles.duty,portal=c.createBufferSource(),low=c.createBiquadFilter(),level=c.createGain();
-    portal.buffer=this.buffer(c,duration);low.type='lowpass';low.frequency.setValueAtTime(380,now);low.frequency.linearRampToValueAtTime(profile.filter,now+duration*.5);level.gain.setValueAtTime(0,now);level.gain.linearRampToValueAtTime(profile.gain*.25,now+duration*.25);level.gain.linearRampToValueAtTime(0,now+duration);portal.connect(low).connect(level).connect(this.master);portal.start(now);portal.stop(now+duration);portal.onended=()=>{portal.disconnect();low.disconnect();level.disconnect();};
+    // Automate the existing rain bed across the visual cut, not a second unrelated loop.
+    const profile=profiles[target as keyof typeof profiles]??profiles.duty;
+    const swap=now+swapMs/1000,reveal=Math.min(feedback.door.revealMs/1000,duration-swapMs/1000),end=swap+reveal;
+    this.doorEnvelope={target,until:end};
+    const cutoff=this.roomFilter?.frequency,level=this.roomGain?.gain;
+    if(cutoff){cutoff.cancelAndHoldAtTime(now);cutoff.exponentialRampToValueAtTime(feedback.door.muffledHz,swap);cutoff.exponentialRampToValueAtTime(profile.filter,end);}
+    if(level){level.cancelAndHoldAtTime(now);level.linearRampToValueAtTime(level.value*.6,swap);level.linearRampToValueAtTime(this.tape?.014:this.musicPlaying?profile.gain*.4:profile.gain,end);}
   }
+  playPurr(){
+    this.unlock();const c=this.context;if(!c||!this.master||!this.enabled)return;
+    const cfg=feedback.purr,t=c.currentTime;
+    const voice=c.createOscillator(),pulse=c.createOscillator(),depth=c.createGain(),body=c.createGain(),low=c.createBiquadFilter(),envelope=c.createGain();
+    voice.type='triangle';voice.frequency.value=cfg.frequency;pulse.frequency.value=cfg.pulseHz;depth.gain.value=.28;body.gain.value=.7;
+    low.type='lowpass';low.frequency.value=cfg.lowpass;
+    envelope.gain.setValueAtTime(0,t);envelope.gain.linearRampToValueAtTime(cfg.gain,t+.16);envelope.gain.exponentialRampToValueAtTime(.0001,t+cfg.duration);
+    pulse.connect(depth).connect(body.gain);voice.connect(body).connect(low).connect(envelope).connect(this.acoustics?.input??this.master);
+    voice.start(t);pulse.start(t);voice.stop(t+cfg.duration);pulse.stop(t+cfg.duration);
+    voice.onended=()=>{voice.disconnect();pulse.disconnect();depth.disconnect();body.disconnect();low.disconnect();envelope.disconnect();};
+  }
+
   play(kind: Foley) {
     this.unlock(); const c = this.context; if (!c || !this.master || !this.enabled) return;
     const durations: Record<Foley, number> = {paper:.48,drawer:.58,door:.8,take:.25,insert:.65,switch:.13,wind:.95,cylinder:.6};

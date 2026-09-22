@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { Sprite } from "./Cats";
 import { ActionSprite } from './companion/ActionSprite';
 import { resolveCompanionPresentation } from './companion/presentation';
+import performance from './companion/performance.json';
 import type { Speech } from "./world";
 export function LivingText({
   text,
@@ -47,6 +48,8 @@ export function Companion({
   onHide,
   onReact,
   listening,
+  musicFocused=false,
+  musicElapsed=0,
   remembering=false,
   corrupt = false,
   hidden = false,
@@ -63,6 +66,8 @@ export function Companion({
   onHide: () => void;
   onReact: (text: string) => void;
   listening: boolean;
+  musicFocused?:boolean;
+  musicElapsed?:number;
   remembering?:boolean;
   corrupt?: boolean;
   hidden?: boolean;
@@ -110,6 +115,7 @@ export function Companion({
     !still && !dragging && !visible && !corrupt && tick % 5 === 0;
   const { pose, gesture, index, motion } = resolveCompanionPresentation({
     speech, visible, dragging, settling, adjust, corrupt, listening, remembering, resting: eyeClosed, depth,
+    musicFocused,listeningPose:performance.music.poses[Math.floor(musicElapsed/performance.music.phaseSeconds)%performance.music.poses.length],
   });
 
   const drag = useRef<{

@@ -1,3 +1,7 @@
+import performance from './companion/performance.json';
+import feedbackConfig from './exploration/feedback.json';
+import {guideFinished} from './exploration/feedback';
+import {TerminalStamp} from './exploration/TerminalStamp';
 import keepsake from './reel-keepsake.json';
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
@@ -193,6 +197,8 @@ export function PersonalWorld() {
   const [room, setRoom] = useState<RoomId>("duty");
   useEffect(()=>atmosphere.setRoom(room),[atmosphere,room]);
   const dark=room==='lounge'&&resolveSceneState(cinematicRooms.find(r=>r.id==='lounge')!,cinematic).includes('dark');
+  const [guideAllowed,setGuideAllowed]=useState(true);
+  useEffect(()=>{if(room!==feedbackConfig.guidance.room)setGuideAllowed(false);},[room]);
   const [stage, setStage] = useState<Stage>("room");
   const [panel, setPanel] = useState<string | null>(null);
   const [archiveView,setArchiveView]=useState(false);
@@ -231,7 +237,9 @@ export function PersonalWorld() {
   const contextual=useCallback((event:string,fallback:Speech)=>{
     let context=contextRef.current;
     if(event in rooms){const target=event as RoomId;context={...context,room:target,dark:target==='lounge'&&resolveSceneState(cinematicRooms.find(r=>r.id===target)!,sceneRef.current).includes('dark')};}
-    return resolveReaction(reactionData as ReactionRule[],event,context,fallback);
+    const resolved=resolveReaction(reactionData as ReactionRule[],event,context,fallback);
+    const pose=(performance.events as Record<string,string>)[event];
+    return resolved.pose||resolved.face>=12||!pose?resolved:{...resolved,pose};
   },[]);
   const speak=useCallback((event:string,fallback:Speech)=>{
     setSpeech(contextual(event,fallback));setSpeechKey(k=>k+1);setSpeechVisible(true);
@@ -454,7 +462,7 @@ export function PersonalWorld() {
       if(!routeAlive.current)return;
       const style=routeStyle(routeConfig,contextRef.current.room,target,still||window.matchMedia('(prefers-reduced-motion: reduce)').matches);
       setRouteVisual(style);
-      atmosphere.playDoor(style.material,style.duration,target);
+      atmosphere.playDoor(style.material,style.duration,target,style.swap);
       transitionTimers.current.forEach(clearTimeout);
       setTransition(target);
       setPanel(null);
@@ -663,7 +671,7 @@ export function PersonalWorld() {
           aria-label={roomData.label + "互动场景"}
         >
           {stage === "room" ? (
-            <CinematicScene key={`${room}:${sceneEpoch}`} room={room} save={cinematic}
+            <CinematicScene guide={guideAllowed&&room===feedbackConfig.guidance.room&&story.save.loops===0&&!guideFinished(feedbackConfig.guidance,narrative.choices)} visits={narrative.visits} key={`${room}:${sceneEpoch}`} room={room} save={cinematic}
               disabled={hidden || !!panel || !!transition || busy || archiveView} still={still} hints={objects}
               audio={atmosphere} onCommit={commitScene} onAction={act} onSpeak={(text,object)=>{
                 speak(`scene:${object.id}`,{text,face:room==='secret'?12:9,motion:room==='secret'?'shrink':'point'});
@@ -923,6 +931,8 @@ export function PersonalWorld() {
         onHide={() => setSpeechVisible(false)}
         onReact={react}
         listening={music.playing&&room!=="secret"}
+        musicFocused={travelMusic}
+        musicElapsed={music.elapsed}
         remembering={remembering}
         hidden={hidden}
         corrupt={hidden}
@@ -1049,7 +1059,7 @@ export function PersonalWorld() {
               <p>游戏房柜上的八音盒可以带走。换好滚筒后，拧动右侧发条钥匙就能响。</p>
             </article>
           )}
-          {panel==='collection'&&<div className="pocket-catalog">{tokens.filter(t=>story.save.keys.includes(t.id)).map(t=><article key={t.id}><span>{t.icon}</span><h3>{t.name}</h3><p>{t.hint}</p></article>)}<p>{story.save.keys.length ? "这些是你沿途留下的东西。" : "口袋还是空的。"}</p></div>}
+          {panel==='collection'&&<div className="pocket-catalog">{tokens.filter(t=>story.save.keys.includes(t.id)).map(t=><article key={t.id}><TerminalStamp/><span>{t.icon}</span><h3>{t.name}</h3><p>{t.hint}</p></article>)}<p>{story.save.keys.length ? "这些是你沿途留下的东西。" : "口袋还是空的。"}</p></div>}
           {panel === "recovery" && (
             <KeyConsole
               save={story.save}

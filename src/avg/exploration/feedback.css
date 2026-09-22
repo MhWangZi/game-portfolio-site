@@ -1,0 +1,15 @@
+.interaction-dot.is-guided i{box-shadow:0 0 8px 2px #eadcaf40;animation:quiet-guidance 1.5s ease-in-out 2}
+@keyframes quiet-guidance{0%,100%{box-shadow:0 0 4px 1px #eadcaf25}50%{box-shadow:0 0 14px 5px #eadcaf70}}
+.scene-feedback{position:absolute;width:22px;height:14px;transform:translate(-50%,-100%);z-index:5;pointer-events:none;color:#e1dbbe;filter:drop-shadow(0 1px 2px #16221c);animation:pet-contentment var(--feedback-duration) ease-out both}
+@keyframes pet-contentment{0%{opacity:0;transform:translate(-50%,-75%)}25%,65%{opacity:.85}100%{opacity:0;transform:translate(-50%,-130%)}}
+.terminal-stamp{width:44px;height:25px;color:#a58a46;opacity:.5;transform:rotate(-8deg);pointer-events:none}
+.pocket-catalog article{position:relative}.pocket-catalog article>.terminal-stamp{position:absolute;right:10px;top:10px}
+.memory-tokens button,.memory-sockets button{position:relative}.memory-tokens .terminal-stamp{position:absolute;right:5px;top:5px;width:31px;opacity:.42}.memory-sockets .terminal-stamp{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:32px;opacity:.55}
+.pocket-slot aside>.terminal-stamp{float:right}
+.cinematic-site:has(.music-table-shade) .companion{z-index:260;left:auto!important;right:16px;top:auto!important;bottom:18px;pointer-events:none;--size:88px!important}
+.cinematic-site:has(.music-table-shade) .companion .companion-bubble{width:260px;max-width:70vw;pointer-events:none}
+.cinematic-site:has(.music-table-shade) .companion .companion-adjust,.cinematic-site:has(.music-table-shade) .companion .companion-minimize{display:none}
+@media(max-width:600px){.cinematic-site:has(.music-table-shade) .companion{right:6px;bottom:4px;--size:62px!important}.cinematic-site:has(.music-table-shade) .companion .companion-bubble{font-size:12px}}
+.companion[data-still=true] .action-sprite{animation:none!important}
+@media(prefers-reduced-motion:reduce){.interaction-dot.is-guided i,.scene-feedback{animation:none}.scene-feedback{opacity:.8}}
+.film-still .interaction-dot.is-guided i,.film-still .scene-feedback{animation:none}.film-still .scene-feedback{opacity:.8}

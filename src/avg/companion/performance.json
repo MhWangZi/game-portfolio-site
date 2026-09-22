@@ -1,0 +1,34 @@
+{
+  "music": {
+    "phaseSeconds": 6,
+    "poses": [
+      "music",
+      "listen",
+      "music",
+      "relief"
+    ]
+  },
+  "events": {
+    "duty": "greet",
+    "lounge": "relief",
+    "corridor": "peek-up",
+    "lab": "repair",
+    "archive": "paper",
+    "projection": "shy",
+    "rooftop": "receiver",
+    "workshop": "repair",
+    "storage": "wait",
+    "intro": "greet",
+    "terminal": "greet",
+    "controller": "peek-up",
+    "loading": "wait",
+    "pause": "listen",
+    "exit": "relief",
+    "swap": "listen",
+    "event:visitor-register": "paper",
+    "event:stopped-clock": "listen",
+    "event:coat-owner": "shy",
+    "event:cat-seat": "listen",
+    "event:disc-margin": "peek-up"
+  }
+}

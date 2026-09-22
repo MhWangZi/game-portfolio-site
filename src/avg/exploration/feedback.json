@@ -1,0 +1,9 @@
+{
+  "guidance": {"room":"duty", "objects":["register","terminal"], "durationMs":3000, "completionEvent":"visitor-register", "completionChoices":["visitor/continue","blank/continue"]},
+  "reactions": [
+    {"room":"lounge", "objects":["cat","cat-taken","cat-dark"], "event":"cat-seat", "minVisits":3, "orStateIncludes":"dark", "point":[71.5,51.5], "durationMs":500, "visual":"closed-eyes", "sound":"purr"}
+  ],
+  "purr": {"duration":1.35, "frequency":63, "pulseHz":25, "gain":0.14, "lowpass":180},
+  "door": {"muffledHz":220, "revealMs":300, "settleMs":300},
+  "terminalStamp": {"label":"旧黄铜接线端子印记", "pins":3}
+}
