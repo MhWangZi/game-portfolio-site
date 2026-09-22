@@ -3,7 +3,7 @@ import type { WorldAction } from '../exploration/types';
 
 export type EventCondition = { flag?: string; notFlag?: string; minKeys?: number; item?: string; minLoops?: number };
 export type EventChoice = { id:string; text:string; next?:string; flags?:string[]; clearFlags?:string[]; action?:WorldAction };
-export type EventNode = { narration:string[]; assistant:string; face?:number; pose?:string; choices:EventChoice[] };
+export type EventNode = { narration:string[]; assistant:string; face?:number; pose?:string; dismissLabel?:string; choices:EventChoice[] };
 export type NarrativeEvent = {
   id:string; room:RoomId; title:string; object:string; purpose:string;
   enabled?:boolean; presentation?:'ambient'|'exchange';

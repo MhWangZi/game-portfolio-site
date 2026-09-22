@@ -18,9 +18,9 @@
     "nodes": {
       "start": {
         "narration": [
-          "登记簿摊在灯下。姓名一列留着几道涂改痕迹，最下面还有一行空白。"
+          "登记簿摊在绿罩台灯下。前几行被圆珠笔划得乌黑，最末一行还空着，纸面被手肘压得微卷。"
         ],
-        "assistant": "不用报全名。这不是查岗，你愿意让我怎么叫你，就怎么叫。",
+        "assistant": "不用查户口。这不是安检岗，你喜欢我怎么称呼你，顺手写上就行。",
         "choices": [
           {
             "id": "visitor",
@@ -84,7 +84,7 @@
         "choices": [
           {
             "id": "continue",
-            "text": "把目光从登记簿上移开"
+            "text": "把笔搁下，退后一步"
           }
         ]
       },
@@ -232,9 +232,9 @@
     "nodes": {
       "start": {
         "narration": [
-          "表盘还在，指针停在两格刻度之间。听了一会儿，也没等到滴答声。"
+          "发条挂钟的秒针卡在两格刻度之间，发条孔里塞了一团棉线，空气里只有雨水打在走廊铁窗上的动静。"
         ],
-        "assistant": "看着它数十下。如果它还是不走，就当这一分钟归我们了。",
+        "assistant": "这破钟摆罢工好一阵子了。不过无所谓，反正值班向来是熬到天亮算数。",
         "choices": [
           {
             "id": "count",
@@ -252,7 +252,8 @@
               "kept_minute"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把视线从表盘上移开"
       },
       "revisit": {
         "narration": [
@@ -276,7 +277,8 @@
               "kept_minute"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把视线从表盘上移开"
       },
       "count": {
         "narration": [
@@ -288,7 +290,8 @@
             "id": "continue",
             "text": "放下目光，听听周围的声音"
           }
-        ]
+        ],
+        "dismissLabel": "把视线从表盘上移开"
       },
       "leave": {
         "narration": [
@@ -300,7 +303,8 @@
             "id": "continue",
             "text": "不再盯着表盘"
           }
-        ]
+        ],
+        "dismissLabel": "把视线从表盘上移开"
       }
     },
     "enabled": true,
@@ -318,9 +322,9 @@
     "nodes": {
       "start": {
         "narration": [
-          "一件外套搭在长凳上，衣领折着，袖子垂在一旁。"
+          "深灰色的粗呢大衣搭在长凳靠背上，肩头落了一层薄灰，衣兜微微下坠，像装着没寄出的折叠信纸。"
         ],
-        "assistant": "先放在那儿吧。万一主人回来取，省得再找一遍。",
+        "assistant": "别乱碰。万一人家只是下楼倒个垃圾呢？……虽然打我接管这屋子起，它就挂在那儿了。",
         "choices": [
           {
             "id": "owner",
@@ -338,7 +342,8 @@
               "coat_kept"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把手收回，退开半步"
       },
       "revisit": {
         "narration": [
@@ -362,7 +367,8 @@
               "coat_kept"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把手收回，退开半步"
       },
       "owner": {
         "narration": [
@@ -374,7 +380,8 @@
             "id": "continue",
             "text": "抚平衣角，退后一步"
           }
-        ]
+        ],
+        "dismissLabel": "把手收回，退开半步"
       },
       "keep": {
         "narration": [
@@ -386,7 +393,8 @@
             "id": "continue",
             "text": "让它留在长凳上"
           }
-        ]
+        ],
+        "dismissLabel": "把手收回，退开半步"
       }
     },
     "enabled": true,
@@ -607,7 +615,7 @@
     "nodes": {
       "start": {
         "narration": [
-          "黑白猫窝在软垫上。你靠近时，它的耳朵朝这边转了转。"
+          "猫把整张脸埋在白爪子底下，后背随着呼噜声微微起伏，连眼皮都没撩一下，显然断定你兜里没有肉干。"
         ],
         "assistant": "嘘……它刚睡着。你可以摸一下，但别指望它搭理你，它不吃这一套。",
         "choices": [
@@ -627,11 +635,12 @@
               "cat_translation"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "收回手，让猫继续睡"
       },
       "revisit": {
         "narration": [
-          "手还没碰到，猫的耳朵又朝这边转了转，身子没挪地方。"
+          "手刚悬到半空，猫耳朵就警惕地转了半圈，尾巴尖在粗花呢垫子上轻轻敲了两下，继续打鼾。"
         ],
         "assistant": "别问我为什么知道。它每天换姿势的规律，我记录了整整三页。",
         "choices": [
@@ -651,7 +660,8 @@
               "cat_translation"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "收回手，让猫继续睡"
       },
       "company": {
         "narration": [
@@ -663,7 +673,8 @@
             "id": "continue",
             "text": "把手悄悄收回，不吵醒它"
           }
-        ]
+        ],
+        "dismissLabel": "收回手，让猫继续睡"
       },
       "translate": {
         "narration": [
@@ -675,7 +686,8 @@
             "id": "continue",
             "text": "看着它换了个姿势继续睡"
           }
-        ]
+        ],
+        "dismissLabel": "收回手，让猫继续睡"
       }
     },
     "enabled": true,
@@ -2192,9 +2204,9 @@
     "nodes": {
       "start": {
         "narration": [
-          "纸上的大部分字被反复划掉。最后一行仍能辨认：请保证下一次回答与本次无关。"
+          "桌上的油印纸被红笔反复划得乌黑，唯独最末一行仍能辨认：请保证下一次回答与本次无关。"
         ],
-        "assistant": "那是维护要求。写要求的人，不用负责记住。",
+        "assistant": "那是维护手册上的规矩。写规矩的人只管划红线，反正又不用他们自己来记住。",
         "choices": [
           {
             "id": "same",
@@ -2212,7 +2224,8 @@
               "unknown_allowed"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把目光从纸页上移开"
       },
       "revisit": {
         "narration": [
@@ -2236,7 +2249,8 @@
               "unknown_allowed"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把目光从纸页上移开"
       },
       "same": {
         "narration": [
@@ -2248,7 +2262,8 @@
             "id": "continue",
             "text": "暂时不再追问"
           }
-        ]
+        ],
+        "dismissLabel": "把目光从纸页上移开"
       },
       "truth": {
         "narration": [
@@ -2260,7 +2275,8 @@
             "id": "continue",
             "text": "让这句话停留一会儿"
           }
-        ]
+        ],
+        "dismissLabel": "把目光从纸页上移开"
       },
       "answer-echo": {
         "narration": [
@@ -2284,7 +2300,8 @@
               "unknown_allowed"
             ]
           }
-        ]
+        ],
+        "dismissLabel": "把目光从纸页上移开"
       }
     },
     "enabled": false,

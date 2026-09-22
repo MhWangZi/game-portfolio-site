@@ -23,7 +23,7 @@ export function NarrativeEventView({event,session,onChoose,onSpeak,onClose,still
     else if(/^[1-9]$/.test(e.key)&&event.presentation!=='ambient'){e.preventDefault();chooser.current(Number(e.key)-1);}
   };window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[event.presentation]);
   return <article className="narrative-event scene-conversation reading-slate" aria-label="场景中的对话" data-presentation={event.presentation??'exchange'} data-event={event.id} data-event-node={session.node}>
-    <header className="slate-heading"><span aria-hidden="true"/><button onClick={onClose} aria-label="结束这段观察">移开目光 · Esc</button></header>
+    <header className="slate-heading"><span aria-hidden="true"/><button onClick={onClose} aria-label={node.dismissLabel??'结束这段观察'}>{node.dismissLabel??'移开目光'} · Esc</button></header>
     <div className="event-observation" onClick={()=>setShown(letters.length)} title={shown<letters.length?'点击显示全文':undefined}>
       <p aria-label={text}><span aria-hidden="true">{letters.slice(0,shown).join('')}<span style={{visibility:'hidden'}}>{letters.slice(shown).join('')}</span></span></p>
     </div>

@@ -1044,9 +1044,9 @@ export function PersonalWorld() {
             <article className="artifact-document manual">
               <small>HELLO, HUMAN / QUICK START</small>
               <h3>你的私人助手</h3>
-              <p>灯还留着，桌上的东西可以点开看看。能带走的小物件会收进口袋，不用办领用手续。</p><p>那个晃来晃去的小家伙是私人助手。挡住画面就把它拽开，双击可以调大小；用Tab选中它后，也能用方向键挪位置。</p>
-              <p>它平时话有点密，放歌时倒安静。想收起气泡就点右上角的叉，不用为了让它闭嘴把音乐也关掉。</p>
-              <p>游戏房柜上的八音盒可以带走。打开口袋里的八音盒，选好滚筒，再按右侧发条钥匙，就能听了。</p>
+              <p>灯还留着，桌上的东西随便翻。拿走的小物件都在随身口袋里，不用办领用手续。</p><p>右下角晃来晃去的是私人助手。嫌挡屏幕可以直接拽开，双击可以缩放；用Tab选中它后，方向键也能推它。</p>
+              <p>它平时话比较密，放歌的时候会发呆。别跟它提“报废”或者“格式化”，它胆子很小，真会当场缩成一团。</p>
+              <p>游戏房柜上的八音盒可以带走。换好滚筒后，拧动右侧发条钥匙就能响。</p>
             </article>
           )}
           {panel==='collection'&&<div className="pocket-catalog">{tokens.filter(t=>story.save.keys.includes(t.id)).map(t=><article key={t.id}><span>{t.icon}</span><h3>{t.name}</h3><p>{t.hint}</p></article>)}<p>{story.save.keys.length ? "这些是你沿途留下的东西。" : "口袋还是空的。"}</p></div>}

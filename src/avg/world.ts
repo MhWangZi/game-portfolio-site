@@ -34,19 +34,19 @@ export const rooms: Record<
   corridor: {
     label: "雨声走廊",
     eyebrow: "05 / BETWEEN ROOMS",
-    note: "每扇门后都有一盏灯。走廊还额外负责下雨。",
+    note: "每扇门后都留着灯。走廊没有灯，走廊只负责下雨和漏风。",
     hotspots: [],
   },
   projection: {
     label: "旧放映间",
     eyebrow: "06 / A PRIVATE SCREENING",
-    note: "放映结束以后，请不要留下空座位。空椅子总是让人心里发毛。",
+    note: "放映机早断电了。走的时候别忘了随身物品，尤其是……别把空椅子留给黑暗。",
     hotspots: [],
   },
   duty: {
     label: "值班室",
     eyebrow: "01 / AFTER HOURS",
-    note: "灯还亮着。值班没有结束，进来坐坐。",
+    note: "灯还留着，桌上的东西随便翻。值班还没结束，进来坐会儿。",
     atlas: "0% 0%",
     hotspots: [
       {
@@ -86,7 +86,7 @@ export const rooms: Record<
   lab: {
     label: "实验间",
     eyebrow: "02 / WORK IN PROGRESS",
-    note: "有些东西能用。有些东西……很有想法，冒烟的那种想法。",
+    note: "有些电路还在通电，有些……很有想法，就是特别容易冒黑烟的那种想法。",
     atlas: "100% 0%",
     hotspots: [
       {
@@ -126,7 +126,7 @@ export const rooms: Record<
   lounge: {
     label: "游戏房",
     eyebrow: "03 / NO LAB COATS",
-    note: "把工作留在门外。猫可以进，猫不算访客。",
+    note: "把差事全关在门外。猫随便进，猫又不用办访客审批。",
     hotspots: [
       {
         id: "sofa",
@@ -157,7 +157,7 @@ export const rooms: Record<
   archive: {
     label: "档案角",
     eyebrow: "04 / SMALL THINGS",
-    note: "纸比我记性好一点。至少纸不会无端被格式化。",
+    note: "纸张比代码能熬。至少塞进抽屉里的草稿，不会半夜无端跳出格式化弹窗。",
     atlas: "0% 100%",
     hotspots: [
       {
@@ -199,7 +199,7 @@ export const rooms: Record<
   secret: {
     label: "未登记空间",
     eyebrow: "00 / STILL HERE",
-    note: "原来，你也看见了。这间屋子以前不在平面图上。",
+    note: "平面图上从没标过这间屋。墙皮落了一地，但桌角的破灯泡居然还亮着。",
     atlas: "100% 100%",
     hotspots: [
       {
@@ -228,41 +228,41 @@ export type Speech = {
   motion: "peek" | "blink" | "point" | "shrink" | "glitch";
 };
 export const dialogue: Record<string, Speech[]> = {
-  corridor: [{text: "左边是实验间，右边是档案角。你慢慢走，我跟得上。", face: 10, motion: "point"}],
-  projection: [{text: "放映机早就停用了。电源倒还留着。……维护清单上忘了划掉而已。", face: 12, motion: "peek", pose: "shy"}],
+  corridor: [{text: "左边实验间，右边档案角。走廊地砖沾了水汽有点滑，你慢点走，我反正摔不着。", face: 10, motion: "point"}],
+  projection: [{text: "放映机早就停用了。指示灯还亮着，估计是设备科报废清单上忘了把它划掉。", face: 12, motion: "peek", pose: "shy"}],
   enter: [
     {
-      text: "我是这里的私人AI助手。MhWangZi负责做东西，我负责把它们看好。",
+      text: "我是这里的私人AI助手。作者只管把东西做出来，剩下看场子、擦灰和应付检查，全是我负责。",
       face: 8,
       motion: "peek",
     },
   ],
   intro: [
     {
-      text: "MhWangZi做游戏，也做工具。做完的东西都在这里；没做完的，我暂时不替他解释。",
+      text: "桌上摆着游戏，架子上挂着工具。做完的都在这屋里；至于没做完的……别看我，我可不替他解释。",
       face: 10,
       motion: "point",
     },
     {
-      text: "不用登记。随便看看就好。……看完也可以再待一会儿。",
+      text: "不用办借阅手续，随便翻翻就好。……看完了也别急着走，沙发又没长刺。",
       face: 8,
       motion: "blink",
     },
   ],
-  duty: [{ text: "值班结束了。你来的时间刚刚好。", face: 8, motion: "blink" }],
+  duty: [{ text: "值班表上写着全天候在岗。……不过你来得正好，我刚把登记簿上的灰擦干净。", face: 8, motion: "blink" }],
   lab: [
     {
-      text: "桌上的东西可以点。冒烟的部分我已经从网页里删掉了。",
+      text: "桌上的电路板随便看。冒烟的部分我已经从网页源码里删掉了，炸不着人。",
       face: 10,
       motion: "point",
     },
   ],
   lounge: [
-    { text: "欢迎来到唯一不用写实验记录的房间。", face: 8, motion: "peek" },
+    { text: "欢迎光临全栋楼唯一不用填实验巡检表的房间。", face: 8, motion: "peek" },
   ],
   archive: [
     {
-      text: "这里没有年度总结。只有一些舍不得删掉的东西。",
+      text: "这里不存什么业绩周报。塞满格子的，都是些写得乱七八糟、但谁也舍不得点彻底删除的旧草稿。",
       face: 9,
       motion: "peek",
     },
@@ -328,7 +328,7 @@ export const dialogue: Record<string, Speech[]> = {
     { text: "还在刚才那里。我没替你玩，猫也没有。", face: 10, motion: "blink" },
   ],
   swap: [
-    { text: "换盘会从头开始。刚才那局就先放下吧。", face: 11, motion: "peek" },
+    { text: "换盘的话，刚才那局游戏就得从头打起了。想玩新的，我顺手把旧盘收起来。", face: 11, motion: "peek" },
   ],
   exit: [
     {
@@ -355,7 +355,7 @@ export const dialogue: Record<string, Speech[]> = {
     },
   ],
   secret: [
-    { text: "这间屋子以前明明打过报废标记。……奇怪，怎么还漏着光。你先别关灯。", face: 13, motion: "glitch" },
+    { text: "这间屋子以前明明打过报废标记。……奇怪，门缝底下怎么还在漏光。你先别关灯。", face: 13, motion: "glitch" },
   ],
   ending: [
     {
