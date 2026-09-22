@@ -126,14 +126,16 @@ export function StoryObjects({
 export function ArchiveRecord({
   id,
   collect,
+  readBefore=false,
 }: {
   id: string;
   collect: (id: TokenId) => void;
+  readBefore?:boolean;
 }) {
   const record = records.find((r) => r.id === id);
   if (!record) return null;
   return (
-    <article className={`artifact-document ${record.skin}`}>
+    <article className={`artifact-document ${record.skin} ${readBefore?'read-before':''}`}>
       <div className="document-stamp">{record.stamp}</div>
       <h3>{record.title}</h3>
       {record.text.map((text, i) => (
@@ -171,12 +173,14 @@ export function KeyConsole({
   onReact,
   slots,
   onChange,
+  onFailed,
 }: {
   save: StorySave;
   onEnter: () => void;
   onReact: (text: string) => void;
   slots:TokenId[];
   onChange:(slots:TokenId[])=>void;
+  onFailed?:()=>void;
 }) {
   const [error, setError] = useState("");
   return (
@@ -221,6 +225,7 @@ export function KeyConsole({
           if (!isPatchComplete(slots,bootOrder)) {
             setError("顺序未匹配。启动流程的旧纸在左侧小柜最下层。");
             onReact("对。接不上。这非常好。我们可以把它忘掉。");
+            onFailed?.();
             return;
           }
           onEnter();

@@ -58,6 +58,9 @@ export function Companion({
   cipher = true,
   showBubble = true,
   docked = false,
+  interactionLocked = false,
+  sceneAnchor,
+  tension=0,
 }: {
   speech: Speech;
   visible: boolean;
@@ -76,6 +79,9 @@ export function Companion({
   cipher?: boolean;
   showBubble?: boolean;
   docked?: boolean;
+  interactionLocked?: boolean;
+  sceneAnchor?:{x:number;y:number}|null;
+  tension?:number;
 }) {
   const [position, setPosition] = useState(() => {
     try {
@@ -136,16 +142,19 @@ export function Companion({
   if(minimized&&!corrupt)return <button className="companion-minimized" onClick={()=>setMinimized(false)}>唤回助手 · H</button>;
   return (
     <aside
+      inert={interactionLocked}
       className={`companion ${remembering?'remembering':''} ${docked?'game-docked':''} ${corrupt ? "corrupted" : ""} ${listening ? "listening" : ""} ${position.x < 35 ? "left-side" : ""} ${position.y < 38 ? "upper-side" : ""}`}
       aria-label="私人AI助手"
       data-pose={gesture??pose}
       data-gesture={gesture}
       data-still={still}
       data-docked={docked}
+      data-tension={tension>=3?'high':'low'}
+      data-scene-anchor={!!sceneAnchor}
       style={
         {
-          left: `clamp(8px, ${position.x}vw, calc(100vw - ${position.size + 8}px))`,
-          top: `clamp(64px, ${position.y}vh, calc(100dvh - ${position.size + 38}px))`,
+          left: `clamp(8px, ${sceneAnchor?.x??position.x}vw, calc(100vw - ${position.size + 8}px))`,
+          top: `clamp(64px, ${sceneAnchor?.y??position.y}vh, calc(100dvh - ${position.size + 38}px))`,
           "--size": `${position.size}px`,
         } as CSSProperties
       }

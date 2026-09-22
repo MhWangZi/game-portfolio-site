@@ -61,6 +61,7 @@ export function useGameHost(onEvent: (event: string) => void) {
       )
         return;
       const data = event.data;
+      if(data.type==='challenge-completed'&&data.achievement==='formal-level'&&typeof data.source==='string'&&data.source.startsWith('res://whitebox/')&&!data.source.includes('/tutorial/'))callback.current('challenge-completed');
       if (data.requestId) {
         const entry = pending.current.get(data.requestId);
         if (entry) {

@@ -19,13 +19,13 @@ export interface CompanionPresentationInput {
 export function resolveCompanionPresentation(input: CompanionPresentationInput): { pose: string; index: number; motion: string; gesture?: string } {
   const { speech, visible, dragging, settling, adjust, corrupt, listening, resting, depth } = input;
   const neutral = { pose: resting ? 'sleep' : 'idle', index: resting ? 11 : 8, motion: 'idle' };
+  if (corrupt) return { pose: depth >= 3 ? 'breakdown' : 'guard', index: speech.face === 19 ? 19 : 18, motion: speech.motion };
   if (dragging) return { pose: 'carried', index: 12, motion: 'idle' };
   if (settling) return { pose: 'landing', index: 8, motion: 'idle' };
   if (adjust) return { pose: 'sizing', index: 8, motion: 'idle' };
-  if (corrupt) return { pose: depth >= 3 ? 'breakdown' : 'guard', index: speech.face === 19 ? 19 : 18, motion: speech.motion };
   const musicPose=input.listeningPose??'music';
   const musicPresentation=musicPose==='music'?{pose:'music',index:16,motion:'idle'}:{pose:musicPose,gesture:musicPose,index:8,motion:'idle'};
-  if(listening&&input.musicFocused&&!input.remembering)return musicPresentation;
+  if(listening&&input.musicFocused&&!input.remembering&&(!visible||speech.priority!=='immediate'))return musicPresentation;
   if (visible && speech.pose) return { pose: speech.pose, gesture: speech.pose, index: 8, motion: 'idle' };
   if(input.remembering)return {pose:'listen',gesture:'listen',index:8,motion:'idle'};
   if (listening) return musicPresentation;

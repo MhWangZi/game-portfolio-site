@@ -1,0 +1,21 @@
+import {useEffect,useMemo,useRef,useState} from 'react';
+import type {CSSProperties} from 'react';
+import config from './config.json';
+import {signalStrength} from './model';
+import {RadioAudio} from './RadioAudio';
+import {Overlay} from './Overlay';
+import type {MaturityController} from './useMaturity';
+export function RadioTuner({model,sound,onStation,onStory}:{model:MaturityController;sound:boolean;onStation:(id:string)=>void;onStory:()=>void}){
+ const [audio]=useState(()=>new RadioAudio()),[error,setError]=useState(''),[started,setStarted]=useState(false),[imageReady,setImageReady]=useState(false);
+ const frequency=model.save.frequency;
+ const callback=useRef(onStation);callback.current=onStation;
+ const station=useMemo(()=>config.radio.stations.find(s=>signalStrength(frequency,s.frequency,config.radio.tolerance)>.08),[frequency]);
+ useEffect(()=>{audio.enable(sound);},[audio,sound]);
+ useEffect(()=>{audio.tune(frequency);},[frequency,audio]);
+ useEffect(()=>{if(!station||!started)return;const t=setTimeout(()=>{model.station(station.id);callback.current(station.id);},config.radio.holdMs);return()=>clearTimeout(t);},[station,started,model.station]);
+ useEffect(()=>{const visibility=()=>{if(document.hidden)audio.suspend();else audio.resume();};document.addEventListener('visibilitychange',visibility);return()=>{document.removeEventListener('visibilitychange',visibility);audio.dispose();};},[audio]);
+ function activate(){setStarted(true);if(sound)try{audio.start();setError('');}catch{setError('声音暂时未能接通。仍可调谐并查看文字记录。');}}
+ function tune(value:number){activate();model.change(s=>({...s,frequency:Math.round(value*10)/10}));}
+ function pointerTune(e:React.PointerEvent<HTMLInputElement>){const r=e.currentTarget.getBoundingClientRect();tune(Math.max(88,Math.min(108,88+(e.clientX-r.left)/r.width*20)));}
+ return <Overlay label="天台收音机" onClose={model.close} className="radio-overlay"><div className="radio-closeup"><img src={config.radio.image} alt="雨棚下的旧收音机，绿色频率窗与黄铜旋钮" onLoad={()=>setImageReady(true)} onError={()=>setError('近景暂未载入，可以继续使用刻度或退出重试。')}/><div className="radio-dial" style={{'--tuning':`${(frequency-88)/20*100}%`} as CSSProperties}><div className="radio-marks" aria-hidden="true">{[88,92,96,100,104,108].map(n=><span key={n}>{n}</span>)}</div><i className="radio-needle"/><input aria-label="收音机频率" aria-valuetext={`${frequency.toFixed(1)}MHz${station?'，'+station.name:''}`} type="range" min={config.radio.min} max={config.radio.max} step={config.radio.step} value={frequency} onPointerDown={e=>{e.preventDefault();e.currentTarget.focus();e.currentTarget.setPointerCapture(e.pointerId);pointerTune(e);}} onPointerMove={e=>{if(e.currentTarget.hasPointerCapture(e.pointerId))pointerTune(e);}} onKeyDown={activate} onChange={e=>tune(Number(e.target.value))}/></div><button className="radio-knob" aria-label="微调收音机旋钮" title="上下或左右拖动微调，方向键调节" onPointerDown={e=>{activate();e.currentTarget.setPointerCapture(e.pointerId);e.currentTarget.dataset.dragX=String(e.clientX);e.currentTarget.dataset.dragY=String(e.clientY);e.currentTarget.dataset.frequency=String(frequency);}} onPointerMove={e=>{if(!e.currentTarget.hasPointerCapture(e.pointerId))return;const delta=e.clientX-Number(e.currentTarget.dataset.dragX)-(e.clientY-Number(e.currentTarget.dataset.dragY));tune(Math.max(88,Math.min(108,Number(e.currentTarget.dataset.frequency)+delta*.04)));}} onKeyDown={e=>{if(['ArrowLeft','ArrowDown','ArrowRight','ArrowUp'].includes(e.key)){e.preventDefault();tune(Math.max(88,Math.min(108,frequency+(['ArrowLeft','ArrowDown'].includes(e.key)?-.1:.1))));}}}><span style={{transform:`rotate(${(frequency-88)*18}deg)`}}/></button><div className="radio-status"><output>{frequency.toFixed(1)} <small>MHz</small></output><span className={station?'signal-lit':''} aria-label={station?'收到信号':'寻找信号'}>●</span></div></div><div className="radio-record"><details><summary>信号记录</summary><p aria-live="polite">{station?station.description:'雨声和电流声混在一起。慢慢移动刻度，寻找能听清的地方。'}</p>{model.save.stations.length>0&&<button onClick={onStory}>翻看原来的信号记录 ↗</button>}</details>{!started&&<button aria-label="接通收音机声音" onClick={activate}>◉</button>}{(!imageReady||error)&&<p role="status">{error||'正在靠近雨棚…'}</p>}</div></Overlay>;
+}

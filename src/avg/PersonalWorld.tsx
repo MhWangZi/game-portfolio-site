@@ -46,6 +46,13 @@ import { preloadSceneImage } from './exploration/sceneImages';
 import './exploration/route-transitions.css';
 import {BlueprintMap} from './exploration/BlueprintMap';
 import './immersive-upgrade.css';
+import {useMaturity} from './maturity/useMaturity';
+import {ReviewDesk} from './maturity/ReviewDesk';
+import {Journal,JournalContent} from './maturity/Journal';
+import {RadioTuner} from './maturity/RadioTuner';
+import {ReportView} from './maturity/ReportView';
+import './maturity/maturity.css';
+import {SceneTraces} from './maturity/SceneTraces';
 
 const storageKey = "mhwangzi-room-v1";
 const SceneEditor = lazy(() => import("./exploration/SceneEditor"));
@@ -220,10 +227,10 @@ export function PersonalWorld() {
   }, [hidden, depth]);
   const remembering=music.playing&&music.selected===keepsake.track.id&&!hidden;
   useEffect(()=>{
-    if(!remembering)return;
+    if(!remembering||panel||eventSession||stage!=='room')return;
     const pending=keepsake.reactions.map(c=>setTimeout(()=>{setSpeech({text:c.text,face:9,motion:'blink',pose:c.pose});setSpeechVisible(true);setSpeechKey(v=>v+1);},c.afterMs));
     return()=>{pending.forEach(clearTimeout);};
-  },[remembering]);
+  },[remembering,room,panel,eventSession,stage]);
   const spoken = useRef<Record<string, { time: number; count: number }>>({});
   const lastSpeech = useRef(0);
   const returnRequest = useRef<() => void>(() => {});
@@ -246,7 +253,7 @@ export function PersonalWorld() {
     setSpeech(contextual(event,fallback));setSpeechKey(k=>k+1);setSpeechVisible(true);
   },[contextual]);
   const responseTimes=useRef<Record<string,number>>({});
-  const showResponse=(reply:Speech)=>{setSpeech(reply);setSpeechKey(k=>k+1);setSpeechVisible(true);};
+  const showResponse=(reply:Speech)=>{setSpeech({...reply,priority:'immediate'});setSpeechKey(k=>k+1);setSpeechVisible(true);};
   const respond=(key:string,facts:string[]=[])=>{
     const definition=(interactionResponses as Record<string,ResponseSet>)[key];
     if(!definition)return;
@@ -281,6 +288,7 @@ export function PersonalWorld() {
     lastSpeech.current = now;
   }, [contextual]);
   const host = useGameHost((event) => {
+    if(event==='challenge-completed'){maturity.remember('challenge:formal-level');return;}
     if (event === "return-request") returnRequest.current();
     else if (event === "ready") {
       setSpeechVisible(false);
@@ -344,6 +352,7 @@ export function PersonalWorld() {
   }, [story.save.keys.length]);
   const reelTest = ["localhost","127.0.0.1"].includes(location.hostname)&&new URLSearchParams(location.search).has("reel-test");
   const finishHidden = () => {
+    if(!reelTest)maturity.finish();
     music.unlockEncore(!reelTest);
     setSpeech({text:'……灯亮了。你还在。',face:8,motion:'blink',pose:'relief'});setSpeechVisible(true);setSpeechKey(v=>v+1);
     if(reelTest){music.release();setHidden(false);setDepth(0);setRoom("duty");setNotice("录像测试完成，八音盒已加入纪念滚筒；原存档未重置。");return;}
@@ -547,6 +556,11 @@ export function PersonalWorld() {
     return () => removeEventListener("keydown", key);
   }, [leave, panel]);
   const act = (action: WorldAction) => {
+    if(action.type!=='room')maturity.remember(action.type==='event'?'event:'+action.id:'action:'+action.type);
+    if(action.type==='panel'&&['permit','desk','radio','journal','report'].includes(action.id)){
+      setPanel(null);setEventSession(null);setTravelMusic(false);
+      maturity.open(action.id==='permit'&&maturity.save.clearance?'desk':action.id as 'permit'|'desk'|'radio'|'journal'|'report');return;
+    }
     if(action.type!=='event')setEventSession(null);
     switch (action.type) {
       case 'cabinet':setArchiveView(true);setPanel(null);break;
@@ -608,14 +622,37 @@ export function PersonalWorld() {
   const closePanel=()=>{
     const closed=panel;setPanel(null);
     if(!closed?.startsWith('record:'))return;
+    maturity.read(closed.slice(7));
     const record=closed.slice(7),flags=markRecordClosed(narrative.flags,record);
+    if(flags)setNarrative(s=>({...s,flags:[...new Set([...s.flags,...flags])]}));
+    if(['record:birth','record:protocol'].includes(closed)){setSpeechVisible(false);return;}
     if(!flags)return;
-    setNarrative(s=>({...s,flags:[...new Set([...s.flags,...flags])]}));
     speak(`record:${record}:closed`,{text:'我在这里。',face:12,motion:'shrink'});
   };
   const roomData = rooms[room];
   const activeEvent=eventSession&&!panel&&!archiveView&&stage==='room'?narrativeEvents.find(e=>e.id===eventSession.id):undefined;
   const activeNode=useMemo(()=>activeEvent&&eventSession?resolveEventNode(activeEvent.nodes[eventSession.node],narrative,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room}):undefined,[activeEvent,eventSession,narrative,story.save.keys.length,cinematic.inventory,story.save.loops,dark,room]);
+  const maturity=useMaturity({room,blocked:hidden||television||busy||!!transition||!!panel||!!eventSession||travelMusic,silent:archiveView,safeMusic:!hidden&&!television&&!busy&&!archiveView&&!eventSession&&(!panel||panel==='music'),speechVisible,flags:narrative.flags,keys:story.save.keys,loops:story.save.loops,music,speak:showResponse});
+  const maturityModal=!!maturity.view;
+  const sceneElement=useRef<HTMLElement>(null);
+  const sceneBounds=sceneElement.current?.getBoundingClientRect();
+  const companionAnchor=maturity.anchor&&sceneBounds&&!maturityModal?{x:(sceneBounds.left+sceneBounds.width*maturity.anchor[0]/100)/innerWidth*100,y:(sceneBounds.top+sceneBounds.height*maturity.anchor[1]/100)/innerHeight*100}:null;
+  useEffect(()=>{if(maturity.save.clearance)setCinematic(s=>s.inventory.includes('clearance-permit')?s:{...s,inventory:[...s.inventory,'clearance-permit']});},[maturity.save.clearance,cinematic.inventory]);
+  const openMaturity=(view:'desk'|'journal'|'permit'|'report')=>{setPanel(null);setEventSession(null);setArchiveView(false);setTravelMusic(false);maturity.open(view==='permit'&&maturity.save.clearance?'desk':view);};
+  useEffect(()=>{
+    const key=(e:KeyboardEvent)=>{
+      if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||hidden||television||busy||eventSession)return;
+      if((e.target as HTMLElement).closest('input,textarea,select,[contenteditable="true"]'))return;
+      if(e.key.toLowerCase()==='p'&&!panel&&!travelMusic&&!archiveView){e.preventDefault();if(maturity.view)maturity.close();else maturity.open(maturity.save.clearance?'desk':'permit');}
+      if(e.key.toLowerCase()==='j'){
+        if(panel&&panel!=='recovery'&&panel!=='music')return;
+        if(maturity.view&&maturity.view!=='journal')return;
+        e.preventDefault();if(travelMusic||panel==='recovery'||panel==='music')maturity.setPinned(v=>!v);else if(maturity.view==='journal')maturity.close();else maturity.open('journal');
+      }
+    };window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);
+  },[hidden,television,busy,eventSession,panel,travelMusic,archiveView,maturity]);
+  useEffect(()=>{atmosphere.setDramaticSilence(maturity.silence);if(music.audio.current)music.audio.current.muted=maturity.silence;return()=>{atmosphere.setDramaticSilence(false);if(music.audio.current)music.audio.current.muted=false;};},[maturity.silence,atmosphere,music.audio]);
+  useEffect(()=>{atmosphere.setTension(!hidden&&['corridor','archive','projection','secret'].includes(room)?story.save.keys.length:0);},[atmosphere,room,story.save.keys.length,hidden]);
   const qa = new URLSearchParams(location.search).has("qa");
   const review =
     ["localhost", "127.0.0.1"].includes(location.hostname) &&
@@ -624,7 +661,7 @@ export function PersonalWorld() {
   if (sceneEditor) return <Suspense fallback={<p>正在打开编辑台…</p>}><SceneEditor/></Suspense>;
   return (
     <div
-      className={`avg-site immersive cinematic-site ${room === "lounge" ? "warm" : ""} ${still ? "reduced-motion" : ""} ${dark && room === "lounge" ? "lights-out" : ""} mood-${story.save.keys.length}`}
+      className={`avg-site immersive cinematic-site ${maturityModal?'has-maturity-overlay':''} ${maturity.silence?'maturity-silence':''} ${room === "lounge" ? "warm" : ""} ${still ? "reduced-motion" : ""} ${dark && room === "lounge" ? "lights-out" : ""} mood-${story.save.keys.length}`}
       data-room={room}
       data-stage={stage}
       data-game-status={host.status}
@@ -644,7 +681,7 @@ export function PersonalWorld() {
           本地验收：旧录像带起点
         </button>
       )}
-      <header className="site-masthead" inert={hidden || television || !!panel}>
+      <header className="site-masthead" inert={hidden || television || !!panel || maturityModal}>
         <a className="wordmark" href="#duty" aria-label="返回值班室">
           <span className="mark">
             m<span>·</span>w
@@ -654,11 +691,12 @@ export function PersonalWorld() {
           </span>
         </a>
         <div className="masthead-right">
+          <div className="maturity-shortcuts"><button onClick={()=>openMaturity('desk')}>作品索引</button><button onClick={()=>openMaturity('permit')}>{maturity.save.clearance?'调阅公函':'访客权限'}<kbd>P</kbd></button></div>
           <span className="live-dot" /> <span>这里还亮着</span>
           <button onClick={() => setPanel("contact")}>打个招呼 ↗</button>
         </div>
       </header>
-      <main inert={hidden || television || !!panel || archiveView}>
+      <main inert={hidden || television || !!panel || archiveView || maturityModal || travelMusic}>
         <div className="room-heading">
           <div>
             <span className="micro">{roomData.eyebrow}</span>
@@ -672,6 +710,7 @@ export function PersonalWorld() {
           </button>
         </div>
         <section
+          ref={sceneElement}
           className={`scene-window ${stage === "zooming" ? "camera-push" : stage === "pulling" ? "camera-pull" : ""} `}
           style={
             {
@@ -684,7 +723,7 @@ export function PersonalWorld() {
         >
           {stage === "room" ? (
             <CinematicScene guide={guideAllowed&&room===feedbackConfig.guidance.room&&story.save.loops===0&&!guideFinished(feedbackConfig.guidance,narrative.choices)} visits={narrative.visits} key={`${room}:${sceneEpoch}`} room={room} save={cinematic}
-              disabled={hidden || !!panel || !!transition || busy || archiveView} still={still} hints={objects}
+              disabled={hidden || !!panel || !!transition || busy || archiveView || maturityModal} still={still} hints={objects}
               audio={atmosphere} onCommit={commitScene} onAction={act} onSpeak={(text,object)=>{
                 if(object.transition.response){respond(object.transition.response);return;}
                 speak(`scene:${object.id}`,{text,face:room==='secret'?12:9,motion:room==='secret'?'shrink':'point'});
@@ -709,6 +748,7 @@ export function PersonalWorld() {
             </>
           )}
           <div className="scene-corner top-left" />
+          <SceneTraces room={room} challenge={maturity.save.facts.includes('challenge:formal-level')} tension={story.save.keys.length} still={still}/>
           <div className="scene-corner bottom-right" />
         </section>
         <div className="scene-under">
@@ -719,10 +759,13 @@ export function PersonalWorld() {
           </button>
         </div>
       </main>
-      <footer className="site-footer" inert={hidden || television || !!panel || archiveView}>
+      <footer className="site-footer" inert={hidden || television || !!panel || archiveView || maturityModal}>
         <span>游戏 / 像素 / 没做完的小念头</span>
         <div>
           <button className="inventory-item quiet-pocket" onClick={()=>setPanel("collection")}>口袋</button>
+          <button className="inventory-item" onClick={()=>openMaturity('journal')}>手帐 · J</button>
+          {maturity.save.clearance&&<button className="inventory-item" onClick={()=>openMaturity('desk')}>公函</button>}
+          {(maturity.save.report||story.save.keys.length===5)&&<button className="inventory-item" onClick={()=>openMaturity('report')}>交接报告</button>}
           {cinematic.inventory.includes("musicbox") && <button className="inventory-item" onClick={()=>{if(!travelMusic)respond('CONTROL.music-open');setTravelMusic(v=>!v);setEventSession(null);}}>♫ 八音盒</button>}
           {cinematic.inventory.includes("tape") && <button className="inventory-item" onClick={()=>react("录像带在你手里。录像机的入口就在屏幕下面。……真的还要继续吗？")}>▣ 旧录像带</button>}
           <button onClick={() => setPanel("settings")}>⚙ 偏好</button>
@@ -918,7 +961,7 @@ export function PersonalWorld() {
           )}
         </div>
       )}
-      {travelMusic&&!hidden&&!television&&!panel&&<div className="music-table-shade" onClick={()=>setTravelMusic(false)}><aside onClick={e=>e.stopPropagation()} ref={travelMusicElement} tabIndex={-1} className="music-travel-drawer" role="dialog" aria-modal="true" aria-label="随身八音盒" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();setTravelMusic(false);}if(e.key==='Tab'){const items=Array.from(e.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),[tabindex="0"]')).filter(el=>el.getClientRects().length>0);const first=items[0],last=items[items.length-1];if(first&&(!items.includes(document.activeElement as HTMLElement)||(e.shiftKey&&document.activeElement===first)||(!e.shiftKey&&document.activeElement===last))){e.preventDefault();(e.shiftKey?last:first).focus();}}}}><header><span>随身八音盒</span><button onClick={()=>setTravelMusic(false)} aria-label="合上八音盒抽屉" title="关闭">×</button></header><MechanicalMusicBox music={music} audio={atmosphere}/></aside></div>}
+      {travelMusic&&!hidden&&!television&&!panel&&<div className="music-table-shade" onClick={()=>setTravelMusic(false)}><aside onClick={e=>e.stopPropagation()} ref={travelMusicElement} tabIndex={-1} className="music-travel-drawer" role="dialog" aria-modal="true" aria-label="随身八音盒" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();setTravelMusic(false);}if(e.key==='Tab'){const items=Array.from(e.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),[tabindex="0"]')).filter(el=>el.getClientRects().length>0);const first=items[0],last=items[items.length-1];if(first&&(!items.includes(document.activeElement as HTMLElement)||(e.shiftKey&&document.activeElement===first)||(!e.shiftKey&&document.activeElement===last))){e.preventDefault();(e.shiftKey?last:first).focus();}}}}><header><span>随身八音盒</span><button onClick={()=>setTravelMusic(false)} aria-label="合上八音盒抽屉" title="关闭">×</button></header><button className="journal-pin-button" onClick={()=>maturity.setPinned(v=>!v)}>{maturity.pinned?"收起手帐":"并排查看手帐 · J"}</button><div className={maturity.pinned?"with-journal":""}><MechanicalMusicBox music={music} audio={atmosphere}/>{maturity.pinned&&<aside className="pinned-journal"><JournalContent model={maturity} keys={story.save.keys} playlistRead={story.save.playlistRead} compact/></aside>}</div></aside></div>}
       <Companion
         speech={speech}
         visible={speechVisible}
@@ -953,8 +996,11 @@ export function PersonalWorld() {
         still={still}
         depth={depth}
         docked={television}
+        interactionLocked={maturityModal}
+        sceneAnchor={companionAnchor}
+        tension={story.save.keys.length}
       />
-      {archiveView&&<ArchiveCabinet audio={atmosphere} still={still} disabled={!!panel} onRead={act} onReturn={id=>{story.collect(id);speak('cabinet:return',{text:'放回原位了。',face:9,motion:'blink'});}} onExit={state=>{setArchiveView(false);setSceneEpoch(v=>v+1);respond('CONTROL.archive-exit',state.selected?[state.read?'unreturned':'unread']:[]);}}/>}
+      {archiveView&&<ArchiveCabinet audio={atmosphere} still={still} disabled={!!panel||maturityModal} returnedIds={maturity.save.returned} onRead={act} onReturn={(id,drawer)=>{story.collect(id);maturity.returned(drawer);speak('cabinet:return',{text:'放回原位了。',face:9,motion:'blink'});}} onExit={state=>{setArchiveView(false);setSceneEpoch(v=>v+1);respond('CONTROL.archive-exit',state.selected?[state.read?'unreturned':'unread']:[]);}}/>}
       {activeEvent&&eventSession&&<NarrativeEventView key={`${activeEvent.id}:${eventSession.node}`} still={still} event={activeEvent} session={eventSession}
         nodeOverride={activeNode}
         onSpeak={node=>{const reply:Speech={text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'};if(node.contextual===false)showResponse(reply);else speak(`event:${activeEvent.id}`,reply);}}
@@ -1032,7 +1078,11 @@ export function PersonalWorld() {
           </div>
         </Modal>
       )}
-      {panel && (
+      {maturity.view==='permit'||maturity.view==='desk'?<ReviewDesk model={maturity} onStamp={()=>atmosphere.play('insert')} onPlay={id=>{maturity.close();setRoom('lounge');pick(id);}} onRoom={target=>{maturity.close();void navigate(target);}}/>:null}
+      {maturity.view==='journal'&&<Journal model={maturity} keys={story.save.keys} playlistRead={story.save.playlistRead}/>}
+      {maturity.view==='radio'&&<RadioTuner model={maturity} sound={cinematic.sound} onStation={()=>setCinematic(s=>({...s,states:{...s.states,rooftop:'tuned'}}))} onStory={()=>{maturity.close();act({type:'event',id:'sparse-signal'});}}/>}
+      {maturity.view==='report'&&<ReportView model={maturity} keys={story.save.keys}/>}
+      {panel && !maturityModal && (
         <Modal
           material={panel==='contact'?'contact':activeWork?'dossier':panel.startsWith('record:')||panel==='manual'?'record':panel}
           title={
@@ -1060,9 +1110,9 @@ export function PersonalWorld() {
             </>
           )}
           {panel === "contact" && <ContactBook collect={story.collect}/>}
-          {panel === "music" && <MechanicalMusicBox music={music} audio={atmosphere} />}
+          {panel === "music" && <><button className="journal-pin-button" onClick={()=>maturity.setPinned(v=>!v)}>{maturity.pinned?'收起手帐':'并排查看手帐 · J'}</button><div className={maturity.pinned?'with-journal':''}><MechanicalMusicBox music={music} audio={atmosphere}/>{maturity.pinned&&<aside className="pinned-journal"><JournalContent model={maturity} keys={story.save.keys} playlistRead={story.save.playlistRead} compact/></aside>}</div></>}
           {panel?.startsWith("record:") && (
-            <ArchiveRecord id={panel.slice(7)} collect={story.collect} />
+            <ArchiveRecord id={panel.slice(7)} collect={story.collect} readBefore={maturity.save.records.includes(panel.slice(7))}/>
           )}
           {panel === "manual" && (
             <article className="artifact-document manual">
@@ -1075,7 +1125,7 @@ export function PersonalWorld() {
           )}
           {panel==='collection'&&<div className="pocket-catalog">{tokens.filter(t=>story.save.keys.includes(t.id)).map(t=><article key={t.id}><TerminalStamp/><span>{t.icon}</span><h3>{t.name}</h3><p>{t.hint}</p></article>)}<p>{story.save.keys.length ? "这些是你沿途留下的东西。" : "口袋还是空的。"}</p></div>}
           {panel === "recovery" && (
-            <KeyConsole
+            <><button className="journal-pin-button" onClick={()=>maturity.setPinned(v=>!v)}>{maturity.pinned?'收起手帐':'并排查看手帐 · J'}</button><div className={maturity.pinned?'with-journal':''}><KeyConsole
               save={story.save}
               slots={story.save.unlocked?[...bootOrder]:patch}
               onChange={next=>{atmosphere.play(next.length>patch.length?'insert':'take');setPatch(next);}}
@@ -1085,7 +1135,8 @@ export function PersonalWorld() {
                 speak('patch:powered',{text:'接通了。右边那扇门……现在我没法再说它只是仓库了。',face:12,motion:'shrink',pose:'halt'});
               }}
               onReact={react}
-            />
+              onFailed={maturity.failPatch}
+            />{maturity.pinned&&<aside className="pinned-journal"><JournalContent model={maturity} keys={story.save.keys} playlistRead={story.save.playlistRead} compact/></aside>}</div></>
           )}
           {panel === "settings" && (
             <>
@@ -1120,6 +1171,7 @@ export function PersonalWorld() {
                     setCinematic(s=>({...s,inventory:[],states:{}}));
                     setPatch([]);
                     setNarrative(blankNarrative());
+                    maturity.reset(story.save.loops);
                     setEventSession(null);
                     music.pause();
                     listened.current = [];

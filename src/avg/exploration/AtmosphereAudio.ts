@@ -20,6 +20,12 @@ export class AtmosphereAudio {
   enabled = true;
   tape = false;
   musicPlaying = false;
+  private dramaticSilence=false;
+  private tension=0;
+  private hum:OscillatorNode|null=null;
+  private humGain:GainNode|null=null;
+  setTension(value:number){this.tension=value;if(this.context)this.humGain?.gain.setTargetAtTime(value>=3?.025:0,this.context.currentTime,2);}
+  setDramaticSilence(value:boolean){this.dramaticSilence=value;if(this.context)this.master?.gain.setTargetAtTime(value?0:this.enabled?.55:0,this.context.currentTime,.12);}
   private buffer(c: AudioContext, seconds: number, air=false) {
     const buffer = c.createBuffer(1, Math.ceil(c.sampleRate * seconds), c.sampleRate);
     const data = buffer.getChannelData(0); let low = 0;
@@ -30,6 +36,7 @@ export class AtmosphereAudio {
     if (!this.context) {
       const c = new AudioContext(); this.context = c;
       const master = c.createGain(); master.gain.value = this.enabled ? .55 : 0; master.connect(c.destination); this.master = master;
+      const hum=c.createOscillator(),humGain=c.createGain();hum.type='sine';hum.frequency.value=56;humGain.gain.value=this.tension>=3?.025:0;hum.connect(humGain).connect(master);hum.start();this.hum=hum;this.humGain=humGain;
       this.acoustics=new RoomAcoustics(c,master);this.acoustics.setRoom(this.room);
       const source = c.createBufferSource(); source.buffer = this.buffer(c, 9, true); source.loop = true;
       const room = c.createGain(); room.gain.value = this.profile.gain; this.roomGain = room;
@@ -54,7 +61,7 @@ export class AtmosphereAudio {
     g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(volume,t+.1); g.gain.exponentialRampToValueAtTime(.0001,t+duration);
     o.connect(g).connect(this.master); o.start(t); o.stop(t+duration+.02);
   }
-  setEnabled(enabled: boolean) { this.enabled = enabled; if (this.context) this.master?.gain.setTargetAtTime(enabled ? .55 : 0, this.context.currentTime, .25); }
+  setEnabled(enabled: boolean) { this.enabled = enabled; if (this.context) this.master?.gain.setTargetAtTime(enabled&&!this.dramaticSilence ? .55 : 0, this.context.currentTime, .25); }
   setRoom(room:string){this.room=room;this.acoustics?.setRoom(room);this.profile=profiles[room as keyof typeof profiles]??profiles.duty;this.themeIndex=0;if(this.context&&!(this.doorEnvelope?.target===room&&this.context.currentTime<this.doorEnvelope.until)){this.roomFilter?.frequency.setTargetAtTime(this.profile.filter,this.context.currentTime,.9);this.roomGain?.gain.setTargetAtTime(this.tape?.014:this.musicPlaying?this.profile.gain*.4:this.profile.gain,this.context.currentTime,.9);}}
   setTape(tape: boolean) { this.tape = tape; if (this.context) { this.hissGain?.gain.setTargetAtTime(tape ? .26 : 0, this.context.currentTime, 1.2); this.roomGain?.gain.setTargetAtTime(tape ? .014 : this.profile.gain, this.context.currentTime, .8); } }
   setMusic(playing: boolean) { this.musicPlaying=playing; if (this.context && !this.tape) this.roomGain?.gain.setTargetAtTime(playing ? this.profile.gain*.4 : this.profile.gain, this.context.currentTime, .7); }
@@ -101,5 +108,5 @@ export class AtmosphereAudio {
     }
   }
   suspend() { if (this.context?.state === 'running') void this.context.suspend(); }
-  dispose() { if(this.interval) clearInterval(this.interval); this.loop?.stop(); this.acoustics?.dispose(); if(this.context) void this.context.close(); }
+  dispose() { if(this.interval) clearInterval(this.interval); this.loop?.stop();this.hum?.stop();this.hum?.disconnect();this.humGain?.disconnect(); this.acoustics?.dispose(); if(this.context) void this.context.close();this.context=null;this.loop=null;this.hum=null;this.humGain=null;this.master=null;this.acoustics=null; }
 }

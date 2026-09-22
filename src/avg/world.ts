@@ -225,6 +225,7 @@ export type Speech = {
   text: string;
   face: number;
   pose?:string;
+  priority?:'immediate';
   motion: "peek" | "blink" | "point" | "shrink" | "glitch";
 };
 export const dialogue: Record<string, Speech[]> = {

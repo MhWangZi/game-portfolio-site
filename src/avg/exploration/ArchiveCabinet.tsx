@@ -10,8 +10,8 @@ import { preloadSceneImage } from './sceneImages';
 type Drawer={id:string;label:string;point:Point;action:WorldAction};
 type Phase='cabinet'|'closed'|'open';
 const drawers=definition.drawers as Drawer[];
-export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit}:{audio:AtmosphereAudio;still:boolean;disabled:boolean;onRead:(action:WorldAction)=>void;onReturn:(token:TokenId)=>void;onExit:(state:{selected:boolean;read:boolean})=>void}) {
-  const [phase,setPhase]=useState<Phase>('cabinet'),[selected,setSelected]=useState<Drawer|null>(null),[seen,setSeen]=useState(false),[returned,setReturned]=useState<string[]>([]);
+export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit,returnedIds=[]}:{audio:AtmosphereAudio;still:boolean;disabled:boolean;onRead:(action:WorldAction)=>void;onReturn:(token:TokenId,drawer:string)=>void;returnedIds?:string[];onExit:(state:{selected:boolean;read:boolean})=>void}) {
+  const [phase,setPhase]=useState<Phase>('cabinet'),[selected,setSelected]=useState<Drawer|null>(null),[seen,setSeen]=useState(false),[returned,setReturned]=useState<string[]>(returnedIds);
   const [old,setOld]=useState<string|null>(null),[busy,setBusy]=useState(true),[error,setError]=useState(''),[focus,setFocus]=useState<Point>([50,50]);
   const alive=useRef(true),initialStill=useRef(still),timer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),phaseRef=useRef(phase);phaseRef.current=phase;
   useEffect(()=>{alive.current=true;void preloadSceneImage(definition.images.cabinet).then(()=>{if(alive.current)timer.current=setTimeout(()=>{if(alive.current)setBusy(false);},initialStill.current?150:1100);}).catch(e=>{if(alive.current){setError(e.message);setBusy(false);}});for(const src of Object.values(definition.images))void preloadSceneImage(src).catch(()=>{});return()=>{alive.current=false;clearTimeout(timer.current);};},[]);
@@ -26,7 +26,7 @@ export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit}:{au
   }
   function retrieve(drawer:Drawer){if(busy||disabled)return;setSelected(drawer);setSeen(false);setFocus(drawer.point);audio.play('drawer');void change('closed');}
   function read(){if(!selected||busy||disabled)return;audio.play('paper');if(phase==='open'){setSeen(true);onRead(selected.action);}else void change('open',()=>{setSeen(true);onRead(selected.action);});}
-  function putBack(){if(!selected||busy||disabled)return;audio.play('drawer');void change('cabinet',()=>{if(seen){setReturned(ids=>[...new Set([...ids,selected.id])]);onReturn(definition.returnToken as TokenId);}setSelected(null);setSeen(false);});}
+  function putBack(){if(!selected||busy||disabled)return;audio.play('drawer');void change('cabinet',()=>{if(seen){setReturned(ids=>[...new Set([...ids,selected.id])]);onReturn(definition.returnToken as TokenId,selected.id);}setSelected(null);setSeen(false);});}
   return <section className={`archive-focus ${busy?'archive-moving':''} ${still?'archive-still':''}`} aria-label="档案柜近景" data-archive-phase={phase} data-archive-busy={busy} inert={disabled}>
     <div className="archive-camera" style={{'--drawer-x':`${focus[0]}%`,'--drawer-y':`${focus[1]}%`} as CSSProperties}>
       <img src={definition.images[phase]} alt={phase==='cabinet'?'三层小柜与三列四层大柜':phase==='closed'?'取出的档案放在桌上，系绳尚未解开':'档案展开在阅览桌上'} draggable={false}/>

@@ -3,8 +3,9 @@
     "id": "duty",
     "initial": "idle",
     "variants": {
-      "idle": "./media/exploration/duty.png",
-      "active": "./media/exploration/duty-reading.png"
+      "idle": "./media/exploration/duty-clearance.png",
+      "active": "./media/exploration/duty-clearance.png",
+      "authorized": "./media/exploration/duty-clearance-stamped.png"
     },
     "objects": [
       {
@@ -220,8 +221,48 @@
           46.5,
           11.5
         ]
+      },
+      {
+        "id": "visitor-clearance",
+        "label": "拿起桌上的调阅公函",
+        "point": [
+          50,
+          33
+        ],
+        "polygon": [
+          [
+            48,
+            31
+          ],
+          [
+            52,
+            31
+          ],
+          [
+            52,
+            35
+          ],
+          [
+            48,
+            35
+          ]
+        ],
+        "transition": {
+          "sound": "paper",
+          "wait": 400,
+          "action": {
+            "type": "panel",
+            "id": "permit"
+          }
+        }
       }
-    ]
+    ],
+    "stateWithItem": {
+      "clearance-permit": {
+        "idle": "authorized",
+        "active": "authorized"
+      }
+    }
   },
   {
     "id": "corridor",
@@ -2178,11 +2219,10 @@
         ],
         "transition": {
           "sound": "switch",
-          "wait": 1300,
-          "state": "tuned",
+          "wait": 400,
           "action": {
-            "type": "event",
-            "id": "sparse-signal"
+            "type": "panel",
+            "id": "radio"
           }
         }
       },
@@ -2215,11 +2255,11 @@
           "tuned"
         ],
         "transition": {
-          "sound": "take",
-          "wait": 700,
+          "sound": "switch",
+          "wait": 400,
           "action": {
-            "type": "event",
-            "id": "sparse-signal"
+            "type": "panel",
+            "id": "radio"
           }
         }
       },
