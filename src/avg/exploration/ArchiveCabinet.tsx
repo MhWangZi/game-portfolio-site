@@ -10,7 +10,7 @@ import { preloadSceneImage } from './sceneImages';
 type Drawer={id:string;label:string;point:Point;action:WorldAction};
 type Phase='cabinet'|'closed'|'open';
 const drawers=definition.drawers as Drawer[];
-export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit}:{audio:AtmosphereAudio;still:boolean;disabled:boolean;onRead:(action:WorldAction)=>void;onReturn:(token:TokenId)=>void;onExit:()=>void}) {
+export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit}:{audio:AtmosphereAudio;still:boolean;disabled:boolean;onRead:(action:WorldAction)=>void;onReturn:(token:TokenId)=>void;onExit:(state:{selected:boolean;read:boolean})=>void}) {
   const [phase,setPhase]=useState<Phase>('cabinet'),[selected,setSelected]=useState<Drawer|null>(null),[seen,setSeen]=useState(false),[returned,setReturned]=useState<string[]>([]);
   const [old,setOld]=useState<string|null>(null),[busy,setBusy]=useState(true),[error,setError]=useState(''),[focus,setFocus]=useState<Point>([50,50]);
   const alive=useRef(true),initialStill=useRef(still),timer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),phaseRef=useRef(phase);phaseRef.current=phase;
@@ -37,7 +37,7 @@ export function ArchiveCabinet({audio,still,disabled,onRead,onReturn,onExit}:{au
         <p className="folder-index">{selected?.label}</p>
       </>}
     </div>
-    <header><button onClick={onExit} disabled={busy}>←退回档案角</button><span>{phase==='cabinet'?'ARCHIVE / 15 FILES':selected?.label}</span></header>
+    <header><button onClick={()=>onExit({selected:!!selected,read:seen})} disabled={busy}>←退回档案角</button><span>{phase==='cabinet'?'ARCHIVE / 15 FILES':selected?.label}</span></header>
     <p className="archive-guidance">{error|| (busy?'':phase==='cabinet'?'轻触把手上的圆点。读完后，请放回原位。':phase==='closed'?'解开系绳，或把档案放回去。':'纸页已经展开。合上后，亲手放回原位。')}</p>
   </section>;
 }

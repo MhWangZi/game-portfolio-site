@@ -3,7 +3,7 @@ import feedbackConfig from './exploration/feedback.json';
 import {guideFinished} from './exploration/feedback';
 import {TerminalStamp} from './exploration/TerminalStamp';
 import keepsake from './reel-keepsake.json';
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { rooms, dialogue, games, camera } from "./world";
 import type { RoomId, Speech, GameId } from "./world";
@@ -27,8 +27,9 @@ import { ArchiveRecord, KeyConsole } from "./StoryObjects";
 import { HiddenChapter } from "./HiddenProjection";
 import { hiddenSpeech } from "./reel";
 import { narrativeEvents } from "./narrative/data";
-import { readNarrative, narrativeStorage, blankNarrative, beginEvent, advanceEvent } from "./narrative/types";
-import type { EventSession } from "./narrative/types";
+import { readNarrative, narrativeStorage, blankNarrative, beginEvent, advanceEvent, responseFor, recordResponse, resolveEventNode } from "./narrative/types";
+import type { EventSession, ResponseSet } from "./narrative/types";
+import interactionResponses from './narrative/interaction-responses.json';
 import { NarrativeEventView } from "./narrative/NarrativeEventView";
 import reactionData from './companion/reactions.json';
 import { resolveReaction, markRecordClosed } from './companion/context';
@@ -244,6 +245,17 @@ export function PersonalWorld() {
   const speak=useCallback((event:string,fallback:Speech)=>{
     setSpeech(contextual(event,fallback));setSpeechKey(k=>k+1);setSpeechVisible(true);
   },[contextual]);
+  const responseTimes=useRef<Record<string,number>>({});
+  const showResponse=(reply:Speech)=>{setSpeech(reply);setSpeechKey(k=>k+1);setSpeechVisible(true);};
+  const respond=(key:string,facts:string[]=[])=>{
+    const definition=(interactionResponses as Record<string,ResponseSet>)[key];
+    if(!definition)return;
+    const now=Date.now();
+    if(now-(responseTimes.current[key]??0)<(definition.cooldownMs??0))return;
+    responseTimes.current[key]=now;
+    showResponse(responseFor(definition,narrative.responses?.[key]??0,narrative,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room,facts}));
+    setNarrative(s=>recordResponse(s,key));
+  };
   const say = useCallback((event: string, priority = false) => {
     const now = Date.now(),
       record = spoken.current[event] || { time: 0, count: 0 };
@@ -583,8 +595,7 @@ export function PersonalWorld() {
       await host.command("resume");
       setSpeechVisible(false);
       host.frame.current?.focus();
-      say("resume");
-      setSpeechVisible(false);
+      say("resume", true);
     } catch (e) {
       setNotice((e as Error).message);
     } finally {
@@ -604,6 +615,7 @@ export function PersonalWorld() {
   };
   const roomData = rooms[room];
   const activeEvent=eventSession&&!panel&&!archiveView&&stage==='room'?narrativeEvents.find(e=>e.id===eventSession.id):undefined;
+  const activeNode=useMemo(()=>activeEvent&&eventSession?resolveEventNode(activeEvent.nodes[eventSession.node],narrative,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room}):undefined,[activeEvent,eventSession,narrative,story.save.keys.length,cinematic.inventory,story.save.loops,dark,room]);
   const qa = new URLSearchParams(location.search).has("qa");
   const review =
     ["localhost", "127.0.0.1"].includes(location.hostname) &&
@@ -674,6 +686,7 @@ export function PersonalWorld() {
             <CinematicScene guide={guideAllowed&&room===feedbackConfig.guidance.room&&story.save.loops===0&&!guideFinished(feedbackConfig.guidance,narrative.choices)} visits={narrative.visits} key={`${room}:${sceneEpoch}`} room={room} save={cinematic}
               disabled={hidden || !!panel || !!transition || busy || archiveView} still={still} hints={objects}
               audio={atmosphere} onCommit={commitScene} onAction={act} onSpeak={(text,object)=>{
+                if(object.transition.response){respond(object.transition.response);return;}
                 speak(`scene:${object.id}`,{text,face:room==='secret'?12:9,motion:room==='secret'?'shrink':'point'});
               }}/>
 
@@ -710,7 +723,7 @@ export function PersonalWorld() {
         <span>游戏 / 像素 / 没做完的小念头</span>
         <div>
           <button className="inventory-item quiet-pocket" onClick={()=>setPanel("collection")}>口袋</button>
-          {cinematic.inventory.includes("musicbox") && <button className="inventory-item" onClick={()=>{setTravelMusic(v=>!v);setEventSession(null);}}>♫ 八音盒</button>}
+          {cinematic.inventory.includes("musicbox") && <button className="inventory-item" onClick={()=>{if(!travelMusic)respond('CONTROL.music-open');setTravelMusic(v=>!v);setEventSession(null);}}>♫ 八音盒</button>}
           {cinematic.inventory.includes("tape") && <button className="inventory-item" onClick={()=>react("录像带在你手里。录像机的入口就在屏幕下面。……真的还要继续吗？")}>▣ 旧录像带</button>}
           <button onClick={() => setPanel("settings")}>⚙ 偏好</button>
           <a href="#/admin" aria-label="管理终端">
@@ -941,11 +954,12 @@ export function PersonalWorld() {
         depth={depth}
         docked={television}
       />
-      {archiveView&&<ArchiveCabinet audio={atmosphere} still={still} disabled={!!panel} onRead={act} onReturn={id=>{story.collect(id);speak('cabinet:return',{text:'放回原位了。',face:9,motion:'blink'});}} onExit={()=>{setArchiveView(false);setSceneEpoch(v=>v+1);}}/>}
+      {archiveView&&<ArchiveCabinet audio={atmosphere} still={still} disabled={!!panel} onRead={act} onReturn={id=>{story.collect(id);speak('cabinet:return',{text:'放回原位了。',face:9,motion:'blink'});}} onExit={state=>{setArchiveView(false);setSceneEpoch(v=>v+1);respond('CONTROL.archive-exit',state.selected?[state.read?'unreturned':'unread']:[]);}}/>}
       {activeEvent&&eventSession&&<NarrativeEventView key={`${activeEvent.id}:${eventSession.node}`} still={still} event={activeEvent} session={eventSession}
-        onSpeak={node=>speak(`event:${activeEvent.id}`,{text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'})}
+        nodeOverride={activeNode}
+        onSpeak={node=>{const reply:Speech={text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'};if(node.contextual===false)showResponse(reply);else speak(`event:${activeEvent.id}`,reply);}}
         onClose={()=>{setEventSession(null);setSpeechVisible(false);}}
-        onChoose={choiceId=>{const next=advanceEvent(activeEvent,eventSession,narrative,choiceId);if(!next)return;atmosphere.play('paper');setNarrative(next.save);setEventSession(next.session);if(next.action)act(next.action);}}/>}
+        onChoose={choiceId=>{const next=advanceEvent(activeEvent,eventSession,narrative,choiceId,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room});if(!next)return;atmosphere.play('paper');setNarrative(next.save);setEventSession(next.session);if(next.action)act(next.action);if(next.speech)showResponse(next.speech);}}/>}
       {story.award && !television && (
         <div className="award-toast" role="status">
           <span>{tokens.find((t) => t.id === story.award)?.icon}</span>

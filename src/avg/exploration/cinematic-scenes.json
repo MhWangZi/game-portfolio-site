@@ -179,7 +179,8 @@
           "action": {
             "type": "panel",
             "id": "manual"
-          }
+          },
+          "response": "SCENE.duty.bulletin"
         },
         "point": [
           62.5,
@@ -478,7 +479,8 @@
         "transition": {
           "state": "idle",
           "sound": "take",
-          "wait": 650
+          "wait": 650,
+          "response": "SCENE.corridor.phone-hang"
         },
         "states": [
           "active"

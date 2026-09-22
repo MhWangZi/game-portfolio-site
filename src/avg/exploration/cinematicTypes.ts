@@ -5,6 +5,7 @@ export type SceneTransition = {
   state?: string;
   sound?: Foley;
   speech?: string;
+  response?: string;
   give?: string;
   remove?: string;
   action?: WorldAction;

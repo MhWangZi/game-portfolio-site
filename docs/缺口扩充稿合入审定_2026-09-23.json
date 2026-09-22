@@ -1,0 +1,217 @@
+{
+  "source": "docs/叙事编辑交付/私人助手_所有点击事件缺口填补与事件扩充稿_2026-09-23.md",
+  "choiceFollowups": 27,
+  "choiceFollowupIds": [
+    "CHOICE.visitor-register.visitor.continue",
+    "CHOICE.visitor-register.blank.continue",
+    "CHOICE.coat-owner.owner.continue",
+    "CHOICE.coat-owner.keep.continue",
+    "CHOICE.missing-room.gap.continue",
+    "CHOICE.missing-room.map.continue",
+    "CHOICE.tool-care.fix.continue",
+    "CHOICE.tool-care.work.continue",
+    "CHOICE.door-name.why.continue",
+    "CHOICE.door-name.return.continue",
+    "CHOICE.no-reflection.here.continue",
+    "CHOICE.no-reflection.know.continue",
+    "CHOICE.borrowed-light.now.continue",
+    "CHOICE.borrowed-light.repair.continue",
+    "CHOICE.sparse-signal.start.script",
+    "CHOICE.sparse-signal.revisit.script",
+    "CHOICE.sparse-signal.allowed.script",
+    "CHOICE.sparse-signal.allowed.stay",
+    "CHOICE.sparse-signal.honest.continue",
+    "CHOICE.rain-cup.ordinary.continue",
+    "CHOICE.rain-cup.unsure.continue",
+    "CHOICE.signal-reports.start.economy",
+    "CHOICE.signal-reports.start.values",
+    "CHOICE.loose-contact.repair.continue",
+    "CHOICE.loose-contact.pause.continue",
+    "CHOICE.unnamed-box.kept.continue",
+    "CHOICE.unnamed-box.privacy.continue"
+  ],
+  "controlResponses": [
+    "SCENE.duty.bulletin",
+    "SCENE.corridor.phone-hang",
+    "CONTROL.archive-exit",
+    "CONTROL.music-open"
+  ],
+  "appliedExpansions": [
+    "visitor-register",
+    "stopped-clock",
+    "coat-owner",
+    "missing-room",
+    "wet-step",
+    "cat-seat",
+    "disc-margin",
+    "tool-care",
+    "unrecorded-answer",
+    "far-away",
+    "spliced-label",
+    "chair-distance",
+    "door-name",
+    "no-reflection",
+    "borrowed-light",
+    "sparse-signal",
+    "loose-contact"
+  ],
+  "deferredExpansions": [
+    "box-outline",
+    "sofa-place",
+    "prototype-mistake",
+    "empty-file",
+    "pencil-note",
+    "room-index",
+    "fifth-seat",
+    "empty-audience",
+    "forgotten-line"
+  ],
+  "notCoveredByDraft": [
+    "antenna-hum",
+    "rain-cup",
+    "signal-reports",
+    "missing-screw",
+    "cold-plug",
+    "unnamed-box",
+    "blank-index",
+    "covered-chair",
+    "stored-clock"
+  ],
+  "ambientPreserved": [
+    "stopped-clock",
+    "wet-step",
+    "cat-seat",
+    "disc-margin",
+    "unrecorded-answer",
+    "far-away",
+    "spliced-label",
+    "chair-distance"
+  ],
+  "adjustments": [
+    {
+      "id": "CHOICE.coat-owner.keep.continue",
+      "field": "条件差分",
+      "reason": "所在房间没有dark状态；适用夜雨描述转为复次候选，不读取游戏房的关灯状态。"
+    },
+    {
+      "id": "CHOICE.missing-room.map.continue",
+      "field": "条件差分",
+      "reason": "所在房间没有dark状态；适用夜雨描述转为复次候选，不读取游戏房的关灯状态。"
+    },
+    {
+      "id": "CHOICE.sparse-signal.allowed.stay",
+      "field": "条件差分",
+      "reason": "所在房间没有dark状态；适用夜雨描述转为复次候选，不读取游戏房的关灯状态。"
+    },
+    {
+      "id": "CHOICE.rain-cup.unsure.continue",
+      "field": "条件差分",
+      "reason": "所在房间没有dark状态；适用夜雨描述转为复次候选，不读取游戏房的关灯状态。"
+    },
+    {
+      "id": "CHOICE.loose-contact.pause.continue",
+      "field": "条件差分",
+      "reason": "所在房间没有dark状态；适用夜雨描述转为复次候选，不读取游戏房的关灯状态。"
+    },
+    {
+      "id": "CHOICE.door-name.return.continue",
+      "field": "选项",
+      "reason": "改为准备返回，不暗示点击后已经传送；仍由房间里的门行走。"
+    },
+    {
+      "id": "CHOICE.borrowed-light.repair.continue",
+      "field": "首次/重复",
+      "reason": "原选项是微热，不能直接断言玩家被烫伤。"
+    },
+    {
+      "id": "CHOICE.sparse-signal.allowed.script",
+      "field": "旗标回应",
+      "reason": "admitted_unknown记录的是允许助手承认不知道，不是玩家自认不知道。"
+    },
+    {
+      "id": "SCENE.duty.bulletin",
+      "field": "高紧张",
+      "reason": "去掉画面与守则正文均不存在的铅笔涂黑条款。"
+    },
+    {
+      "id": "CONTROL.archive-exit",
+      "field": "默认回应",
+      "reason": "退出不等于推平抽屉；由近景组件提供已读未归还事实再给提醒。"
+    },
+    {
+      "id": "missing-room",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "wet-step",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "cat-seat",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "disc-margin",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "unrecorded-answer",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "far-away",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "spliced-label",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "chair-distance",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "door-name",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "no-reflection",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "borrowed-light",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "sparse-signal",
+      "field": "黑暗差分",
+      "reason": "天台雨夜作为复访描写，不增加不存在的关灯条件。"
+    },
+    {
+      "id": "sparse-signal",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "loose-contact",
+      "field": "场景扩写",
+      "reason": "修正静态画面、物件类型或不存在的线索/行为；采用审定后的描写。"
+    },
+    {
+      "id": "visitor-register.revisit",
+      "field": "称呼记忆",
+      "reason": "已登记后复访不再说还没想好，留白选择也保留其意愿。"
+    }
+  ]
+}

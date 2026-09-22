@@ -57,7 +57,7 @@ export function CinematicScene({room,save,disabled,still,hints,audio,onCommit,on
       callbacks.current.onCommit(room,transition);
       const reaction=sceneFeedback(feedbackConfig.reactions,room,object.id,state,visits);
       if(reaction){setFeedback(reaction);if(reaction.sound==='purr')audio.playPurr();timers.current.push(setTimeout(()=>setFeedback(null),reaction.durationMs));}
-      if(transition.speech||transition.give)callbacks.current.onSpeak(transition.speech??'',object);
+      if(transition.speech||transition.give||transition.response)callbacks.current.onSpeak(transition.speech??'',object);
       setVisited(v=>[...new Set([...v,object.id])]);
       const wait=still?Math.min(transition.wait??550,350):transition.wait??850;
       timers.current.push(setTimeout(()=>{

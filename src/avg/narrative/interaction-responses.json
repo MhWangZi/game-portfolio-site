@@ -1,0 +1,107 @@
+{
+  "SCENE.duty.bulletin": {
+    "first": {
+      "text": "墙上的守则写得一本正经的。……其实就两句话：灯别全关，人别全丢。",
+      "face": 9,
+      "motion": "point"
+    },
+    "variants": [
+      {
+        "when": {
+          "minKeys": 3
+        },
+        "speech": {
+          "text": "守则写得再齐，也没教我碰上这种时候该怎么办。……前面那几条，先记着就行。",
+          "face": 9,
+          "motion": "point"
+        }
+      }
+    ],
+    "repeat": {
+      "text": "守则还在墙上。忘了就再看一眼，不收补考费。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "paper"
+    }
+  },
+  "SCENE.corridor.phone-hang": {
+    "first": {
+      "text": "挂上就好。老铁钩子有点松，免得老听筒受潮短路了。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    },
+    "repeat": {
+      "text": "挂断了？线路那头空荡荡的，还是这走廊的雨声实在。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    }
+  },
+  "CONTROL.archive-exit": {
+    "first": {
+      "text": "先回桌边吧。读完的纸页记得放回原格，免得下次找起来又乱成一团。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "paper"
+    },
+    "variants": [
+      {
+        "when": {
+          "fact": "unreturned"
+        },
+        "speech": {
+          "text": "刚看的那份档案还没放回原格呢。……不放也行，反正我不给你记违纪分。",
+          "face": 9,
+          "motion": "blink",
+          "pose": "paper"
+        }
+      },
+      {
+        "when": {
+          "fact": "unread"
+        },
+        "speech": {
+          "text": "那份档案还没翻开。想看时再来取，不急。",
+          "face": 9,
+          "motion": "blink",
+          "pose": "paper"
+        }
+      }
+    ],
+    "repeat": {
+      "text": "档案柜就在这儿，想看再来。读完记得亲手归还。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "paper"
+    }
+  },
+  "CONTROL.music-open": {
+    "first": {
+      "text": "想放哪首滚筒随便挑。右边的发条要是松了，顺手帮我拧一下。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "care"
+    },
+    "variants": [
+      {
+        "when": {
+          "minKeys": 3
+        },
+        "speech": {
+          "text": "放首慢歌吧。……这会儿听点叮咚响的，省得我老胡思乱想。",
+          "face": 9,
+          "motion": "blink",
+          "pose": "care"
+        }
+      }
+    ],
+    "repeat": {
+      "text": "滚筒还在里面。挑吧，我听着。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "listen"
+    },
+    "cooldownMs": 20000
+  }
+}

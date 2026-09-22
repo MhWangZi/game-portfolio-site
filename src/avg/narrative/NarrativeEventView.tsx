@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { NarrativeEvent, EventSession, EventNode } from './types';
 import './narrative.css';
-export function NarrativeEventView({event,session,onChoose,onSpeak,onClose,still=false}:{event:NarrativeEvent;session:EventSession;onChoose:(id:string)=>void;onSpeak:(node:EventNode)=>void;onClose:()=>void;still?:boolean}) {
-  const node=event.nodes[session.node],text=node.narration.join('\n'),letters=Array.from(text);
+export function NarrativeEventView({event,session,nodeOverride,onChoose,onSpeak,onClose,still=false}:{event:NarrativeEvent;session:EventSession;nodeOverride?:EventNode;onChoose:(id:string)=>void;onSpeak:(node:EventNode)=>void;onClose:()=>void;still?:boolean}) {
+  const node=nodeOverride??event.nodes[session.node],text=node.narration.join('\n'),letters=Array.from(text);
   const reduced=still||window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [shown,setShown]=useState(reduced?letters.length:0),selected=useRef(false);
   const callbacks=useRef({onChoose,onSpeak,onClose});callbacks.current={onChoose,onSpeak,onClose};
