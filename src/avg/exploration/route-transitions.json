@@ -78,16 +78,6 @@
     },
     {
       "rooms": [
-        "archive",
-        "projection"
-      ],
-      "kind": "diagonal",
-      "duration": 680,
-      "swap": 340,
-      "material": "wood"
-    },
-    {
-      "rooms": [
         "projection",
         "secret"
       ],

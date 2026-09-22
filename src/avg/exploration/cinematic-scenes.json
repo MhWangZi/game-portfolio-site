@@ -1495,8 +1495,8 @@
         ]
       },
       {
-        "id": "door-projection",
-        "label": "推门去旧放映间",
+        "id": "door-closed",
+        "label": "试着推一推侧门",
         "polygon": [
           [
             84,
@@ -1517,8 +1517,8 @@
         ],
         "transition": {
           "action": {
-            "type": "room",
-            "target": "projection"
+            "type": "event",
+            "id": "archive-closed-door"
           },
           "sound": "door",
           "wait": 420

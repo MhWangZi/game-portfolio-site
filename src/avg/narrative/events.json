@@ -4278,5 +4278,35 @@
         "choices": []
       }
     }
+  },
+  {
+    "id": "archive-closed-door",
+    "room": "archive",
+    "title": "推不开的侧门",
+    "object": "档案角侧门",
+    "purpose": "明确不可通行的门及放映间的实际路径",
+    "presentation": "ambient",
+    "entry": "first",
+    "revisit": "again",
+    "nodes": {
+      "first": {
+        "narration": [
+          "把手压下去了，门却没有动。你松开手，把手缓缓弹回原处。"
+        ],
+        "assistant": "这边推不开。要去放映间的话，先回走廊，再从实验间过去。",
+        "face": 9,
+        "pose": "explain",
+        "choices": []
+      },
+      "again": {
+        "narration": [
+          "侧门依旧推不开。"
+        ],
+        "assistant": "还是从走廊绕过去吧。我陪你。",
+        "face": 9,
+        "pose": "care",
+        "choices": []
+      }
+    }
   }
 ]

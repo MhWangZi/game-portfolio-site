@@ -5,6 +5,8 @@ import { ActionSprite } from './companion/ActionSprite';
 import { resolveCompanionPresentation } from './companion/presentation';
 import performance from './companion/performance.json';
 import type { Speech } from "./world";
+import {useBubbleAnchor} from './ui/useBubbleAnchor';
+import './ui/floating.css';
 export function LivingText({
   text,
   seed = 0,
@@ -138,10 +140,12 @@ export function Companion({
   }, [position]);
   const clamp = (n: number, a: number, b: number) =>
     Math.max(a, Math.min(b, n));
+  const floating=useBubbleAnchor(visible&&showBubble&&!hidden&&(!minimized||corrupt));
   if (hidden) return null;
   if(minimized&&!corrupt)return <button className="companion-minimized" onClick={()=>setMinimized(false)}>唤回助手 · H</button>;
   return (
     <aside
+      ref={floating.anchor}
       inert={interactionLocked}
       className={`companion ${remembering?'remembering':''} ${docked?'game-docked':''} ${corrupt ? "corrupted" : ""} ${listening ? "listening" : ""} ${position.x < 35 ? "left-side" : ""} ${position.y < 38 ? "upper-side" : ""}`}
       aria-label="私人AI助手"
@@ -160,7 +164,7 @@ export function Companion({
       }
     >
       {visible && showBubble && (
-        <div className="companion-bubble" role="status">
+        <div ref={floating.bubble} className="companion-bubble" role="status">
           <small>
             PRIVATE ASSISTANT / {corrupt ? "UNRECOGNIZED" : "ONLINE"}
           </small>
