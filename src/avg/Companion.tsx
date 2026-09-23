@@ -108,6 +108,7 @@ export function Companion({
   };window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[docked,corrupt,hidden]);
   const [tick, setTick] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [facing, setFacing] = useState<'left'|'right'>('right');
   const [settling, setSettling] = useState(false);
   useEffect(() => {
     if (still) return;
@@ -131,6 +132,7 @@ export function Companion({
     y: number;
     ox: number;
     oy: number;
+    lastX: number;
     moved: boolean;
   } | null>(null);
   useEffect(() => {
@@ -154,6 +156,8 @@ export function Companion({
       data-still={still}
       data-docked={docked}
       data-tension={tension>=3?'high':'low'}
+      data-facing={facing}
+      data-dragging={dragging}
       data-scene-anchor={!!sceneAnchor}
       style={
         {
@@ -193,6 +197,7 @@ export function Companion({
             y: e.clientY,
             ox: position.x,
             oy: position.y,
+            lastX: e.clientX,
             moved: false,
           };
         }}
@@ -202,6 +207,10 @@ export function Companion({
           const dx = e.clientX - d.x,
             dy = e.clientY - d.y;
           if (Math.abs(dx) + Math.abs(dy) > 5) d.moved = true;
+          if (Math.abs(e.clientX-d.lastX)>=3) {
+            setFacing(e.clientX>d.lastX?'right':'left');
+            d.lastX=e.clientX;
+          }
           if (d.moved)
             setPosition((p: typeof position) => ({
               ...p,
@@ -235,6 +244,7 @@ export function Companion({
           if (moves[e.key]&&!docked) {
             e.preventDefault();
             const [x, y] = moves[e.key];
+            if(x) setFacing(x<0?'left':'right');
             setPosition((p: typeof position) => ({
               ...p,
               x: clamp(p.x + x, 1, 96),
@@ -247,10 +257,12 @@ export function Companion({
           }
         }}
       >
-        {gesture?<ActionSprite key={`${gesture}:${serial}`} pose={gesture}/>:<Sprite index={index}/>}
-        <span className="headphone-overlay" aria-hidden="true">
-          <i />
-          <b />♫
+        <span className="companion-visual">
+          {gesture?<ActionSprite key={`${gesture}:${serial}`} pose={gesture}/>:<Sprite index={index}/>}
+          <span className="headphone-overlay" aria-hidden="true">
+            <i />
+            <b />♫
+          </span>
         </span>
       </button>
       <button

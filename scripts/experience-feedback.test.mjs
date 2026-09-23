@@ -32,14 +32,14 @@ test('every performance pose points to existing artwork',()=>{
 });
 test('door lowpass stays scheduled across room commit, reaches target at reveal, and reverse transition closes it',async()=>{
  let code=read('exploration/AtmosphereAudio.ts');
- for(const [variable,file] of [['profiles','room-sound'],['settings','acoustics'],['feedback','feedback']])code=code.replace(`import ${variable} from './${file}.json';`,`const ${variable}=${read('exploration/'+file+'.json')};`);
+ for(const [variable,file] of [['profiles','room-sound'],['settings','acoustics'],['feedback','feedback'],['samples','audio-samples']])code=code.replace(`import ${variable} from './${file}.json';`,`const ${variable}=${read('exploration/'+file+'.json')};`);
  code=code.replace("import { RoomAcoustics } from './RoomAcoustics';",'class RoomAcoustics{constructor(c,m){this.input=m}setRoom(){}dispose(){}}');
  const compiled=ts.transpileModule(code,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
  const {AtmosphereAudio}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
  const param=()=>({value:1,events:[],cancelAndHoldAtTime(t){this.events.push(['hold',t])},setValueAtTime(v,t){this.events.push(['set',v,t])},setTargetAtTime(v,t){this.events.push(['target',v,t])},linearRampToValueAtTime(v,t){this.events.push(['linear',v,t])},exponentialRampToValueAtTime(v,t){this.events.push(['exp',v,t])}});
  const node=()=>({connect(n){return n},disconnect(){},start(){},stop(){},frequency:param(),gain:param(),Q:param()});
  const c={currentTime:10,sampleRate:1000,state:'running',createOscillator:node,createGain:node,createBiquadFilter:node,createBufferSource:node,createBuffer(ch,n){const data=new Float32Array(n);return{getChannelData:()=>data}},close(){}};
- const audio=new AtmosphereAudio();audio.context=c;audio.master=node();audio.roomFilter=node();audio.roomGain=node();
+ const audio=new AtmosphereAudio();audio.context=c;audio.master=node();audio.roomFilter=node();audio.roomGain=node();audio.playSample=()=>{};
  audio.playDoor('wood',600,'corridor',300);
  const events=[...audio.roomFilter.frequency.events];
  assert.deepEqual(events.slice(-2),[['exp',220,10.3],['exp',4200,10.600000000000001]]);

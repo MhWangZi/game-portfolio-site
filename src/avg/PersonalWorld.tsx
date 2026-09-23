@@ -594,6 +594,7 @@ export function PersonalWorld() {
     }
   };
   const pick = (id: GameId) => {
+    atmosphere.play('insert');
     if (host.game) {
       setSwapTo(id);
       say("swap", true);
@@ -607,6 +608,7 @@ export function PersonalWorld() {
     setBusy(true);
     try {
       await host.command("resume");
+      atmosphere.play('switch');
       setSpeechVisible(false);
       host.frame.current?.focus();
       say("resume", true);
@@ -653,6 +655,7 @@ export function PersonalWorld() {
   },[hidden,television,busy,eventSession,panel,travelMusic,archiveView,maturity]);
   useEffect(()=>{atmosphere.setDramaticSilence(maturity.silence);if(music.audio.current)music.audio.current.muted=maturity.silence;return()=>{atmosphere.setDramaticSilence(false);if(music.audio.current)music.audio.current.muted=false;};},[maturity.silence,atmosphere,music.audio]);
   useEffect(()=>{atmosphere.setTension(!hidden&&['corridor','archive','projection','secret'].includes(room)?story.save.keys.length:0);},[atmosphere,room,story.save.keys.length,hidden]);
+  useEffect(()=>{if(story.award)atmosphere.playAchievement();},[atmosphere,story.award]);
   const qa = new URLSearchParams(location.search).has("qa");
   const review =
     ["localhost", "127.0.0.1"].includes(location.hostname) &&
@@ -796,6 +799,9 @@ export function PersonalWorld() {
               {host.game
                 ? games.find((g) => g.id === host.game)?.name
                 : "今晚玩哪张？"}
+              <span className="tv-achievements" aria-label="已获得的游戏奖杯">
+                {tokens.filter(t=>['clickdown','anchored-gaze'].includes(t.id)&&story.save.keys.includes(t.id)).map(t=><span key={t.id} title={t.name} aria-label={t.name}>{t.icon}</span>)}
+              </span>
             </span>
             {host.game ? (
               <button
@@ -1006,8 +1012,8 @@ export function PersonalWorld() {
         onSpeak={node=>{const reply:Speech={text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'};if(node.contextual===false)showResponse(reply);else speak(`event:${activeEvent.id}`,reply);}}
         onClose={()=>{setEventSession(null);setSpeechVisible(false);}}
         onChoose={choiceId=>{const next=advanceEvent(activeEvent,eventSession,narrative,choiceId,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room});if(!next)return;atmosphere.play('paper');setNarrative(next.save);setEventSession(next.session);if(next.action)act(next.action);if(next.speech)showResponse(next.speech);}}/>}
-      {story.award && !television && (
-        <div className="award-toast" role="status">
+      {story.award && (
+        <div className={`award-toast ${television?'award-in-game':''}`} role="status">
           <span>{tokens.find((t) => t.id === story.award)?.icon}</span>
           <div>
             已留下纪念物
@@ -1140,7 +1146,7 @@ export function PersonalWorld() {
           )}
           {panel === "settings" && (
             <>
-              <label className="setting-row"><span>环境音乐与物件声音<small>雨声、低音旋律、胶片底噪和拿取声音。</small></span><input aria-label="环境音乐与物件声音" type="checkbox" checked={cinematic.sound} onChange={e=>setCinematic(s=>({...s,sound:e.target.checked}))}/></label>
+              <label className="setting-row"><span>环境音乐与物件声音<small>雨声、收音机、胶片底噪和拿取声音。</small></span><input aria-label="环境音乐与物件声音" type="checkbox" checked={cinematic.sound} onChange={e=>setCinematic(s=>({...s,sound:e.target.checked}))}/></label>
               <label className="setting-row">
                 <span>
                   减少动态效果<small>短淡入、静止小猫，保留所有入口。</small>
@@ -1157,6 +1163,7 @@ export function PersonalWorld() {
               {systemStill && (
                 <p className="muted">正在跟随设备的减少动态效果设置。</p>
               )}
+              <details className="audio-credits"><summary>声音素材来源</summary><p>环境声与交互音效来自<a href="https://opengameart.org/content/rain-loopable" target="_blank" rel="noreferrer">Ylmir</a>、<a href="https://opengameart.org/content/100-cc0-sfx" target="_blank" rel="noreferrer">rubberduck</a>、<a href="https://opengameart.org/content/cat-purr-meow" target="_blank" rel="noreferrer">Kerzoven</a>及<a href="https://kenney.nl/assets/interface-sounds" target="_blank" rel="noreferrer">Kenney</a>，均为CC0。收音机爵士乐由<a href="https://opengameart.org/content/jazz-improvisation-looped" target="_blank" rel="noreferrer">Alex McCulloch</a>创作，CC0；旧呼叫使用<a href="https://opengameart.org/content/mysterious-radio-signal" target="_blank" rel="noreferrer">nicStage、Sam Uncle</a>的Mysterious Radio Signal，按CC-BY 3.0授权，本站仅调整混音音量与滤波。完整来源见项目文档。</p></details>
               <details>
                 <summary>重新探索这个小世界</summary>
                 <p>清除纪念物、拿取状态与本轮对话记录。它记得你来过的次数会保留。</p>

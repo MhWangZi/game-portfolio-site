@@ -1,0 +1,21 @@
+{
+  "rain": "rain-white.ogg",
+  "achievement": "achievement.ogg",
+  "paper": "paper_01.ogg",
+  "drawer": "wooded_box_open.ogg",
+  "door": "door_open.ogg",
+  "take": "wooden_01.ogg",
+  "insert": "metal_01.ogg",
+  "switch": "switch_01.ogg",
+  "wind": "musicbox-wind.ogg",
+  "cylinder": "spring_01.ogg",
+  "purr": "cat-purr.ogg",
+  "doorMaterials": {
+    "wood": "door_open.ogg",
+    "iron": "metal_02.ogg",
+    "roller": "spring_01.ogg",
+    "metal": "metal_02.ogg",
+    "glass": "door_open.ogg",
+    "paper": "paper_02.ogg"
+  }
+}

@@ -7,7 +7,7 @@
   "idleAnchors":{"lounge":[65,58],"rooftop":[78,55],"projection":[44,64],"archive":[58,68]},
   "radio":{"min":88,"max":108,"step":0.1,"tolerance":0.8,"holdMs":1800,"image":"./media/exploration/rooftop-radio-close.png","stations":[
     {"id":"call","frequency":92.4,"name":"旧呼叫","description":"杂音里有几组短长交替的呼叫声。它反复出现，不要求你解码。"},
-    {"id":"jazz","frequency":98.6,"name":"雨中的旋律","description":"噪声慢慢退下去，一段低沉的簧管旋律从雨里浮出来。"}
+    {"id":"jazz","frequency":98.6,"name":"雨中的旋律","description":"噪声慢慢退下去，一段断续的旧爵士旋律从雨里浮出来。"}
   ]},
   "workRooms":{"click-down":"lounge","anchored-gaze":"lounge","parry-arena":"lab","hd2d-kit":"workshop","static-signal":"rooftop"},
   "speeches":{
