@@ -126,8 +126,11 @@
   animation: helper-explain 1s ease-in-out 2;
 }
 .companion .pose-carried {
-  animation: helper-carried 0.9s ease-in-out infinite;
+  animation: helper-carried-right 0.62s steps(3, end) infinite;
   cursor: grabbing;
+}
+.companion[data-facing="left"] .pose-carried {
+  animation-name: helper-carried-left;
 }
 .companion .pose-landing {
   animation: helper-land 0.6s ease-out both;
@@ -184,14 +187,16 @@
     transform: rotate(3deg);
   }
 }
-@keyframes helper-carried {
-  0%,
-  100% {
-    transform: rotate(-9deg) scale(0.92, 1.08);
-  }
-  50% {
-    transform: rotate(9deg) scale(0.92, 1.08);
-  }
+@keyframes helper-carried-right {
+  0%,100% { transform: translate(-2px, 7px) rotate(-7deg) scale(.94, .91); }
+  50% { transform: translate(4px, 2px) rotate(7deg) scale(.98, 1.03); }
+}
+@keyframes helper-carried-left {
+  0%,100% { transform: translate(2px, 7px) rotate(7deg) scale(.94, .91); }
+  50% { transform: translate(-4px, 2px) rotate(-7deg) scale(.98, 1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .companion .pose-carried { animation: none !important; }
 }
 @keyframes helper-land {
   0% {
