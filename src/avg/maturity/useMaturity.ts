@@ -2,7 +2,7 @@ import {useCallback,useEffect,useRef,useState} from 'react';
 import type {RoomId,Speech} from '../world';
 import type {TokenId} from '../story';
 import config from './config.json';
-import {isLost,maturityStorage,migrateMaturity,reportFacts,resetRound} from './model';
+import {isLost,maturityStorage,migrateMaturity,reportFacts,resetRound,resetExploration} from './model';
 import type {MaturitySave} from './model';
 import {readStored,writeStored} from '../../lib/storage/versioned';
 export type MaturityView='permit'|'desk'|'journal'|'radio'|'report'|null;
@@ -38,7 +38,9 @@ export function useMaturity(context:Context){
  const patchFails=useRef(0);
  const failPatch=useCallback(()=>{interacted();if(++patchFails.current===3)speak('patchFail');},[interacted,speak]);
  const finish=useCallback(()=>{const s=current.current;change(v=>({...v,report:{date:new Date().toLocaleDateString('zh-CN'),facts:reportFacts(s),tokens:[...ctx.current.keys],ending:true}}));},[change]);
- const reset=useCallback((round:number)=>{cancel();idleRooms.current.clear();patchFails.current=0;visits.current=[];setPinned(false);change(s=>resetRound(s,round));},[change,cancel]);
+ const clearRuntime=useCallback(()=>{cancel();idleRooms.current.clear();patchFails.current=0;visits.current=[];setPinned(false);setView(null);},[cancel]);
+ const reset=useCallback((round:number)=>{clearRuntime();change(s=>resetRound(s,round));},[change,clearRuntime]);
+ const resetExplorationSave=useCallback((round:number)=>{clearRuntime();change(()=>resetExploration(round));},[change,clearRuntime]);
  useEffect(()=>{if(current.current.round!==context.loops)reset(context.loops);},[context.loops,reset]);
  useEffect(()=>{
   const facts=context.keys.map(id=>'token:'+id);if(facts.some(f=>!current.current.facts.includes(f)))change(s=>({...s,facts:[...new Set([...s.facts,...facts])]}));
@@ -77,6 +79,6 @@ export function useMaturity(context:Context){
   if(current.current.heard.includes(m.selected)&&m.selected==='room-forgot'&&!current.current.echoes.includes('songReturn'))pendingSong.current=true;
   if(!current.current.heard.includes(m.selected))change(s=>({...s,heard:[...s.heard,m.selected]}));
  },[context.music.playing,context.music.elapsed,context.music.selected,context.safeMusic,context.speechVisible,change,speak]);
- return {save,change,view,setView,open,close,grant,speak,reply,remember,read,returned,station,failPatch,finish,reset,silence,anchor,pinned,setPinned};
+ return {save,change,view,setView,open,close,grant,speak,reply,remember,read,returned,station,failPatch,finish,reset,resetExploration:resetExplorationSave,silence,anchor,pinned,setPinned};
 }
 export type MaturityController=ReturnType<typeof useMaturity>;

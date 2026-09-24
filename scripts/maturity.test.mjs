@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {migrateMaturity,resetRound,signalStrength,isLost,reportFacts} from '../src/avg/maturity/model.ts';
+import {migrateMaturity,resetRound,resetExploration,signalStrength,isLost,reportFacts} from '../src/avg/maturity/model.ts';
 import {resolveCompanionPresentation} from '../src/avg/companion/presentation.ts';
 test('new and corrupt saves recover without deleting existing narrative keys',()=>{
  for(const v of [null,42,'bad',[],{frequency:NaN,stations:'bad',hints:{music:90},records:[1,'birth','birth']}]){const s=migrateMaturity(v);assert.equal(s.version,1);assert(Number.isFinite(s.frequency));assert(Array.isArray(s.records));assert(s.hints.music<=3);}
@@ -9,6 +9,15 @@ test('new and corrupt saves recover without deleting existing narrative keys',()
 });
 test('new round keeps review permission and ending record but not old facts',()=>{
  const s=migrateMaturity({clearance:true,records:['protocol'],facts:['token:echo'],stations:['jazz'],report:{date:'2026/9/23',facts:['真实记录'],tokens:['echo'],ending:true}});const next=resetRound(s,2);assert.equal(next.clearance,true);assert.deepEqual(next.records,[]);assert.deepEqual(next.report,s.report);assert.equal(next.round,2);
+});
+test('manual exploration reset revokes desk permission and clears previous review while retaining loop count',()=>{
+ const s=migrateMaturity({clearance:true,reading:{work:'click-down',page:'process',scroll:402},records:['birth'],report:{date:'2026/9/23',facts:['old'],tokens:['echo'],ending:true},round:3});
+ const next=resetExploration(s.round);
+ assert.equal(next.clearance,false);
+ assert.deepEqual(next.reading,{work:'',page:'overview',scroll:0});
+ assert.equal(next.report,null);
+ assert.deepEqual(next.records,[]);
+ assert.equal(next.round,3);
 });
 test('radio uses smooth forgiving tuning and no hard frequency cliff',()=>{assert.equal(signalStrength(98.6,98.6,.8),1);assert(signalStrength(98.9,98.6,.8)>.5);assert.equal(signalStrength(100,98.6,.8),0);});
 test('lost hint needs repeated alternating visits within its active window',()=>{const v=['duty','corridor','duty','corridor','duty','corridor'].map((room,i)=>({room,at:i*5000}));assert(isLost(v,26000,60000,5));assert(!isLost(v,100000,60000,5));assert(!isLost(v.slice(0,4),26000,60000,5));assert(!isLost([...v,{room:'lab',at:26000}],27000,60000,5));});

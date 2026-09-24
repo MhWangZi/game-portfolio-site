@@ -559,7 +559,7 @@ export function PersonalWorld() {
     if(action.type!=='room')maturity.remember(action.type==='event'?'event:'+action.id:'action:'+action.type);
     if(action.type==='panel'&&['permit','desk','radio','journal','report'].includes(action.id)){
       setPanel(null);setEventSession(null);setTravelMusic(false);
-      maturity.open(action.id==='permit'&&maturity.save.clearance?'desk':action.id as 'permit'|'desk'|'radio'|'journal'|'report');return;
+      maturity.open(action.id==='permit'||action.id==='desk'?(maturity.save.clearance?'desk':'permit'):action.id as 'radio'|'journal'|'report');return;
     }
     if(action.type!=='event')setEventSession(null);
     switch (action.type) {
@@ -640,7 +640,7 @@ export function PersonalWorld() {
   const sceneBounds=sceneElement.current?.getBoundingClientRect();
   const companionAnchor=maturity.anchor&&sceneBounds&&!maturityModal?{x:(sceneBounds.left+sceneBounds.width*maturity.anchor[0]/100)/innerWidth*100,y:(sceneBounds.top+sceneBounds.height*maturity.anchor[1]/100)/innerHeight*100}:null;
   useEffect(()=>{if(maturity.save.clearance)setCinematic(s=>s.inventory.includes('clearance-permit')?s:{...s,inventory:[...s.inventory,'clearance-permit']});},[maturity.save.clearance,cinematic.inventory]);
-  const openMaturity=(view:'desk'|'journal'|'permit'|'report')=>{setPanel(null);setEventSession(null);setArchiveView(false);setTravelMusic(false);maturity.open(view==='permit'&&maturity.save.clearance?'desk':view);};
+  const openMaturity=(view:'desk'|'journal'|'permit'|'report')=>{setPanel(null);setEventSession(null);setArchiveView(false);setTravelMusic(false);maturity.open(view==='desk'||view==='permit'?(maturity.save.clearance?'desk':'permit'):view);};
   useEffect(()=>{
     const key=(e:KeyboardEvent)=>{
       if(e.repeat||e.ctrlKey||e.altKey||e.metaKey||hidden||television||busy||eventSession)return;
@@ -1166,7 +1166,7 @@ export function PersonalWorld() {
               <details className="audio-credits"><summary>声音素材来源</summary><p>环境声与交互音效来自<a href="https://opengameart.org/content/rain-loopable" target="_blank" rel="noreferrer">Ylmir</a>、<a href="https://opengameart.org/content/100-cc0-sfx" target="_blank" rel="noreferrer">rubberduck</a>、<a href="https://opengameart.org/content/cat-purr-meow" target="_blank" rel="noreferrer">Kerzoven</a>及<a href="https://kenney.nl/assets/interface-sounds" target="_blank" rel="noreferrer">Kenney</a>，均为CC0。收音机爵士乐由<a href="https://opengameart.org/content/jazz-improvisation-looped" target="_blank" rel="noreferrer">Alex McCulloch</a>创作，CC0；旧呼叫使用<a href="https://opengameart.org/content/mysterious-radio-signal" target="_blank" rel="noreferrer">nicStage、Sam Uncle</a>的Mysterious Radio Signal，按CC-BY 3.0授权，本站仅调整混音音量与滤波。完整来源见项目文档。</p></details>
               <details>
                 <summary>重新探索这个小世界</summary>
-                <p>清除纪念物、拿取状态与本轮对话记录。它记得你来过的次数会保留。</p>
+                <p>清除调阅授权、纪念物、拿取状态与本轮对话记录。它记得你来过的次数会保留。</p>
                 <button
                   onClick={() => {
                     story.setSave((s) => ({
@@ -1178,7 +1178,7 @@ export function PersonalWorld() {
                     setCinematic(s=>({...s,inventory:[],states:{}}));
                     setPatch([]);
                     setNarrative(blankNarrative());
-                    maturity.reset(story.save.loops);
+                    maturity.resetExploration(story.save.loops);
                     setEventSession(null);
                     music.pause();
                     listened.current = [];

@@ -11,6 +11,8 @@ export function migrateMaturity(raw:unknown):MaturitySave {
  report:d.report&&typeof d.report.date==='string'?{date:d.report.date,facts:strings(d.report.facts),tokens:strings(d.report.tokens),ending:d.report.ending===true}:null,round:Math.max(0,Number(d.round)||0)};
 }
 export function resetRound(s:MaturitySave,round:number):MaturitySave{return {...migrateMaturity(null),clearance:s.clearance,reading:s.reading,report:s.report,round};}
+/** Explicit player reset starts a fresh exploration; only the story loop counter survives. */
+export function resetExploration(round:number):MaturitySave{return {...migrateMaturity(null),round};}
 export function signalStrength(frequency:number,station:number,tolerance:number):number{return Math.max(0,1-Math.abs(frequency-station)/tolerance);}
 export function isLost(visits:{room:string;at:number}[],now:number,windowMs:number,changes:number):boolean {
  const recent=visits.filter(v=>now-v.at<=windowMs);
