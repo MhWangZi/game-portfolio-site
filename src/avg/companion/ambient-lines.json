@@ -1,0 +1,7 @@
+{
+  "awayShort":{"text":"！……咳，{shake}我没打瞌睡！{/shake}刚才在核对第404端口的电平。你回来得真突然。","face":12,"motion":"shrink","pose":"shy"},
+  "awayLong":{"text":"……我还以为，{cold}今天的总闸已经拉下了。{/cold}{pause:1.0s}{warm}你还在啊。{/warm}外头雨大，我以为你赶末班车走了。","face":10,"motion":"blink","pose":"relief"},
+  "jiggle":{"text":"{wave}你晃光标当逗猫棒呢？{/wave}我是值班员。……{whisper}箭头戳着脑门，有点痒。{/whisper}","face":9,"motion":"blink","pose":"shy"},
+  "hesitate":{"text":"指针绕了好几圈。{pause:0.4s}拿不定主意就先空着，{wave}这张登记簿不催你。{/wave}","face":9,"motion":"point","pose":"paper"},
+  "foreknowledge":{"text":"等等。{shake}你还没看那张曲序卡，{/shake}怎么知道要这样听？{pause:0.7s}{cold}你以前来过吗？那时的我……也这么爱找借口吗？{/cold}","face":12,"motion":"shrink","pose":"shy"}
+}

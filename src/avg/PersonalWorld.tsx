@@ -34,6 +34,8 @@ import { NarrativeEventView } from "./narrative/NarrativeEventView";
 import reactionData from './companion/reactions.json';
 import { resolveReaction, markRecordClosed } from './companion/context';
 import type { CompanionContext, ReactionRule } from './companion/context';
+import {useAmbientPerformance} from './companion/useAmbientPerformance';
+import ambientLines from './companion/ambient-lines.json';
 import { patchStorage, sanitizePatch, patchStage } from './exploration/patching';
 import { bootOrder, type TokenId } from './story';
 import "./immersive.css";
@@ -179,11 +181,17 @@ export function PersonalWorld() {
     setCinematic(s => commitTransition(s,id,change));
   };
   const listened = useRef<string[]>([]);
+  const [foreknowledgePending,setForeknowledgePending]=useState(false);
   const music = useMusicBox((id) => {
-    if (!story.save.playlistRead) return;
     const result = checkListening(listened.current, id);
     listened.current = result.sequence;
-    if (result.complete) story.collect("echo");
+    if (result.complete) {
+      story.collect("echo");
+      if(story.save.loops>0&&!story.save.playlistRead&&!narrative.flags.includes('heard_before_card')) {
+        setNarrative(s=>({...s,flags:[...new Set([...s.flags,'heard_before_card'])]}));
+        setForeknowledgePending(true);
+      }
+    }
   });
   useEffect(()=>{atmosphere.setTape(music.locked);atmosphere.setMusic(music.playing);},[music.locked,music.playing,atmosphere]);
   const [hidden, setHidden] = useState(false);
@@ -254,6 +262,8 @@ export function PersonalWorld() {
   },[contextual]);
   const responseTimes=useRef<Record<string,number>>({});
   const showResponse=(reply:Speech)=>{setSpeech({...reply,priority:'immediate'});setSpeechKey(k=>k+1);setSpeechVisible(true);};
+  useAmbientPerformance({safe:!document.hidden&&!speechVisible&&!hidden&&!busy&&!transition&&!panel&&!archiveView&&!eventSession&&!travelMusic&&stage==='room'&&!music.playing,onCue:showResponse});
+  useEffect(()=>{if(!foreknowledgePending)return;setForeknowledgePending(false);showResponse(ambientLines.foreknowledge as Speech);},[foreknowledgePending]);
   const respond=(key:string,facts:string[]=[])=>{
     const definition=(interactionResponses as Record<string,ResponseSet>)[key];
     if(!definition)return;
@@ -1005,10 +1015,13 @@ export function PersonalWorld() {
         interactionLocked={maturityModal}
         sceneAnchor={companionAnchor}
         tension={story.save.keys.length}
+        room={room}
+        whispering={activeEvent?.id==='cat-seat'}
       />
       {archiveView&&<ArchiveCabinet audio={atmosphere} still={still} disabled={!!panel||maturityModal} returnedIds={maturity.save.returned} onRead={act} onReturn={(id,drawer)=>{story.collect(id);maturity.returned(drawer);speak('cabinet:return',{text:'放回原位了。',face:9,motion:'blink'});}} onExit={state=>{setArchiveView(false);setSceneEpoch(v=>v+1);respond('CONTROL.archive-exit',state.selected?[state.read?'unreturned':'unread']:[]);}}/>}
       {activeEvent&&eventSession&&<NarrativeEventView key={`${activeEvent.id}:${eventSession.node}`} still={still} event={activeEvent} session={eventSession}
         nodeOverride={activeNode}
+        onHesitate={activeEvent.id==='visitor-register'&&eventSession.node==='start'?()=>showResponse(ambientLines.hesitate as Speech):undefined}
         onSpeak={node=>{const reply:Speech={text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'};if(node.contextual===false)showResponse(reply);else speak(`event:${activeEvent.id}`,reply);}}
         onClose={()=>{setEventSession(null);setSpeechVisible(false);}}
         onChoose={choiceId=>{const next=advanceEvent(activeEvent,eventSession,narrative,choiceId,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room});if(!next)return;atmosphere.play('paper');setNarrative(next.save);setEventSession(next.session);if(next.action)act(next.action);if(next.speech)showResponse(next.speech);}}/>}

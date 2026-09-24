@@ -3,13 +3,21 @@ import type { NarrativeEvent, EventSession, EventNode } from './types';
 import './narrative.css';
 import {useMovablePanel} from '../ui/useMovablePanel';
 import '../ui/floating.css';
-export function NarrativeEventView({event,session,nodeOverride,onChoose,onSpeak,onClose,still=false}:{event:NarrativeEvent;session:EventSession;nodeOverride?:EventNode;onChoose:(id:string)=>void;onSpeak:(node:EventNode)=>void;onClose:()=>void;still?:boolean}) {
+export function NarrativeEventView({event,session,nodeOverride,onChoose,onSpeak,onClose,onHesitate,still=false}:{event:NarrativeEvent;session:EventSession;nodeOverride?:EventNode;onChoose:(id:string)=>void;onSpeak:(node:EventNode)=>void;onClose:()=>void;onHesitate?:()=>void;still?:boolean}) {
   const node=nodeOverride??event.nodes[session.node],text=node.narration.join('\n'),letters=Array.from(text);
   const movable=useMovablePanel('mw-scene-dialogue-position-v1');
   const reduced=still||window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const [shown,setShown]=useState(reduced?letters.length:0),selected=useRef(false);
   const callbacks=useRef({onChoose,onSpeak,onClose});callbacks.current={onChoose,onSpeak,onClose};
   const progress=useRef(shown);progress.current=shown;
+  const hesitation=useRef({last:'',started:0,count:0,done:false});
+  const hover=(id:string)=>{
+    if(!onHesitate||hesitation.current.done||id===hesitation.current.last)return;
+    const now=Date.now(),item=hesitation.current;
+    if(!item.started||now-item.started>8000){item.started=now;item.count=0;}
+    item.last=id;item.count++;
+    if(item.count>=4&&now-item.started>=1800){item.done=true;onHesitate();}
+  };
   useEffect(()=>{callbacks.current.onSpeak(node);},[node]);
   useEffect(()=>{if(reduced)return;const t=setInterval(()=>setShown(n=>Math.min(letters.length,n+1)),25);const end=setTimeout(()=>clearInterval(t),letters.length*25+50);return()=>{clearInterval(t);clearTimeout(end);};},[letters.length,reduced]);
   useEffect(()=>{if(event.presentation!=='ambient'||movable.dragging)return;const t=setTimeout(()=>callbacks.current.onClose(),10000+(reduced?0:letters.length*25));return()=>clearTimeout(t);},[event,letters.length,reduced,movable.dragging]);
@@ -30,6 +38,6 @@ export function NarrativeEventView({event,session,nodeOverride,onChoose,onSpeak,
     <div className="event-observation" onClick={()=>setShown(letters.length)} title={shown<letters.length?'点击显示全文':undefined}>
       <p aria-label={text}><span aria-hidden="true">{letters.slice(0,shown).join('')}<span style={{visibility:'hidden'}}>{letters.slice(shown).join('')}</span></span></p>
     </div>
-    {event.presentation!=='ambient'&&<div className="event-choices">{node.choices.map((choice,i)=><button key={choice.id} onClick={()=>choose(i)}><kbd>{i+1}</kbd><span>{choice.text}</span></button>)}</div>}
+    {event.presentation!=='ambient'&&<div className="event-choices">{node.choices.map((choice,i)=><button key={choice.id} onPointerEnter={e=>{if(e.pointerType==='mouse')hover(choice.id);}} onClick={()=>choose(i)}><kbd>{i+1}</kbd><span>{choice.text}</span></button>)}</div>}
   </article>;
 }

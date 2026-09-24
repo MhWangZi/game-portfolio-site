@@ -1,7 +1,7 @@
 {
   "SCENE.duty.bulletin": {
     "first": {
-      "text": "墙上的守则写得一本正经的。……其实就两句话：灯别全关，人别全丢。",
+      "text": "墙上的守则写得一本正经的。……其实就两句话：{warm}灯别全关，{/warm}{heavy}人别全丢。{/heavy}",
       "face": 9,
       "motion": "point"
     },
@@ -26,7 +26,7 @@
   },
   "SCENE.corridor.phone-hang": {
     "first": {
-      "text": "挂上就好。老铁钩子有点松，免得老听筒受潮短路了。",
+      "text": "挂上就好。老铁钩子有点松，{wave}免得老听筒受潮短路了。{/wave}",
       "face": 9,
       "motion": "blink",
       "pose": "relief"
@@ -51,7 +51,7 @@
           "fact": "unreturned"
         },
         "speech": {
-          "text": "刚看的那份档案还没放回原格呢。……不放也行，反正我不给你记违纪分。",
+          "text": "刚看的那份档案还没放回原格呢。……{pause:0.5s}{wave}不放也行，反正我不给你记违纪分。{/wave}",
           "face": 9,
           "motion": "blink",
           "pose": "paper"
@@ -78,7 +78,7 @@
   },
   "CONTROL.music-open": {
     "first": {
-      "text": "想放哪首滚筒随便挑。右边的发条要是松了，顺手帮我拧一下。",
+      "text": "想放哪首滚筒随便挑。{wave}右边的发条要是松了，顺手帮我拧一下。{/wave}",
       "face": 9,
       "motion": "blink",
       "pose": "care"
@@ -89,7 +89,7 @@
           "minKeys": 3
         },
         "speech": {
-          "text": "放首慢歌吧。……这会儿听点叮咚响的，省得我老胡思乱想。",
+          "text": "放首慢歌吧。……{pause:0.8s}{cold}这会儿听点叮咚响的，{/cold}{warm}省得我老胡思乱想。{/warm}",
           "face": 9,
           "motion": "blink",
           "pose": "care"

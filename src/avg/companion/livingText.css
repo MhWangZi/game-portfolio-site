@@ -1,0 +1,26 @@
+.companion .living-text.animated span{opacity:0;animation:glyph-arrive .14s ease-out both;animation-delay:var(--glyph-delay)}
+.companion .living-text .tone-wave{color:#52735d;animation:glyph-arrive .14s ease-out both,glyph-wave 2.8s ease-in-out infinite;animation-delay:var(--glyph-delay),calc(var(--glyph-delay) + .2s)}
+.companion .living-text .tone-shake{color:#a34e3d;font-weight:700;animation:glyph-arrive .14s ease-out both,glyph-tremble .22s steps(2) 3;animation-delay:var(--glyph-delay),calc(var(--glyph-delay) + .2s)}
+.companion .living-text .tone-warm{color:#98734b;font-weight:700;animation:glyph-arrive .14s ease-out both,glyph-breathe 3s ease-in-out infinite;animation-delay:var(--glyph-delay),calc(var(--glyph-delay) + .2s)}
+.companion .living-text .tone-cold{color:#657984;font-weight:400}
+.companion .living-text .tone-whisper{font-size:.88em;letter-spacing:-.02em;color:#738079}
+.companion .living-text .tone-glitch{color:#76656a;animation:glyph-arrive .14s ease-out both,glyph-fracture .38s steps(2) 1;animation-delay:var(--glyph-delay),calc(var(--glyph-delay) + .1s)}
+.companion .living-text .tone-heavy{font-weight:900;color:#343e36}
+.companion[data-room=rooftop] .companion-bubble,.companion[data-room=corridor] .companion-bubble{background:#dbe3da;border-color:#354b50}
+.companion[data-room=rooftop] .companion-bubble[data-side]:after,.companion[data-room=corridor] .companion-bubble[data-side]:after{border-top-color:#dbe3da}
+.companion[data-room=rooftop] .companion-bubble[data-side=below]:after,.companion[data-room=corridor] .companion-bubble[data-side=below]:after{border-bottom-color:#dbe3da}
+.companion[data-room=rooftop] .living-text,.companion[data-room=corridor] .living-text{color:#465962}
+.companion[data-room=secret] .living-text .tone-glitch{animation-duration:.14s,.28s}
+.companion[data-whispering=true] .companion-bubble{width:min(252px,calc(100vw - 24px));padding:10px 16px 11px;background:#e2e5d1}
+.companion[data-whispering=true] .companion-bubble[data-side]:after{border-top-color:#e2e5d1}
+.companion[data-whispering=true] .companion-bubble[data-side=below]:after{border-bottom-color:#e2e5d1}
+.companion[data-whispering=true] .living-text{font-size:13px;line-height:1.55;color:#59645e}
+.companion:not(.corrupted):has(.companion-bubble) .companion-visual::after{content:'';position:absolute;left:22%;right:22%;bottom:0;height:7%;border-radius:50%;background:#b4ba8d55;filter:blur(7px);z-index:-1;animation:companion-ground-breathe 3.8s ease-in-out infinite;pointer-events:none}
+@keyframes glyph-arrive{from{opacity:0;filter:blur(1px)}to{opacity:1;filter:none}}
+@keyframes glyph-wave{50%{transform:translateY(-2px)}}
+@keyframes glyph-tremble{50%{transform:translateX(1px)}}
+@keyframes glyph-breathe{50%{filter:brightness(1.18)}}
+@keyframes glyph-fracture{50%{transform:translateX(1px);text-shadow:-1px 0 #638a87,1px 0 #a04d45}}
+@keyframes companion-ground-breathe{50%{transform:scaleX(1.04);opacity:.45}}
+.reduced-motion .companion .living-text span,.reduced-motion .companion .companion-visual::after{animation:none!important;opacity:1!important;filter:none!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){.companion .living-text span,.companion .companion-visual::after{animation:none!important;opacity:1!important;filter:none!important;transform:none!important}}

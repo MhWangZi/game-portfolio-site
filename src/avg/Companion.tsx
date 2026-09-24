@@ -6,6 +6,8 @@ import { resolveCompanionPresentation } from './companion/presentation';
 import performance from './companion/performance.json';
 import type { Speech } from "./world";
 import {useBubbleAnchor} from './ui/useBubbleAnchor';
+import {parseLivingText} from './companion/livingText';
+import './companion/livingText.css';
 import './ui/floating.css';
 export function LivingText({
   text,
@@ -18,21 +20,23 @@ export function LivingText({
   scared?: boolean;
   cipher?: boolean;
 }) {
+  const {plain,glyphs}=parseLivingText(text);
   return (
-    <p className={`living-text ${scared ? "scared" : ""}`} aria-label={text}>
-      {Array.from(text).map((char, i) => (
+    <p className={`living-text ${scared ? "scared" : ""} ${text.includes('{')?'animated':''}`} aria-label={plain}>
+      {glyphs.map(({char,tone,delayMs}, i) => (
         <span
           aria-hidden="true"
           key={i}
           style={
             {
               "--i": i,
+              "--glyph-delay": `${delayMs}ms`,
               "--tone": ["#7d4e2a", "#2d6a6d", "#775086", "#9c4635"][
                 (seed + Math.floor(i / 7)) % 4
               ],
             } as CSSProperties
           }
-          className={i % 7 < 2 ? "emphasis" : ""}
+          className={`${tone ? `tone-${tone}` : i % 7 < 2 ? "emphasis" : ""}`}
         >
           {cipher && char !== " "
             ? String.fromCharCode(33 + (char.charCodeAt(0) % 90))
@@ -63,6 +67,8 @@ export function Companion({
   interactionLocked = false,
   sceneAnchor,
   tension=0,
+  room='duty',
+  whispering=false,
 }: {
   speech: Speech;
   visible: boolean;
@@ -84,6 +90,8 @@ export function Companion({
   interactionLocked?: boolean;
   sceneAnchor?:{x:number;y:number}|null;
   tension?:number;
+  room?:string;
+  whispering?:boolean;
 }) {
   const [position, setPosition] = useState(() => {
     try {
@@ -156,6 +164,8 @@ export function Companion({
       data-still={still}
       data-docked={docked}
       data-tension={tension>=3?'high':'low'}
+      data-room={room}
+      data-whispering={whispering}
       data-facing={facing}
       data-dragging={dragging}
       data-scene-anchor={!!sceneAnchor}
