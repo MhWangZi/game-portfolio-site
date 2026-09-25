@@ -4,7 +4,7 @@ import lines from './ambient-lines.json';
 
 export type AmbientCue = keyof typeof lines;
 export function classifyAbsence(ms:number):AmbientCue|null {
-  return ms>=45*60_000?'awayLong':ms>=5*60_000?'awayShort':null;
+  return ms>=45*60_000?'awayLong':ms>=15*60_000?'awayShort':null;
 }
 
 /** Browser-life cues never write save state and never interrupt story interactions. */

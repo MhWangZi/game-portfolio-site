@@ -30,10 +30,11 @@ test('archive exit distinguishes read-but-unreturned from returned and unread fi
  assert.match(responseFor(response,0,blankNarrative(),{...base,facts:['unread']}).text,/还没翻开/);
  const save=recordResponse(blankNarrative(),'CONTROL.music-open');assert.equal(save.responses['CONTROL.music-open'],1);assert.deepEqual(save.flags,[]);
 });
-test('authored followup questions are reachable; ambient observations stay non-interactive; dark is not leaked into other rooms',()=>{
+test('authored followup questions are reachable without forcing ambient observations; dark is not leaked into other rooms',()=>{
  assert.equal(events.filter(e=>e.enabled!==false&&e.presentation==='ambient').length,15);
- assert.equal(events.filter(e=>e.nodes['editorial-question']).length,9);
- for(const e of events.filter(e=>e.nodes['editorial-question'])){assert.equal(e.presentation,'exchange');const b=beginEvent(e,blankNarrative(),base);assert(e.nodes[b.session.node].choices.some(c=>c.next==='editorial-question'));assert.equal(e.nodes['editorial-question'].contextual,false);}
+ const live=events.filter(e=>e.enabled!==false&&e.nodes['editorial-question']);assert.equal(live.length,17);
+ for(const e of live){const b=beginEvent(e,blankNarrative(),base);assert(e.nodes[b.session.node].choices.some(c=>c.next==='editorial-question'));assert(e.nodes['editorial-question'].assistant);}
+ assert(events.some(e=>e.enabled!==false&&e.presentation==='ambient'&&e.nodes[e.entry].choices.some(c=>c.next==='editorial-question')));
  const cat=events.find(e=>e.id==='cat-seat');assert.match(resolveEventNode(cat.nodes.start,blankNarrative(),{...base,room:'lounge',dark:true}).narration[0],/暗处/);
  for(const e of events.filter(e=>e.enabled!==false&&e.room!=='lounge'))for(const node of Object.values(e.nodes))for(const c of node.choices)assert(!c.followup?.variants?.some(v=>v.when.dark));
 });

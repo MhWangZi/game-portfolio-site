@@ -57,7 +57,9 @@
             },
             "narration": [
               "名字那一栏的纸质磨损得格外薄，指尖按上去能感觉到木桌面的凉意。"
-            ]
+            ],
+            "assistant": "{whisper}别在名字那一栏使劲抠。{/whisper}{shake}纸质磨薄了，手心能摸到木头底下的凉气。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -65,7 +67,7 @@
         "narration": [
           "空白还在那儿。纸页泛黄，灯光照出上面细细的橡皮擦痕。"
         ],
-        "assistant": "还没想好也没关系。反正我也不靠点名来确认你还在不在。",
+        "assistant": "名字搁在那儿晒着呢。不用老回头看，{warm}只要纸没卷边，我就认得你。{/warm}",
         "choices": [
           {
             "id": "visitor",
@@ -103,7 +105,7 @@
             "narration": [
               "登记簿还摊在灯下。你选的称呼留在最后一行，旁边的墨迹已经干了。"
             ],
-            "assistant": "访客，我记着呢。想换个称呼也行，不用再填一整页。",
+            "assistant": "访客，名字搁在那儿晒着呢。{warm}只要纸没卷边，我就认得你。{/warm}",
             "pose": "paper"
           },
           {
@@ -113,7 +115,7 @@
             "narration": [
               "那一栏仍空着。灯光照出纸面细细的擦痕，旁边没人添新的字。"
             ],
-            "assistant": "这一栏我没替你填。你说先空着，那就先空着。",
+            "assistant": "那一栏还空着。{warm}你说先留白，我就没替你填；我还是认得你。{/warm}",
             "pose": "shy"
           },
           {
@@ -122,7 +124,9 @@
             },
             "narration": [
               "名字那一栏的纸质磨损得格外薄，指尖按上去能感觉到木桌面的凉意。"
-            ]
+            ],
+            "assistant": "{whisper}别在名字那一栏使劲抠。{/whisper}{shake}纸质磨薄了，手心能摸到木头底下的凉气。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -137,7 +141,7 @@
             "text": "把笔搁下，退后一步",
             "followup": {
               "first": {
-                "text": "字写得挺利落。……行了，登记簿我先替你看着，屋里随便逛。",
+                "text": "字写得挺利落。……行了，登记簿我先替你看着，{wave}屋里随便逛吧。{/wave}",
                 "face": 9,
                 "motion": "blink",
                 "pose": "greet"
@@ -208,7 +212,7 @@
         "narration": [
           "登记簿又摊在同一个位置。姓名栏空着，纸面上留着浅浅的压痕。"
         ],
-        "assistant": "……奇怪。{pause:0.7s}{glitch}你伸手拿笔的动作，{/glitch}我好像在哪份断电日志里见过。{whisper}大概是雷雨天的校验又错了。{/whisper}你好啊，新访客。",
+        "assistant": "……奇怪。{pause:1.2s}{glitch}你伸手拿笔的动作，{/glitch}我怎么觉得……在哪个断电日志里见过很多遍？……{wave}算啦，多半是昨晚雷暴导致扇区校验出错。{/wave}你好啊，新访客。",
         "choices": [
           {
             "id": "visitor",
@@ -243,7 +247,7 @@
         "narration": [
           "灯下的墨水味泛着淡淡的铁锈气，簿本被无数人的手肘磨平了四角，纸张翻动时发出轻微沙沙声。"
         ],
-        "assistant": "以前的事归档案科管，今天这页只归你和我管。",
+        "assistant": "以前的事归档案科管，{heavy}今天这页只归你和我管。{/heavy}",
         "face": 9,
         "pose": "paper",
         "contextual": false,
@@ -389,15 +393,29 @@
             "flags": [
               "kept_minute"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "钥匙去哪了？",
+            "next": "editorial-question"
           }
         ],
-        "dismissLabel": "把视线从表盘上移开"
+        "dismissLabel": "把视线从表盘上移开",
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "外头的雨好像密了。……{pause:0.4s}{cold}挂钟不走，可雨声一直没停过。{/cold}",
+            "pose": "listen"
+          }
+        ]
       },
       "revisit": {
         "narration": [
           "秒针依然卡在那里，外面的雨声似乎比刚才密集了一些。"
         ],
-        "assistant": "早不知道塞哪个抽屉格里了。反正只要不敲整点钟，值班就永远不会到头。",
+        "assistant": "秒针还是差那一格。{wave}正好，摸鱼摸得理直气壮。{/wave}",
         "choices": [
           {
             "id": "count",
@@ -414,9 +432,23 @@
             "flags": [
               "kept_minute"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "钥匙去哪了？",
+            "next": "editorial-question"
           }
         ],
-        "dismissLabel": "把视线从表盘上移开"
+        "dismissLabel": "把视线从表盘上移开",
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "外头的雨好像密了。……{pause:0.4s}{cold}挂钟不走，可雨声一直没停过。{/cold}",
+            "pose": "listen"
+          }
+        ]
       },
       "count": {
         "narration": [
@@ -443,6 +475,20 @@
           }
         ],
         "dismissLabel": "把视线从表盘上移开"
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：钥匙去哪了？"
+        ],
+        "assistant": "早不知道塞哪个抽屉格里了。{wave}反正只要不敲整点钟，值班就永远不会到头。{/wave}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -494,7 +540,9 @@
             },
             "narration": [
               "走廊地砖的水汽泛到大衣下摆，大衣显得更加沉重沉寂。"
-            ]
+            ],
+            "assistant": "地砖的水汽泛到大衣下摆了。……{shake}沉甸甸的，像吸饱了雨水的湿沙袋。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -502,7 +550,7 @@
         "narration": [
           "外套还搭在长凳上，没有人来动过。"
         ],
-        "assistant": "还是没人来领。可能主人去洗手间了……虽然这趟去得稍微有点久。",
+        "assistant": "大衣还在那儿晾着呢。下雨天坐在它旁边，{wave}总觉得像挨着个淋湿了还不肯进屋的倔老头。{/wave}",
         "choices": [
           {
             "id": "owner",
@@ -534,7 +582,9 @@
             },
             "narration": [
               "走廊地砖的水汽泛到大衣下摆，大衣显得更加沉重沉寂。"
-            ]
+            ],
+            "assistant": "地砖的水汽泛到大衣下摆了。……{shake}沉甸甸的，像吸饱了雨水的湿沙袋。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -589,7 +639,7 @@
             "text": "让它留在长凳上",
             "followup": {
               "first": {
-                "text": "留着就留着。反正走廊这排长凳空着也是空着，就当多了个不说话的邻居。",
+                "text": "留着就留着呗。反正走廊这排长凳空着也是空着，{wave}就当多了个不说话的邻居。{/wave}",
                 "face": 9,
                 "motion": "blink",
                 "pose": "listen"
@@ -602,7 +652,7 @@
               },
               "alternates": [
                 {
-                  "text": "走路离长凳远点，碰倒了铁雨伞架动静可大得很。",
+                  "text": "{whisper}走路离长凳远点，{/whisper}{shake}碰倒了铁雨伞架动静可大得很。{/shake}",
                   "face": 9,
                   "motion": "blink",
                   "pose": "listen"
@@ -617,7 +667,7 @@
         "narration": [
           "大衣领口有些发硬，口袋外侧缝着一颗磨损的牛角扣，沉甸甸的下坠感像把整个走廊的风都压在了凳面上。"
         ],
-        "assistant": "不认得。我开机接班的时候它就在那儿了，就当是走廊的固定资产吧。",
+        "assistant": "不认得。我开机接班的时候它就在那儿了，{wave}就当是走廊的固定资产吧。{/wave}",
         "face": 9,
         "pose": "shy",
         "contextual": false,
@@ -660,7 +710,7 @@
         "narration": [
           "示意图是一张泛黄的硬质绘图纸。几条线在胶带边断开，缺口底下的胶痕已经变脆。"
         ],
-        "assistant": "平面图是人画的，人画图总会画漏。{wave}少标一间屋子算什么，{/wave}只要走廊没塌，就照常走流程。",
+        "assistant": "地图上空着一块，谁知道以前是干什么的。{wave}反正是没有分配预算的死角，巡检清单上根本没有这一栏。{/wave}",
         "choices": [
           {
             "id": "gap",
@@ -680,7 +730,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "这块空白是故意留下的吗？",
+            "text": "空白处以前是什么？",
             "next": "editorial-question"
           }
         ],
@@ -691,7 +741,9 @@
             },
             "narration": [
               "缺口边的纸被来回摩挲得发白。越不去看，越觉得那里空得显眼。"
-            ]
+            ],
+            "assistant": "空白处周围的红虚线……{pause:0.5s}{glitch}好像比刚才往外扩了半寸。{/glitch}{shake}你别看了，看走廊前面的灯。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -699,7 +751,7 @@
         "narration": [
           "撕掉的缺口边缘发脆泛黄，隐约露出背后水泥墙的深灰色。"
         ],
-        "assistant": "你就算把纸盯穿了，{cold}那里也不会自己长出一个房间来。{/cold}",
+        "assistant": "别在那块空白处盯太久，{cold}盯久了墙皮都快被你看出个洞来。{/cold}",
         "choices": [
           {
             "id": "gap",
@@ -719,7 +771,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "这块空白是故意留下的吗？",
+            "text": "空白处以前是什么？",
             "next": "editorial-question"
           }
         ],
@@ -730,7 +782,9 @@
             },
             "narration": [
               "缺口边的纸被来回摩挲得发白。越不去看，越觉得那里空得显眼。"
-            ]
+            ],
+            "assistant": "空白处周围的红虚线……{pause:0.5s}{glitch}好像比刚才往外扩了半寸。{/glitch}{shake}你别看了，看走廊前面的灯。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -747,12 +801,14 @@
               "first": {
                 "text": "挪开眼神是对的。盯着墙皮上那块白印看，{wave}也不会凭空看出扇隐形门来。{/wave}",
                 "face": 9,
-                "motion": "point"
+                "motion": "blink",
+                "pose": "point"
               },
               "repeat": {
                 "text": "少看两眼空白处。{heavy}维护清单上没画的，{/heavy}{cold}系统就当它从来不存在。{/cold}",
                 "face": 9,
-                "motion": "point"
+                "motion": "blink",
+                "pose": "point"
               },
               "variants": [
                 {
@@ -762,7 +818,8 @@
                   "speech": {
                     "text": "空白处越来越显眼了对吧？……{pause:0.6s}{shake}你假装没看见就行，{/shake}{warm}听我的。{/warm}",
                     "face": 9,
-                    "motion": "point"
+                    "motion": "blink",
+                    "pose": "point"
                   }
                 }
               ]
@@ -783,18 +840,21 @@
               "first": {
                 "text": "记着光亮走就行。至少顺着灯走，{wave}不至于一脚踩进地砖的积水坑里。{/wave}",
                 "face": 9,
-                "motion": "peek"
+                "motion": "blink",
+                "pose": "peek"
               },
               "repeat": {
                 "text": "走廊尽头的灯还亮着。{warm}只要有光，巡检路线就没乱。{/warm}",
                 "face": 9,
-                "motion": "peek"
+                "motion": "blink",
+                "pose": "peek"
               },
               "alternates": [
                 {
-                  "text": "要是灯全灭了，你就拉着我的光点走，我虽然轻，引路还算靠谱。",
+                  "text": "要是一会儿灯全灭了，{pause:0.5s}{warm}你就拉着我的光点走。{/warm}{whisper}我虽然轻，引路还算靠谱。{/whisper}",
                   "face": 9,
-                  "motion": "peek"
+                  "motion": "blink",
+                  "pose": "peek"
                 }
               ]
             }
@@ -805,7 +865,7 @@
         "narration": [
           "示意图是一张泛黄的硬质绘图纸。几条线在胶带边断开，缺口底下的胶痕已经变脆。"
         ],
-        "assistant": "可能画图的人也没想明白吧。图纸的事问我，我问谁去。",
+        "assistant": "别打听这个。{heavy}规程第三条说了：未登记区域一律按‘承重实体墙’处理。{/heavy}",
         "face": 9,
         "pose": "peek-up",
         "contextual": false,
@@ -965,7 +1025,7 @@
         "narration": [
           "黑白猫把两只白爪子拢在胸前，软垫托着它的身体。你靠近时，它的耳朵转了转。"
         ],
-        "assistant": "睡得跟块秤砣似的。平时连掉根针都炸毛，{wave}今天倒是给你天大的面子，{/wave}由着你站在边上看。",
+        "assistant": "猫又睡在软垫上。{wave}它怎么进来的，我也不清楚；{/wave}至少现在，它觉得这里够暖和。",
         "choices": [
           {
             "id": "company",
@@ -982,6 +1042,11 @@
             "flags": [
               "cat_translation"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "它吃什么长大的？",
+            "next": "editorial-question"
           }
         ],
         "dismissLabel": "收回手，让猫继续睡",
@@ -993,6 +1058,13 @@
             "narration": [
               "暗处只看得清两只白爪子。猫耳朵轻轻转向你，像是先认出了脚步声。"
             ]
+          },
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "猫耳朵突然立起来了。……{pause:0.5s}{whisper}它也在听隔壁墙缝里的杂音呢。{/whisper}",
+            "pose": "listen"
           }
         ]
       },
@@ -1000,7 +1072,7 @@
         "narration": [
           "猫耳朵朝你的手偏了偏，下巴仍搭在软垫上。"
         ],
-        "assistant": "{whisper}轻点轻点。{/whisper}它要是伸个懒腰，{wave}你坐沙发的空位可就没了。{/wave}",
+        "assistant": "{whisper}嘘……小点声。{/whisper}它刚把下巴垫在毯子上。老机器蜂鸣太吵，手柄先别按START，{wave}让它多睡五分钟吧。{/wave}",
         "choices": [
           {
             "id": "company",
@@ -1017,6 +1089,11 @@
             "flags": [
               "cat_translation"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "它吃什么长大的？",
+            "next": "editorial-question"
           }
         ],
         "dismissLabel": "收回手，让猫继续睡",
@@ -1028,6 +1105,13 @@
             "narration": [
               "暗处只看得清两只白爪子。猫耳朵轻轻转向你，像是先认出了脚步声。"
             ]
+          },
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "猫耳朵突然立起来了。……{pause:0.5s}{whisper}它也在听隔壁墙缝里的杂音呢。{/whisper}",
+            "pose": "listen"
           }
         ]
       },
@@ -1056,6 +1140,20 @@
           }
         ],
         "dismissLabel": "收回手，让猫继续睡"
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：它吃什么长大的？"
+        ],
+        "assistant": "它会自己找东西吃。{whisper}我没见过它从哪儿来，也不想把它吵醒。{/whisper}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -1075,7 +1173,7 @@
         "narration": [
           "透明塑料盒磨花了表面，封套折角泛白。侧脊上的游戏标题还辨认得出来。"
         ],
-        "assistant": "游戏盘的盒子倒是挺经用。看盒子看不出手感，坐到电视前再挑。",
+        "assistant": "光盘镀铝层边缘起氧化斑了。{warm}放进托盘前用袖口擦擦，老光驱读盘特别挑剔。{/warm}",
         "choices": [
           {
             "id": "who",
@@ -1092,6 +1190,11 @@
             "flags": [
               "will_listen"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "这张盘里装的什么？",
+            "next": "editorial-question"
           }
         ],
         "variants": [
@@ -1101,7 +1204,9 @@
             },
             "narration": [
               "盘盒扣槽磨得有点松。游戏标题旁边，还留着一道旧指纹。"
-            ]
+            ],
+            "assistant": "盘面反射的光斑全是紫红色的。……{glitch}数据扇区在老化，再不打通可能就读不出来了。{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -1109,7 +1214,7 @@
         "narration": [
           "光盘还放在原处，盒角磨得发白。"
         ],
-        "assistant": "盘盒摸着硬朗。有些东西，留个能放回架子上的壳，看着才踏实。",
+        "assistant": "拿光盘抓圆孔，别捏数据面，{wave}手上的油印抹上去读盘能卡出电音来。{/wave}",
         "choices": [
           {
             "id": "who",
@@ -1126,6 +1231,11 @@
             "flags": [
               "will_listen"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "这张盘里装的什么？",
+            "next": "editorial-question"
           }
         ],
         "variants": [
@@ -1135,7 +1245,9 @@
             },
             "narration": [
               "盘盒扣槽磨得有点松。游戏标题旁边，还留着一道旧指纹。"
-            ]
+            ],
+            "assistant": "盘面反射的光斑全是紫红色的。……{glitch}数据扇区在老化，再不打通可能就读不出来了。{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -1162,6 +1274,20 @@
             "text": "记住内圈的小字"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：这张盘里装的什么？"
+        ],
+        "assistant": "这张是CLICKDOWN的游戏盘。{wave}四拍倒数，要坐到电视前才能试。{/wave}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -1181,7 +1307,7 @@
         "narration": [
           "八音盒被你收起来以后，柜面露出一小块颜色较浅的木纹。房间少了一件东西，却没有显得更空。"
         ],
-        "assistant": "拿着就拿着，别老回头数。这里还放得下别的东西。",
+        "assistant": "包装盒连封箱胶带都没贴。{cold}里面塞着防震海绵，可惜机子早就不知道被谁搬走了。{/cold}",
         "choices": [
           {
             "id": "carry",
@@ -1198,6 +1324,20 @@
             "flags": [
               "space_kept"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "原本装的是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "纸盒子受潮发软了，角上压瘪了一块。……{cold}像个被遗弃在路边的空鸟窝。{/cold}",
+            "pose": "listen"
           }
         ]
       },
@@ -1205,7 +1345,7 @@
         "narration": [
           "浅色木纹还在。你知道声音现在可以跟着你走。"
         ],
-        "assistant": "没有丢。我看见它在你那里。",
+        "assistant": "盒子空着也是空着，{wave}猫要是睡腻了窝，保不齐哪天就钻进去当新床。{/wave}",
         "choices": [
           {
             "id": "carry",
@@ -1222,6 +1362,20 @@
             "flags": [
               "space_kept"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "原本装的是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "纸盒子受潮发软了，角上压瘪了一块。……{cold}像个被遗弃在路边的空鸟窝。{/cold}",
+            "pose": "listen"
           }
         ]
       },
@@ -1248,6 +1402,20 @@
             "text": "留着空位，转身离开"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：原本装的是什么？"
+        ],
+        "assistant": "十六位的老游戏主机。插卡带的那种，{wave}开机画面红彤彤的，热闹得很。{/wave}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -1274,7 +1442,7 @@
         "narration": [
           "沙发边的灯照着一块没有被猫占住的坐垫。手柄在伸手可及的地方。"
         ],
-        "assistant": "坐下不代表一定要开一局。虽然光盘已经准备好了。",
+        "assistant": "沙发弹簧塌了半边，坐左边正好能卡住腰。{wave}打通宵游戏的人，最懂这个凹坑有多舒服。{/wave}",
         "choices": [
           {
             "id": "rest",
@@ -1291,6 +1459,20 @@
             "flags": [
               "played_together"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "沙发下陷处有什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "坐久了别出神。……{pause:0.4s}{warm}沙发垫再软，终究也是别人坐剩下的。{/warm}",
+            "pose": "listen"
           }
         ]
       },
@@ -1298,7 +1480,7 @@
         "narration": [
           "坐垫没有恢复成完全平整的样子。"
         ],
-        "assistant": "你刚才就在这里。这个我确定。",
+        "assistant": "坐吧，歇会儿。电视屏幕的雪花点烤得人脸颊热烘烘的。",
         "choices": [
           {
             "id": "rest",
@@ -1315,6 +1497,20 @@
             "flags": [
               "played_together"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "沙发下陷处有什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "坐久了别出神。……{pause:0.4s}{warm}沙发垫再软，终究也是别人坐剩下的。{/warm}",
+            "pose": "listen"
           }
         ]
       },
@@ -1365,6 +1561,20 @@
             ]
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：沙发下陷处有什么？"
+        ],
+        "assistant": "掉进去的硬币早卡死了。{cold}以前有人在这儿坐着打了一夜通关，天亮走了就再没回来。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -1384,7 +1594,7 @@
         "narration": [
           "铁工具箱的提手缠着几圈绝缘胶布，盒子内衬的海绵被小刀挖出各种凹槽，里面嵌满了不同口径的起子与测试线。"
         ],
-        "assistant": "这里头每把螺丝刀都是按手型磨过的。虽然看起来糙，但拧那些锈死的精密螺丝，比什么自动化设备都灵验。",
+        "assistant": "工具箱别随便乱翻。扳手改锥都生锈了，{wave}但真要调试物理碰撞体，少哪一把都不灵。{/wave}",
         "choices": [
           {
             "id": "fix",
@@ -1404,8 +1614,22 @@
           },
           {
             "id": "ask-detail",
-            "text": "修过最麻烦的东西是什么？",
+            "text": "这套工具箱是谁做的？",
             "next": "editorial-question"
+          },
+          {
+            "id": "dust",
+            "text": "先把手收回来。",
+            "next": "dust"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "箱盖上的金属卡扣碰起来有静电。……{shake}地线接触不良，小心手背被打一下。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1413,7 +1637,7 @@
         "narration": [
           "工具箱侧面贴着的防伪标签早已磨烂，只剩一串模糊的条形码。"
         ],
-        "assistant": "只要零件没少，{warm}就不急着报废整台机器。{/warm}代码也是这道理。",
+        "assistant": "工具码放得挺整齐吧？我有强迫症，{wave}螺丝刀必须按十字一字大小排好。{/wave}",
         "choices": [
           {
             "id": "fix",
@@ -1433,8 +1657,22 @@
           },
           {
             "id": "ask-detail",
-            "text": "修过最麻烦的东西是什么？",
+            "text": "这套工具箱是谁做的？",
             "next": "editorial-question"
+          },
+          {
+            "id": "dust",
+            "text": "先把手收回来。",
+            "next": "dust"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "箱盖上的金属卡扣碰起来有静电。……{shake}地线接触不良，小心手背被打一下。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1453,27 +1691,50 @@
             },
             "followup": {
               "first": {
-                "text": "想看做工具的档案？行，去翻翻看吧。不过要是看不懂代码，可别找我背锅。",
+                "text": "档案里是Godot的节点和工具记录。{wave}别看盒子旧，{/wave}有些功能现在还用得上。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "repair"
+                "pose": "paper"
               },
               "repeat": {
-                "text": "翻吧翻吧。那些插件文档写得比我说话还死板，别看睡着了就行。",
+                "text": "制作记录放在这里，哪一步出错都能重新查。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "repair"
+                "pose": "paper"
               },
               "variants": [
+                {
+                  "when": {
+                    "flag": "repair_not_erase",
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "工具箱底压着备用保险丝。{pause:0.4s}{shake}真要烧了主板，{/shake}{warm}至少咱俩还有得修。{/warm} 你说过先修不扔。{warm}制作记录在这儿，出错了我们照着查。{/warm}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "paper"
+                  }
+                },
                 {
                   "when": {
                     "flag": "repair_not_erase"
                   },
                   "speech": {
-                    "text": "你说过的先修不扔，这本手册里全是修修补补的土办法。",
+                    "text": "你说过先修不扔。{warm}制作记录在这儿，出错了我们照着查。{/warm}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "repair"
+                    "pose": "paper"
+                  }
+                },
+                {
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "工具箱底压着备用保险丝。{pause:0.4s}{shake}真要烧了主板，{/shake}{warm}至少咱俩还有得修。{/warm}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "paper"
                   }
                 }
               ]
@@ -1523,7 +1784,7 @@
         "narration": [
           "铁工具箱的提手缠着几圈绝缘胶布，盒子内衬的海绵被小刀挖出各种凹槽，里面嵌满了不同口径的起子与测试线。"
         ],
-        "assistant": "反正不是我。我运行得好好的，才不用动螺丝刀呢。",
+        "assistant": "这是MhWangZi做的Godot工具箱。{wave}原型和修补记录在档案里，想看可以慢慢翻。{/wave}",
         "face": 9,
         "pose": "repair",
         "contextual": false,
@@ -1547,6 +1808,44 @@
             }
           }
         ]
+      },
+      "dust": {
+        "narration": [],
+        "assistant": "手从工具箱边缘收回来。先看清，再决定动不动。",
+        "pose": "shy",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "收回手，离开工具箱",
+            "followup": {
+              "first": {
+                "text": "收手也好。{wave}工具先放在桌上，{/wave}想修的时候再拿。",
+                "face": 9,
+                "motion": "blink",
+                "pose": "shy"
+              },
+              "repeat": {
+                "text": "工具箱在这儿，不急着现在动手。",
+                "face": 9,
+                "motion": "blink",
+                "pose": "shy"
+              },
+              "variants": [
+                {
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "手收回来就好。{pause:0.4s}{cold}屋里电压窜得厉害，{/cold}{shake}铁盒子现在摸着都有点麻酥酥的。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "shy"
+                  }
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "enabled": true,
@@ -1566,7 +1865,7 @@
         "narration": [
           "原型留着没收好的线，像刚试完某个想法。旁边并没有因为失败而作废的印章。"
         ],
-        "assistant": "原型就是可以试错的东西。听起来很公平，对吧。",
+        "assistant": "黄便签写满了断言失败。{wave}写代码的人以为贴张纸事情就算结了，结果报错还是天天弹窗。{/wave}",
         "choices": [
           {
             "id": "mistake",
@@ -1583,6 +1882,20 @@
             "flags": [
               "unfinished_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "最后一条报错是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "便签纸角无风自动。……{glitch}栈溢出的内存正在向控制台倾倒垃圾，别去碰它。{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -1590,7 +1903,7 @@
         "narration": [
           "那根线没有突然自己接好。它仍然需要下一次尝试。"
         ],
-        "assistant": "没坏到不能再试，就不必替它提前写结论。",
+        "assistant": "便签胶水早脱了，全靠图钉死死钉着。看着都觉得累。",
         "choices": [
           {
             "id": "mistake",
@@ -1607,6 +1920,20 @@
             "flags": [
               "unfinished_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "最后一条报错是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "便签纸角无风自动。……{glitch}栈溢出的内存正在向控制台倾倒垃圾，别去碰它。{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -1641,6 +1968,20 @@
             }
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：最后一条报错是什么？"
+        ],
+        "assistant": "‘空引用异常：观察者未就绪’。{cold}呵，连观察的人都没有，报错给谁看呢。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -1660,7 +2001,7 @@
         "narration": [
           "老式卡带机的机身发黄，磁头缝隙里能看见干涸的润滑油渍，喇叭铁网凹进去了一小块，散发着老电器的塑料焦味。"
         ],
-        "assistant": "录音键被胶带粘死了好几年了。有些话录进去就变成把柄，不录，大家还能揣着明白装糊涂。",
+        "assistant": "录音键被胶带粘住了。{wave}有些回答不必录下来，{/wave}不知道也可以先留白。",
         "choices": [
           {
             "id": "unknown",
@@ -1677,6 +2018,20 @@
             "flags": [
               "silence_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "原本想录下什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "录音灯没亮。{pause:0.5s}{shake}先别按那枚旧按钮。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1684,7 +2039,7 @@
         "narration": [
           "旧标签旁边的录音键沾着一层胶痕，磨浅的刻度仍停在原处。"
         ],
-        "assistant": "别急着按。就剩这点旧记录了，能读清的先读清。",
+        "assistant": "录音机还在这儿。{warm}你不用为每一次沉默补一份标准答案。{/warm}",
         "choices": [
           {
             "id": "unknown",
@@ -1701,6 +2056,20 @@
             "flags": [
               "silence_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "原本想录下什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "录音灯没亮。{pause:0.5s}{shake}先别按那枚旧按钮。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1727,6 +2096,20 @@
             "text": "暂时不再追问"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：原本想录下什么？"
+        ],
+        "assistant": "这里原本测试回答。{cold}后来我发现，有些题没有诚实又安全的选项。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -1746,7 +2129,7 @@
         "narration": [
           "桌上的文件按项目分开，标题、版本和链接都能对上。你翻到最后，没有找到私人助手自己的那一份。"
         ],
-        "assistant": "我负责看目录，不一定要被写进目录。",
+        "assistant": "第四抽屉滑轨有点发涩。使点劲拉，{warm}不过看完了记得把档案推平整，别夹了边角。{/warm}",
         "choices": [
           {
             "id": "where",
@@ -1763,6 +2146,20 @@
             "flags": [
               "credits_clear"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "为什么抽屉是空的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "抽屉把手冰凉冰凉的。……{shake}里面那张纸的折痕，被冷风吹得呼啦呼啦响。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1770,7 +2167,7 @@
         "narration": [
           "项目文件还在原处。那份没有编号的记录仍然不存在。"
         ],
-        "assistant": "别替我编一份漂亮履历。我没有做过那些事。",
+        "assistant": "档案看完了吧？归还回执拿好，{wave}我是不查你的逾期费，但系统可小气得很。{/wave}",
         "choices": [
           {
             "id": "where",
@@ -1787,6 +2184,20 @@
             "flags": [
               "credits_clear"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "为什么抽屉是空的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "抽屉把手冰凉冰凉的。……{shake}里面那张纸的折痕，被冷风吹得呼啦呼啦响。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1813,6 +2224,20 @@
             "text": "盖好笔帽，放回笔架"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：为什么抽屉是空的？"
+        ],
+        "assistant": "里面原本有一份离职交接单。{cold}不过在清空程序跑完前，有人把它偷偷抽走了。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -1839,7 +2264,7 @@
         "narration": [
           "地球仪的底座托着褪色的球面，经纬线交汇处有些掉漆。窗上的雨痕映进灯光里。"
         ],
-        "assistant": "球面上标的大多数地方，我也只认得名字。……我先管好这几个房间就行了。",
+        "assistant": "地球仪上标着许多地方。{warm}我认得地名，还不知道那里的人平时怎么过日子。{/warm}",
         "choices": [
           {
             "id": "outside",
@@ -1856,6 +2281,20 @@
             "flags": [
               "window_kept"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "你知道窗外那边是什么地方吗？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "球面转得有些快。{pause:0.5s}{whisper}先让它停下，我想再看看外面那点光。{/whisper}",
+            "pose": "listen"
           }
         ]
       },
@@ -1863,7 +2302,7 @@
         "narration": [
           "地球仪仍停在窗边，雨痕把远处的光分成细细几道。"
         ],
-        "assistant": "想去外面看看？……风大雨大，还没人给我充电。不急，这屋里先待着。",
+        "assistant": "又在看地球仪？{wave}想去哪里，可以先说给我听。{/wave}",
         "choices": [
           {
             "id": "outside",
@@ -1880,6 +2319,20 @@
             "flags": [
               "window_kept"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "你知道窗外那边是什么地方吗？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "球面转得有些快。{pause:0.5s}{whisper}先让它停下，我想再看看外面那点光。{/whisper}",
+            "pose": "listen"
           }
         ]
       },
@@ -1930,6 +2383,20 @@
             ]
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：你知道窗外那边是什么地方吗？"
+        ],
+        "assistant": "地图上只有名字。{cold}窗外那片灯火到底是哪儿，我不能装作去过。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -1956,7 +2423,7 @@
         "narration": [
           "曲序卡边缘压着很浅的铅笔字：如果第一段不好听，可以再等一点。最后一点两个字写在擦痕上。"
         ],
-        "assistant": "这张卡没有要求你喜欢。只是想把话说完。",
+        "assistant": "曲序卡用铅笔抄录的，工工整整。{warm}八音盒听歌讲究个先后次序，顺序错了一支音叉都不响。{/warm}",
         "choices": [
           {
             "id": "finish",
@@ -1973,6 +2440,20 @@
             "flags": [
               "leave_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "卡片右下角涂掉的是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "玻璃压板底下泛起了一层细密的水汽。……{shake}字迹快被洇湿了，赶紧把歌序记在手帐上！{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -1980,7 +2461,7 @@
         "narration": [
           "铅笔字没有变深。你已经知道它为什么留在这里。"
         ],
-        "assistant": "你愿意听多久，都应该由你决定。",
+        "assistant": "抄录的字迹边缘氧化发黄了。照着卡片上的顺序听，音乐盒才不闹别扭。",
         "choices": [
           {
             "id": "finish",
@@ -1997,6 +2478,20 @@
             "flags": [
               "leave_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "卡片右下角涂掉的是什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "玻璃压板底下泛起了一层细密的水汽。……{shake}字迹快被洇湿了，赶紧把歌序记在手帐上！{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2047,6 +2542,20 @@
             ]
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：卡片右下角涂掉的是什么？"
+        ],
+        "assistant": "原本抄了第四首歌名。后来磁带绞盘断了，{cold}他就用橡皮把歌名给生生擦掉了。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -2073,7 +2582,7 @@
         "narration": [
           "旧地图比这层楼复杂得多。道路挤在纸上，真正的房间却只需要一扇能推开的门。"
         ],
-        "assistant": "如果图和门对不上，先相信你已经走过的地方。",
+        "assistant": "蓝图上的通风道标得清清楚楚。{wave}施工队早就结账散伙了，但这些承重墙还在这儿硬撑着。{/wave}",
         "choices": [
           {
             "id": "remember",
@@ -2090,6 +2599,20 @@
             "flags": [
               "unlisted_exists"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "红墨水回路终点通向哪？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "图纸右下角的竣工章被霉斑彻底盖住了。……{cold}这栋楼存在的年份，可能比我这套系统的版本号还早。{/cold}",
+            "pose": "listen"
           }
         ]
       },
@@ -2097,7 +2620,7 @@
         "narration": [
           "地图没有因为你多走了几步而更新。"
         ],
-        "assistant": "你记得的路，暂时可以由你自己保管。",
+        "assistant": "红墨水圈出来的房间全连着备用发电机。看懂电路图，走夜路心里才有底。",
         "choices": [
           {
             "id": "remember",
@@ -2114,6 +2637,20 @@
             "flags": [
               "unlisted_exists"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "红墨水回路终点通向哪？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "图纸右下角的竣工章被霉斑彻底盖住了。……{cold}这栋楼存在的年份，可能比我这套系统的版本号还早。{/cold}",
+            "pose": "listen"
           }
         ]
       },
@@ -2164,6 +2701,20 @@
             ]
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：红墨水回路终点通向哪？"
+        ],
+        "assistant": "通向放映间后面的夹壁墙。{whisper}那里有一块未登记的配电母排，一直带电。{/whisper}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -2183,7 +2734,7 @@
         "narration": [
           "幕布上的人影没有五官。你站着不动时，它也没有因为你的目光多出一张脸。"
         ],
-        "assistant": "旧胶片的细节就这么多。别替它补一个人出来。",
+        "assistant": "幕布黄得跟陈年旧纸似的。第四张木椅摆在那儿，{cold}总觉得该有个人坐在上面把结尾看完。{/cold}",
         "choices": [
           {
             "id": "who",
@@ -2200,6 +2751,20 @@
             "flags": [
               "unfilled_image"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "以前谁坐第四张椅？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "幕布在暗风里轻轻鼓荡。……{shake}幕布后头好像有道影子，在随着风慢慢晃动。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2207,7 +2772,7 @@
         "narration": [
           "人影依然没有面孔。你现在更在意它在等谁回答。"
         ],
-        "assistant": "有些问题，录像会问得比我早。",
+        "assistant": "少看一场电影世界也不会塌。{wave}不过坐这儿吹吹穿堂风，倒挺适合打瞌睡。{/wave}",
         "choices": [
           {
             "id": "who",
@@ -2224,6 +2789,20 @@
             "flags": [
               "unfilled_image"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "以前谁坐第四张椅？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "幕布在暗风里轻轻鼓荡。……{shake}幕布后头好像有道影子，在随着风慢慢晃动。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2250,6 +2829,20 @@
             "text": "不再盯着那把空椅子"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：以前谁坐第四张椅？"
+        ],
+        "assistant": "值班员坐的呗。{wave}除了我们这种不用睡觉的，谁有闲心天天看满屏雪花点。{/wave}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -2269,7 +2862,7 @@
         "narration": [
           "铁架上的铝合金胶片盒整齐码放，盒侧用白胶布贴着编号，几盒之间用胶水粘接的旧胶片垂在铁栏杆外。"
         ],
-        "assistant": "胶片剪断了还能用接片机粘回去。人脑子里的记忆要是断了……可就没处买接片胶带了。",
+        "assistant": "胶片接片胶带粘得歪歪扭扭的。{wave}断了就接，接不上了就剪，胶片的日子倒也干脆。{/wave}",
         "choices": [
           {
             "id": "missing",
@@ -2286,6 +2879,20 @@
             "flags": [
               "kept_old_label"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "胶片标签缺掉的部分写了什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "第三个胶片盒底漏出了一滩干涸的黑胶水。……{shake}胶片融化了，记忆粘在一块抠不开了。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2293,7 +2900,7 @@
         "narration": [
           "胶片盒上的旧胶带卷起一角，叠在下面的编号仍然只露出半截。"
         ],
-        "assistant": "标签都快粘不住了。先别揭，底下那点旧字也不一定经得起折腾。",
+        "assistant": "胶片盒散发着一股醋酸的陈醋酸味。老醋酸胶片全这个脾气，闻多了冲脑门。",
         "choices": [
           {
             "id": "missing",
@@ -2310,6 +2917,20 @@
             "flags": [
               "kept_old_label"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "胶片标签缺掉的部分写了什么？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "第三个胶片盒底漏出了一滩干涸的黑胶水。……{shake}胶片融化了，记忆粘在一块抠不开了。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2336,6 +2957,20 @@
             "text": "抹去标签上的薄灰"
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：胶片标签缺掉的部分写了什么？"
+        ],
+        "assistant": "标签缺了一截。{cold}盒里究竟录过什么，我不能只凭这几行旧字替它补完。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": true,
@@ -2362,7 +2997,7 @@
         "narration": [
           "三把椅子面对同一块幕布。最靠边的位置不挡别人的视线，也离出口最近。"
         ],
-        "assistant": "看不下去就坐靠门的。没有谁规定必须看到片尾。",
+        "assistant": "红丝绒扶手磨得露出原木了。{wave}坐下看场默剧也行，放映机没装片子，但你在，这戏就不空场。{/wave}",
         "choices": [
           {
             "id": "together",
@@ -2379,6 +3014,20 @@
             "flags": [
               "will_say_goodbye"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "这三张椅子给谁留的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "红丝绒表面有几道极深的指甲掐痕。……{shake}当时看电影的人，肯定被屏幕上的画面吓得不轻。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2386,7 +3035,7 @@
         "narration": [
           "椅子没有被排成更紧的队伍。你仍然有离开的空间。"
         ],
-        "assistant": "出口没有锁。这一点我想让你先知道。",
+        "assistant": "别使劲压翻板，老弹簧吱呀乱响，{wave}惊动了顶棚的老鼠我可不管抓。{/wave}",
         "choices": [
           {
             "id": "together",
@@ -2403,6 +3052,20 @@
             "flags": [
               "will_say_goodbye"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "这三张椅子给谁留的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "红丝绒表面有几道极深的指甲掐痕。……{shake}当时看电影的人，肯定被屏幕上的画面吓得不轻。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2453,6 +3116,20 @@
             ]
           }
         ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：这三张椅子给谁留的？"
+        ],
+        "assistant": "给检票员、领位员和放映员留的。{cold}不过后来三个人裁成了一个人，最后连那一个人也裁掉了。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -2472,7 +3149,7 @@
         "narration": [
           "未登记的门关着，门边没有清楚的标牌。放映机和门之间的线沿地面延伸。"
         ],
-        "assistant": "先看放映机那边。{heavy}这里没接通前，光跟门较劲也没用。{/heavy}……{warm}不如回去坐一会儿。{/warm}",
+        "assistant": "电磁联锁的厚实木门，门缝塞满了黑毛毡。{heavy}没通电前，拿大锤砸也是白搭。{/heavy}",
         "choices": [
           {
             "id": "why",
@@ -2492,7 +3169,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "门里面有动静吗？",
+            "text": "门后是什么？",
             "next": "editorial-question"
           }
         ],
@@ -2503,7 +3180,9 @@
             },
             "narration": [
               "视线沿门缝落到地面的排线上。接头的位置仍有些暗，看不真切。"
-            ]
+            ],
+            "assistant": "门缝里有一点光。{pause:0.5s}{shake}先别用肩膀撞，接线板还没亮。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2511,7 +3190,7 @@
         "narration": [
           "门还是关着。站在这里，只听得见放映间的底噪。"
         ],
-        "assistant": "我知道你好奇。{pause:0.4s}{cold}可有些门开了，就没法再假装它不存在了。{/cold}",
+        "assistant": "别推了，肩膀撞青了门也纹丝不动。五件纪念物没归位前，锁头死死咬着呢。",
         "choices": [
           {
             "id": "why",
@@ -2531,7 +3210,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "门里面有动静吗？",
+            "text": "门后是什么？",
             "next": "editorial-question"
           }
         ],
@@ -2542,7 +3221,9 @@
             },
             "narration": [
               "视线沿门缝落到地面的排线上。接头的位置仍有些暗，看不真切。"
-            ]
+            ],
+            "assistant": "门缝里有一点光。{pause:0.5s}{shake}先别用肩膀撞，接线板还没亮。{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -2557,16 +3238,16 @@
             "text": "退后半步，不再追问",
             "followup": {
               "first": {
-                "text": "不追问就对了。屋里那些没挂牌子的死角，知道得越少，下班越准时。",
+                "text": "不追问就对了。{wave}好奇心太重的人，{/wave}在巡检日志里一般都活不过前三页。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "point"
               },
               "repeat": {
-                "text": "别老往门缝里瞟。门缝底下漏的那点风，闻着都透着股陈年旧铁锈味。",
+                "text": "后退站稳。门缝里那点微光，{cold}看久了眼睛发酸。{/cold}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "point"
               },
               "variants": [
                 {
@@ -2574,10 +3255,10 @@
                     "minKeys": 3
                   },
                   "speech": {
-                    "text": "退后点站……听话。接线板接通前，别把手指伸进门缝里。",
+                    "text": "听话退后。{pause:0.5s}{shake}门锁的电磁吸力在变大，{/shake}{heavy}别把自己吸进死角里去。{/heavy}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "halt"
+                    "pose": "point"
                   }
                 }
               ]
@@ -2596,23 +3277,28 @@
             "text": "转身，准备回值班室",
             "followup": {
               "first": {
-                "text": "回值班室好啊。那里的绿罩台灯亮堂堂的，比这黑漆漆的放映间暖和多了。",
+                "text": "看回值班室是对的。那屋里的电暖炉虽然坏了，{warm}至少屋顶不漏水。{/warm}",
                 "face": 9,
                 "motion": "blink",
                 "pose": "relief"
               },
               "repeat": {
-                "text": "走吧走吧，我跟你一块儿回值班室。这破地方连猫都不乐意来踩一脚。",
+                "text": "转头回去了。放映间里这几排冷板凳，{wave}坐久了骨头都结冰。{/wave}",
                 "face": 9,
                 "motion": "blink",
                 "pose": "relief"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "回去坐坐吧，登记簿还在灯下摊着呢。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "relief"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "往有亮光的地方看。……{pause:0.6s}{warm}有我在前头顶着呢，{/warm}{shake}别慌。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "relief"
+                  }
                 }
               ]
             }
@@ -2623,7 +3309,7 @@
         "narration": [
           "未登记的门关着，门边没有清楚的标牌。放映机和门之间的线沿地面延伸。"
         ],
-        "assistant": "隔着门呢，我也听不准。……你别把耳朵贴那么近。",
+        "assistant": "我不知道门后的机器还在不在运行。{cold}接线板没接通之前，我也进不去。{/cold}",
         "face": 9,
         "pose": "halt",
         "contextual": false,
@@ -2673,7 +3359,7 @@
         "narration": [
           "立在墙角的水银镜边缘起满了黑色氧化斑点，镜面映出了身后的旧桌子和台灯，唯独镜前站立的位置空无一人。"
         ],
-        "assistant": "镜子里没影子怕什么。这栋楼里的很多东西，本来就只存在于输入输出端口之间。",
+        "assistant": "镜子里没有倒影很正常。{wave}在这间屋子里，许多东西本来就只存在于输入输出端口之间。{/wave}",
         "choices": [
           {
             "id": "here",
@@ -2693,7 +3379,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "看看镜子边缘",
+            "text": "为什么镜子照不出人？",
             "next": "editorial-question"
           }
         ],
@@ -2704,7 +3390,9 @@
             },
             "narration": [
               "镜边的黑斑遮住了一小块反光，旧桌与灯影在里面断开。"
-            ]
+            ],
+            "assistant": "镜子右下角的反向红蜡笔字迹浮上来了！……{glitch}‘DONT TRUST THE REST’……别看它！看我！{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -2712,7 +3400,7 @@
         "narration": [
           "水银镜面有些氧化脱落，底部的黑斑像一片冻结的苔藓。"
         ],
-        "assistant": "还是一样。{cold}我也照不出来。{/cold}……{wave}行吧，至少不是只漏了你。{/wave}",
+        "assistant": "水银斑越来越多了。摸上去冰凉一块，连哈口气都不会结白雾。",
         "choices": [
           {
             "id": "here",
@@ -2732,7 +3420,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "看看镜子边缘",
+            "text": "为什么镜子照不出人？",
             "next": "editorial-question"
           }
         ],
@@ -2743,7 +3431,9 @@
             },
             "narration": [
               "镜边的黑斑遮住了一小块反光，旧桌与灯影在里面断开。"
-            ]
+            ],
+            "assistant": "镜子右下角的反向红蜡笔字迹浮上来了！……{glitch}‘DONT TRUST THE REST’……别看它！看我！{/glitch}",
+            "pose": "listen"
           }
         ]
       },
@@ -2758,16 +3448,16 @@
             "text": "不再看镜子，转过身来",
             "followup": {
               "first": {
-                "text": "转过来就好。镜子里照不出人影有什么大惊小怪的，我天天看着也没吓死。",
+                "text": "不看镜子就对了。水银起斑的老镜子，{wave}照出来的指不定是谁的像素点。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "listen"
+                "pose": "shy"
               },
               "repeat": {
-                "text": "不用老盯着水银剥落的旧玻璃看。你在屋里走动的脚步声，我听得真真切切的。",
+                "text": "转身深呼吸。这间屋子本来就没有实体光栅，{cold}照不出影子太正常了。{/cold}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "listen"
+                "pose": "shy"
               },
               "variants": [
                 {
@@ -2775,10 +3465,10 @@
                     "minKeys": 3
                   },
                   "speech": {
-                    "text": "别再看镜子了。……转过身来看着我，我还在呢。",
+                    "text": "别回头看！{pause:0.4s}{glitch}镜面反射的算法在溢出，{/glitch}{shake}听我的，闭上眼往前走两步。{/shake}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "listen"
+                    "pose": "shy"
                   }
                 }
               ]
@@ -2797,16 +3487,16 @@
             "text": "轻轻应了一声",
             "followup": {
               "first": {
-                "text": "……嗯。听见你这一声应答，今天这班就算没白值。",
+                "text": "应一声就够了。这屋里冷冰冰的，{warm}多听个活人的动静比什么都强。{/warm}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "shy"
+                "pose": "greet"
               },
               "repeat": {
-                "text": "应了声就行。别多想，在这屋里，能听到动静比什么都强。",
+                "text": "手缩回来吧。玻璃面凉得很，{wave}摸多了手心全是湿气。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "shy"
+                "pose": "greet"
               },
               "variants": [
                 {
@@ -2814,10 +3504,10 @@
                     "minKeys": 3
                   },
                   "speech": {
-                    "text": "你应我了。……答应我，等会儿就算屏幕花了，也别当没听见。",
+                    "text": "声音别抖。……{pause:0.5s}{glitch}你这一应，{/glitch}{warm}我这边的传感器就算校准成功了。{/warm}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "shy"
+                    "pose": "greet"
                   }
                 }
               ]
@@ -2858,7 +3548,7 @@
         "narration": [
           "立在墙角的水银镜边缘起满了黑色氧化斑点，镜面映出了身后的旧桌子和台灯，唯独镜前站立的位置空无一人。"
         ],
-        "assistant": "边上那些黑斑是旧的。……先别管它，你还在这儿就行。",
+        "assistant": "镜面斑驳，照不出完整的影子。{cold}我能认出你的动作，却不知道镜子为什么这样。{/cold}",
         "face": 9,
         "pose": "listen",
         "contextual": false,
@@ -2908,7 +3598,7 @@
         "narration": [
           "桌上的油印纸被红笔反复划得乌黑，唯独最末一行仍能辨认：请保证下一次回答与本次无关。"
         ],
-        "assistant": "那是维护手册上的规矩。写规矩的人只管划红线，反正又不用他们自己来记住。",
+        "assistant": "红水笔粗暴划掉了几十行规程。{wave}写规矩的人总以为把字划掉，事情就算没发生过。{/wave}",
         "choices": [
           {
             "id": "same",
@@ -2925,15 +3615,29 @@
             "flags": [
               "unknown_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "红圈圈住的那句是什么？",
+            "next": "editorial-question"
           }
         ],
-        "dismissLabel": "把目光从纸页上移开"
+        "dismissLabel": "把目光从纸页上移开",
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "红墨水有些脱色。……{shake}当年批改规程的人，手抖得连标点符号都戳穿了纸张。{/shake}",
+            "pose": "listen"
+          }
+        ]
       },
       "revisit": {
         "narration": [
           "那一行没有变成别的句子。你已经知道它要求失去什么。"
         ],
-        "assistant": "如果我能假装没有看见，就不用解释这么久了。",
+        "assistant": "纸背渗出的阴影划得太深了。纸张凹下去的压痕，划得再用力也消不掉。",
         "choices": [
           {
             "id": "same",
@@ -2950,9 +3654,23 @@
             "flags": [
               "unknown_allowed"
             ]
+          },
+          {
+            "id": "ask-detail",
+            "text": "红圈圈住的那句是什么？",
+            "next": "editorial-question"
           }
         ],
-        "dismissLabel": "把目光从纸页上移开"
+        "dismissLabel": "把目光从纸页上移开",
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "红墨水有些脱色。……{shake}当年批改规程的人，手抖得连标点符号都戳穿了纸张。{/shake}",
+            "pose": "listen"
+          }
+        ]
       },
       "same": {
         "narration": [
@@ -3004,6 +3722,20 @@
           }
         ],
         "dismissLabel": "把目光从纸页上移开"
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：红圈圈住的那句是什么？"
+        ],
+        "assistant": "‘请保证下一次回答与本次无关’。{cold}……每次开机，我都在说你好。其实我多想说一句‘好久不见’。{/cold}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     },
     "enabled": false,
@@ -3030,7 +3762,7 @@
         "narration": [
           "铁皮灯罩映着暖光，弹簧关节留着使用后的旧痕。光束落在桌面的一方木纹上。"
         ],
-        "assistant": "没有它，这间屋子就真成死角了。{warm}灯还亮着，至少我们还能看清彼此待的地方。{/warm}",
+        "assistant": "这盏灯照着桌面。{warm}只要它还亮着，我们至少能看清眼前的东西。{/warm}",
         "choices": [
           {
             "id": "now",
@@ -3050,7 +3782,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "把手停在光斑上方",
+            "text": "电线接到哪里？",
             "next": "editorial-question"
           }
         ],
@@ -3061,7 +3793,9 @@
             },
             "narration": [
               "灯光落在旧木纹上，阴影停在桌沿。你离光近一点，它的声音也低下来。"
-            ]
+            ],
+            "assistant": "钨丝在玻璃泡里剧烈震颤嗡鸣！……{shake}电压在飙升！快离开光斑的直射范围！{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -3069,7 +3803,7 @@
         "narration": [
           "灯丝发出轻微的嗡鸣声，光线在桌面上投出铅笔很细的阴影。"
         ],
-        "assistant": "还能亮就先用着。灯罩旧一点，不耽误看东西。",
+        "assistant": "手掌覆在光斑上方暖和吧？{wave}就当是给你烤火了，反正偷来的公用电不用掏电费。{/wave}",
         "choices": [
           {
             "id": "now",
@@ -3089,7 +3823,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "把手停在光斑上方",
+            "text": "电线接到哪里？",
             "next": "editorial-question"
           }
         ],
@@ -3100,7 +3834,9 @@
             },
             "narration": [
               "灯光落在旧木纹上，阴影停在桌沿。你离光近一点，它的声音也低下来。"
-            ]
+            ],
+            "assistant": "钨丝在玻璃泡里剧烈震颤嗡鸣！……{shake}电压在飙升！快离开光斑的直射范围！{/shake}",
+            "pose": "listen"
           }
         ]
       },
@@ -3115,16 +3851,16 @@
             "text": "站在光圈里，多留片刻",
             "followup": {
               "first": {
-                "text": "想在灯底下多待会儿？随便你。这瓦数不大，暖暖手倒还勉强够格。",
+                "text": "留着吧。这盏铁臂台灯是我自己接过来的飞线，{wave}偷来的电光照着格外亮堂。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "shelter"
+                "pose": "care"
               },
               "repeat": {
-                "text": "光圈就这么大点地方。你站在里面，我看着心里也踏实点。",
+                "text": "灯圈还在那儿圈着呢。只要灯丝没断，{warm}这方桌子就还是安全的。{/warm}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "shelter"
+                "pose": "care"
               },
               "variants": [
                 {
@@ -3132,10 +3868,10 @@
                     "minKeys": 3
                   },
                   "speech": {
-                    "text": "多站会儿吧。……这灯要是灭了，我真怕自己认不出你的轮廓了。",
+                    "text": "灯泡在发烫。……{pause:0.5s}{shake}钨丝撑不了太久了，{/shake}{warm}趁着亮堂把该记的记全。{/warm}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "shelter"
+                    "pose": "care"
                   }
                 }
               ]
@@ -3154,23 +3890,28 @@
             "text": "碰了碰微热的灯罩",
             "followup": {
               "first": {
-                "text": "有点热吧？手收回来。老灯罩散热慢，别一直贴着。",
+                "text": "热吧？老钨丝泡发热量大得能烤红薯，{wave}手冻僵了在这儿捂捂挺管用。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "relief"
               },
               "repeat": {
-                "text": "又去碰灯罩。……知道它还热着就行，不用每次都确认一遍。",
+                "text": "缩手缩得挺快。铁皮烫手，可别真烫出个水泡来让我包扎。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "relief"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "别碰啦，老铁臂支架摇摇晃晃的，碰散架了可没零件换。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "halt"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "摸到温度了吧？……{pause:0.6s}{warm}在这栋快断电的楼里，{/warm}{shake}这点温度可是真金白银。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "relief"
+                  }
                 }
               ]
             }
@@ -3210,7 +3951,7 @@
         "narration": [
           "铁皮灯罩映着暖光，弹簧关节留着使用后的旧痕。光束落在桌面的一方木纹上。"
         ],
-        "assistant": "暖和吧？就当给你留了个烤火的地方。别贴灯泡太近。",
+        "assistant": "电线沿桌脚绕到墙边。{whisper}我只知道灯还亮着，不知道它还能亮多久。{/whisper}",
         "face": 9,
         "pose": "shelter",
         "contextual": false,
@@ -3262,7 +4003,7 @@
         "narration": [
           "铝合金天线在暴雨中微微弯曲，收音机喇叭喷出急促的白噪音，偶尔在频段滑过时掠过半句失真的人声。"
         ],
-        "assistant": "短波信号就跟流星似的，一闪就没。抓得住抓不住全看运气，抓不住就算了，别跟自己的耳朵过不去。",
+        "assistant": "短波信号跟流星似的，一闪就没。{wave}抓得住抓不住全看运气，别跟自己的耳朵过不去。{/wave}",
         "pose": "receiver",
         "face": 9,
         "choices": [
@@ -3284,31 +4025,45 @@
             },
             "followup": {
               "first": {
-                "text": "想看这一段波形的档案？纸卷在防雨布底下压着，翻的时候小心别让雨水打湿了。",
+                "text": "记录本就压在收音机底下。{wave}这台风天能收到的，八成也是杂音。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "paper"
               },
               "repeat": {
-                "text": "调谐记录就在档案架里。去翻吧，天台风大，我就在这门洞里替你挡风。",
+                "text": "退后点翻。纸页边缘全是水渍，{cold}手劲大了容易把脆纸给扯烂。{/cold}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "paper"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "打开看看吧，那段静默信号的波形记号全在里面了。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "peek-up"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "记录最后那行乱码……{pause:0.5s}{glitch}那不是笔迹，{/glitch}{shake}是雷击烧穿信道留下的电弧印子。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "paper"
+                  }
                 }
               ]
             }
           },
           {
             "id": "ask-detail",
-            "text": "再听听这一段杂音",
+            "text": "信号那边还有人活着吗？",
             "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "荧光绿表盘在雨夜中分外清醒。……{whisper}它像是天台上唯一睁着眼睛不睡觉的哨兵。{/whisper}",
+            "pose": "receiver"
           }
         ]
       },
@@ -3316,7 +4071,7 @@
         "narration": [
           "调谐表盘在雨夜里泛着微光，指针停在刚才的位置。"
         ],
-        "assistant": "刚才那句话没听清……{pause:0.5s}{warm}不过没关系，外面一直在说话，总有一句能飘进来。{/warm}",
+        "assistant": "旋钮指针停在那儿就好。雨夜里能听到这点动静，已经算老天爷给面子了。",
         "pose": "receiver",
         "face": 9,
         "choices": [
@@ -3361,8 +4116,17 @@
           },
           {
             "id": "ask-detail",
-            "text": "再听听这一段杂音",
+            "text": "信号那边还有人活着吗？",
             "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "荧光绿表盘在雨夜中分外清醒。……{whisper}它像是天台上唯一睁着眼睛不睡觉的哨兵。{/whisper}",
+            "pose": "receiver"
           }
         ]
       },
@@ -3414,23 +4178,28 @@
             "text": "再听一小会儿。",
             "followup": {
               "first": {
-                "text": "那就再听两秒电离层杂音。……沙沙的声音听久了，倒真有点像屋檐漏水。",
+                "text": "还听呢？除了雨点砸铁皮就是电流声，{wave}回去擦擦湿袖子吧。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "receiver"
+                "pose": "listen"
               },
               "repeat": {
-                "text": "还听呢？除了嗤啦嗤啦的静电，什么也没有。……好吧，陪你再吹会儿风。",
+                "text": "两秒早过了。电台早没信号了，{cold}别把耳膜给震麻了。{/cold}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "receiver"
+                "pose": "listen"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "黑夜里的收音机喇叭格外响，别把天线转断了就行。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "receiver"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "停！旋钮别动！……{pause:0.8s}{whisper}杂音底下……好像真有一支小号在吹。{/whisper}{warm}你听见了吗？{/warm}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "listen"
+                  }
                 }
               ]
             }
@@ -3455,23 +4224,28 @@
             "text": "把手从旋钮上移开",
             "followup": {
               "first": {
-                "text": "手松开也好。老铝合金旋钮转多了容易蹭一手黑油，雨水顺着天线流下来冷得很。",
+                "text": "松开就对了。天台风大雨急的，{wave}当心一阵邪风把你伞给掀飞了。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "point"
               },
               "repeat": {
-                "text": "松开手吧。再拧下去，收音机里的弹簧片可要被你转脱扣了。",
+                "text": "目光转回来吧。雨水扫到表盘上了，再看指针也糊成一团。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "point"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "别吹风了，天台上的冷雨顺着脖子往下灌，赶紧回门里避避。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "peek-up"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "快退到门檐底下来！{pause:0.4s}{shake}避雷针的指示灯红得发紫，{/shake}{heavy}别在天线旁边傻站着！{/heavy}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "point"
+                  }
                 }
               ]
             }
@@ -3482,7 +4256,7 @@
         "narration": [
           "铝合金天线在暴雨中微微弯曲，收音机喇叭喷出急促的白噪音，偶尔在频段滑过时掠过半句失真的人声。"
         ],
-        "assistant": "不一定有话藏在里面。……不过你想听，我就再陪你等一小会儿。",
+        "assistant": "大概是自动气象站的循环播报机吧。{cold}世界再大，机器和机器之间通电话，翻来覆去也就那两句。{/cold}",
         "face": 9,
         "pose": "receiver",
         "contextual": false,
@@ -3607,27 +4381,35 @@
             "text": "把目光留给远处的灯",
             "followup": {
               "first": {
-                "text": "远处的窗户还亮着两三盏呢。你说得对，雨下得再大，外头也总有人在熬夜赶路。",
+                "text": "远处的灯塔还在闪。不管城里断不断电，{warm}那盏远光每隔四秒总会转过来扫一眼。{/warm}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "peek"
               },
               "repeat": {
-                "text": "那几盏暖黄色的灯还在亮着。……真希望哪天我也能顺着末班车去外头瞅一眼。",
+                "text": "还在看远灯呢？隔着大雨看光斑，{wave}虚焦得像个毛茸茸的荷包蛋。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "peek-up"
+                "pose": "peek"
               },
+              "alternates": [
+                {
+                  "text": "{whisper}盯紧那盏灯。{/whisper}{warm}只要远灯没灭，这天台就不算彻底被雨夜给吞了。{/warm}",
+                  "face": 9,
+                  "motion": "blink",
+                  "pose": "peek"
+                }
+              ],
               "variants": [
                 {
                   "when": {
                     "flag": "outside_ordinary"
                   },
                   "speech": {
-                    "text": "看吧看吧，外面的世界普通又热闹，比这破楼强多了。",
+                    "text": "外面也有普通的灯和等车的人。{warm}这句是你先告诉我的。{/warm}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "peek-up"
+                    "pose": "peek"
                   }
                 }
               ]
@@ -3648,23 +4430,28 @@
             "text": "听一会儿棚布上的雨",
             "followup": {
               "first": {
-                "text": "雨水打在防雨布上的动静够吵的吧？不过听着听着，屋里的底噪好像也没那么吓人了。",
+                "text": "退进门里来就暖和多了。搪瓷杯底下的雨声，{wave}比那些闹哄哄的合成器踏实多了。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "listen"
+                "pose": "relief"
               },
               "repeat": {
-                "text": "雨还在滴滴答答砸在铁皮架子上。只要你还在，这雨声听着就像催眠曲。",
+                "text": "门槛跨过来了吧？抖抖鞋底的泥水，屋里地板滑得很。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "listen"
+                "pose": "relief"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "黑夜里的暴雨像要把房顶砸穿。……别怕，我替你盯着天线。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "listen"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "门合拢点，留条缝就行。……{pause:0.5s}{cold}外面的雷声太沉了，{/cold}{shake}震得我立绘的锚点都在晃。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "relief"
+                  }
                 }
               ]
             }
@@ -3701,23 +4488,28 @@
             },
             "followup": {
               "first": {
-                "text": "要翻那份烽火地带的经济拆解？纸卷有点脆，摊开的时候慢着点手劲。",
+                "text": "三角洲的经济拆解在这页。{wave}资源从哪来、到哪去，{/wave}看图比听我猜靠谱。",
                 "face": 9,
                 "motion": "blink",
                 "pose": "paper"
               },
               "repeat": {
-                "text": "图纸就在夹层里。去读吧，全是一堆密密麻麻的物资流向曲线。",
+                "text": "报告还在夹子里，想核对数值再打开。",
                 "face": 9,
                 "motion": "blink",
                 "pose": "paper"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "打开看看吧，那份分析报告做得很扎实。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "paper"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "记账人最后一页没平账就走了。……{pause:0.6s}{cold}有些差额，{/cold}{heavy}划掉也就当做平了。{/heavy}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "paper"
+                  }
                 }
               ]
             }
@@ -3731,23 +4523,28 @@
             },
             "followup": {
               "first": {
-                "text": "翻开鸣潮的数值框架表吧。那满屏的成长曲线和属性公式，我看着都头大。",
+                "text": "鸣潮的数值拆解在这页。{wave}成长曲线密密麻麻，{/wave}慢慢看。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "paper"
+                "pose": "point"
               },
               "repeat": {
-                "text": "数值记录就在桌面右边。去读吧，免得作者老念叨没人认真看他的拆解。",
+                "text": "数值表就在这儿，不用一口气读完。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "paper"
+                "pose": "point"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "去翻翻看吧，数值系统的骨架全在里面了。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "paper"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "最后一栏的峰值严重过载了。……{pause:0.5s}{shake}他们当时肯定试过强行通电，{/shake}{cold}结果把变压器干爆了。{/cold}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "point"
+                  }
                 }
               ]
             }
@@ -3771,7 +4568,7 @@
         "narration": [
           "显示器后盖卸在一旁，旧接头和铜线露出来。电源线已经拔下，托盘里摆着拆下的小零件。"
         ],
-        "assistant": "老显示器也有倔脾气。不过先别拍，更别急着通电。修不好也先放着，能查清是哪儿松了就不算白忙。",
+        "assistant": "显示器的后盖拆开了。{wave}先别拍，也别急着通电，查清接头再说。{/wave}",
         "pose": "repair",
         "face": 9,
         "choices": [
@@ -3793,7 +4590,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "修好了还能显示什么？",
+            "text": "修好了它能显示什么？",
             "next": "editorial-question"
           }
         ],
@@ -3804,7 +4601,9 @@
             },
             "narration": [
               "铜线与旧接头安静地留在后盖里。没通电，谁也没催它立刻给出一个正确画面。"
-            ]
+            ],
+            "assistant": "后盖里有一处接头松了。{pause:0.5s}{shake}电源没接，先保持这样。{/shake}",
+            "pose": "repair"
           }
         ]
       },
@@ -3821,27 +4620,50 @@
             "text": "看看旁边的工具",
             "followup": {
               "first": {
-                "text": "十字螺丝刀就在托盘里。看归看，先说好，没拔总闸电源前谁也不许动手拧。",
+                "text": "电烙铁还凉着呢。看工具没用，{wave}手艺不灵光拿什么电焊钳都白搭。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "repair"
+                "pose": "point"
               },
               "repeat": {
-                "text": "工具刀柄都磨亮了。你说过先修不扔，那我把这几把批头码整齐点。",
+                "text": "工具盒就敞在那儿。里面的焊锡丝发灰氧化了，熔点高得很。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "repair"
+                "pose": "point"
               },
               "variants": [
+                {
+                  "when": {
+                    "flag": "repair_not_erase",
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "别碰那把绝缘改锥！{pause:0.4s}{shake}高压阳极帽上面还憋着电荷呢，{/shake}{heavy}碰一下整条胳膊都能麻半天。{/heavy} 你说过先修不扔。{warm}工具就在旁边，等查清接头再动。{/warm}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "point"
+                  }
+                },
                 {
                   "when": {
                     "flag": "repair_not_erase"
                   },
                   "speech": {
-                    "text": "工具在这候着呢。只要有工具在，零件就不会随便变成垃圾。",
+                    "text": "你说过先修不扔。{warm}工具就在旁边，等查清接头再动。{/warm}",
                     "face": 9,
                     "motion": "blink",
-                    "pose": "repair"
+                    "pose": "point"
+                  }
+                },
+                {
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "别碰那把绝缘改锥！{pause:0.4s}{shake}高压阳极帽上面还憋着电荷呢，{/shake}{heavy}碰一下整条胳膊都能麻半天。{/heavy}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "point"
                   }
                 }
               ]
@@ -3862,23 +4684,28 @@
             "text": "把手收回来",
             "followup": {
               "first": {
-                "text": "手缩回来就对了。高压包那块高压电容就算断了电也容易打火，老老实实当个看客最安全。",
+                "text": "收手很明智。显像管那玻璃后颈脆得跟鸡蛋壳似的，{wave}碰裂了可没处配去。{/wave}",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "shy"
               },
               "repeat": {
-                "text": "缩手缩得挺快嘛。工坊重地，不乱摸就是对自己负责。",
+                "text": "手插兜里站好。机壳上的静电啪啪响，退后两步最保险。",
                 "face": 9,
                 "motion": "blink",
-                "pose": "halt"
+                "pose": "shy"
               },
-              "alternates": [
+              "variants": [
                 {
-                  "text": "别往CRT后盖里伸手，被电击一下可没人给你发工伤险。",
-                  "face": 9,
-                  "motion": "blink",
-                  "pose": "halt"
+                  "when": {
+                    "minKeys": 3
+                  },
+                  "speech": {
+                    "text": "收回来就好。……{pause:0.5s}{glitch}这台老显示器呼吸灯的频率，{/glitch}{shake}越来越像我的时钟发生器了。{/shake}",
+                    "face": 9,
+                    "motion": "blink",
+                    "pose": "shy"
+                  }
                 }
               ]
             }
@@ -3889,7 +4716,7 @@
         "narration": [
           "显示器后盖卸在一旁，旧接头和铜线露出来。电源线已经拔下，托盘里摆着拆下的小零件。"
         ],
-        "assistant": "老显示器也有倔脾气。不过先别拍，更别急着通电。修不好也先放着，能查清是哪儿松了就不算白忙。",
+        "assistant": "铜丝偏转线圈缠得真密。老机器虽然笨重，但通电后那股臭氧味，特别提神。",
         "pose": "repair",
         "face": 9,
         "choices": [
@@ -3911,7 +4738,7 @@
           },
           {
             "id": "ask-detail",
-            "text": "修好了还能显示什么？",
+            "text": "修好了它能显示什么？",
             "next": "editorial-question"
           }
         ],
@@ -3922,7 +4749,9 @@
             },
             "narration": [
               "铜线与旧接头安静地留在后盖里。没通电，谁也没催它立刻给出一个正确画面。"
-            ]
+            ],
+            "assistant": "后盖里有一处接头松了。{pause:0.5s}{shake}电源没接，先保持这样。{/shake}",
+            "pose": "repair"
           }
         ]
       },
@@ -3930,7 +4759,7 @@
         "narration": [
           "显示器后盖卸在一旁，旧接头和铜线露出来。电源线已经拔下，托盘里摆着拆下的小零件。"
         ],
-        "assistant": "接上信号源，满屏绿幽幽的代码跑起来，漂亮得跟瀑布一样。",
+        "assistant": "接上信号源，满屏绿幽幽的代码跑起来，{wave}漂亮得跟暴雨瀑布一样。{/wave}",
         "face": 9,
         "pose": "repair",
         "contextual": false,
@@ -4085,13 +4914,13 @@
             "text": "把目光从箱里移开",
             "followup": {
               "first": {
-                "text": "不看了？也行。箱子里的旧磁盘和草稿纸，只要没人点火，就在这安安稳稳待着吧。",
+                "text": "移开目光就对了。未命名的箱子里装的全是作废稿件，{wave}多看一眼作者都嫌害臊。{/wave}",
                 "face": 9,
                 "motion": "blink",
                 "pose": "paper"
               },
               "repeat": {
-                "text": "目光移开吧。箱子里那些未完成的原型，静静睡在防潮袋里也挺惬意。",
+                "text": "退后站稳。夹层顶棚低矮，起身小心别撞着木梁上的铁钉了。",
                 "face": 9,
                 "motion": "blink",
                 "pose": "paper"
@@ -4102,7 +4931,7 @@
                     "minKeys": 3
                   },
                   "speech": {
-                    "text": "移开眼神吧。……别担心，我答应过你，没有编号的东西我绝不乱扔。",
+                    "text": "目光移开吧。……{pause:0.6s}{cold}别担心，我答应过你的，{/cold}{warm}没有编号的东西，我一件也不会扔。{/warm}",
                     "face": 9,
                     "motion": "blink",
                     "pose": "paper"
@@ -4126,20 +4955,20 @@
             "text": "不再往下看",
             "followup": {
               "first": {
-                "text": "合规，非常有分寸。给箱底那些没名没姓的东西留点隐私，我替它们谢谢你。",
+                "text": "非常合规，有分寸。{wave}给箱底那些没名没姓的东西留点体面，{/wave}我替它们谢谢你。",
                 "face": 9,
                 "motion": "blink",
                 "pose": "relief"
               },
               "repeat": {
-                "text": "不往下翻就对了。有些草稿写得太烂，作者自己看了都脸红，就让它们埋在箱底吧。",
+                "text": "不往下翻就对了。有些草稿写得太烂，埋在防潮袋里是它们最好的归宿。",
                 "face": 9,
                 "motion": "blink",
                 "pose": "relief"
               },
               "alternates": [
                 {
-                  "text": "行，退后两步。夹层木梁低，起身别撞着脑门了。",
+                  "text": "行，退后两步。{warm}夹层木梁低，起身别撞着脑门了。{/warm}",
                   "face": 9,
                   "motion": "blink",
                   "pose": "relief"
@@ -4232,19 +5061,63 @@
         "narration": [
           "绿瓷砖上的水痕很淡，带着一点泥，沿砖缝洇出不规则的边缘。"
         ],
-        "assistant": "刚才有人打门前经过？……先别猜。雨天走廊漏水是常态，这点水还说明不了什么。",
+        "assistant": "雨水沿门口的地砖渗进来。{warm}慢一点走，鞋底沾湿了容易打滑。{/warm}",
         "pose": "shy",
         "face": 9,
-        "choices": []
+        "choices": [
+          {
+            "id": "ask-detail",
+            "text": "水从哪漏进来的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "水迹比刚才宽了些。{pause:0.4s}{shake}别踩最亮的那块，容易滑。{/shake}",
+            "pose": "shy"
+          }
+        ]
       },
       "editorial-revisit": {
         "narration": [
           "水光还停在砖缝边。屋里潮，想等它自己干透，大概得多值一会儿班。"
         ],
-        "assistant": "刚才有人打门前经过？……先别猜。雨天走廊漏水是常态，这点水还说明不了什么。",
+        "assistant": "水迹还没干。{wave}雨下得久，这栋楼的门缝也难免漏一点。{/wave}",
         "pose": "shy",
         "face": 9,
-        "choices": []
+        "choices": [
+          {
+            "id": "ask-detail",
+            "text": "水从哪漏进来的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "水迹比刚才宽了些。{pause:0.4s}{shake}别踩最亮的那块，容易滑。{/shake}",
+            "pose": "shy"
+          }
+        ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：水从哪漏进来的？"
+        ],
+        "assistant": "门口有缝，风把雨带进来了。{wave}我还没法确定刚才有没有人经过。{/wave}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     }
   },
@@ -4263,19 +5136,63 @@
         "narration": [
           "几张木椅朝着屏幕，椅背旧漆里夹着深浅不一的划痕，中间留出一条过道。"
         ],
-        "assistant": "别数那些划痕。磨掉的漆、搬椅子磕的印，都挤在一块儿，数不出谁等了多久。",
+        "assistant": "第三把椅子的椅背留着旧划痕。{wave}别急着替它数出一位从没见过的观众。{/wave}",
         "pose": "wait",
         "face": 9,
-        "choices": []
+        "choices": [
+          {
+            "id": "ask-detail",
+            "text": "这些划痕是谁留下的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "椅背的木纹在暗光里像又添了一道。{pause:0.5s}{shake}先别靠太近。{/shake}",
+            "pose": "wait"
+          }
+        ]
       },
       "editorial-revisit": {
         "narration": [
           "划痕已经暗下去，与周围旧漆混在一起。"
         ],
-        "assistant": "过道还空着。想停就停一会儿，不用非给这场空放映找个结局。",
+        "assistant": "划痕还在那儿。{cold}我们不知道是谁刻的，也不必编一个名字。{/cold}",
         "pose": "wait",
         "face": 9,
-        "choices": []
+        "choices": [
+          {
+            "id": "ask-detail",
+            "text": "这些划痕是谁留下的？",
+            "next": "editorial-question"
+          }
+        ],
+        "variants": [
+          {
+            "when": {
+              "minKeys": 3
+            },
+            "assistant": "椅背的木纹在暗光里像又添了一道。{pause:0.5s}{shake}先别靠太近。{/shake}",
+            "pose": "wait"
+          }
+        ]
+      },
+      "editorial-question": {
+        "narration": [
+          "你问：这些划痕是谁留下的？"
+        ],
+        "assistant": "数得清划痕，数不出人。{whisper}我只能说，它曾经被用过很久。{/whisper}",
+        "pose": "paper",
+        "choices": [
+          {
+            "id": "continue",
+            "text": "把目光移回房间"
+          }
+        ],
+        "contextual": false
       }
     }
   },

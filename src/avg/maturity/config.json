@@ -1,38 +1,172 @@
 {
-  "idleMs":25000,
-  "idleCooldownMs":90000,
-  "lostWindowMs":60000,
-  "lostChanges":5,
-  "sensitivePauseMs":2500,
-  "idleAnchors":{"lounge":[65,58],"rooftop":[78,55],"projection":[44,64],"archive":[58,68]},
-  "radio":{"min":88,"max":108,"step":0.1,"tolerance":0.8,"holdMs":1800,"image":"./media/exploration/rooftop-radio-close.png","stations":[
-    {"id":"call","frequency":92.4,"name":"旧呼叫","description":"杂音里有几组短长交替的呼叫声。它反复出现，不要求你解码。"},
-    {"id":"jazz","frequency":98.6,"name":"雨中的旋律","description":"噪声慢慢退下去，一段断续的旧爵士旋律从雨里浮出来。"}
-  ]},
-  "workRooms":{"click-down":"lounge","anchored-gaze":"lounge","parry-arena":"lab","hd2d-kit":"workshop","static-signal":"rooftop"},
-  "speeches":{
-    "grant":{"text":"……哟，{wave}带红章的特聘公函。{/wave}{pause:0.6s}行吧，做成的原型、还在改的部分，都在调阅台上。{warm}先说好，别光挑好看的翻，{/warm}复盘也看看。","face":9,"motion":"point","pose":"paper"},
-    "restored":{"text":"还是上次那一页，{wave}夹子都没动过。{/wave}{pause:0.4s}{warm}你看你的，我在这儿帮你盯着走廊的穿堂风。{/warm}","face":8,"motion":"blink","pose":"greet"},
-    "reviewClose":{"text":"公函收在口袋右侧了，想看随时抽出来。{pause:0.5s}{warm}累了的话，屋里多转转也挺好。{/warm}","face":8,"motion":"blink","pose":"relief"},
-    "radio:jazz":{"text":"就停在这儿……{pause:0.5s}听见了吗？这台老机器，遇到下雨天，{warm}比谁都能抓得住远处的歌。{/warm}","face":9,"motion":"blink","pose":"care"},
-    "radio:call":{"text":"这个呼叫还在。先记下来吧，不用急着替它回答。","face":9,"motion":"blink","pose":"receiver"},
-    "sensitive":{"text":"……看完了？{pause:1.2s}看完了就把抽屉推回去吧。{heavy}天塌不下来，{/heavy}{warm}至少这会儿还塌不下来。{/warm}","face":10,"motion":"blink","pose":"relief"},
-    "lost":{"text":"这两间屋子，你已经来回走了好几遍了。要找东西的话，翻翻手帐，或者看看楼层图。我在这儿。","face":9,"motion":"blink","pose":"shy"},
-    "patchFail":{"text":"先慢点。它诞生的顺序，不一定是你找到东西的顺序。左边小柜最下层那张旧纸，还能再翻一次。","face":9,"motion":"blink","pose":"relief"},
-    "promise":{"text":"工具还在这儿。你说过先修好，再决定留不留。……我记着呢。","face":9,"motion":"blink","pose":"repair"},
-    "registerEcho":{"text":"登记簿还摊在灯下。‘访客’，我记着呢。……不用每次回来都重新报一遍。","face":8,"motion":"blink","pose":"paper"},
-    "blankEcho":{"text":"登记簿那一栏还空着。我没替你填。……不写名字，也认得你。","face":9,"motion":"blink","pose":"shy"},
-    "songReturn":{"text":"又是这首。……上次你也听过。别急着换，刚才那一小段，我想再听听。","face":9,"motion":"blink","pose":"listen"},
-    "challenge":{"text":"过关了。……至少在这间屋子里，时间愿意为你往前挪一格了。","face":8,"motion":"point","pose":"greet"}
+  "idleMs": 25000,
+  "idleCooldownMs": 90000,
+  "lostWindowMs": 60000,
+  "lostChanges": 5,
+  "sensitivePauseMs": 2500,
+  "idleAnchors": {
+    "lounge": [
+      65,
+      58
+    ],
+    "rooftop": [
+      78,
+      55
+    ],
+    "projection": [
+      44,
+      64
+    ],
+    "archive": [
+      58,
+      68
+    ]
   },
-  "idle":{
-    "lounge":{"text":"呼噜声真大……猫多好啊，就算工作区断电了，它也只在乎今天有没有小鱼干。","face":8,"motion":"blink","pose":"shy"},
-    "rooftop":{"text":"铁皮棚顶被雨砸出来的声音，听着倒挺像谁在打字。……在门檐底下待会儿吧。","face":9,"motion":"blink","pose":"shelter"},
-    "projection":{"text":"幕布就这么空着。……我有时候觉得，什么都没放，也挺好的。","face":9,"motion":"blink","pose":"listen"},
-    "archive":{"text":"旧纸的味道闻多了容易犯困。我可没睡着，闭目养神呢。","face":8,"motion":"blink","pose":"relief"}
+  "radio": {
+    "min": 88,
+    "max": 108,
+    "step": 0.1,
+    "tolerance": 0.8,
+    "holdMs": 1800,
+    "image": "./media/exploration/rooftop-radio-close.png",
+    "stations": [
+      {
+        "id": "call",
+        "frequency": 92.4,
+        "name": "旧呼叫",
+        "description": "杂音里有几组短长交替的呼叫声。它反复出现，不要求你解码。"
+      },
+      {
+        "id": "jazz",
+        "frequency": 98.6,
+        "name": "雨中的旋律",
+        "description": "噪声慢慢退下去，一段断续的旧爵士旋律从雨里浮出来。"
+      }
+    ]
   },
-  "hints":{
-    "music":["曲序卡在档案角左侧三层小柜的中层。先把那张卡翻开。","看曲序卡上的‘先确认’‘然后经过’‘最后醒来’，它们在安排三首歌的先后。","先放昨夜没有来过，再放Before the Room Forgot，最后放The Morning Knew My Name。每首开头至少听两秒。"],
-    "patch":["档案角左侧三层小柜最下层，有一张启动流程的旧纸。","旧纸写的是它诞生的先后：听见、被看见、学会倒数、学会害怕，最后归还。把这些动作和口袋里的物件对一对。","依次放入监听回执、外来邮戳、四拍奖杯、目光奖杯、归还回执。"]
+  "workRooms": {
+    "click-down": "lounge",
+    "anchored-gaze": "lounge",
+    "parry-arena": "lab",
+    "hd2d-kit": "workshop",
+    "static-signal": "rooftop"
+  },
+  "speeches": {
+    "grant": {
+      "text": "……哟，{wave}带红章的特聘公函。{/wave}{pause:0.6s}行吧，看来今天来的是正经查账的，值班室的弯弯绕绕就不耽误您大驾了。做成的原型、没做成被退稿的废料……{heavy}全都在调阅台上码着呢。{/heavy}{pause:0.4s}{warm}先说好啊，别光挑好看的翻，{/warm}{shake}那些写满 Bug 的复盘才是我最宝贝的。{/shake}",
+      "face": 9,
+      "motion": "point",
+      "pose": "paper"
+    },
+    "restored": {
+      "text": "还是上次那一页，{wave}夹子都没动过。{/wave}{pause:0.4s}{warm}你看你的，我在这儿帮你盯着走廊的穿堂风。{/warm}",
+      "face": 8,
+      "motion": "blink",
+      "pose": "greet"
+    },
+    "reviewClose": {
+      "text": "公函我替你收在口袋右侧了，想看随时抽出来。{pause:0.5s}不过……{warm}要是累了，屋里多转转也挺好，{/warm}{wave}地砖虽然潮，但踩着踏实。{/wave}",
+      "face": 8,
+      "motion": "blink",
+      "pose": "relief"
+    },
+    "radio:jazz": {
+      "text": "手别抖，就停在这儿别转了。……听见萨克斯了吗？这台老机器别看外壳锈成这样，遇到下雨天，{warm}比谁都能抓得住远处的歌。{/warm}",
+      "face": 9,
+      "motion": "blink",
+      "pose": "care"
+    },
+    "radio:call": {
+      "text": "这个呼叫还在。先记下来吧，不用急着替它回答。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "receiver"
+    },
+    "sensitive": {
+      "text": "……看完了？{pause:1.5s}看完了就把抽屉推回去吧。{heavy}天塌不下来{/heavy}，{warm}至少这会儿，还塌不下来。{/warm}",
+      "face": 10,
+      "motion": "blink",
+      "pose": "relief"
+    },
+    "lost": {
+      "text": "这两间屋子，你已经来回走了好几遍了。要找东西的话，翻翻手帐，或者看看楼层图。我在这儿。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "shy"
+    },
+    "patchFail": {
+      "text": "先慢点。它诞生的顺序，不一定是你找到东西的顺序。左边小柜最下层那张旧纸，还能再翻一次。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "relief"
+    },
+    "promise": {
+      "text": "工具还在这儿。你说过先修好，再决定留不留。……我记着呢。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "repair"
+    },
+    "registerEcho": {
+      "text": "登记簿还摊在灯下。‘访客’，我记着呢。……不用每次回来都重新报一遍。",
+      "face": 8,
+      "motion": "blink",
+      "pose": "paper"
+    },
+    "blankEcho": {
+      "text": "登记簿那一栏还空着。我没替你填。……不写名字，也认得你。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "shy"
+    },
+    "songReturn": {
+      "text": "又是这首。……上次你也听过。别急着换，刚才那一小段，我想再听听。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "listen"
+    },
+    "challenge": {
+      "text": "过关了。……至少在这间屋子里，时间愿意为你往前挪一格了。",
+      "face": 8,
+      "motion": "point",
+      "pose": "greet"
+    }
+  },
+  "idle": {
+    "lounge": {
+      "text": "呼噜声真大……猫多好啊，就算工作区断电了，它也只在乎今天有没有小鱼干。",
+      "face": 8,
+      "motion": "blink",
+      "pose": "shy"
+    },
+    "rooftop": {
+      "text": "铁皮棚顶被雨砸出来的声音，听着倒挺像谁在打字。……在门檐底下待会儿吧。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "shelter"
+    },
+    "projection": {
+      "text": "幕布就这么空着。……我有时候觉得，什么都没放，也挺好的。",
+      "face": 9,
+      "motion": "blink",
+      "pose": "listen"
+    },
+    "archive": {
+      "text": "旧纸的味道闻多了容易犯困。我可没睡着，闭目养神呢。",
+      "face": 8,
+      "motion": "blink",
+      "pose": "relief"
+    }
+  },
+  "hints": {
+    "music": [
+      "曲序卡在档案角左侧三层小柜的中层。先把那张卡翻开。",
+      "看曲序卡上的‘先确认’‘然后经过’‘最后醒来’，它们在安排三首歌的先后。",
+      "先放昨夜没有来过，再放Before the Room Forgot，最后放The Morning Knew My Name。每首开头至少听两秒。"
+    ],
+    "patch": [
+      "档案角左侧三层小柜最下层，有一张启动流程的旧纸。",
+      "旧纸写的是它诞生的先后：听见、被看见、学会倒数、学会害怕，最后归还。把这些动作和口袋里的物件对一对。",
+      "依次放入监听回执、外来邮戳、四拍奖杯、目光奖杯、归还回执。"
+    ]
   }
 }

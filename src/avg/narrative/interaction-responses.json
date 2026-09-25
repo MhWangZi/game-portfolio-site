@@ -3,7 +3,8 @@
     "first": {
       "text": "墙上的守则写得一本正经的。……其实就两句话：{warm}灯别全关，{/warm}{heavy}人别全丢。{/heavy}",
       "face": 9,
-      "motion": "point"
+      "motion": "blink",
+      "pose": "point"
     },
     "variants": [
       {
@@ -11,9 +12,10 @@
           "minKeys": 3
         },
         "speech": {
-          "text": "守则写得再齐，也没教我碰上这种时候该怎么办。……前面那几条，先记着就行。",
+          "text": "守则最后一条被铅笔涂黑了对吧？……{pause:0.6s}{shake}别看被划掉的那一行，{/shake}{warm}看前面两行就行。{/warm}",
           "face": 9,
-          "motion": "point"
+          "motion": "blink",
+          "pose": "point"
         }
       }
     ],
@@ -32,7 +34,7 @@
       "pose": "relief"
     },
     "repeat": {
-      "text": "挂断了？线路那头空荡荡的，还是这走廊的雨声实在。",
+      "text": "挂断了？线路那头空荡荡的，{cold}还是这走廊的雨声更实在点。{/cold}",
       "face": 9,
       "motion": "blink",
       "pose": "relief"
@@ -40,7 +42,7 @@
   },
   "CONTROL.archive-exit": {
     "first": {
-      "text": "先回桌边吧。读完的纸页记得放回原格，免得下次找起来又乱成一团。",
+      "text": "先回桌边吧。{warm}读过的纸页放回原格，下次才找得到。{/warm}",
       "face": 9,
       "motion": "blink",
       "pose": "paper"

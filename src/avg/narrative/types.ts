@@ -43,8 +43,12 @@ export function recordResponse(save:NarrativeSave,key:string):NarrativeSave {
   return {...save,responses:{...save.responses,[key]:(save.responses?.[key]??0)+1}};
 }
 export function resolveEventNode(node:EventNode,save:NarrativeSave,context:EventContext):EventNode {
-  const variant=node.variants?.find(v=>matchesEvent(v.when,save,context));
-  return variant?{...node,...variant,...(variant.assistant?{contextual:false}:{})}:node;
+  // A remembered choice and the room's rising tension can both be true.
+  // Layer matching scene details in data order; a later tension cue may change
+  // the line without discarding a flag-specific narration or pose.
+  return (node.variants??[]).filter(v=>matchesEvent(v.when,save,context)).reduce<EventNode>(
+    (resolved,variant)=>({...resolved,...variant,...(variant.assistant?{contextual:false}:{})}),node
+  );
 }
 export function beginEvent(event:NarrativeEvent,save:NarrativeSave,context:EventContext) {
   const node=event.entryRules?.find(rule=>matchesEvent(rule.when,save,context))?.node??(save.visits[event.id]?event.revisit:event.entry);
