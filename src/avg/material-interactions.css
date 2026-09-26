@@ -1,6 +1,7 @@
 /* Solid scene points have a generous circular touch target. */
 .scene-dot-layer{position:absolute;inset:0;z-index:5;pointer-events:none}
-.immersive .interaction-dot{position:absolute;width:44px;height:44px;min-width:44px;padding:0;border:0;border-radius:50%;background:none;box-shadow:none;transform:translate(-50%,-50%);display:grid;place-items:center;pointer-events:auto;cursor:pointer;z-index:5;color:#eee3c3}
+.immersive .interaction-dot{position:absolute;left:var(--dot-x);top:var(--dot-y);width:44px;height:44px;min-width:44px;padding:0;border:0;border-radius:50%;background:none;box-shadow:none;transform:translate(-50%,-50%);display:grid;place-items:center;pointer-events:auto;cursor:pointer;z-index:5;color:#eee3c3}
+@media(max-width:600px){.immersive .interaction-dot{left:var(--mobile-dot-x);top:var(--mobile-dot-y)}}
 .interaction-dot>i{display:block;width:7px;height:7px;border-radius:50%;background:#f1ddb0;box-shadow:0 1px 3px #000,0 0 0 3px #09110c66;transition:transform .25s,background .25s,box-shadow .25s}
 .interaction-dot.is-visited>i{background:#a99872;width:6px;height:6px}.interaction-dot:hover>i,.interaction-dot:focus-visible>i,.interaction-dot.is-revealed>i{transform:scale(1.3);background:#fff1c9;box-shadow:0 0 0 5px #e7d8ab15,0 1px 3px #000}.interaction-dot:focus-visible{outline:1px solid #ead09b88;outline-offset:-7px}
 .interaction-dot:disabled{pointer-events:none;opacity:0}.dot-label{position:absolute;bottom:40px;left:50%;transform:translateX(-50%) translateY(3px);white-space:nowrap;padding:7px 11px;border-radius:2px;background:#0c1513e8;color:#f1e4c7;font-size:11px;line-height:1.5;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;box-shadow:0 3px 12px #0004}

@@ -1,0 +1,12 @@
+[
+  {"id":"wet-step","room":"corridor","anchor":[31,38],"pose":"peek-up","asset":"./media/exploration/diffs/wet-step.svg"},
+  {"id":"box-outline","room":"lounge","anchor":[50,27],"pose":"relief","asset":"./media/exploration/diffs/box-outline.svg"},
+  {"id":"test-paper","room":"lab","anchor":[35,28],"pose":"paper","asset":"./media/exploration/diffs/test-paper.svg"},
+  {"id":"spliced-label","room":"projection","anchor":[74,24],"pose":"care","asset":"./media/exploration/diffs/spliced-label.svg"},
+  {"id":"chair-distance","room":"projection","anchor":[43,54],"pose":"listen","asset":"./media/exploration/diffs/chair-distance.svg"},
+  {"id":"antenna-hum","room":"rooftop","anchor":[31,41],"pose":"greet","asset":"./media/exploration/diffs/antenna-hum.svg"},
+  {"id":"missing-screw","room":"workshop","anchor":[46,28],"pose":"repair","asset":"./media/exploration/diffs/missing-screw.svg"},
+  {"id":"cold-plug","room":"workshop","anchor":[65,47],"pose":"relief","asset":"./media/exploration/diffs/cold-plug.svg"},
+  {"id":"covered-chair","room":"storage","anchor":[67,48],"pose":"care","asset":"./media/exploration/diffs/covered-chair.svg"},
+  {"id":"stored-clock","room":"storage","anchor":[78,34],"pose":"listen","asset":"./media/exploration/diffs/stored-clock.svg"}
+]

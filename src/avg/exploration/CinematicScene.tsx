@@ -8,6 +8,7 @@ import type { AtmosphereAudio } from './AtmosphereAudio';
 import { cinematicRooms } from './cinematicData';
 import { InteractionDot } from './InteractionDot';
 import { preloadSceneImage as preload } from './sceneImages';
+import {SceneDiffLayer} from './SceneDiffLayer';
 import feedbackConfig from './feedback.json';
 import {sceneFeedback,type FeedbackRule} from './feedback';
 import './feedback.css';
@@ -73,9 +74,10 @@ export function CinematicScene({room,save,disabled,still,hints,audio,onCommit,on
     <div className="cinematic-camera" style={{'--focus-x':`${camera?.x??50}%`,'--focus-y':`${camera?.y??50}%`,'--focus-scale':camera?.scale??1,'--focus-duration':`${camera?.duration??850}ms`} as CSSProperties}>
       <img className="cinematic-plate" src={visual} alt={`${room}，${state}`} draggable={false} onLoad={()=>setReady(true)} onError={()=>setError('房间图像未接通，请刷新重试。')}/>
       {old&&<img className="cinematic-plate outgoing-plate" src={old} alt="" draggable={false}/ >}
+      <SceneDiffLayer room={room} traces={save.traces} still={still}/>
       {feedback&&<svg className="scene-feedback" data-feedback={feedback.visual} aria-hidden="true" viewBox="0 0 24 14" style={{left:feedback.point[0]+'%',top:feedback.point[1]+'%','--feedback-duration':feedback.durationMs+'ms'} as CSSProperties}><path d="M3 4l3 3 3-3M15 4l3 3 3-3M9 10q3 3 6 0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"/></svg>}
       <div className="scene-dot-layer" aria-label="场景中的可互动物件">
-        {objects.map(object=><InteractionDot key={object.id} objectId={object.id} guided={guiding&&feedbackConfig.guidance.objects.includes(object.id)} kind={object.transition.action?.type==='room'?'door':object.transition.give?'take':'observe'} point={object.point??[object.polygon.reduce((n,p)=>n+p[0],0)/object.polygon.length,object.polygon.reduce((n,p)=>n+p[1],0)/object.polygon.length]} label={object.label} reveal={hints} visited={visited.includes(object.id)} disabled={disabled||busy||!ready} onClick={()=>void interact(object)}/>)}
+        {objects.map(object=><InteractionDot key={object.id} objectId={object.id} guided={guiding&&feedbackConfig.guidance.objects.includes(object.id)} kind={object.transition.action?.type==='room'?'door':object.transition.give?'take':'observe'} point={object.point??[object.polygon.reduce((n,p)=>n+p[0],0)/object.polygon.length,object.polygon.reduce((n,p)=>n+p[1],0)/object.polygon.length]} mobilePoint={object.mobilePoint} label={object.label} reveal={hints} visited={visited.includes(object.id)} disabled={disabled||busy||!ready} onClick={()=>void interact(object)}/>)}
       </div>
     </div>
     <div className="quiet-film-grain" aria-hidden="true"/>

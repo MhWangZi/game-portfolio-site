@@ -8,6 +8,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { rooms, dialogue, games, camera } from "./world";
 import type { RoomId, Speech, GameId } from "./world";
 import { CinematicScene } from "./exploration/CinematicScene";
+import {sceneDiff} from './exploration/SceneDiffLayer';
 import { cinematicRooms } from "./exploration/cinematicData";
 import { readCinematic, cinematicStorage, commitTransition, resolveSceneState } from "./exploration/cinematicTypes";
 import type { SceneTransition } from "./exploration/cinematicTypes";
@@ -162,6 +163,7 @@ export function PersonalWorld() {
   const [eventSession,setEventSession]=useState<EventSession|null>(null);
   useEffect(()=>{try{localStorage.setItem(narrativeStorage,JSON.stringify(narrative));}catch{/* In-memory conversations remain available. */}},[narrative]);
   const [cinematic, setCinematic] = useState(readCinematic);
+  const [activeSceneDiff,setActiveSceneDiff]=useState<string|null>(null);
   const [patch,setPatch]=useState<TokenId[]>(()=>{try{return sanitizePatch(JSON.parse(localStorage.getItem(patchStorage)||'null'),story.save.keys) as TokenId[];}catch{return [];}});
   useEffect(()=>{try{localStorage.setItem(patchStorage,JSON.stringify(patch));}catch{/* Optional storage. */}},[patch]);
   useEffect(()=>{const state=patchStage(patch,story.save.unlocked);setCinematic(s=>s.states.projection===state?s:{...s,states:{...s.states,projection:state}});},[patch,story.save.unlocked]);
@@ -177,6 +179,8 @@ export function PersonalWorld() {
   },[atmosphere]);
   const commitScene = (id:RoomId, change:SceneTransition) => {
     setEventSession(null);
+    setSpeechVisible(false);
+    setActiveSceneDiff(change.trace??null);
     if (change.action?.type === "hidden") music.lockSilently();
     setCinematic(s => commitTransition(s,id,change));
   };
@@ -273,6 +277,7 @@ export function PersonalWorld() {
     showResponse(responseFor(definition,narrative.responses?.[key]??0,narrative,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room,facts}));
     setNarrative(s=>recordResponse(s,key));
   };
+  useEffect(()=>{if(!activeSceneDiff)return;const timer=setTimeout(()=>setActiveSceneDiff(null),30000);return()=>clearTimeout(timer);},[activeSceneDiff]);
   const say = useCallback((event: string, priority = false) => {
     const now = Date.now(),
       record = spoken.current[event] || { time: 0, count: 0 };
@@ -370,7 +375,7 @@ export function PersonalWorld() {
     setNarrative(blankNarrative());
     setEventSession(null);
     try{localStorage.removeItem(narrativeStorage);}catch{/* In-memory reset. */}
-    setCinematic({inventory:[],states:{},sound:cinematic.sound});
+    setCinematic({inventory:[],states:{},traces:[],sound:cinematic.sound});
     try { localStorage.removeItem(cinematicStorage); } catch { /* Memory-only restart. */ }
     music.release();
     story.restart();
@@ -571,7 +576,7 @@ export function PersonalWorld() {
       setPanel(null);setEventSession(null);setTravelMusic(false);
       maturity.open(action.id==='permit'||action.id==='desk'?(maturity.save.clearance?'desk':'permit'):action.id as 'radio'|'journal'|'report');return;
     }
-    if(action.type!=='event')setEventSession(null);
+    if(action.type!=='event'){setEventSession(null);setActiveSceneDiff(null);}
     switch (action.type) {
       case 'cabinet':setArchiveView(true);setPanel(null);break;
       case "event": {
@@ -648,7 +653,9 @@ export function PersonalWorld() {
   const maturityModal=!!maturity.view;
   const sceneElement=useRef<HTMLElement>(null);
   const sceneBounds=sceneElement.current?.getBoundingClientRect();
-  const companionAnchor=maturity.anchor&&sceneBounds&&!maturityModal?{x:(sceneBounds.left+sceneBounds.width*maturity.anchor[0]/100)/innerWidth*100,y:(sceneBounds.top+sceneBounds.height*maturity.anchor[1]/100)/innerHeight*100}:null;
+  const activeDiff=activeSceneDiff&&stage==='room'&&!panel&&!archiveView?sceneDiff(activeSceneDiff):undefined;
+  const anchorPoint=maturity.anchor??(activeDiff?.room===room?activeDiff.anchor:null);
+  const companionAnchor=anchorPoint&&sceneBounds&&!maturityModal?{x:(sceneBounds.left+sceneBounds.width*anchorPoint[0]/100)/innerWidth*100,y:(sceneBounds.top+sceneBounds.height*anchorPoint[1]/100)/innerHeight*100}:null;
   useEffect(()=>{if(maturity.save.clearance)setCinematic(s=>s.inventory.includes('clearance-permit')?s:{...s,inventory:[...s.inventory,'clearance-permit']});},[maturity.save.clearance,cinematic.inventory]);
   const openMaturity=(view:'desk'|'journal'|'permit'|'report')=>{setPanel(null);setEventSession(null);setArchiveView(false);setTravelMusic(false);maturity.open(view==='desk'||view==='permit'?(maturity.save.clearance?'desk':'permit'):view);};
   useEffect(()=>{
@@ -1014,6 +1021,7 @@ export function PersonalWorld() {
         docked={television}
         interactionLocked={maturityModal}
         sceneAnchor={companionAnchor}
+        scenePose={!activeEvent&&activeDiff?.room===room?activeDiff.pose:undefined}
         tension={story.save.keys.length}
         room={room}
         whispering={activeEvent?.id==='cat-seat'}
@@ -1023,7 +1031,7 @@ export function PersonalWorld() {
         nodeOverride={activeNode}
         onHesitate={activeEvent.id==='visitor-register'&&eventSession.node==='start'?()=>showResponse(ambientLines.hesitate as Speech):undefined}
         onSpeak={node=>{const reply:Speech={text:node.assistant,face:node.face??(room==='secret'?12:9),pose:node.pose,motion:room==='secret'?'shrink':'point'};if(node.contextual===false)showResponse(reply);else speak(`event:${activeEvent.id}`,reply);}}
-        onClose={()=>{setEventSession(null);setSpeechVisible(false);}}
+        onClose={()=>{setEventSession(null);setSpeechVisible(false);setActiveSceneDiff(null);}}
         onChoose={choiceId=>{const next=advanceEvent(activeEvent,eventSession,narrative,choiceId,{keys:story.save.keys.length,inventory:cinematic.inventory,loops:story.save.loops,dark,room});if(!next)return;atmosphere.play('paper');setNarrative(next.save);setEventSession(next.session);if(next.action)act(next.action);if(next.speech)showResponse(next.speech);}}/>}
       {story.award && (
         <div className={`award-toast ${television?'award-in-game':''}`} role="status">
@@ -1188,7 +1196,7 @@ export function PersonalWorld() {
                       unlocked: false,
                       playlistRead: false,
                     }));
-                    setCinematic(s=>({...s,inventory:[],states:{}}));
+                    setCinematic(s=>({...s,inventory:[],states:{},traces:[]}));
                     setPatch([]);
                     setNarrative(blankNarrative());
                     maturity.resetExploration(story.save.loops);

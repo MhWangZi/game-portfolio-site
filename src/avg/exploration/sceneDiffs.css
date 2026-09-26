@@ -1,0 +1,6 @@
+.scene-diff-layer{position:absolute;inset:0;z-index:3;pointer-events:none}
+.scene-diff-layer img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill;animation:scene-diff-arrive .7s ease-out both}
+.scene-diff-layer img[data-scene-diff=covered-chair]{mix-blend-mode:multiply}
+.scene-diff-still img{animation:none}
+@keyframes scene-diff-arrive{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.scene-diff-layer img{animation:none}}

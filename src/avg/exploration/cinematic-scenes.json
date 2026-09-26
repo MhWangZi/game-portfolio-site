@@ -591,12 +591,13 @@
           ]
         ],
         "transition": {
-          "sound": "paper",
+          "sound": "take",
           "wait": 700,
           "action": {
             "type": "event",
             "id": "wet-step"
-          }
+          },
+          "trace": "wet-step"
         }
       }
     ]
@@ -680,6 +681,41 @@
           60,
           15
         ]
+      },
+      {
+        "id": "box-outline",
+        "label": "折好书柜下层的包装盒",
+        "point": [
+          57,
+          33
+        ],
+        "polygon": [
+          [
+            54,
+            30
+          ],
+          [
+            61,
+            30
+          ],
+          [
+            61,
+            37
+          ],
+          [
+            54,
+            37
+          ]
+        ],
+        "transition": {
+          "trace": "box-outline",
+          "sound": "drawer",
+          "wait": 650,
+          "action": {
+            "type": "event",
+            "id": "box-outline"
+          }
+        }
       },
       {
         "id": "discs",
@@ -1340,6 +1376,10 @@
         "point": [
           21,
           35
+        ],
+        "mobilePoint": [
+          17,
+          35
         ]
       },
       {
@@ -1375,7 +1415,50 @@
         "point": [
           32.5,
           32
+        ],
+        "mobilePoint": [
+          32.5,
+          27
         ]
+      },
+      {
+        "id": "test-paper",
+        "label": "翻看桌上的测试纸",
+        "point": [
+          29.5,
+          35
+        ],
+        "mobilePoint": [
+          29.5,
+          46
+        ],
+        "polygon": [
+          [
+            26,
+            33
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            33,
+            39
+          ],
+          [
+            26,
+            39
+          ]
+        ],
+        "transition": {
+          "trace": "test-paper",
+          "sound": "paper",
+          "wait": 650,
+          "action": {
+            "type": "event",
+            "id": "test-paper"
+          }
+        }
       },
       {
         "id": "recorder",
@@ -1761,7 +1844,8 @@
             "id": "spliced-label"
           },
           "sound": "paper",
-          "wait": 900
+          "wait": 900,
+          "trace": "spliced-label"
         },
         "point": [
           73,
@@ -1799,7 +1883,8 @@
           "action": {
             "type": "event",
             "id": "chair-distance"
-          }
+          },
+          "trace": "chair-distance"
         }
       },
       {
@@ -2324,12 +2409,13 @@
           ]
         ],
         "transition": {
-          "sound": "paper",
+          "sound": "insert",
           "wait": 700,
           "action": {
             "type": "event",
             "id": "antenna-hum"
-          }
+          },
+          "trace": "antenna-hum"
         }
       },
       {
@@ -2611,12 +2697,13 @@
           ]
         ],
         "transition": {
-          "sound": "paper",
+          "sound": "insert",
           "wait": 700,
           "action": {
             "type": "event",
             "id": "missing-screw"
-          }
+          },
+          "trace": "missing-screw"
         }
       },
       {
@@ -2645,12 +2732,13 @@
           ]
         ],
         "transition": {
-          "sound": "paper",
+          "sound": "switch",
           "wait": 700,
           "action": {
             "type": "event",
             "id": "cold-plug"
-          }
+          },
+          "trace": "cold-plug"
         }
       }
     ]
@@ -2835,7 +2923,8 @@
           "action": {
             "type": "event",
             "id": "covered-chair"
-          }
+          },
+          "trace": "covered-chair"
         }
       },
       {
@@ -2864,12 +2953,13 @@
           ]
         ],
         "transition": {
-          "sound": "paper",
+          "sound": "wind",
           "wait": 700,
           "action": {
             "type": "event",
             "id": "stored-clock"
-          }
+          },
+          "trace": "stored-clock"
         }
       }
     ]

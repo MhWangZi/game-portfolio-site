@@ -13,6 +13,7 @@ export interface CompanionPresentationInput {
   remembering?:boolean;
   resting: boolean;
   depth: number;
+  scenePose?: string;
 }
 
 /** Dialogue expressions expire with the dialogue; physical and film states are independent. */
@@ -29,6 +30,7 @@ export function resolveCompanionPresentation(input: CompanionPresentationInput):
   if (visible && speech.pose) return { pose: speech.pose, gesture: speech.pose, index: 8, motion: 'idle' };
   if(input.remembering)return {pose:'listen',gesture:'listen',index:8,motion:'idle'};
   if (listening) return musicPresentation;
+  if (!visible && input.scenePose) return {pose:input.scenePose,gesture:input.scenePose,index:8,motion:'idle'};
   if (!visible) return neutral;
   return {
     pose: speech.face >= 12 ? 'cower' : speech.motion === 'point' ? 'explain' : 'talk',

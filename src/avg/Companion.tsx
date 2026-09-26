@@ -66,6 +66,7 @@ export function Companion({
   docked = false,
   interactionLocked = false,
   sceneAnchor,
+  scenePose,
   tension=0,
   room='duty',
   whispering=false,
@@ -89,6 +90,7 @@ export function Companion({
   docked?: boolean;
   interactionLocked?: boolean;
   sceneAnchor?:{x:number;y:number}|null;
+  scenePose?:string;
   tension?:number;
   room?:string;
   whispering?:boolean;
@@ -132,7 +134,7 @@ export function Companion({
     !still && !dragging && !visible && !corrupt && tick % 5 === 0;
   const { pose, gesture, index, motion } = resolveCompanionPresentation({
     speech, visible, dragging, settling, adjust, corrupt, listening, remembering, resting: eyeClosed, depth,
-    musicFocused,listeningPose:performance.music.poses[Math.floor(musicElapsed/performance.music.phaseSeconds)%performance.music.poses.length],
+    musicFocused,scenePose,listeningPose:performance.music.poses[Math.floor(musicElapsed/performance.music.phaseSeconds)%performance.music.poses.length],
   });
 
   const drag = useRef<{

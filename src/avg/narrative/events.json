@@ -1296,112 +1296,32 @@
   {
     "id": "box-outline",
     "room": "lounge",
-    "title": "柜上的浅色轮廓",
-    "object": "八音盒原来的位置",
-    "purpose": "对拾取后的空位作出反应，建立随身物品与房间状态的连续性。",
+    "title": "折平的纸盒",
+    "object": "书柜下层的包装盒",
+    "purpose": "玩家整理可见的旧纸盒，折痕在本轮探索中保留。",
     "entry": "start",
     "revisit": "revisit",
     "entryRules": [],
     "nodes": {
       "start": {
         "narration": [
-          "八音盒被你收起来以后，柜面露出一小块颜色较浅的木纹。房间少了一件东西，却没有显得更空。"
+          "你把外翻的纸盒盖一角压入另一角，纸板轻轻咬合，柜子里终于齐整了一点。"
         ],
-        "assistant": "包装盒连封箱胶带都没贴。{cold}里面塞着防震海绵，可惜机子早就不知道被谁搬走了。{/cold}",
+        "assistant": "哟，折得挺齐。{wave}我早就看那片翘起来的盒盖不顺眼了。{/wave}{warm}猫要是路过，大概也愿意踩上去试试。{/warm}",
         "choices": [
-          {
-            "id": "carry",
-            "text": "想听的时候，我会把它打开。",
-            "next": "carry",
-            "flags": [
-              "box_carried"
-            ]
-          },
-          {
-            "id": "space",
-            "text": "这里也可以留一点空位。",
-            "next": "space",
-            "flags": [
-              "space_kept"
-            ]
-          },
-          {
-            "id": "ask-detail",
-            "text": "原本装的是什么？",
-            "next": "editorial-question"
-          }
+          {"id":"ask-detail","text":"原本装的是什么？","next":"editorial-question"}
         ],
-        "variants": [
-          {
-            "when": {
-              "minKeys": 3
-            },
-            "assistant": "纸盒子受潮发软了，角上压瘪了一块。……{cold}像个被遗弃在路边的空鸟窝。{/cold}",
-            "pose": "listen"
-          }
-        ]
+        "pose": "relief"
       },
       "revisit": {
         "narration": [
-          "浅色木纹还在。你知道声音现在可以跟着你走。"
+          "纸盒还平平地放在书柜下层，折角没有重新弹开。"
         ],
-        "assistant": "盒子空着也是空着，{wave}猫要是睡腻了窝，保不齐哪天就钻进去当新床。{/wave}",
+        "assistant": "盒盖还咬着。{warm}你收拾过的地方，我看得出来。{/warm}",
         "choices": [
-          {
-            "id": "carry",
-            "text": "想听的时候，我会把它打开。",
-            "next": "carry",
-            "flags": [
-              "box_carried"
-            ]
-          },
-          {
-            "id": "space",
-            "text": "这里也可以留一点空位。",
-            "next": "space",
-            "flags": [
-              "space_kept"
-            ]
-          },
-          {
-            "id": "ask-detail",
-            "text": "原本装的是什么？",
-            "next": "editorial-question"
-          }
+          {"id":"ask-detail","text":"原本装的是什么？","next":"editorial-question"}
         ],
-        "variants": [
-          {
-            "when": {
-              "minKeys": 3
-            },
-            "assistant": "纸盒子受潮发软了，角上压瘪了一块。……{cold}像个被遗弃在路边的空鸟窝。{/cold}",
-            "pose": "listen"
-          }
-        ]
-      },
-      "carry": {
-        "narration": [
-          "你摸了摸随身带着的盒子。"
-        ],
-        "assistant": "那我就不用一直守在柜边了。不是为了跟着你，是换个地方也能听。",
-        "choices": [
-          {
-            "id": "continue",
-            "text": "把纸盒往里推了推"
-          }
-        ]
-      },
-      "space": {
-        "narration": [
-          "你没有急着找别的东西把它填满。"
-        ],
-        "assistant": "嗯。空位不一定是在等失去的东西。也可以是给还没来的。",
-        "choices": [
-          {
-            "id": "continue",
-            "text": "留着空位，转身离开"
-          }
-        ]
+        "pose": "relief"
       },
       "editorial-question": {
         "narration": [
@@ -1418,7 +1338,7 @@
         "contextual": false
       }
     },
-    "enabled": false,
+    "enabled": true,
     "presentation": "ambient"
   },
   {
@@ -2860,9 +2780,9 @@
     "nodes": {
       "start": {
         "narration": [
-          "铁架上的铝合金胶片盒整齐码放，盒侧用白胶布贴着编号，几盒之间用胶水粘接的旧胶片垂在铁栏杆外。"
+          "你把翘起的标签按回胶片盒边缘。纸胶带在指腹下服帖了些。"
         ],
-        "assistant": "胶片接片胶带粘得歪歪扭扭的。{wave}断了就接，接不上了就剪，胶片的日子倒也干脆。{/wave}",
+        "assistant": "按紧了？按紧了好。{wave}这条纸边总被风吹得敲架子。{/wave}{warm}屋里这下安静一点。{/warm}",
         "choices": [
           {
             "id": "missing",
@@ -2894,13 +2814,14 @@
             "assistant": "第三个胶片盒底漏出了一滩干涸的黑胶水。……{shake}胶片融化了，记忆粘在一块抠不开了。{/shake}",
             "pose": "listen"
           }
-        ]
+        ],
+        "pose": "care"
       },
       "revisit": {
         "narration": [
-          "胶片盒上的旧胶带卷起一角，叠在下面的编号仍然只露出半截。"
+          "胶片盒的标签还贴着，边角没有再翘起来。"
         ],
-        "assistant": "胶片盒散发着一股醋酸的陈醋酸味。老醋酸胶片全这个脾气，闻多了冲脑门。",
+        "assistant": "还贴得住。{warm}有些东西修好以后，就不用老担心它掉下来。{/warm}",
         "choices": [
           {
             "id": "missing",
@@ -2932,7 +2853,8 @@
             "assistant": "第三个胶片盒底漏出了一滩干涸的黑胶水。……{shake}胶片融化了，记忆粘在一块抠不开了。{/shake}",
             "pose": "listen"
           }
-        ]
+        ],
+        "pose": "care"
       },
       "missing": {
         "narration": [
@@ -4292,14 +4214,23 @@
     "enabled": true,
     "presentation": "ambient",
     "entry": "start",
-    "revisit": "start",
+    "revisit": "revisit",
     "nodes": {
       "start": {
         "narration": [
-          "细钢丝绳在夜风中绷得笔直，发出极其低沉的嗡鸣，水珠顺着天线滑落。"
+          "你扶住天线基座，把松动的连接处旋紧半圈。风里的震颤慢慢收住。"
         ],
-        "assistant": "别碰那根线，倒不是漏电，是雨水顺着它流下来很凉。",
-        "pose": "peek-up",
+        "assistant": "手挺稳。{wave}刚才那阵颤音，我在门里也听见了。{/wave}{warm}现在信号灯稳下来了。{/warm}",
+        "pose": "greet",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "天线仍在细雨里轻轻颤动，基座没有重新松开。"
+        ],
+        "assistant": "基座还稳着。{warm}雨没停，至少它不用再跟着风乱晃。{/warm}",
+        "pose": "greet",
         "face": 9,
         "choices": []
       }
@@ -4795,13 +4726,22 @@
     "enabled": true,
     "presentation": "ambient",
     "entry": "start",
-    "revisit": "start",
+    "revisit": "revisit",
     "nodes": {
       "start": {
         "narration": [
-          "托盘里放着几枚小螺丝，边缘被拧得发亮。"
+          "你从托盘里拣出一颗合牙纹的螺丝，旋进显示器后盖边缘的空孔。"
         ],
-        "assistant": "拆之前数一遍，装完再数。别最后多出两颗，还夸自己省了材料。",
+        "assistant": "还真找着合适的。{wave}整台机壳没因此变成新的一样，{/wave}{warm}但这一角先稳住了。{/warm}",
+        "pose": "repair",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "那颗螺丝还在后盖边缘，接缝比先前齐整。"
+        ],
+        "assistant": "这颗没松。{warm}小地方也算修好了。{/warm}",
         "pose": "repair",
         "face": 9,
         "choices": []
@@ -4817,14 +4757,23 @@
     "enabled": true,
     "presentation": "ambient",
     "entry": "start",
-    "revisit": "start",
+    "revisit": "revisit",
     "nodes": {
       "start": {
         "narration": [
-          "厚重的黑色橡胶电源插头躺在木地板上，纯铜引脚泛着冷光，断电很久了。"
+          "你沿着电线把插头拾起，挂到墙边的绝缘钩上，再把地上的线圈收齐。"
         ],
-        "assistant": "先拔电源这步做对了。等检查完再说开机，别让机器带着毛病加班。",
-        "pose": "wait",
+        "assistant": "挂上去就好。{shake}地上潮，插头一直拖在那里我看着不放心。{/shake}{warm}现在踏进来不用先绕开它了。{/warm}",
+        "pose": "relief",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "插头仍挂在绝缘钩上，地上的线圈也收得比先前齐整。"
+        ],
+        "assistant": "插头还挂着。{warm}线圈也没有重新散开。{/warm}",
+        "pose": "relief",
         "face": 9,
         "choices": []
       }
@@ -5011,14 +4960,23 @@
     "enabled": true,
     "presentation": "ambient",
     "entry": "start",
-    "revisit": "start",
+    "revisit": "revisit",
     "nodes": {
       "start": {
         "narration": [
-          "防尘布顺着椅背垂下来，褶皱里积着灰。"
+          "你掀起椅子右侧的一角防尘布，下面露出暗红色的旧布面。"
         ],
-        "assistant": "一把旧椅子，先盖着防尘。别看得太认真，底下没有藏人。",
-        "pose": "wait",
+        "assistant": "……原来是这个颜色。{cold}我隔着白布看得太久，都快忘了。{/cold}{warm}先让它透一会儿气吧。{/warm}",
+        "pose": "care",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "白布仍折在椅侧，暗红的扶手在昏暗里露出一小块。"
+        ],
+        "assistant": "还露着那一角。{warm}这间屋子看起来没那么只有灰了。{/warm}",
+        "pose": "care",
         "face": 9,
         "choices": []
       }
@@ -5033,13 +4991,22 @@
     "enabled": true,
     "presentation": "ambient",
     "entry": "start",
-    "revisit": "start",
+    "revisit": "revisit",
     "nodes": {
       "start": {
         "narration": [
-          "小钟搁在箱子上，指针停着，表盘上落了一点灰。"
+          "你轻轻拨了一下箱上的小钟。指针颤了一点，迟缓地响了几下，又停住。"
         ],
-        "assistant": "被收起来的钟，走不走都没人在意。不用给它上发条，让它休个长假。",
+        "assistant": "……听见了吗？{warm}它没有继续走，但还有声音。先别急着给它上弦。{/warm}",
+        "pose": "listen",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "小钟仍停在箱上，表盘上的指针略微偏了一点。"
+        ],
+        "assistant": "它又安静了。{warm}刚才那几声，我记着。{/warm}",
         "pose": "listen",
         "face": 9,
         "choices": []
@@ -5059,10 +5026,10 @@
     "nodes": {
       "start": {
         "narration": [
-          "绿瓷砖上的水痕很淡，带着一点泥，沿砖缝洇出不规则的边缘。"
+          "你在门边的湿瓷砖上试了试脚。水光里留下两道很浅的鞋印。"
         ],
-        "assistant": "雨水沿门口的地砖渗进来。{warm}慢一点走，鞋底沾湿了容易打滑。{/warm}",
-        "pose": "shy",
+        "assistant": "{wave}踩出印子了。{/wave}慢点，这里会滑。……{warm}不过，看到有人真走过这段路，也挺好。{/warm}",
+        "pose": "peek-up",
         "face": 9,
         "choices": [
           {
@@ -5083,10 +5050,10 @@
       },
       "editorial-revisit": {
         "narration": [
-          "水光还停在砖缝边。屋里潮，想等它自己干透，大概得多值一会儿班。"
+          "两道鞋印还留在砖缝旁，边缘已经淡了一点。"
         ],
-        "assistant": "水迹还没干。{wave}雨下得久，这栋楼的门缝也难免漏一点。{/wave}",
-        "pose": "shy",
+        "assistant": "鞋印还在。{warm}门缝会漏雨，今天也确实有人从这儿走过去。{/warm}",
+        "pose": "peek-up",
         "face": 9,
         "choices": [
           {
@@ -5134,10 +5101,10 @@
     "nodes": {
       "start": {
         "narration": [
-          "几张木椅朝着屏幕，椅背旧漆里夹着深浅不一的划痕，中间留出一条过道。"
+          "你拂去第三把椅背上的灰。旧漆里几道浅浅的划痕，在灯下显出来。"
         ],
-        "assistant": "第三把椅子的椅背留着旧划痕。{wave}别急着替它数出一位从没见过的观众。{/wave}",
-        "pose": "wait",
+        "assistant": "……擦干净了，就能看清。{cold}我不知道是谁刻的，也不想替它编一个人。{/cold}",
+        "pose": "listen",
         "face": 9,
         "choices": [
           {
@@ -5158,10 +5125,10 @@
       },
       "editorial-revisit": {
         "narration": [
-          "划痕已经暗下去，与周围旧漆混在一起。"
+          "椅背擦过的木纹仍比旁边亮一点，划痕也没有消失。"
         ],
-        "assistant": "划痕还在那儿。{cold}我们不知道是谁刻的，也不必编一个名字。{/cold}",
-        "pose": "wait",
+        "assistant": "那一小块还是亮的。{warm}你摸过的痕迹留在这儿了。{/warm}",
+        "pose": "listen",
         "face": 9,
         "choices": [
           {
@@ -5222,6 +5189,37 @@
         "assistant": "还是从走廊绕过去吧。我陪你。",
         "face": 9,
         "pose": "care",
+        "choices": []
+      }
+    }
+  },
+  {
+    "id": "test-paper",
+    "room": "lab",
+    "title": "纸背面的草稿",
+    "object": "测试纸",
+    "purpose": "与原有录音机热点分开，让翻纸动作留下可复访的折角。",
+    "enabled": true,
+    "presentation": "ambient",
+    "entry": "start",
+    "revisit": "revisit",
+    "nodes": {
+      "start": {
+        "narration": [
+          "你把桌上的测试纸翻起一角。背面不是答案，只有几行被擦淡的演算。折角留在右上方。"
+        ],
+        "assistant": "背面还有草稿。{whisper}我认不出是谁写的，也不想把它当成标准答案。{/whisper}{warm}这一角留着，下次就知道从哪儿翻。{/warm}",
+        "pose": "paper",
+        "face": 9,
+        "choices": []
+      },
+      "revisit": {
+        "narration": [
+          "测试纸的右上角仍折着，背面的铅笔线隐约透过纸面。"
+        ],
+        "assistant": "折角还在。{warm}不用把每张纸都重新从头看一遍。{/warm}",
+        "pose": "paper",
+        "face": 9,
         "choices": []
       }
     }
