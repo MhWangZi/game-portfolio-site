@@ -1,257 +1,215 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const LEGACY_INDEX_ZERO_STORAGE_KEY = 'gdn:index0:puzzle:v1'
-const INDEX_ZERO_RECOVERY_PHRASE = '被删除的记录仍在继续编写'
-const INDEX_ZERO_FRAGMENT_LOCATIONS = [
-  ['01', '#current'],
-  ['04', '#current'],
-  ['02', '#radar'],
-  ['03', '#cases'],
-  ['05', '#notes'],
-] as const
+function silentWave(seconds = 10) {
+  const sampleRate = 8_000
+  const sampleBytes = sampleRate * seconds * 2
+  const wave = Buffer.alloc(44 + sampleBytes)
+  wave.write('RIFF', 0)
+  wave.writeUInt32LE(36 + sampleBytes, 4)
+  wave.write('WAVEfmt ', 8)
+  wave.writeUInt32LE(16, 16)
+  wave.writeUInt16LE(1, 20)
+  wave.writeUInt16LE(1, 22)
+  wave.writeUInt32LE(sampleRate, 24)
+  wave.writeUInt32LE(sampleRate * 2, 28)
+  wave.writeUInt16LE(2, 32)
+  wave.writeUInt16LE(16, 34)
+  wave.write('data', 36)
+  wave.writeUInt32LE(sampleBytes, 40)
+  return wave
+}
 
-async function recoverAllIndexZeroFragments(page: Page) {
-  for (const [index, section] of INDEX_ZERO_FRAGMENT_LOCATIONS) {
-    await page.locator(section).scrollIntoViewIfNeeded()
-    const fragment = page.getByTestId(`index-zero-fragment-${index}`)
-    await expect(fragment).toBeVisible()
-    await fragment.click()
+async function go(page: Page, label: string, next: string) {
+  await page.getByRole('button', { name: label, exact: true }).click()
+  await expect(page.locator('.cinematic-room')).toHaveAttribute('data-scene-state', next)
+  await expect(page.locator('.cinematic-error')).toBeEmpty()
+}
+
+test('room images and doors connect the playable world', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Full route traversal runs on desktop.')
+  const errors: string[] = []
+  page.on('pageerror', error => errors.push(error.message))
+  await page.goto('/')
+  await expect(page.locator('.cinematic-plate')).toBeVisible()
+  await go(page, '推门去雨声走廊', 'idle')
+  await go(page, '沿铁梯上天台', 'idle')
+  await go(page, '沿楼梯回雨声走廊', 'idle')
+  await go(page, '推门去实验间', 'idle')
+  await go(page, '穿过卷帘门去拆解工坊', 'idle')
+  await go(page, '从卷帘门回实验间', 'idle')
+  await go(page, '推门去旧放映间', 'idle')
+  await go(page, '推门回实验间', 'idle')
+  await go(page, '推门回雨声走廊', 'idle')
+  await go(page, '推门去档案角', 'idle')
+  expect(errors).toEqual([])
+})
+
+test('archive cabinet keeps fifteen readable drawers and a way back', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Archive interaction runs on desktop.')
+  await page.goto('/')
+  await go(page, '推门去雨声走廊', 'idle')
+  await go(page, '推门去档案角', 'idle')
+  await page.getByRole('button', { name: '走近厚重的铁皮档案柜' }).click()
+  const cabinet = page.getByRole('region', { name: '档案柜近景' })
+  await expect(cabinet).toHaveAttribute('data-archive-phase', 'cabinet')
+  await expect(cabinet.getByRole('button', { name: /^取出档案：/ })).toHaveCount(15)
+  await cabinet.getByRole('button', { name: /^取出档案：/ }).first().click()
+  await expect(cabinet).toHaveAttribute('data-archive-phase', 'closed')
+  await cabinet.getByRole('button', { name: '解开系绳，翻开档案' }).click()
+  await expect(cabinet).toHaveAttribute('data-archive-phase', 'open')
+  await page.getByRole('button', { name: '关闭面板' }).click()
+  await cabinet.getByRole('button', { name: '把档案放回原位' }).click()
+  await expect(cabinet).toHaveAttribute('data-archive-phase', 'cabinet')
+  await cabinet.getByRole('button', { name: '退回档案角' }).click()
+  await expect(cabinet).toHaveCount(0)
+})
+
+test('music box can be taken, adjusted and loaded with a local track', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Music controls run on desktop.')
+  await page.goto('/')
+  await go(page, '推门去游戏房', 'idle')
+  await page.getByRole('button', { name: '拿起柜上的八音盒' }).click()
+  await expect(page.getByRole('button', { name: '♫ 八音盒' })).toBeVisible()
+  await page.getByRole('button', { name: '♫ 八音盒' }).click()
+  const drawer = page.getByRole('dialog', { name: '随身八音盒' })
+  await expect(drawer.getByRole('button', { name: '拧动发条钥匙，播放当前滚筒' })).toBeVisible()
+  await drawer.getByRole('combobox', { name: '播放速度' }).selectOption('1.25')
+  await expect(drawer.getByRole('combobox', { name: '播放速度' })).toHaveValue('1.25')
+  await drawer.getByRole('slider', { name: '八音盒音量' }).fill('0.3')
+  await expect(drawer.getByRole('slider', { name: '八音盒音量' })).toHaveValue('0.3')
+  await drawer.getByRole('button', { name: '下一首' }).click()
+  await expect(drawer.getByRole('button', { name: /^装入滚筒：/ }).nth(1)).toHaveAttribute('aria-pressed', 'true')
+  await drawer.getByLabel('选择本地音频文件').setInputFiles({ name: 'visitor.wav', mimeType: 'audio/wav', buffer: silentWave() })
+  await expect(drawer.getByRole('button', { name: '装入滚筒：visitor.wav' })).toBeVisible()
+  await drawer.getByRole('button', { name: '装入滚筒：visitor.wav' }).click()
+  await drawer.getByRole('button', { name: '拧动发条钥匙，播放当前滚筒' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-music-playing', 'true')
+  await drawer.getByRole('slider', { name: '播放位置' }).fill('4.5')
+  await expect(drawer.getByRole('slider', { name: '播放位置' })).toHaveValue('4.5')
+  await drawer.getByRole('button', { name: '暂停' }).click()
+  await drawer.getByRole('button', { name: '合上八音盒抽屉' }).click()
+  await expect(drawer).toHaveCount(0)
+})
+
+test('reset clears taken objects and room traces', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Save reset runs on desktop.')
+  await page.goto('/')
+  await go(page, '推门去游戏房', 'idle')
+  await page.getByRole('button', { name: '拿起柜上的八音盒' }).click()
+  await expect(page.getByRole('button', { name: '♫ 八音盒' })).toBeVisible()
+  await page.getByRole('button', { name: '折好书柜下层的包装盒' }).click()
+  await expect(page.locator('[data-scene-diff="box-outline"]')).toBeVisible()
+  await page.getByRole('button', { name: '⚙ 偏好' }).click()
+  await page.getByText('重新探索这个小世界').click()
+  await page.getByRole('button', { name: '重置探索记录' }).click()
+  await expect(page.getByRole('button', { name: '♫ 八音盒' })).toHaveCount(0)
+  await go(page, '推门去游戏房', 'idle')
+  await expect(page.locator('[data-scene-diff="box-outline"]')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: '拿起柜上的八音盒' })).toBeVisible()
+})
+
+test('hidden tape starts in order, locks the helper and can exit cleanly', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Local reel acceptance runs on desktop.')
+  await page.goto('/?review=1')
+  await page.getByRole('button', { name: '本地验收：旧录像带起点' }).click()
+  await page.getByRole('button', { name: '拿起桌上的旧录像带' }).click()
+  await expect(page.getByRole('button', { name: '▣ 旧录像带' })).toBeVisible()
+  await page.getByRole('button', { name: '把旧录像带推进录像机' }).click()
+  await expect(page.getByRole('button', { name: '▣ 旧录像带' })).toHaveCount(0)
+  await page.getByRole('button', { name: '按下录像机的播放键' }).click()
+  const reel = page.getByRole('dialog', { name: '旧录像测试' })
+  await expect(reel).toHaveAttribute('data-depth', '0')
+  await expect(reel.getByLabel('助手操作已锁定')).toBeVisible()
+  await reel.getByRole('button', { name: '被锁定的私人助手' }).click({ force: true })
+  await expect(reel.locator('.ica-wingdings')).toBeVisible()
+  await reel.getByRole('button', { name: '退出录像' }).click()
+  await expect(reel).toHaveCount(0)
+})
+
+test('unregistered room and sealed storage render, react and connect back', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Hidden room traversal runs on desktop.')
+  await page.goto('/?review=1')
+  await page.getByRole('button', { name: '本地验收：旧录像带起点' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-room', 'secret')
+  await page.getByRole('button', { name: '走进右侧的封存夹层' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-room', 'storage')
+  await expect(page.locator('.cinematic-error')).toBeEmpty()
+  await page.getByRole('button', { name: '看看白布下的椅子' }).click()
+  await expect(page.locator('[data-scene-diff="covered-chair"]')).toBeVisible()
+  await expect(page.locator('[data-event="covered-chair"]')).toBeVisible()
+  await page.locator('[data-event="covered-chair"]').getByRole('button', { name: /移开目光|结束这段观察/ }).click()
+  await page.getByRole('button', { name: '回到未登记空间' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-room', 'secret')
+})
+
+test('complete hidden film restores the helper and adds the familiar music cylinder', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Full hidden-film playthrough runs on desktop.')
+  test.setTimeout(60_000)
+  await page.goto('/?reel-test=1')
+  await page.getByRole('button', { name: '开始录像测试 · 不重置存档' }).click()
+  const reel = page.getByRole('dialog', { name: '旧录像测试' })
+  const targets = [1, 1, 1, 3, 1]
+  for (let depth = 0; depth < targets.length; depth++) {
+    await expect(reel).toHaveAttribute('data-depth', String(depth))
+    for (let index = 0; index < targets[depth]; index++) {
+      await reel.getByRole('button', { name: `检查影像区域${index + 1}` }).click({ force: true })
+      await page.waitForTimeout(900)
+    }
+    await expect(reel).toHaveAttribute('data-depth', String(depth + 1))
   }
-}
-
-async function canvasSignature(page: Page) {
-  return page.locator('[data-testid="portfolio-three-canvas"]').evaluate((canvas) => {
-    const source = canvas as HTMLCanvasElement
-    const probe = document.createElement('canvas')
-    probe.width = Math.min(source.width, 240)
-    probe.height = Math.min(source.height, 160)
-    const context = probe.getContext('2d')
-    if (!context) return { colored: 0, signature: '' }
-    context.drawImage(source, 0, 0, probe.width, probe.height)
-    const data = context.getImageData(0, 0, probe.width, probe.height).data
-    let colored = 0
-    let signature = 0
-    for (let index = 0; index < data.length; index += 16) {
-      const alpha = data[index + 3]
-      const value = data[index] + data[index + 1] + data[index + 2]
-      if (alpha > 8 && value > 12) colored += 1
-      signature = (signature + value * (index + 1)) % 1000000007
-    }
-    return { colored, signature: String(signature) }
-  })
-}
-
-test('desktop scene is visible and reacts to pointer movement', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Desktop scene assertion only runs in the desktop project.')
-  await page.goto('/')
-  const heroHeading = page.locator('#current h1')
-  await expect(heroHeading).toHaveText('CLICK\\\\DOWN')
-  const titleMetrics = await heroHeading.evaluate((element) => {
-    const styles = getComputedStyle(element)
-    return {
-      height: element.getBoundingClientRect().height,
-      lineHeight: Number.parseFloat(styles.lineHeight),
-    }
-  })
-  expect(titleMetrics.height).toBeLessThanOrEqual(titleMetrics.lineHeight * 1.25)
-  const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
-  await expect(canvas).toHaveAttribute('data-scene-mode', 'full')
-  await expect(canvas).toHaveAttribute('data-theme', 'countdown-grid')
-  await expect(page.locator('.dc-build-image img')).toHaveAttribute('src', /click-down-network\.gif/)
-  await page.waitForTimeout(350)
-  const before = await canvasSignature(page)
-  expect(before.colored).toBeGreaterThan(60)
-  await page.mouse.move(1160, 180)
-  await page.waitForTimeout(450)
-  const after = await canvasSignature(page)
-  expect(after.signature).not.toBe(before.signature)
-
-  await page.getByRole('button', { name: '下一个项目', exact: true }).click()
-  await expect(heroHeading).toHaveText('HD2DKit')
-  await expect(canvas).toHaveAttribute('data-theme', 'tool-grid')
-
-  await page.goto('/#cases')
-  await expect(page.getByRole('button', { name: '01 CLICK\\\\DOWN', exact: true })).toBeVisible()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-music-locked', 'true')
+  await expect(reel).toHaveAttribute('data-depth', '6', { timeout: 15_000 })
+  await expect(reel).toHaveCount(0, { timeout: 12_000 })
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-music-locked', 'false')
+  await page.getByRole('button', { name: '知道了' }).click()
+  await go(page, '推门去游戏房', 'idle')
+  await page.getByRole('button', { name: '拿起柜上的八音盒' }).click()
+  await page.getByRole('button', { name: '♫ 八音盒' }).click()
+  await expect(page.getByRole('dialog', { name: '随身八音盒' }).getByRole('button', { name: /装入滚筒：Childishly fresh eyes/i })).toBeVisible()
 })
 
-test('mobile layout does not overflow and uses compact scene mode', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Mobile layout assertion only runs in the mobile project.')
+test('both embedded games load and the player can return to the room', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Embedded game load runs on desktop.')
+  test.setTimeout(120_000)
+  await page.goto('/?qa=1')
+  await go(page, '推门去游戏房', 'idle')
+  await page.getByRole('button', { name: '坐在沙发上' }).click()
+  await page.getByRole('button', { name: '拿起手柄' }).click()
+  await expect(page.getByRole('heading', { name: '今晚，玩哪张？' })).toBeVisible()
+  await page.getByRole('button', { name: '放入CLICKDOWN光盘' }).click()
+  await page.frameLocator('iframe').getByRole('button', { name: '点击开始' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-game-status', 'ready', { timeout: 60_000 })
+  await page.getByRole('button', { name: '更换光盘 ◉' }).click()
+  await page.getByRole('button', { name: '放入万众瞩目光盘' }).click()
+  await page.getByRole('button', { name: '确认换盘' }).click()
+  await expect(page.locator('iframe[src*="anchored-gaze"]')).toBeVisible()
+  await page.frameLocator('iframe[src*="anchored-gaze"]').getByRole('button', { name: '点击开始' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-game-status', 'ready', { timeout: 60_000 })
+  await page.getByRole('button', { name: '返回房间' }).click()
+  await expect(page.locator('.avg-site')).toHaveAttribute('data-stage', 'room')
+})
+
+test('mobile world fits the viewport and remains operable', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'Mobile viewport check only.')
   await page.goto('/')
-  const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
-  await expect(canvas).toHaveAttribute('data-scene-mode', 'compact')
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+  await expect(page.locator('.cinematic-room')).toBeVisible()
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
   expect(overflow).toBeLessThanOrEqual(1)
-  await expect(page.locator('#current h1')).toBeVisible()
-  await expect(page.getByRole('button', { name: '01 CLICK\\\\DOWN', exact: true })).toBeVisible()
+  await go(page, '推门去游戏房', 'idle')
+  await expect(page.getByRole('button', { name: '轻轻摸摸熟睡的猫' })).toBeVisible()
 })
 
-test('reduced motion keeps content readable', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced motion assertion only runs in the reduced-motion project.')
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/#static-signal')
-  const canvas = page.locator('[data-testid="portfolio-three-canvas"]')
-  await expect(canvas).toHaveAttribute('data-motion', 'reduced')
-  await expect(page.getByRole('heading', { name: 'STATIC SIGNAL 静默信号' })).toBeVisible()
-  await page.getByRole('tab', { name: 'BUILD', exact: true }).click()
-  await expect(page.getByRole('link', { name: '下载文件', exact: true })).toHaveAttribute('href', /static-signal-web-package\.zip/)
+test('reduced motion keeps scene interaction and text available', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced-motion check only.')
+  await page.goto('/')
+  await go(page, '推门去雨声走廊', 'idle')
+  await page.getByRole('button', { name: '看看门口未干的水迹' }).click()
+  await expect(page.locator('[data-scene-diff="wet-step"]')).toBeVisible()
+  await expect(page.locator('[data-event="wet-step"]')).toBeVisible()
 })
 
-test('CLICK\\\\DOWN uses a static poster until reduced-motion visitors request the GIF', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'reduced-motion', 'Animated media fallback only runs in the reduced-motion project.')
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/#click-down')
-
-  const dialog = page.getByRole('dialog')
-  await expect(dialog.getByRole('heading', { name: 'CLICK\\\\DOWN' })).toBeVisible()
-  const media = dialog.locator('.dc-dossier-media-frame img')
-  await expect(media).toHaveAttribute('src', /click-down-network-poster\.png/)
-
-  await dialog.getByRole('button', { name: '播放动图', exact: true }).click()
-  await expect(media).toHaveAttribute('src', /click-down-network\.gif/)
-})
-
-test('project dossier supports direct links and restores the project index', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Dossier route assertion only runs in the desktop project.')
-  await page.goto('/#parry-arena')
-  const dialog = page.getByRole('dialog')
-  await expect(dialog).toBeVisible()
-  await expect(dialog.getByRole('heading', { name: 'Parry Arena 弹反竞技场' })).toBeVisible()
-  await page.getByRole('button', { name: '关闭项目档案', exact: true }).click()
-  await expect(page).toHaveURL(/#projects$/)
-  await expect(page.getByRole('dialog')).toHaveCount(0)
-})
-
-test('hidden pseudo admin route renders locked access terminal', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Admin route smoke test only runs in the desktop project.')
+test('management terminal stays reachable without entering game routes', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'Terminal route smoke test only.')
   await page.goto('/#/admin')
   await expect(page.getByRole('heading', { name: 'ACCESS TERMINAL' })).toBeVisible()
-  await expect(page.getByText('PRIVATE GATE')).toBeVisible()
-  await expect(page.getByRole('button', { name: /\[UNLOCK PANEL\]/ })).toBeDisabled()
-})
-
-test('INDEX-0 exploration resets completely after a page refresh', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Puzzle refresh behavior runs in the desktop project.')
-  await page.goto('/')
-
-  const fragment = page.getByTestId('index-zero-fragment-01')
-  await fragment.click()
-  await expect(page.getByTestId('archive-integrity')).toContainText('1 / 5')
-
-  await page.reload()
-  await expect(page.getByTestId('archive-integrity')).toContainText('0 / 5')
-  await expect(page.getByTestId('index-zero-fragment-01')).toHaveAttribute('aria-label', '发现异常片段 01')
-  const legacyStorage = await page.evaluate((storageKey) => window.localStorage.getItem(storageKey), LEGACY_INDEX_ZERO_STORAGE_KEY)
-  expect(legacyStorage).toBeNull()
-})
-
-test('INDEX-0 fragments unlock the recovery route and CASE-00', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Full INDEX-0 flow runs in the desktop project.')
-  await page.goto('/')
-
-  const firstFragment = page.getByTestId('index-zero-fragment-01')
-  await expect(firstFragment).toBeVisible()
-  await firstFragment.focus()
-  await expect(firstFragment).toBeFocused()
-  await page.keyboard.press('Enter')
-  await expect(firstFragment).toHaveAttribute('aria-label', /已恢复：被删除/)
-  await expect(page.locator('.dc-telemetry-revision dd')).toContainText('下一轮将继｜续调整操作反馈与战斗节奏。')
-
-  const fragmentLocations = [
-    ['04', '#current'],
-    ['02', '#radar'],
-    ['03', '#cases'],
-    ['05', '#notes'],
-  ] as const
-
-  for (const [index, section] of fragmentLocations) {
-    await page.locator(section).scrollIntoViewIfNeeded()
-    const fragment = page.getByTestId(`index-zero-fragment-${index}`)
-    await expect(fragment).toBeVisible()
-    await fragment.click()
-  }
-
-  await expect(page.locator('.index-zero-fragment-status')).toHaveCount(0)
-  await expect(page.locator('.dc-telemetry-revision dd')).toContainText('下一轮将继续调整操作反馈与战斗节奏。')
-  for (const index of ['01', '02', '03', '04', '05']) {
-    const parentTag = await page.getByTestId(`index-zero-fragment-${index}`).evaluate(
-      (element) => element.parentElement?.parentElement?.tagName,
-    )
-    expect(['P', 'DD']).toContain(parentTag)
-  }
-
-  const integrity = page.getByTestId('archive-integrity')
-  await expect(integrity).toContainText('5 FRAGMENTS RECOVERED')
-  await expect(integrity).toContainText('UNREGISTERED ENTRY FOUND')
-  const legacyStorage = await page.evaluate((storageKey) => window.localStorage.getItem(storageKey), LEGACY_INDEX_ZERO_STORAGE_KEY)
-  expect(legacyStorage).toBeNull()
-
-  const recoveryLink = page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })
-  await expect(recoveryLink).toBeVisible()
-  await recoveryLink.click()
-  await expect(page).toHaveURL(/#\/recovery$/)
-  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
-
-  const phraseInput = page.getByTestId('recovery-phrase')
-  await phraseInput.fill('顺序错误的文本')
-  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
-  await expect(page.locator('#recovery-response')).not.toContainText('口令匹配')
-
-  await phraseInput.fill(INDEX_ZERO_RECOVERY_PHRASE)
-  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
-  await expect(page.getByText('口令匹配。')).toBeVisible()
-  await expect(page).toHaveURL(/#\/case-00$/, { timeout: 6_000 })
-  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
-  await expect(page.getByText('第零号档案 / 未被编写的记录')).toBeVisible()
-
-  await page.getByRole('button', { name: /RETURN TO PUBLIC INDEX/ }).click()
-  await expect(page).toHaveURL(/#current$/)
-  await expect(page.getByTestId('current-build-status')).toHaveText('OBSERVATION COMPLETE')
-  await page.locator('#contact').scrollIntoViewIfNeeded()
-  await expect(page.getByText('当前页面暂存本次阅读；刷新后清除。')).toBeVisible()
-
-  await page.evaluate(() => {
-    window.location.hash = '/case-00'
-  })
-  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
-  await page.reload()
-  await expect(page).toHaveURL(/#\/recovery$/)
-  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
-  await expect(page.locator('.recovery-interface-topbar strong')).toContainText('0 / 5')
-})
-
-test('CASE-00 redirects to recovery before phrase verification', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Route guard smoke test runs in the desktop project.')
-  await page.goto('/#/case-00')
-  await expect(page).toHaveURL(/#\/recovery$/)
-  await expect(page.getByRole('heading', { name: 'RECOVERY INTERFACE' })).toBeVisible()
-})
-
-test('mobile visitors can recover all five fragments without overflow', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'mobile', 'Mobile puzzle flow only runs in the mobile project.')
-  await page.goto('/')
-
-  await recoverAllIndexZeroFragments(page)
-
-  await expect(page.getByTestId('archive-integrity')).toContainText('5 FRAGMENTS RECOVERED')
-  await page.locator('#contact').scrollIntoViewIfNeeded()
-  await expect(page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ })).toBeVisible()
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
-  expect(overflow).toBeLessThanOrEqual(1)
-})
-
-test('reduced motion renders the restored CASE-00 document immediately', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'reduced-motion', 'Reduced CASE-00 flow only runs in the reduced-motion project.')
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/')
-  await recoverAllIndexZeroFragments(page)
-  await page.locator('#contact').scrollIntoViewIfNeeded()
-  await page.getByRole('link', { name: /OPEN RECOVERY INTERFACE/ }).click()
-  await page.getByTestId('recovery-phrase').fill(INDEX_ZERO_RECOVERY_PHRASE)
-  await page.getByRole('button', { name: 'VERIFY RECORD' }).click()
-  await expect(page.getByRole('heading', { name: /CASE-00 \/ THE UNWRITTEN RECORD/ })).toBeVisible()
-  const finalMessage = page.locator('[data-final-observer-text]')
-  await expect(finalMessage).toContainText('你没有进入后台。')
-  await expect(finalMessage).toContainText('你只是完成了它缺少的那一段。')
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
-  expect(overflow).toBeLessThanOrEqual(1)
 })

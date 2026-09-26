@@ -167,4 +167,5 @@
       console.error(err);
     }
   };
+  start.disabled = false;
 })();

@@ -26,7 +26,7 @@ test('key documents have exactly one physical entry and no optional dialogue reo
 });
 test('every scene interaction has a bounded point; ambient inquiries do not reopen documents',()=>{
   for(const room of scenes)for(const o of room.objects){assert.equal(o.point.length,2);assert.ok(o.point.every(n=>n>=0&&n<=100),o.id);}
-  assert.equal(events.filter(e=>e.enabled&&e.presentation==='ambient').length,14);
+  assert.equal(events.filter(e=>e.enabled&&e.presentation==='ambient').length,16);
   assert.equal(events.filter(e=>e.enabled&&e.presentation==='exchange').length,12);
   assert(events.filter(e=>e.enabled&&e.presentation==='ambient').every(e=>e.nodes[e.entry].choices.every(c=>c.action?.type!=='panel')));
 });

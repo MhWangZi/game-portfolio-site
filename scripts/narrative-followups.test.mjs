@@ -31,8 +31,8 @@ test('archive exit distinguishes read-but-unreturned from returned and unread fi
  const save=recordResponse(blankNarrative(),'CONTROL.music-open');assert.equal(save.responses['CONTROL.music-open'],1);assert.deepEqual(save.flags,[]);
 });
 test('authored followup questions are reachable without forcing ambient observations; dark is not leaked into other rooms',()=>{
- assert.equal(events.filter(e=>e.enabled!==false&&e.presentation==='ambient').length,15);
- const live=events.filter(e=>e.enabled!==false&&e.nodes['editorial-question']);assert.equal(live.length,17);
+ assert.equal(events.filter(e=>e.enabled!==false&&e.presentation==='ambient').length,17);
+ const live=events.filter(e=>e.enabled!==false&&e.nodes['editorial-question']);assert.equal(live.length,18);
  for(const e of live){const b=beginEvent(e,blankNarrative(),base);assert(e.nodes[b.session.node].choices.some(c=>c.next==='editorial-question'));assert(e.nodes['editorial-question'].assistant);}
  assert(events.some(e=>e.enabled!==false&&e.presentation==='ambient'&&e.nodes[e.entry].choices.some(c=>c.next==='editorial-question')));
  const cat=events.find(e=>e.id==='cat-seat');assert.match(resolveEventNode(cat.nodes.start,blankNarrative(),{...base,room:'lounge',dark:true}).narration[0],/暗处/);
