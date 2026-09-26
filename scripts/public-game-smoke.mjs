@@ -27,17 +27,31 @@ try {
     await page.getByRole('button', { name: '拿起手柄' }).click()
     await page.getByRole('button', { name: '放入CLICKDOWN光盘' }).click()
     await page.frameLocator('iframe[src*="clickdown"]').getByRole('button', { name: '点击开始' }).click()
+    const firstStarted = Date.now()
+    const firstProgress = setInterval(async () => console.log(`clickdown ${Math.round((Date.now() - firstStarted) / 1000)}s ${await page.frameLocator('iframe[src*="clickdown"]').locator('#status').textContent().catch(() => '?')}`), 30_000)
     try {
-      await page.locator('.avg-site[data-game-status="ready"]').waitFor({ timeout: 45_000 })
+      await page.locator('.avg-site[data-game-status="ready"]').waitFor({ timeout: 240_000 })
     } catch (error) {
       console.log('gameDiagnostic', JSON.stringify({ status: await page.locator('.avg-site').getAttribute('data-game-status'), playerText: await page.frameLocator('iframe[src*="clickdown"]').locator('#status').textContent(), errors, failed }))
       throw error
+    } finally {
+      clearInterval(firstProgress)
     }
+    console.log('clickdown=ready')
     await page.getByRole('button', { name: '更换光盘 ◉' }).click()
     await page.getByRole('button', { name: '放入万众瞩目光盘' }).click()
     await page.getByRole('button', { name: '确认换盘' }).click()
     await page.frameLocator('iframe[src*="anchored-gaze"]').getByRole('button', { name: '点击开始' }).click()
-    await page.locator('.avg-site[data-game-status="ready"]').waitFor({ timeout: 90_000 })
+    const secondStarted = Date.now()
+    const secondProgress = setInterval(async () => console.log(`anchored-gaze ${Math.round((Date.now() - secondStarted) / 1000)}s ${await page.frameLocator('iframe[src*="anchored-gaze"]').locator('#status').textContent().catch(() => '?')}`), 30_000)
+    try {
+      await page.locator('.avg-site[data-game-status="ready"]').waitFor({ timeout: 240_000 })
+    } catch (error) {
+      console.log('gameDiagnostic', JSON.stringify({ status: await page.locator('.avg-site').getAttribute('data-game-status'), playerText: await page.frameLocator('iframe[src*="anchored-gaze"]').locator('#status').textContent(), errors, failed }))
+      throw error
+    } finally {
+      clearInterval(secondProgress)
+    }
     await page.getByRole('button', { name: '返回房间' }).click()
     await page.locator('.avg-site[data-stage="room"]').waitFor()
     console.log('embeddedGames=2 ready return=room')
